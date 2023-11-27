@@ -18,7 +18,7 @@ public class Main extends Application
     activeStage.setTitle("Bob's Project Management System");
 
     //Scene controller:
-    ActiveModelController activeModel = new ActiveModelController();
+    MainModel activeModel = new MainModel();
     SceneController sceneController = new SceneController(activeModel, activeStage);
 
     //Launch the GUI at the Dashboard Scene:

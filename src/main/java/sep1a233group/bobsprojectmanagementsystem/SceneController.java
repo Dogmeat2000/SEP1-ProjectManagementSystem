@@ -14,7 +14,7 @@ import static javafx.application.Platform.exit;
 
 public class SceneController
 {
-  private ActiveModelController activeModel; //Refers to the currently active model. (The one associated with the active scene)
+  private MainModel activeModel; //Refers to the currently active model. (The one associated with the active scene)
   private Stage activeStage; //Refers to the scene/stage that is currently being displayed in the application.
 
   private Map<String, Scene_ControllerInterface> sceneControllers; //Here we map a String key to a Scene value, so that it is possible for us to easily identify which controller is connected to which window.
@@ -23,7 +23,7 @@ public class SceneController
 
   /**The Scene Controller class is used for controlling the active scene in the GUI application.
    * It is inspired by some of the SDJ1 developmental work our Lector, Michael, has presented during the SDJ1 course - specifically relating to the use of a 'viewhandler'*/
-  public SceneController(ActiveModelController activeModel, Stage activeStage)
+  public SceneController(MainModel activeModel, Stage activeStage)
   {
     this.activeModel = activeModel;
     this.activeStage = activeStage;

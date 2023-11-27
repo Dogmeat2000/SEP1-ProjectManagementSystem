@@ -10,13 +10,13 @@ import java.io.IOException;
 public class Scene_SettingsView implements Scene_ControllerInterface
 {
   @FXML TextField GUI_Console;
-  private ActiveModelController activeModel;
+  private MainModel activeModel;
   private SceneController sceneController;
 
   /** Initializes this scene into the active stage on the GUI - reusing the same window space.
    * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
    * */
-  public void init(ActiveModelController activeModel, SceneController sceneController)
+  public void init(MainModel activeModel, SceneController sceneController)
   {
     this.activeModel = activeModel;
     this.sceneController = sceneController;
