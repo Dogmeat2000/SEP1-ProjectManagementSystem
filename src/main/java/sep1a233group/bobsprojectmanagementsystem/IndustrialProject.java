@@ -13,6 +13,7 @@ public class IndustrialProject extends ConstructionProject
     /** Constructs this object the first time it is created/called. */
     public IndustrialProject()
     {
+      super();
       //TODO: IMPLEMENT THE DEFAULT VALUES HERE!
       /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
 
