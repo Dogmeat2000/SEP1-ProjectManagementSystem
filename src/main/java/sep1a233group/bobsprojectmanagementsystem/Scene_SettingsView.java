@@ -48,7 +48,7 @@ public class Scene_SettingsView implements Scene_ControllerInterface
    * Check SceneController.exportToWeb() for a more detailed description.*/
   public void exportToWeb()
   {
-    //TODO Implement the method
+    sceneController.exportToWeb();
   }
 
   /** This method simply calls the common method with the same name, from the SceneController.

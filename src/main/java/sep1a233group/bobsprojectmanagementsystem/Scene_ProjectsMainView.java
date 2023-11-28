@@ -56,7 +56,7 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
    */
   public void exportToWeb()
   {
-    //TODO Implement the method
+    sceneController.exportToWeb();
   }
 
   /**
