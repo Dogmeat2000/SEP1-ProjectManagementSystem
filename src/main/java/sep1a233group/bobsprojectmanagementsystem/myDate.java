@@ -7,13 +7,19 @@ public class myDate
 {
   private int day, month, year;
 
+
+  /*
+  * this method is the constructor, which is used when creating a new myDate object.
+  */
   public myDate(int day, int month, int year)
   {
     setDay(day);
     setMonth(month);
     setYear(year);
   }
-
+  /*
+  * the constructor with no values creates a new myDate object with the current date.
+  */
   public myDate()
   {
     Calendar calendar = Calendar.getInstance();
@@ -29,6 +35,10 @@ public class myDate
   public int getYear() { return year; }
   public void setYear(int year) { this.year = year; }
 
+
+  /*
+   * this method calculates the amount of days between two dates
+  */
   public int daysBetween(myDate date)
   {
     if (date instanceof myDate)
@@ -43,6 +53,9 @@ public class myDate
     return 6;//Retur antal dage;
   }
 
+  /*
+  * this method is used to get the object value as a string. in this situation we want our date to return in the format (dd/mm/yyyy)
+  */
   @Override public String toString()
   {
 
@@ -50,11 +63,18 @@ public class myDate
     return super.toString();
   }
 
+  /*
+   *this method can be used if you have a date and want to create a new myDate object with the same date.
+   * the method uses an existing myDate object and creates a new one identical.
+   */
   public myDate copy()
   {
     return new myDate(getDay(),getMonth(),getYear());
   }
 
+  /*
+   * this method compares two myDate objects to see if they are the same date or not
+   */
   @Override public boolean equals(Object obj)
   {
     if (!(obj instanceof myDate))
@@ -69,6 +89,10 @@ public class myDate
     }
   }
 
+
+  /*
+   * this method returns a myDate object with the current date
+   */
   public myDate Now()
   {
     return new myDate();
