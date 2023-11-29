@@ -5,19 +5,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class MyDate
+public class myDate
 {
   private int day;
   private int month;
   private int year;
 
-  public MyDate(int day, int month, int year)
+  public myDate(int day, int month, int year)
   {
     setDay(day);
     setMonth(month);
     setYear(year);
   }
-  public MyDate()
+  public myDate()
   {
     Calendar now = GregorianCalendar.getInstance();
     this.day = now.get(Calendar.DAY_OF_MONTH);
@@ -124,10 +124,10 @@ public class MyDate
     }
   }
 
-  public int daysbetween(MyDate other)
+  public int daysbetween(myDate other)
   {
     boolean date1Bigger;
-    MyDate date1 = (MyDate)other;
+    myDate date1 = (myDate)other;
     if (this.year<date1.year)
     {
       date1Bigger = true;
@@ -145,7 +145,7 @@ public class MyDate
       date1Bigger = false;
     }
 
-    MyDate Counterdate = new MyDate(day, month, year);
+    myDate Counterdate = new myDate(day, month, year);
     int antaldage = 0;
     if (date1Bigger)
     {
@@ -183,9 +183,9 @@ public class MyDate
 
   public boolean equals(Object obj)
   {
-    if (obj instanceof MyDate)
+    if (obj instanceof myDate)
     {
-      MyDate otherdate = (MyDate)obj;
+      myDate otherdate = (myDate)obj;
       return (this.day == otherdate.day &&
               this.month == otherdate.month &&
               this.year == otherdate.year);
@@ -204,14 +204,14 @@ public class MyDate
     return MyDate.format(date);
   }
 
-  public MyDate copy()
+  public myDate copy()
   {
-    return new MyDate(day, month, year);
+    return new myDate(day, month, year);
   }
 
 
-  public static MyDate now()
+  public static myDate now()
   {
-    return new MyDate();
+    return new myDate();
   }
 }
