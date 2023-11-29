@@ -1,6 +1,5 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 /** This is the main controller for the project management system.
@@ -215,8 +214,10 @@ public class MainModel
   }
 
   /** Enables data persistence across sessions by saving relevant system information to a file.
-   * Returns true if operation was successful.
-   * Author: K. Dashnaw
+   *  Note: Validation of data integrity should be conducted prior to calling this save method,
+   *  ideally as early as while adding data to the model field attributes.
+   *  Returns true if operation was successful.
+   *  Author: K. Dashnaw
    * */
   public boolean save()
   {

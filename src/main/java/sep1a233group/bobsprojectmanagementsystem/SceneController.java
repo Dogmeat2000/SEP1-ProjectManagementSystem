@@ -63,6 +63,7 @@ public class SceneController
 
     activeStage.show();
     activeStage.setScene(newScene);
+    activeStage.setResizable(false);
     activeStage.setTitle("Bob's Project Management System");
   }
 
