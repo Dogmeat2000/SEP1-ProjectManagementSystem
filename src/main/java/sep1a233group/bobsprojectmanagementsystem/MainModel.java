@@ -1,6 +1,7 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /** This is the main controller for the project management system.
  * This controls most of the coding logic and method functionality that is called from the GUI
@@ -31,7 +32,7 @@ public class MainModel
 
     //TODO: Implement som coding logic for all the below, attempting to first load data from a file if such a file exists and data is proper!
     //The below is simply dummy information for now!
-    setFileManager(new FileIO());
+    setFileManager(new FileIO("NONE", "NONE"));
     setDefaultResidentialSettings(new DefaultResidentialSettings());
     setDefaultCommercialSettings(new DefaultCommercialSettings());
     setDefaultIndustrialSettings(new DefaultIndustrialSettings());
