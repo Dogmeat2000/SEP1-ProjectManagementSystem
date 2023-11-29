@@ -1,6 +1,8 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
-public class DashboardProgressReports
+import java.io.Serializable; //Needed in order to save class object as Binary file!
+
+public class DashboardProgressReports implements Serializable
 {
   private ProgressReport[] dashboardProgressReports; // Contains the 4 progress reports that are shown on the GUI dashboard.
   //TODO: Implement Class!

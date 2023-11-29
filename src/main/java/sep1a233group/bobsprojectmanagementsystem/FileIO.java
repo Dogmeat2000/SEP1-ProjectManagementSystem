@@ -1,5 +1,7 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import java.io.*;
+
 /** This is the main file in-and-out controller used for maintaining data persistence across sessions,
  * and providing cross-platform functionality so project information can be generically loaded in the company homepage.
  * Local files are saves in binary format.
@@ -8,57 +10,95 @@ package sep1a233group.bobsprojectmanagementsystem;
  * */
 public class FileIO
 {
-  private String systemSaveFileUrl; //A reference URL to the system file containing: Projects, Dashboard Information & Default settings.
-  private String webPageFileUrl; //A reference URL to the webpage file that should be exported upon called by the user from the GUI.
+  private File systemSaveFile; //Reference to the system save file object.
+  private File webpageFile; //Reference to the exported webpage compatible file object.
+  private String systemFileName; //The name used for the system save file.
+  private String webPageFileName; //The name used for the exported webpage compatible file.
   private Date lastDataSaveTime; //Contains a Date/Time representation of when the system data was last saved.
   private Date lastWebExportTime; //Contains a Date/Time representation of when the system data was last saved.
 
   /** Constructs the FileIO object and calls relevant methods for field attribute initialization.
-   * Parameters are:
-   * String systemSaveFileUrl: A string address (URL) pointing to the location of the system save file containing all persistence data for this application.
-   * String webPageFileUrl: A string address (URL) pointing to the location the webpage data file, containing relevant project data for display on the company homepage.
    * Author: K. Dashnaw
    * */
-  public FileIO(String systemSaveFileUrl, String webPageFileUrl)
+  public FileIO()
   {
+    setSystemFileName("mainProjectSaveFile.bin");
+    setSystemSaveFile("Project Data Files/" + this.getSystemFileName());
+
+    setWebPageFileName("webpageFile.json");
+    setWebpageFile("Project Data Files/" + this.getWebPageFileName());
+
+
+
+
+
     //TODO: Implement
-    setSystemSaveFileUrl(systemSaveFileUrl);
-    setWebPageFileUrl(webPageFileUrl);
-
+    setLastDataSaveTime(new Date());
+    setLastWebExportTime(new Date());
   }
 
-  /** Returns a URL pointing to the location of the system save file containing all persistence data for this application.
+  /** Returns the name of the system data file
    * Author: K. Dashnaw
    * */
-  public String getSystemSaveFileUrl()
+  public File getSystemSaveFile()
   {
-    return systemSaveFileUrl;
+    return systemSaveFile;
   }
 
-  /** Sets/Initializes a URL pointing to the location of the system save file containing all persistence data for this application.
+  /** Sets/Initializes the name of the system data file
    * Author: K. Dashnaw
    * */
-  public void setSystemSaveFileUrl(String systemSaveFileUrl)
+  public void setSystemSaveFile(String fileName)
   {
-    //TODO: Check if the given fileName has the proper ending (ie. .bin). If not, add the proper fileName!
-    this.systemSaveFileUrl = systemSaveFileUrl;
+    this.systemSaveFile = new File(fileName);
   }
 
-  /** Returns a URL pointing to the location of the webpage data file, containing relevant project data for display on the company homepage.
+  /** Returns the name of the main system data file
    * Author: K. Dashnaw
    * */
-  public String getWebPageFileUrl()
+  public String getSystemFileName()
   {
-    return webPageFileUrl;
+    return systemFileName;
   }
 
-  /** Sets/Initializes a URL pointing to the location of the webpage data file, containing relevant project data for display on the company homepage.
+  /** Sets/Initializes the name for the main system data file
    * Author: K. Dashnaw
    * */
-  public void setWebPageFileUrl(String webPageFileUrl)
+  public void setSystemFileName(String systemFileName)
   {
-    //TODO: Check if the given fileName has the proper ending (ie. .xml or .json). If not, add the proper fileName!
-    this.webPageFileUrl = webPageFileUrl;
+    this.systemFileName = systemFileName;
+  }
+
+  /** Returns the name of the webpage Project Data file
+   * Author: K. Dashnaw
+   * */
+  public File getWebpageFile()
+  {
+    return webpageFile;
+  }
+
+  /** Sets/Initializes the name of the webpage Project Data file
+   * Author: K. Dashnaw
+   * */
+  public void setWebpageFile(String fileName)
+  {
+    this.webpageFile = new File(fileName);
+  }
+
+  /** Returns the name of the exported Web Page Compatible file
+   * Author: K. Dashnaw
+   * */
+  public String getWebPageFileName()
+  {
+    return webPageFileName;
+  }
+
+  /** Sets/Initializes the name for the exported Web Page Compatible file
+   * Author: K. Dashnaw
+   * */
+  public void setWebPageFileName(String webPageFileName)
+  {
+    this.webPageFileName = webPageFileName;
   }
 
   /** Returns a Date Object containing the last date and time the system files were saved
@@ -94,19 +134,38 @@ public class FileIO
   }
 
   /** Writes the persistence system data to a local binary file.
-   * URL references are defined directly in FileIO.
+   * File references are defined directly in FileIO.
    * Return true if saving was successful.
    * Returns false if not.
    * Author: K. Dashnaw
    * */
-  public boolean writeToBinary()
+  public boolean writeToBinary(Object[] objectList)
   {
-    //TODO: Implement
-    return false;
+    System.out.println("WriteToBinary method called.");
+    //Create the fileOutputStream with "try-with-resources")
+    try (FileOutputStream fos = new FileOutputStream(this.getSystemSaveFile()))
+    {
+      //Create the ObjectOutputStreams, as a "try-with-resources")
+      try (ObjectOutputStream out = new ObjectOutputStream(fos))
+      {
+        //We now write the received Object to the Binary File:
+        out.writeObject(objectList);
+        out.flush(); //Force it to write the text, emptying the buffer.
+        //out.close(); - Not needed since we are using "try-with-resources"
+
+        return true; //Data successfully saved.
+      }
+    }
+    catch (IOException e)
+    {
+      System.out.println("'WriteToBinary' failed.");
+      System.out.println("IOException Error: " + e);
+      return false; //Write to Binary failed.
+    }
   }
 
   /** Writes the relevant project data to a local xml/json file for use on the company homepage.
-   * URL references are defined directly in FileIO.
+   * File references are defined directly in FileIO.
    * Return true if saving was successful.
    * Returns false if not.
    * Author: K. Dashnaw
@@ -118,7 +177,7 @@ public class FileIO
   }
 
   /** Loads system persistence data from a local binary file.
-   * URL references are defined directly in FileIO.
+   * File references are defined directly in FileIO.
    * Return true if loading was successful.
    * Returns false if not.
    * Author: K. Dashnaw

@@ -1,7 +1,7 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 
 /** This is the main controller for the project management system.
  * This controls most of the coding logic and method functionality that is called from the GUI
@@ -22,6 +22,14 @@ public class MainModel
  * */
   public MainModel()
   {
+    //Initialize the file manager.
+    setFileManager();
+
+
+
+
+
+
     //TODO: Implement som coding logic for the initialization of the dashboardProgressReports at this stage, that loads this information from a Binary File - if such a file exists
     //The below is simply dummy information for now!
     setDashboardProgressReport(new DashboardProgressReports());
@@ -32,7 +40,7 @@ public class MainModel
 
     //TODO: Implement som coding logic for all the below, attempting to first load data from a file if such a file exists and data is proper!
     //The below is simply dummy information for now!
-    setFileManager(new FileIO("NONE", "NONE"));
+
     setDefaultResidentialSettings(new DefaultResidentialSettings());
     setDefaultCommercialSettings(new DefaultCommercialSettings());
     setDefaultIndustrialSettings(new DefaultIndustrialSettings());
@@ -82,9 +90,9 @@ public class MainModel
   /** Sets/Initializes the file manager responsible for maintaining data persistence across sessions
    * Author: K. Dashnaw
    * */
-  public void setFileManager(FileIO fileManager)
+  public void setFileManager()
   {
-    this.fileManager = fileManager;
+    this.fileManager = new FileIO();
   }
 
   /** Gets the default residential project settings used when creating new projects
@@ -212,8 +220,25 @@ public class MainModel
    * */
   public boolean save()
   {
-    //TODO: Implement method.
-    return false;
+    Object[] objectList = new Object[8]; //Pack all the different system Object into a single Object array before saving.
+
+    objectList[0] = this.getAllProjectsList();
+    objectList[1] = this.getDashboardProgressReports();
+    objectList[2] = this.getDefaultResidentialSettings();
+    objectList[3] = this.getDefaultCommercialSettings();
+    objectList[4] = this.getDefaultIndustrialSettings();
+    objectList[5] = this.getDefaultRoadSettings();
+    objectList[7] = this.getFileManager().getLastDataSaveTime();
+
+    if(this.getFileManager().writeToBinary(objectList))
+    {
+      System.out.println("Data saved successfully");
+      return true; //Saving was successful
+    }
+    else
+    {
+      return false; //Saving failed.
+    }
   }
 
   /** Enables data persistence across sessions by loading relevant system information from a file.
