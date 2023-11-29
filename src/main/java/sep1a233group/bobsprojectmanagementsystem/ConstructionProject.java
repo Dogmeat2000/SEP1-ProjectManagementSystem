@@ -14,11 +14,20 @@ public abstract class ConstructionProject
     this.projectEndDate = new Date(/* TODO: MISSING PARAMETERS */);
   }
 
-  /**
-   * This method returns the specific type of construction project this is.
+  /** This method is compares the given ConstructionProject object with the current ConstructionProject object and returns true if they are identical.
+   * It is for instance used to validate attempts of adding projects to the system in order to avoid adding duplicates.
+   * Author:
+   * */
+  public boolean equals(ConstructionProject project)
+  {
+    //TODO: Implement method.
+    return false; //Dummy information for now!
+  }
+
+    /**
+   * This abstract method, once implemented, returns the specific type of construction project this is.
    * They can either be: Residential, Commercial, Industrial or Road projects
    * Author: K. Dashnaw
    */
   public abstract String getProjectType();
-
 }
