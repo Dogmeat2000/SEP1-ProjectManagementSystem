@@ -1,99 +1,216 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class myDate
 {
-  private int day, month, year;
+  private int day;
+  private int month;
+  private int year;
 
-
-  /*
-  * this method is the constructor, which is used when creating a new myDate object.
-  */
   public myDate(int day, int month, int year)
   {
     setDay(day);
     setMonth(month);
     setYear(year);
   }
-  /*
-  * the constructor with no values creates a new myDate object with the current date.
-  */
   public myDate()
   {
-    Calendar calendar = Calendar.getInstance();
-    day = calendar.get(Calendar.DAY_OF_MONTH);
-    month = calendar.get(Calendar.MONTH+1);
-    year = calendar.get(Calendar.YEAR);
+    Calendar now = GregorianCalendar.getInstance();
+    this.day = now.get(Calendar.DAY_OF_MONTH);
+    this.month = now.get(Calendar.MONTH) + 1;
+    this.year = now.get(Calendar.YEAR);
   }
 
-  public int getDay() { return day; }
-  public void setDay(int day) { this.day = day; }
-  public int getMonth() { return month; }
-  public void setMonth(int month) { this.month = month; }
-  public int getYear() { return year; }
-  public void setYear(int year) { this.year = year; }
-
-
-  /*
-   * this method calculates the amount of days between two dates
-  */
-  public int daysBetween(myDate date)
+  public int getDay()
   {
-    if (date instanceof myDate)
+    return day;
+  }
+  public int getMonth()
+  {
+    return month;
+  }
+  public int getYear()
+  {
+    return year;
+  }
+
+  public void setDay(int day)
+  {
+    if (day < 1 || day > numberOfDaysInMonths())
     {
-      int counter = 0;
-      while (date.day != this.day && date.month != this.month && date.year != this.year)
+      if (day < 1)
       {
-        // Find ud af hvilken dato er forrest
-
+        day = 1;
+        this.day = day;
       }
-    }
-    return 6;//Retur antal dage;
-  }
-
-  /*
-  * this method is used to get the object value as a string. in this situation we want our date to return in the format (dd/mm/yyyy)
-  */
-  @Override public String toString()
-  {
-
-    //implement Method make format (dd/mm/yyyy)
-    return super.toString();
-  }
-
-  /*
-   *this method can be used if you have a date and want to create a new myDate object with the same date.
-   * the method uses an existing myDate object and creates a new one identical.
-   */
-  public myDate copy()
-  {
-    return new myDate(getDay(),getMonth(),getYear());
-  }
-
-  /*
-   * this method compares two myDate objects to see if they are the same date or not
-   */
-  @Override public boolean equals(Object obj)
-  {
-    if (!(obj instanceof myDate))
-    {
-      return false;
+      else
+      {
+        day = numberOfDaysInMonths();
+        this.day = day;
+      }
     }
     else
     {
-      myDate other = (myDate) obj;
-
-      return (other.getDay()==day && other.getMonth() == month && other.getYear() == year);
+      this.day = day;
     }
   }
 
+  public void setMonth(int month)
+  {
+    if (month < 1 || month > 12)
+    {
+      if (month < 1)
+      {
+        month = 1;
+        this.month = month;
+      }
+      else
+      {
+        month = 12;
+        this.month = month;
+      }
+    }
+    else
+    {
+      this.month = month;
+    }
+  }
 
-  /*
-   * this method returns a myDate object with the current date
-   */
-  public myDate Now()
+  public void setYear(int year)
+  {
+    if (year < 0)
+    {
+      year = -year;
+      this.year = year;
+    }
+    else
+    {
+      this.year = year;
+    }
+  }
+  public boolean isLeapYear()
+  {
+    if (year%4==0 && year%100!=0 || year%400==0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  public int numberOfDaysInMonths()
+  {
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+    {
+      return 31;
+    }
+    else if (month == 4 || month == 6 || month == 9 || month == 11)
+    {
+      return 30;
+    }
+    else if (month == 2 && isLeapYear())
+    {
+      return 29;
+    }
+    else
+    {
+      return 28;
+    }
+  }
+
+  public int daysbetween(myDate other)
+  {
+    boolean date1Bigger;
+    myDate date1 = (myDate)other;
+    if (this.year<date1.year)
+    {
+      date1Bigger = true;
+    }
+    else if (this.year==date1.year && this.month < date1.month)
+    {
+      date1Bigger = true;
+    }
+    else if (this.month == date1.month && this.day < date1.month)
+    {
+      date1Bigger = true;
+    }
+    else
+    {
+      date1Bigger = false;
+    }
+
+    myDate Counterdate = new myDate(day, month, year);
+    int antaldage = 0;
+    if (date1Bigger)
+    {
+      while (date1.day != Counterdate.day || date1.month != Counterdate.month || date1.year != Counterdate.year)
+      {
+        antaldage++;
+        Counterdate.stepForwardOneDay();
+      }
+    }
+    else
+    {
+      while (date1.day != Counterdate.day || date1.month != Counterdate.month || date1.year != Counterdate.year)
+      {
+        antaldage++;
+        date1.stepForwardOneDay();
+      }
+    }
+    return antaldage;
+  }
+
+  public void stepForwardOneDay()
+  {
+    day++;
+    if (day>numberOfDaysInMonths())
+    {
+      day=1;
+      month++;
+      if (month>12)
+      {
+        month = 1;
+        year++;
+      }
+    }
+  }
+
+  public boolean equals(Object obj)
+  {
+    if (obj instanceof myDate)
+    {
+      myDate otherdate = (myDate)obj;
+      return (this.day == otherdate.day &&
+              this.month == otherdate.month &&
+              this.year == otherdate.year);
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  @Override public String toString()
+  {
+    Date date = new Date(year-1900, month-1, day);
+    SimpleDateFormat MyDate = new SimpleDateFormat("dd/MM/yyyy");
+
+    return MyDate.format(date);
+  }
+
+  public myDate copy()
+  {
+    return new myDate(day, month, year);
+  }
+
+
+  public static myDate now()
   {
     return new myDate();
   }
