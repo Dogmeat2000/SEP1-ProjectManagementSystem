@@ -1,11 +1,12 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import java.io.Serializable; //Needed in order to save class object as Binary file!
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class MyDate
+public class MyDate implements Serializable
 {
   private int day;
   private int month;
@@ -20,9 +21,9 @@ public class MyDate
   public MyDate()
   {
     Calendar now = GregorianCalendar.getInstance();
-    this.day = now.get(Calendar.DAY_OF_MONTH);
-    this.month = now.get(Calendar.MONTH) + 1;
-    this.year = now.get(Calendar.YEAR);
+    this.setDay(now.get(Calendar.DAY_OF_MONTH));
+    this.setMonth(now.get(Calendar.MONTH) + 1);
+    this.setYear(now.get(Calendar.YEAR));
   }
 
   public int getDay()
@@ -94,7 +95,7 @@ public class MyDate
   }
   public boolean isLeapYear()
   {
-    if (year%4==0 && year%100!=0 || year%400==0)
+    if (this.getYear() % 4 == 0 && this.getYear() % 100 != 0 || this.getYear() % 400 == 0)
     {
       return true;
     }
@@ -106,15 +107,15 @@ public class MyDate
 
   public int numberOfDaysInMonths()
   {
-    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+    if (this.getMonth() == 1 || this.getMonth() == 3 || this.getMonth() == 5 || this.getMonth() == 7 || this.getMonth() == 8 || this.getMonth() == 10 || this.getMonth() == 12)
     {
       return 31;
     }
-    else if (month == 4 || month == 6 || month == 9 || month == 11)
+    else if (this.getMonth() == 4 || this.getMonth() == 6 || this.getMonth() == 9 || this.getMonth() == 11)
     {
       return 30;
     }
-    else if (month == 2 && isLeapYear())
+    else if (this.getMonth() == 2 && isLeapYear())
     {
       return 29;
     }
@@ -128,15 +129,15 @@ public class MyDate
   {
     boolean date1Bigger;
     MyDate date1 = (MyDate)other;
-    if (this.year<date1.year)
+    if (this.getYear() < date1.getYear())
     {
       date1Bigger = true;
     }
-    else if (this.year==date1.year && this.month < date1.month)
+    else if (this.getYear() == date1.getYear() && this.getMonth() < date1.getMonth())
     {
       date1Bigger = true;
     }
-    else if (this.month == date1.month && this.day < date1.month)
+    else if (this.getMonth() == date1.getMonth() && this.getYear() < date1.getMonth())
     {
       date1Bigger = true;
     }
@@ -145,19 +146,19 @@ public class MyDate
       date1Bigger = false;
     }
 
-    MyDate Counterdate = new MyDate(day, month, year);
+    MyDate counterdate = new MyDate(this.getDay(), this.getMonth(), this.getYear());
     int antaldage = 0;
     if (date1Bigger)
     {
-      while (date1.day != Counterdate.day || date1.month != Counterdate.month || date1.year != Counterdate.year)
+      while (date1.getDay() != counterdate.getDay() || date1.getMonth() != counterdate.getMonth() || date1.getYear() != counterdate.getYear())
       {
         antaldage++;
-        Counterdate.stepForwardOneDay();
+        counterdate.stepForwardOneDay();
       }
     }
     else
     {
-      while (date1.day != Counterdate.day || date1.month != Counterdate.month || date1.year != Counterdate.year)
+      while (date1.getDay() != counterdate.getDay() || date1.getMonth() != counterdate.getMonth() || date1.getYear() != counterdate.getYear())
       {
         antaldage++;
         date1.stepForwardOneDay();
@@ -168,15 +169,15 @@ public class MyDate
 
   public void stepForwardOneDay()
   {
-    day++;
-    if (day>numberOfDaysInMonths())
+    this.setDay(this.getDay() + 1);
+    if (this.getDay() > numberOfDaysInMonths())
     {
-      day=1;
-      month++;
-      if (month>12)
+      this.setDay(1);
+      this.setMonth(this.getMonth() + 1);
+      if (this.getMonth() > 12)
       {
-        month = 1;
-        year++;
+        this.setMonth(1);
+        this.setYear(getYear() + 1);
       }
     }
   }
@@ -186,9 +187,9 @@ public class MyDate
     if (obj instanceof MyDate)
     {
       MyDate otherdate = (MyDate)obj;
-      return (this.day == otherdate.day &&
-              this.month == otherdate.month &&
-              this.year == otherdate.year);
+      return (this.getDay() == otherdate.getDay() &&
+          this.getMonth() == otherdate.getMonth() &&
+          this.getYear() == otherdate.getYear());
     }
     else
     {
@@ -198,15 +199,15 @@ public class MyDate
 
   @Override public String toString()
   {
-    Date date = new Date(year-1900, month-1, day);
-    SimpleDateFormat MyDate = new SimpleDateFormat("dd/MM/yyyy");
+    java.util.Date date = new java.util.Date(this.getYear() - 1900, this.getMonth() - 1, this.getDay());
+    SimpleDateFormat Date = new SimpleDateFormat("dd/MM/yyyy");
 
-    return MyDate.format(date);
+    return Date.format(date);
   }
 
   public MyDate copy()
   {
-    return new MyDate(day, month, year);
+    return new MyDate(this.getDay(), this.getMonth(), this.getYear());
   }
 
 

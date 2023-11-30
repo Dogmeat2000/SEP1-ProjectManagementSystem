@@ -14,8 +14,8 @@ public class FileIO
   private File webpageFile; //Reference to the exported webpage compatible file object.
   private String systemFileName; //The name used for the system save file.
   private String webPageFileName; //The name used for the exported webpage compatible file.
-  private Date lastDataSaveTime; //Contains a Date/Time representation of when the system data was last saved.
-  private Date lastWebExportTime; //Contains a Date/Time representation of when the system data was last saved.
+  private MyDate lastDataSaveTime; //Contains a MyDate/Time representation of when the system data was last saved.
+  private MyDate lastWebExportTime; //Contains a MyDate/Time representation of when the system data was last saved.
 
   /** Constructs the FileIO object and calls relevant methods for field attribute initialization.
    * Author: K. Dashnaw
@@ -33,8 +33,8 @@ public class FileIO
 
 
     //TODO: Implement
-    setLastDataSaveTime(new Date());
-    setLastWebExportTime(new Date());
+    setLastDataSaveTime(new MyDate(1,1,2000));
+    setLastWebExportTime(new MyDate(1,1,2000));
   }
 
   /** Returns the name of the system data file
@@ -101,34 +101,34 @@ public class FileIO
     this.webPageFileName = webPageFileName;
   }
 
-  /** Returns a Date Object containing the last date and time the system files were saved
+  /** Returns a MyDate Object containing the last date and time the system files were saved
    * Author: K: Dashnaw
    * */
-  public Date getLastDataSaveTime()
+  public MyDate getLastDataSaveTime()
   {
     return lastDataSaveTime;
   }
 
-  /** Sets/Initializes a Date Object containing the last date and time the system files were exported to webpage compatible format
+  /** Sets/Initializes a MyDate Object containing the last date and time the system files were exported to webpage compatible format
    * Author: K: Dashnaw
    * */
-  public void setLastDataSaveTime(Date lastDataSaveTime)
+  public void setLastDataSaveTime(MyDate lastDataSaveTime)
   {
     this.lastDataSaveTime = lastDataSaveTime;
   }
 
-  /** Returns a Date Object containing the last date and time the system files were exported to webpage compatible format
+  /** Returns a MyDate Object containing the last date and time the system files were exported to webpage compatible format
    * Author: K: Dashnaw
    * */
-  public Date getLastWebExportTime()
+  public MyDate getLastWebExportTime()
   {
     return lastWebExportTime;
   }
 
-  /** Sets/Initializes a Date Object containing the last date and time the system files were exported to webpage compatible format
+  /** Sets/Initializes a MyDate Object containing the last date and time the system files were exported to webpage compatible format
    * Author: K: Dashnaw
    * */
-  public void setLastWebExportTime(Date lastWebExportTime)
+  public void setLastWebExportTime(MyDate lastWebExportTime)
   {
     this.lastWebExportTime = lastWebExportTime;
   }

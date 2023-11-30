@@ -2,16 +2,16 @@ package sep1a233group.bobsprojectmanagementsystem;
 
 public abstract class ConstructionProject
 {
-  private Date projectStartDate; //When was the project created/initiated?
-  private Date projectEndDate; //When was the project finished (or expected to finish?)
+  private MyDate projectStartDate; //When was the project created/initiated?
+  private MyDate projectEndDate; //When was the project finished (or expected to finish?)
 
   //TODO: IMPLEMENT CLASS
 
   public ConstructionProject()
   {
     //TODO: Implement... ALSO CONVERT THESE TEMPORARY DATA SETS TO SETTERS AND GETTERS!
-    this.projectStartDate = new Date(/* TODO: MISSING PARAMETERS */);
-    this.projectEndDate = new Date(/* TODO: MISSING PARAMETERS */);
+    this.projectStartDate = new MyDate(1,1,2000);
+    this.projectEndDate = new MyDate(1,1,2000);
   }
 
   /** This method is compares the given ConstructionProject object with the current ConstructionProject object and returns true if they are identical.
