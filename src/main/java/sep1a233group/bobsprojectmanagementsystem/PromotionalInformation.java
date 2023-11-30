@@ -50,13 +50,9 @@ public class PromotionalInformation
     this.projectName = projectName;
   }
 
-  public String getProjectManagerComments()
+  public ArrayList<String> getProjectManagerComments()
   {
-    for (String managerComments:projectManagerComments)
-    {
-      return managerComments;
-    }
-    return null;
+      return projectManagerComments;
   }
 
   public void addProjectManagerComment(String comment)
