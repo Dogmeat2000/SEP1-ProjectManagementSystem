@@ -16,13 +16,13 @@ public class RoadProject extends ConstructionProject
   public RoadProject()
   {
     super();
+
     //TODO: IMPLEMENT THE DEFAULT VALUES HERE!
     /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
-
     setRoadLength(0);
     setRoadWidth(0);
-    setBridgeOrTunnelDetails("N/A");
-    setEnvironmentalOrGeographicalChallenges("N/A");
+    setBridgeOrTunnelDetails("");
+    setEnvironmentalOrGeographicalChallenges("");
     setProjectDuration(0);
   }
 

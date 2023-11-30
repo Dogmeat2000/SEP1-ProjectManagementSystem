@@ -5,7 +5,7 @@ public abstract class ConstructionProject
   private Address projectAddress; //What is the address of the Project?
   private Customer customer; // who is the project for?
   private PromotionalInformation projectInformation; // What information do we have about the project?
-  private HumanRessources humanRessources; // how much manhours is used for the project(current and expectied to finish)?
+  private HumanRessources humanRessources; // how many man-hours is used for the project(current and expected to finish)?
   private Finances finances; //how much is spent on the project?. what is the budget for the project?
   private ProgressReport progressReport; // how is the project going?
   private boolean isProjectFinished; //is the project finished?
@@ -15,18 +15,18 @@ public abstract class ConstructionProject
 
   //TODO: IMPLEMENT CLASS
 
-  public ConstructionProject(PromotionalInformation projectInformation, Address projectAddress, Customer customer, boolean projectConfidentiality, MyDate projectStartDate, MyDate projectEndDate, HumanRessources humanRessources, Finances finances,ProgressReport progressReport)
+  public ConstructionProject()
   {
     //TODO: Implement... ALSO CONVERT THESE TEMPORARY DATA SETS TO SETTERS AND GETTERS!
-    this.projectInformation = projectInformation;
-    this.projectAddress = projectAddress;
-    this.customer = customer;
-    this.projectConfidentiality = projectConfidentiality;
-    this.projectStartDate = projectStartDate;
-    this.projectEndDate = projectEndDate;
-    this.humanRessources = humanRessources;
-    this.finances = finances;
-    this.progressReport = progressReport;
+    this.projectInformation = new PromotionalInformation("");
+    this.projectAddress = new Address("","","",-1);
+    this.customer = new Customer("","","",-1,new Address("","","",-1));
+    this.projectConfidentiality = false;
+    this.projectStartDate = MyDate.now();
+    this.projectEndDate = MyDate.now();
+    this.humanRessources = new HumanRessources(0,0);
+    this.finances = new Finances(0,0);
+    this.progressReport = new ProgressReport();
     isProjectFinished = false;
   }
 

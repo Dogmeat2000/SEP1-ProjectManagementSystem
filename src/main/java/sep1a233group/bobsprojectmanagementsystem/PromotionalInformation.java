@@ -9,8 +9,8 @@ public class PromotionalInformation
 
   public PromotionalInformation(String projectName)
   {
-    this.photoURL = null;
-    this.projectDescription = null;
+    this.photoURL = "";
+    this.projectDescription = "";
     this.projectName = projectName;
     this.projectManagerComments = new ArrayList<>();
   }

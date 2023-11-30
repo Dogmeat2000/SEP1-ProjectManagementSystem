@@ -14,11 +14,11 @@ public class IndustrialProject extends ConstructionProject
     public IndustrialProject()
     {
       super();
+
       //TODO: IMPLEMENT THE DEFAULT VALUES HERE!
       /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
-
       setFacilitySize(0);
-      setFacilityType("N/A");
+      setFacilityType("");
       setProjectDuration(0);
     }
 

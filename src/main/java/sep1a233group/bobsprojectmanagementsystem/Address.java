@@ -3,15 +3,15 @@ package sep1a233group.bobsprojectmanagementsystem;
 public class Address
 {
 
-  private String street ,apartment ,city ,country;
+  private String street, streetNumber, apartment, city, country;
 
   private int postalCode;
 
-  public Address (String street, String apartment, String city, String country,
-      int postalCode)
+  public Address (String street, String city, String country, int postalCode)
   {
     this.street = street;
-    this.apartment = apartment;
+    this.streetNumber = "";
+    this.apartment = "";
     this.city = city;
     this.country = country;
     this.postalCode = postalCode;
@@ -41,6 +41,37 @@ public class Address
   {
     return postalCode;
   }
+
+  public String setStreet(String street)
+  {
+    return this.street = street;
+  }
+
+  public String setStreetNumber(String streetNumber)
+  {
+    return this.streetNumber = streetNumber;
+  }
+
+  public String setApartment(String apartment)
+  {
+    return this.apartment = apartment;
+  }
+
+  public int setPostalCode(int postalCode)
+  {
+    return this.postalCode = postalCode;
+  }
+
+  public String setCity(String city)
+  {
+    return this.city = city;
+  }
+
+  public String setCountry(String country)
+  {
+    return this.country = country;
+  }
+
   public void set(String street, String apartment, String city, String country,
       int postalCode)
   {

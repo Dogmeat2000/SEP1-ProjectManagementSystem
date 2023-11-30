@@ -16,11 +16,11 @@ public class CommercialProject extends ConstructionProject
   public CommercialProject()
   {
     super();
+
     //TODO: IMPLEMENT THE DEFAULT VALUES HERE!
     /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
-
     setBuildingSize(0);
-    setIntendedBuildingUse("N/A");
+    setIntendedBuildingUse("");
     setNumberOfFloors(0);
     setProjectDuration(0);
   }

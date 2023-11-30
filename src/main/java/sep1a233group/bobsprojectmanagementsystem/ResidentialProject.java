@@ -17,9 +17,9 @@ public class ResidentialProject extends ConstructionProject
   public ResidentialProject()
   {
     super();
+
     //TODO: IMPLEMENT THE DEFAULT VALUES HERE!
     /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
-
     setIsRenovation(false);
     setBuildingSize(0);
     setNumberOfKitchens(0);

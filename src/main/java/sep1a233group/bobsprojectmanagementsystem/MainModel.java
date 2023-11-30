@@ -1,5 +1,8 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
 import java.util.ArrayList;
 
 /** This is the main controller for the project management system.
@@ -15,6 +18,9 @@ public class MainModel
   private DefaultCommercialSettings defaultCommercialSettings; //Handles the default commercial project settings used when creating new projects!
   private DefaultIndustrialSettings defaultIndustrialSettings; //Handles the default industrial project settings used when creating new projects!
   private DefaultRoadSettings defaultRoadSettings; //Handles the default road project settings used when creating new projects!
+
+  private ConstructionProject selectedProject; //Container used to contain currently selected/active project information.
+
 
   /** Constructs the MainModel.
  * Author: K. Dashnaw
@@ -68,6 +74,28 @@ public class MainModel
   public ArrayList<ConstructionProject> getAllProjectsList()
   {
     return allProjectsList;
+  }
+
+  public ConstructionProject getSelectedProject()
+  {
+    return selectedProject;
+  }
+
+  public void setSelectedProject(ResidentialProject selectedProject)
+  {
+    this.selectedProject = selectedProject;
+  }
+  public void setSelectedProject(CommercialProject selectedProject)
+  {
+    this.selectedProject = selectedProject;
+  }
+  public void setSelectedProject(IndustrialProject selectedProject)
+  {
+    this.selectedProject = selectedProject;
+  }
+  public void setSelectedProject(RoadProject selectedProject)
+  {
+    this.selectedProject = selectedProject;
   }
 
   /** Sets/Initializes an ArrayList containing all the projects in the project management system
@@ -170,6 +198,67 @@ public class MainModel
     //TODO: Implement method.
     //TODO: Perform some validation before adding using the equals method from ConstructionProject Class
     return false;
+  }
+
+  public void newActiveProject(String projectType)
+  {
+    //Create a new project of the selected type.
+    switch (projectType)
+    {
+      case "ResidentialProjectType":
+        this.setSelectedProject(new ResidentialProject());
+        break;
+      case "CommercialProjectType":
+        this.setSelectedProject(new CommercialProject());
+        break;
+      case "IndustrialProjectType":
+        this.setSelectedProject(new IndustrialProject());
+        break;
+      case "RoadProjectType":
+        this.setSelectedProject(new RoadProject());
+        break;
+    }
+  }
+
+  public void initializeCreateProjectGUI(TextField bathroomGUIID, TextField kitchenGUIID, TextField otherPlumbingGUIID, TextField durationGUIID, TextField buildingSizeGUIID)
+  {
+    ResidentialProject currentProject = (ResidentialProject) this.getSelectedProject();
+
+    bathroomGUIID.setText("" + currentProject.getNumberOfBathrooms());
+    kitchenGUIID.setText("" + currentProject.getNumberOfKitchens());
+    otherPlumbingGUIID.setText("" + currentProject.getNumberOfOtherRoomsWithPlumbing());
+    durationGUIID.setText("" + currentProject.getProjectDuration());
+    buildingSizeGUIID.setText("" + currentProject.getBuildingSize());
+  }
+
+  public void initializeCreateProjectGUI(TextField floorsGUIID, TextField durationGUIID, TextField buildingSizeGUIID, TextArea intendedUseGUIID)
+  {
+    CommercialProject currentProject = (CommercialProject) this.getSelectedProject();
+
+    floorsGUIID.setText("" + currentProject.getNumberOfFloors());
+    durationGUIID.setText("" + currentProject.getProjectDuration());
+    buildingSizeGUIID.setText("" + currentProject.getBuildingSize());
+    intendedUseGUIID.setText(currentProject.getIntendedBuildingUse());
+  }
+
+  public void initializeCreateProjectGUI(TextField durationGUIID, TextField buildingSizeGUIID, TextArea intendedUseGUIID)
+  {
+    IndustrialProject currentProject = (IndustrialProject) this.getSelectedProject();
+
+    durationGUIID.setText("" + currentProject.getProjectDuration());
+    buildingSizeGUIID.setText("" + currentProject.getFacilitySize());
+    intendedUseGUIID.setText(currentProject.getFacilityType());
+  }
+
+  public void initializeCreateProjectGUI(TextField lengthGUIID, TextField widthGUIID, TextField durationGUIID, TextArea bridgeOrTunnelInfoGUIID, TextArea environmentalInfoGUIID)
+  {
+    RoadProject currentProject = (RoadProject) this.getSelectedProject();
+
+    lengthGUIID.setText("" + currentProject.getRoadLength());
+    widthGUIID.setText("" + currentProject.getRoadWidth());
+    durationGUIID.setText("" + currentProject.getProjectDuration());
+    bridgeOrTunnelInfoGUIID.setText("" + currentProject.getBridgeOrTunnelDetails());
+    environmentalInfoGUIID.setText("" + currentProject.getEnvironmentalOrGeographicalChallenges());
   }
 
   /** Edits a single construction project in the project management system.

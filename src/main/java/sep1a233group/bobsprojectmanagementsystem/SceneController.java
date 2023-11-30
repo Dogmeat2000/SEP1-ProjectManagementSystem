@@ -167,8 +167,8 @@ public class SceneController
     catch (Exception error)
     {
       GUI_Console.setText(
-          "Unexpected error occurred while attempting to load stage. Code: "
-              + error);
+          "Unexpected error occurred while attempting to load stage. Code: " + error);
+      System.out.println("Unexpected error occurred while attempting to load stage. Code: " + error);
     }
   }
 

@@ -273,57 +273,57 @@
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="285.0" text="Name:" textAlignment="RIGHT" GridPane.rowIndex="1" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="65.0" prefHeight="17.0" prefWidth="285.0" text="Phone Number:" textAlignment="RIGHT" GridPane.rowIndex="2" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="90.0" prefHeight="17.0" prefWidth="285.0" text="Email:" textAlignment="RIGHT" GridPane.rowIndex="3" />
-                                                      <TextField promptText="Customer first name" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                      <TextField onKeyTyped="#validate_NotEmpty_NotNumber" promptText="first name" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="299.0" layoutY="38.0" promptText="Customer last name" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                      <TextField layoutX="299.0" layoutY="38.0" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="last name" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="2.5" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="299.0" layoutY="68.0" promptText="Prefix (ie. +45)" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                      <TextField layoutX="299.0" layoutY="68.0" onKeyTyped="#validate_NotEmpty" promptText="Prefix (ie. +45)" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="299.0" layoutY="98.0" promptText="Customers email" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                                                      <TextField layoutX="299.0" layoutY="98.0" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="email" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="132.0" prefHeight="17.0" prefWidth="285.0" text="Company Name:" textAlignment="RIGHT" GridPane.rowIndex="4" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="162.0" prefHeight="17.0" prefWidth="285.0" text="Street:" textAlignment="RIGHT" GridPane.rowIndex="5" />
-                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="192.0" prefHeight="17.0" prefWidth="285.0" text="Apartment #:" textAlignment="RIGHT" GridPane.rowIndex="6" />
+                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="192.0" prefHeight="17.0" prefWidth="285.0" text="Apartment:" textAlignment="RIGHT" GridPane.rowIndex="6" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="222.0" prefHeight="17.0" prefWidth="285.0" text="City:" textAlignment="RIGHT" GridPane.rowIndex="7" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="307.0" prefHeight="17.0" prefWidth="285.0" text="Country:" textAlignment="RIGHT" GridPane.rowIndex="8" />
-                                                      <TextField layoutX="185.0" layoutY="123.0" promptText="Name of the company customer is representing" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                                                      <TextField layoutX="185.0" layoutY="123.0" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="Company Name the customer is representing" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="185.0" layoutY="183.0" promptText="Street name" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                      <TextField layoutX="185.0" layoutY="183.0" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="Customers Street Name" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="185.0" layoutY="213.0" promptText="Apartment number, if applicable. (else leave empty)" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
+                                                      <TextField layoutX="185.0" layoutY="213.0" onKeyTyped="#addTemporaryProjectData" promptText="Customer apartment number, if applicable." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="185.0" layoutY="243.0" promptText="ZIP code" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                      <TextField layoutX="185.0" layoutY="243.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="ZIP code" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="185.0" layoutY="273.0" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                                                      <TextField layoutX="185.0" layoutY="273.0" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="7">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="2.5" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="185.0" layoutY="303.0" promptText="Country" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
+                                                      <TextField layoutX="185.0" layoutY="303.0" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="Country" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
@@ -339,7 +339,7 @@
                                                         <content>
                                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="55.0" prefWidth="367.0">
                                                                <children>
-                                                                  <TextArea prefHeight="58.0" prefWidth="367.0" promptText="Enter a short description. This information is exported and displayed on the company homepage" wrapText="true" />
+                                                                  <TextArea fx:id="taProjectDescription" onKeyTyped="#addTemporaryProjectData_TextArea" prefHeight="58.0" prefWidth="367.0" promptText="Enter a short project description. This information is exported and displayed on the company homepage" wrapText="true" />
                                                                </children>
                                                             </AnchorPane>
                                                         </content>
@@ -348,7 +348,7 @@
                                                          </GridPane.margin>
                                                       </ScrollPane>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project photo (if applicable):" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                                                      <CheckBox mnemonicParsing="false" prefHeight="17.0" prefWidth="165.0" text="Is project confidential?" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="8">
+                                                      <CheckBox mnemonicParsing="false" onAction="#checkBoxChecker" prefHeight="17.0" prefWidth="165.0" text="Is project confidential?" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="8">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
@@ -371,7 +371,7 @@
                                                          <content>
                                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="55.0" prefWidth="368.0">
                                                                <children>
-                                                                  <TextArea prefHeight="58.0" prefWidth="372.0" promptText="Enter any interval only notes directed towards the project manager" wrapText="true" />
+                                                                  <TextArea fx:id="taManagersComments" onKeyTyped="#addTemporaryProjectData_TextArea" prefHeight="58.0" prefWidth="372.0" promptText="Enter any internal only notes directed towards the project manager" wrapText="true" />
                                                                </children>
                                                             </AnchorPane>
                                                          </content>
@@ -383,17 +383,17 @@
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="247.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="277.0" prefHeight="17.0" prefWidth="285.0" text="Street:" textAlignment="RIGHT" GridPane.rowIndex="10" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="307.0" prefHeight="17.0" prefWidth="285.0" text="Estimated Man Hours required: " textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-                                                      <TextField layoutX="145.0" layoutY="333.0" promptText="Project name. Will be displayed on homepage" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                                      <TextField layoutX="145.0" layoutY="333.0" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="Project name. Will be displayed on homepage" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="711.0" layoutY="33.0" promptText="in $USD" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                                                      <TextField layoutX="711.0" layoutY="33.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="in $USD" GridPane.columnIndex="5" GridPane.rowIndex="8">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="711.0" layoutY="243.0" promptText="Positive number value" GridPane.columnIndex="5" GridPane.rowIndex="9">
+                                                      <TextField layoutX="711.0" layoutY="243.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="In hours" GridPane.columnIndex="5" GridPane.rowIndex="9">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
@@ -412,12 +412,12 @@
                                                             </DatePicker>
                                                          </children>
                                                       </HBox>
-                                                      <TextField layoutX="145.0" layoutY="63.0" promptText="Number (8 digits)" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                      <TextField layoutX="145.0" layoutY="63.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="Number (8 digits)" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="2.5" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="145.0" layoutY="153.0" promptText="Building number" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                      <TextField layoutX="145.0" layoutY="153.0" onKeyTyped="#validate_NotEmpty" promptText="Building number" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="2.5" right="5.0" top="2.5" />
                                                          </GridPane.margin>
@@ -427,40 +427,40 @@
                                                             <Font name="System Bold" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <TextField layoutX="145.0" layoutY="153.0" promptText="Street name" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                                      <TextField layoutX="145.0" layoutY="153.0" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="Street name" GridPane.columnIndex="1" GridPane.rowIndex="10">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="312.0" layoutY="153.0" promptText="Property number" GridPane.columnIndex="2" GridPane.rowIndex="10">
+                                                      <TextField layoutX="312.0" layoutY="153.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="Property number" GridPane.columnIndex="2" GridPane.rowIndex="10">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="2.5" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="187.0" prefHeight="17.0" prefWidth="285.0" text="Apartment #:" textAlignment="RIGHT" GridPane.rowIndex="11" />
-                                                      <TextField layoutX="145.0" layoutY="183.0" promptText="Apartment number, if applicable. (else leave empty)" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="11">
+                                                      <TextField layoutX="145.0" layoutY="183.0" onKeyTyped="#addTemporaryProjectData" promptText="Apartment number, if applicable. (else leave empty)" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="11">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="217.0" prefHeight="17.0" prefWidth="285.0" text="City:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="10" />
-                                                      <TextField layoutX="145.0" layoutY="213.0" promptText="ZIP code" GridPane.columnIndex="5" GridPane.rowIndex="10">
+                                                      <TextField layoutX="145.0" layoutY="213.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="Project ZIP code" GridPane.columnIndex="5" GridPane.rowIndex="10">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="312.0" layoutY="213.0" promptText="City" GridPane.columnIndex="6" GridPane.rowIndex="10">
+                                                      <TextField layoutX="312.0" layoutY="213.0" onInputMethodTextChanged="#validate_NotEmpty_NotNumber" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="Project City" GridPane.columnIndex="6" GridPane.rowIndex="10">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="2.5" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="247.0" prefHeight="17.0" prefWidth="285.0" text="Country:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="11" />
-                                                      <TextField layoutX="145.0" layoutY="243.0" promptText="Country" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="11">
+                                                      <TextField layoutX="145.0" layoutY="243.0" onInputMethodTextChanged="#validate_NotEmpty_NotNumber" onKeyTyped="#validate_NotEmpty_NotNumber" promptText="Project Country" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="11">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <CheckBox layoutX="879.0" layoutY="247.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="217.0" text="Add project to Dashboard?" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="9">
+                                                      <CheckBox layoutX="879.0" layoutY="247.0" mnemonicParsing="false" onAction="#checkBoxChecker" prefHeight="17.0" prefWidth="217.0" text="Add project to Dashboard?" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="9">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
@@ -492,24 +492,24 @@
                                                       </Label>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="298.0" text="Number of Bathrooms:" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="65.0" prefHeight="17.0" prefWidth="299.0" text="Number of Kitchens" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                                                      <TextField promptText="Type a positive number" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                      <TextField fx:id="tResBathroomNumber" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="Number of Bathrooms" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="299.0" layoutY="68.0" promptText="Type a positive number" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                      <TextField fx:id="tResNumberKitchens" layoutX="299.0" layoutY="68.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="Number of Kitchens" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="299.0" layoutY="98.0" promptText="Type a positive number" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                      <TextField fx:id="tResNumberOfOtherPlumbing" layoutX="299.0" layoutY="98.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="Other plumbing?" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="37.0" prefHeight="17.0" prefWidth="301.0" text="Number of other rooms with Plumming" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                                                      <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="17.0" prefWidth="237.0" text="Is project a renovation?" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                                                      <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#checkBoxChecker" prefHeight="17.0" prefWidth="237.0" text="Is project a renovation?" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="3">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
@@ -518,12 +518,12 @@
                                                          </padding>
                                                       </CheckBox>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="247.0" prefHeight="17.0" prefWidth="285.0" text="Building Size:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                                      <TextField editable="false" layoutX="145.0" layoutY="333.0" promptText="Calculated based on the previous entries" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                                      <TextField fx:id="tResDuration" editable="false" layoutX="145.0" layoutY="333.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="Duration in months" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="711.0" layoutY="33.0" promptText="in m^2" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                                      <TextField fx:id="tResBuildingSize" layoutX="711.0" layoutY="33.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="in m^2" GridPane.columnIndex="5" GridPane.rowIndex="2">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
@@ -556,19 +556,19 @@
                                                       </Label>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="298.0" text="Number of Floors:" textAlignment="RIGHT" GridPane.rowIndex="1" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="65.0" prefHeight="17.0" prefWidth="299.0" text="Intended building use:" textAlignment="RIGHT" GridPane.rowIndex="2" />
-                                                      <TextField promptText="Type a positive number" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                      <TextField fx:id="tComNumberFloors" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="Number of floors" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="247.0" prefHeight="17.0" prefWidth="285.0" text="Building Size:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                                      <TextField editable="false" layoutX="145.0" layoutY="333.0" promptText="Calculated based on the previous entries" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                                      <TextField fx:id="tComDuration" editable="false" layoutX="145.0" layoutY="333.0" promptText="Duration in months" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="711.0" layoutY="33.0" promptText="in m^2" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                                      <TextField fx:id="tComBuildingSize" layoutX="711.0" layoutY="33.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="in m^2" GridPane.columnIndex="5" GridPane.rowIndex="2">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
@@ -578,7 +578,7 @@
                                                          <content>
                                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="55.0" prefWidth="303.0">
                                                                <children>
-                                                                  <TextArea prefHeight="58.0" prefWidth="315.0" promptText="Describe the intended use of the building" wrapText="true" />
+                                                                  <TextArea fx:id="taComIntendedUse" onKeyTyped="#addTemporaryProjectData_TextArea" prefHeight="58.0" prefWidth="315.0" promptText="Describe the intended use of the building" wrapText="true" />
                                                                </children>
                                                             </AnchorPane>
                                                          </content>
@@ -622,12 +622,12 @@
                                                             <Insets bottom="5.0" />
                                                          </GridPane.margin>
                                                       </Label>
-                                                      <TextField editable="false" layoutX="145.0" layoutY="333.0" promptText="Calculated based on the previous entries" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                                      <TextField fx:id="tIndDuration" editable="false" layoutX="145.0" layoutY="333.0" promptText="Duration in months" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="5.0" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="711.0" layoutY="33.0" promptText="in m^2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                      <TextField fx:id="tIndFacilitySize" layoutX="711.0" layoutY="33.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="in m^2" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="5.0" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
@@ -637,7 +637,7 @@
                                                          <content>
                                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="73.0" prefWidth="875.0">
                                                                <children>
-                                                                  <TextArea prefHeight="30.0" prefWidth="877.0" promptText="Describe the intended use of the building" wrapText="true" />
+                                                                  <TextArea fx:id="taIndFacilityType" onKeyTyped="#addTemporaryProjectData_TextArea" prefHeight="30.0" prefWidth="877.0" promptText="Describe the intended use of the facility" wrapText="true" />
                                                                </children>
                                                             </AnchorPane>
                                                          </content>
@@ -672,18 +672,18 @@
                                                       </Label>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="298.0" text="Road length (meters):" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="65.0" prefHeight="17.0" prefWidth="299.0" text="Road width (meters):" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                                                      <TextField promptText="Type a positive number" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                      <TextField fx:id="tRDLength" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="length in meters" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <TextField layoutX="299.0" layoutY="68.0" promptText="Type a positive number" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                      <TextField fx:id="tRDWidth" layoutX="299.0" layoutY="68.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="width in meters" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration:" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                      <TextField editable="false" layoutX="145.0" layoutY="333.0" promptText="Automatically filled out" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                      <TextField fx:id="tRDDuration" editable="false" layoutX="145.0" layoutY="333.0" onKeyTyped="#validate_NotEmpty_NotString_NotNegative" promptText="Duration in months" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
@@ -693,7 +693,7 @@
                                                          <content>
                                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="67.0" prefWidth="313.0">
                                                                <children>
-                                                                  <TextArea prefHeight="58.0" prefWidth="324.0" promptText="Enter any interval only notes directed towards the project manager" wrapText="true" />
+                                                                  <TextArea fx:id="taRDBridgeTunnelInfo" onKeyTyped="#addTemporaryProjectData_TextArea" prefHeight="58.0" prefWidth="324.0" promptText="Type any relevant information about bridges or tunnels" wrapText="true" />
                                                                </children>
                                                             </AnchorPane>
                                                          </content>
@@ -706,7 +706,7 @@
                                                          <content>
                                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="67.0" prefWidth="313.0">
                                                                <children>
-                                                                  <TextArea prefHeight="58.0" prefWidth="324.0" promptText="Enter any interval only notes directed towards the project manager" wrapText="true" />
+                                                                  <TextArea fx:id="taRDEnvironmentInfo" onKeyTyped="#addTemporaryProjectData_TextArea" prefHeight="58.0" prefWidth="324.0" promptText="Type any relevant environmental or geographical information" wrapText="true" />
                                                                </children>
                                                             </AnchorPane>
                                                          </content>
