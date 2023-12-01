@@ -40,7 +40,7 @@ public abstract class ConstructionProject
 
   public Finances getFinances() { return finances; }
 
-  public ProgressReport getProgressReport() { return progressReport; }
+  public ProgressReport generateProgressReport() { return new ProgressReport(this.customer,this.projectAddress,this.finances,this.projectStartDate,this.projectEndDate,this.humanRessources); }
 
   public boolean isProjectFinished() { return isProjectFinished; }
 
