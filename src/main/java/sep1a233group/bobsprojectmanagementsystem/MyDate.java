@@ -39,7 +39,7 @@ public class MyDate implements Serializable
 
   public void setDay(int day)
   {
-    if (day < 1 || day > numberOfDaysInMonths())
+    if (day < 1 || day > numberOfDaysInMonth())
     {
       if (day < 1)
       {
@@ -48,7 +48,7 @@ public class MyDate implements Serializable
       }
       else
       {
-        day = numberOfDaysInMonths();
+        day = numberOfDaysInMonth();
         this.day = day;
       }
     }
@@ -103,23 +103,33 @@ public class MyDate implements Serializable
     }
   }
 
-  public int numberOfDaysInMonths()
+  public int numberOfDaysInMonth()
   {
-    if (this.getMonth() == 1 || this.getMonth() == 3 || this.getMonth() == 5 || this.getMonth() == 7 || this.getMonth() == 8 || this.getMonth() == 10 || this.getMonth() == 12)
+    if (this.getMonth() == 1 || this.getMonth() == 3 || this.getMonth() == 5
+        || this.getMonth() == 7 || this.getMonth() == 8 || this.getMonth() == 10
+        || this.getMonth() == 12)
     {
-      return 31;
+      return 31; //Days in uneven months.
     }
-    else if (this.getMonth() == 4 || this.getMonth() == 6 || this.getMonth() == 9 || this.getMonth() == 11)
+    else if (this.getMonth() == 4 || this.getMonth() == 6
+        || this.getMonth() == 9 || this.getMonth() == 11)
     {
-      return 30;
+      return 30; //Days in uneven months.
     }
-    else if (this.getMonth() == 2 && isLeapYear())
+    else if (this.getMonth() == 2)
     {
-      return 29;
+      if (this.isLeapYear())
+      {
+        return 29; //Leap year
+      }
+      else
+      {
+        return 28; //not leap year.
+      }
     }
     else
     {
-      return 28;
+      return 0; //Unknown error!
     }
   }
 
@@ -231,36 +241,6 @@ public class MyDate implements Serializable
     {
       this.set(this.getDay() + 1, this.getMonth(),
           this.getYear()); //Add a single day, as this remaining loop will only run if the day is nr. 30, but the number of days in the month is 31!
-    }
-  }
-
-  public int numberOfDaysInMonth()
-  {
-    if (this.getMonth() == 1 || this.getMonth() == 3 || this.getMonth() == 5
-        || this.getMonth() == 7 || this.getMonth() == 8 || this.getMonth() == 10
-        || this.getMonth() == 12)
-    {
-      return 31; //Days in uneven months.
-    }
-    else if (this.getMonth() == 4 || this.getMonth() == 6
-        || this.getMonth() == 9 || this.getMonth() == 11)
-    {
-      return 30; //Days in uneven months.
-    }
-    else if (this.getMonth() == 2)
-    {
-      if (this.isLeapYear())
-      {
-        return 29; //Leap year
-      }
-      else
-      {
-        return 28; //not leap year.
-      }
-    }
-    else
-    {
-      return 0; //Unknown error!
     }
   }
 
