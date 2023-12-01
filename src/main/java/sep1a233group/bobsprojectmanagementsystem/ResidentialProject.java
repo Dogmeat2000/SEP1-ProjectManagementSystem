@@ -25,7 +25,7 @@ public class ResidentialProject extends ConstructionProject
     setNumberOfKitchens(0);
     setNumberOfBathrooms(0);
     setNumberOfOtherRoomsWithPlumbing(0);
-    setProjectDuration(0);
+    setProjectDuration(5);
   }
 
   /** Returns the number of kitchens the construction build has assigned. */
@@ -124,7 +124,13 @@ public class ResidentialProject extends ConstructionProject
   {
     //TODO: Missing implementation. Waiting for the Default Settings Class to be created!
 
-    return new DefaultResidentialSettings();
+    return new DefaultResidentialSettings(0,0,0,0,false);
+  }
+
+  public boolean equals(ConstructionProject project)
+  {
+    //TODO: Missing implementation
+    return false;
   }
 
 }

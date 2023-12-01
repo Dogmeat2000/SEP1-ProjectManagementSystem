@@ -14,9 +14,7 @@ public class MyDate implements Serializable
 
   public MyDate(int day, int month, int year)
   {
-    setDay(day);
-    setMonth(month);
-    setYear(year);
+    set(day, month, year);
   }
   public MyDate()
   {
@@ -167,18 +165,102 @@ public class MyDate implements Serializable
     return antaldage;
   }
 
+  public void set(int day, int month, int year)
+  {
+    //Check that the input is legal&Proper:
+    if (year < 0)
+    {
+      year = year * -1;
+    }
+    this.year = year;
+
+    if (month < 1)
+    {
+      month = 1;
+    }
+    if (month > 12)
+    {
+      month = 12;
+    }
+    this.month = month;
+
+    if (day < 1)
+    {
+      day = 1;
+    }
+    if (day > this.numberOfDaysInMonth())
+    {
+      day = this.numberOfDaysInMonth();
+    }
+    this.day = day;
+  }
+
   public void stepForwardOneDay()
   {
-    this.setDay(this.getDay() + 1);
-    if (this.getDay() > numberOfDaysInMonths())
+    //Increment the day with 1 if the given day is less than the last day of the given month.
+    if (this.getDay() < 28)
     {
-      this.setDay(1);
-      this.setMonth(this.getMonth() + 1);
-      if (this.getMonth() > 12)
+      this.set(this.getDay() + 1, this.getMonth(), this.getYear());
+    }
+    //Increment the day with 1, but this loop catches the specifics around february and leap years.
+    else if (this.getDay() == 28 && this.getMonth() == 2 && !this.isLeapYear())
+    {
+      this.set(1, 3, this.getYear());
+    }
+    else if (this.getDay() == 29 && this.getMonth() == 2 && this.isLeapYear())
+    {
+      this.set(1, 3, this.getYear());
+    }
+
+    //Check if the date is not the last day of the month (even months) and increment with 1.
+    else if (this.getDay() < 30)
+    {
+      this.set(this.getDay() + 1, this.getMonth(), this.getYear());
+    }
+    else if ((this.getDay() == 31 && this.numberOfDaysInMonth() == 31)
+        && this.getMonth() == 12)
+    {//This is december... increase the year by one.
+      this.set(1, 1, this.getYear() + 1);
+    }
+    else if ((this.getDay() == 30 && this.numberOfDaysInMonth() == 30) || (
+        this.getDay() == 31 && this.numberOfDaysInMonth() == 31))
+    {
+      this.set(1, this.getMonth() + 1, this.getYear());
+    }
+    else
+    {
+      this.set(this.getDay() + 1, this.getMonth(),
+          this.getYear()); //Add a single day, as this remaining loop will only run if the day is nr. 30, but the number of days in the month is 31!
+    }
+  }
+
+  public int numberOfDaysInMonth()
+  {
+    if (this.getMonth() == 1 || this.getMonth() == 3 || this.getMonth() == 5
+        || this.getMonth() == 7 || this.getMonth() == 8 || this.getMonth() == 10
+        || this.getMonth() == 12)
+    {
+      return 31; //Days in uneven months.
+    }
+    else if (this.getMonth() == 4 || this.getMonth() == 6
+        || this.getMonth() == 9 || this.getMonth() == 11)
+    {
+      return 30; //Days in uneven months.
+    }
+    else if (this.getMonth() == 2)
+    {
+      if (this.isLeapYear())
       {
-        this.setMonth(1);
-        this.setYear(getYear() + 1);
+        return 29; //Leap year
       }
+      else
+      {
+        return 28; //not leap year.
+      }
+    }
+    else
+    {
+      return 0; //Unknown error!
     }
   }
 

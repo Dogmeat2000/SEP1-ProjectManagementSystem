@@ -19,7 +19,7 @@ public class IndustrialProject extends ConstructionProject
       /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
       setFacilitySize(0);
       setFacilityType("");
-      setProjectDuration(0);
+      setProjectDuration(5);
     }
 
     /** Returns a string value containing a description of the planned type of facility */
@@ -75,6 +75,12 @@ public class IndustrialProject extends ConstructionProject
     {
       //TODO: Missing implementation. Waiting for the Default Settings Class to be created!
 
-      return new DefaultIndustrialSettings();
+      return new DefaultIndustrialSettings(0);
     }
+
+  public boolean equals(ConstructionProject project)
+  {
+    //TODO: Missing implementation
+    return false;
+  }
 }

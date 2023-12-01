@@ -22,7 +22,7 @@ public class CommercialProject extends ConstructionProject
     setBuildingSize(0);
     setIntendedBuildingUse("");
     setNumberOfFloors(0);
-    setProjectDuration(0);
+    setProjectDuration(5);
   }
 
   /** Returns a string value containing a description of the planned use of this building */
@@ -90,7 +90,13 @@ public class CommercialProject extends ConstructionProject
   {
     //TODO: Missing implementation. Waiting for the Default Settings Class to be created!
 
-    return new DefaultCommercialSettings();
+    return new DefaultCommercialSettings(0,0);
+  }
+
+  public boolean equals(ConstructionProject project)
+  {
+    //TODO: Missing implementation
+    return false;
   }
 
 }

@@ -42,6 +42,11 @@ public class Address
     return postalCode;
   }
 
+  public String getStreetNumber()
+  {
+    return streetNumber;
+  }
+
   public String setStreet(String street)
   {
     return this.street = street;

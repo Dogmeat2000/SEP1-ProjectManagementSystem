@@ -42,10 +42,10 @@ public class MainModel
     //TODO: Implement som coding logic for all the below, attempting to first load data from a file if such a file exists and data is proper!
     //The below is simply dummy information for now!
 
-    setDefaultResidentialSettings(new DefaultResidentialSettings());
-    setDefaultCommercialSettings(new DefaultCommercialSettings());
-    setDefaultIndustrialSettings(new DefaultIndustrialSettings());
-    setDefaultRoadSettings(new DefaultRoadSettings());
+    setDefaultResidentialSettings(new DefaultResidentialSettings(0,0,0,0,false));
+    setDefaultCommercialSettings(new DefaultCommercialSettings(0,0));
+    setDefaultIndustrialSettings(new DefaultIndustrialSettings(0));
+    setDefaultRoadSettings(new DefaultRoadSettings("","",0));
   }
 
   /**
@@ -97,8 +97,7 @@ public class MainModel
     this.selectedProject = selectedProject;
   }
 
-  /**
-   * Sets/Initializes an ArrayList containing all the projects in the project management system
+  /** Sets/Initializes an ArrayList containing all the projects in the project management system
    * Author: K. Dashnaw
    */
   public void setAllProjectsList(ArrayList<ConstructionProject> allProjectsList)
@@ -106,8 +105,7 @@ public class MainModel
     this.allProjectsList = allProjectsList;
   }
 
-  /**
-   * Gets the file manager responsible for maintaining data persistence across sessions
+  /** Gets the file manager responsible for maintaining data persistence across sessions
    * Author: K. Dashnaw
    */
   public FileIO getFileManager()
@@ -115,8 +113,7 @@ public class MainModel
     return fileManager;
   }
 
-  /**
-   * Sets/Initializes the file manager responsible for maintaining data persistence across sessions
+  /** Sets/Initializes the file manager responsible for maintaining data persistence across sessions
    * Author: K. Dashnaw
    */
   public void setFileManager()
@@ -206,9 +203,19 @@ public class MainModel
    */
   public boolean addProject(ConstructionProject project)
   {
-    //TODO: Implement method.
     //TODO: Perform some validation before adding using the equals method from ConstructionProject Class
-    return false;
+    //Adds the project to the project list!
+    if(this.getAllProjectsList().add(project))
+    {
+      //Project was added. Save system.
+      this.save();
+      return true;
+    }
+    else
+    {
+      //Project was NOT added.
+      return false;
+    }
   }
 
   public void newActiveProject(String projectType)

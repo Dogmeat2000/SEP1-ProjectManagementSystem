@@ -12,6 +12,7 @@ public abstract class ConstructionProject
   private boolean projectConfidentiality; // is the project confidential?
   private MyDate projectStartDate; //When was the project created/initiated?
   private MyDate projectEndDate; //When was the project finished (or expected to finish?)
+  private int projectDuration; // How many months the build will take.
 
   //TODO: IMPLEMENT CLASS
 
@@ -19,8 +20,8 @@ public abstract class ConstructionProject
   {
     //TODO: Implement... ALSO CONVERT THESE TEMPORARY DATA SETS TO SETTERS AND GETTERS!
     this.projectInformation = new PromotionalInformation("");
-    this.projectAddress = new Address("","","",-1);
-    this.customer = new Customer("","","",-1,new Address("","","",-1));
+    this.projectAddress = new Address("","","",0);
+    this.customer = new Customer("","","",0,new Address("","","",0));
     this.projectConfidentiality = false;
     this.projectStartDate = MyDate.now();
     this.projectEndDate = MyDate.now();
@@ -94,15 +95,21 @@ public abstract class ConstructionProject
     this.projectEndDate = projectEndDate;
   }
 
-  /** This method is compares the given ConstructionProject object with the current ConstructionProject object and returns true if they are identical.
+  /** This abstract method is compares the given ConstructionProject object with the current ConstructionProject object and returns true if they are identical.
    * It is for instance used to validate attempts of adding projects to the system in order to avoid adding duplicates.
-   * Author:
+   * Author: K. Dashnaw
    * */
-  public boolean equals(ConstructionProject project)
-  {
-    //TODO: Implement method.
-    return false; //Dummy information for now!
-  }
+  public abstract boolean equals(ConstructionProject project);
+
+  /** Abstract method for getting the project duration in months
+   * Author: K. Dashnaw
+   * */
+  public abstract int getProjectDuration();
+
+  /** Abstract method for setting the project duration in months
+   * Author: K. Dashnaw
+   */
+  public abstract void setProjectDuration(int projectDuration);
 
     /**
    * This abstract method, once implemented, returns the specific type of construction project this is.

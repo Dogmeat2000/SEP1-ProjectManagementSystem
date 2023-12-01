@@ -23,7 +23,7 @@ public class RoadProject extends ConstructionProject
     setRoadWidth(0);
     setBridgeOrTunnelDetails("");
     setEnvironmentalOrGeographicalChallenges("");
-    setProjectDuration(0);
+    setProjectDuration(5);
   }
 
   /** Returns a string value containing any details relating to possible bridges or tunnels on the construction route */
@@ -103,6 +103,12 @@ public class RoadProject extends ConstructionProject
   {
     //TODO: Missing implementation. Waiting for the Default Settings Class to be created!
 
-    return new DefaultRoadSettings();
+    return new DefaultRoadSettings("","",0);
+  }
+
+  public boolean equals(ConstructionProject project)
+  {
+    //TODO: Missing implementation
+    return false;
   }
 }
