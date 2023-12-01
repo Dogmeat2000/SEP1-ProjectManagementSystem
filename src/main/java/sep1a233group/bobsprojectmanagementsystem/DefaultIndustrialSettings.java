@@ -4,5 +4,27 @@ import java.io.Serializable; //Needed in order to save class object as Binary fi
 
 public class DefaultIndustrialSettings implements Serializable
 {
-  //TODO: MISSING IMPLEMENTATION!
+
+  private int projectDuration;
+
+  public DefaultIndustrialSettings(int projectDuration)
+  {
+    this.projectDuration = projectDuration;
+  }
+
+  public int getProjectDuration()
+  {
+    return projectDuration;
+  }
+
+  public void setProjectDuration(int projectDuration)
+  {
+    this.projectDuration = projectDuration;
+  }
+
+
+
+
+
+
 }

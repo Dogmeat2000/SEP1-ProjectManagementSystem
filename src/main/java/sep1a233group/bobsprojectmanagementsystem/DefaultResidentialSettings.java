@@ -4,5 +4,57 @@ import java.io.Serializable; //Needed in order to save class object as Binary fi
 
 public class DefaultResidentialSettings implements Serializable
 {
-  //TODO: MISSING IMPLEMENTATION!
+
+  private int projectDuration, numberOfKitchens, numberOfBathrooms,numberOfOtherRoomsWithPlumbing;
+
+  private boolean isRenovation;
+
+  public DefaultResidentialSettings(int projectDuration, int numberOfKitchens,
+      int numberOfBathrooms, int numberOfOtherRoomsWithPlumbing,
+      boolean isRenovation)
+  {
+    this.projectDuration = projectDuration;
+    this.numberOfKitchens = numberOfKitchens;
+    this.numberOfBathrooms = numberOfBathrooms;
+    this.numberOfOtherRoomsWithPlumbing = numberOfOtherRoomsWithPlumbing;
+    this.isRenovation = isRenovation;
+  }
+
+  public void set(int projectDuration, int numberOfKitchens,
+      int numberOfBathrooms, int numberOfOtherRoomsWithPlumbing,
+      boolean isRenovation)
+  {
+    this.projectDuration = projectDuration;
+    this.numberOfKitchens = numberOfKitchens;
+    this.numberOfBathrooms = numberOfBathrooms;
+    this.numberOfOtherRoomsWithPlumbing = numberOfOtherRoomsWithPlumbing;
+    this.isRenovation = isRenovation;
+  }
+
+  public int getProjectDuration()
+  {
+    return projectDuration;
+  }
+
+  public int getNumberOfKitchens()
+  {
+    return numberOfKitchens;
+  }
+
+  public int getNumberOfBathrooms()
+  {
+    return numberOfBathrooms;
+  }
+
+  public int getNumberOfOtherRoomsWithPlumbing()
+  {
+    return numberOfOtherRoomsWithPlumbing;
+  }
+
+  public boolean isRenovation()
+  {
+    return isRenovation;
+  }
+
+
 }
