@@ -26,7 +26,7 @@ public abstract class ConstructionProject
     this.projectEndDate = MyDate.now();
     this.humanRessources = new HumanRessources(0,0);
     this.finances = new Finances(0,0);
-    this.progressReport = new ProgressReport();
+    //this.progressReport = new ProgressReport();
     isProjectFinished = false;
   }
 
