@@ -32,15 +32,45 @@ public abstract class ConstructionProject
 
   public Address getProjectAddress() { return projectAddress; }
 
+  public void setProjectAddress(Address projectAddress)
+  {
+    this.projectAddress = projectAddress;
+  }
+
   public Customer getCustomer() { return customer; }
+
+  public void setCustomer(Customer customer)
+  {
+    this.customer = customer;
+  }
 
   public PromotionalInformation getProjectInformation() { return projectInformation; }
 
+  public void setProjectInformation(PromotionalInformation projectInformation)
+  {
+    this.projectInformation = projectInformation;
+  }
+
   public HumanRessources getHumanRessources() { return humanRessources; }
+
+  public void setHumanRessources(HumanRessources humanRessources)
+  {
+    this.humanRessources = humanRessources;
+  }
 
   public Finances getFinances() { return finances; }
 
+  public void setFinances(Finances finances)
+  {
+    this.finances = finances;
+  }
+
   public ProgressReport generateProgressReport() { return new ProgressReport(this.customer,this.projectAddress,this.finances,this.projectStartDate,this.projectEndDate,this.humanRessources); }
+
+  public ProgressReport getProgressReport()
+  {
+    return progressReport;
+  }
 
   public boolean isProjectFinished() { return isProjectFinished; }
 
@@ -52,7 +82,17 @@ public abstract class ConstructionProject
 
   public MyDate getProjectStartDate() { return projectStartDate; }
 
+  public void setProjectStartDate(MyDate projectStartDate)
+  {
+    this.projectStartDate = projectStartDate;
+  }
+
   public MyDate getProjectEndDate() { return projectEndDate;}
+
+  public void setProjectEndDate(MyDate projectEndDate)
+  {
+    this.projectEndDate = projectEndDate;
+  }
 
   /** This method is compares the given ConstructionProject object with the current ConstructionProject object and returns true if they are identical.
    * It is for instance used to validate attempts of adding projects to the system in order to avoid adding duplicates.

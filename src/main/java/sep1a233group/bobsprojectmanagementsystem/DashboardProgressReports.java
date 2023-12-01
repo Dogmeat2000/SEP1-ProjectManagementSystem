@@ -15,14 +15,31 @@ public class DashboardProgressReports implements Serializable
 
   public boolean addProgressReport(ProgressReport progressReport)
   {
+    for (int i = 0; i < dashboardProgressReports.length; i++)
+    {
+      if (!dashboardProgressReports[i].equals(null))
+      {
+        dashboardProgressReports[i] = progressReport;
+        return true; //Successfully added the progressReport
+      }
+    }
     //TODO: Implement
-    return true; //Successfully added the progressReport
+    return false; //All dashboard places are full
   }
 
   public boolean removeProgressReport(ProgressReport progressReport)
   {
+    for (ProgressReport findReport:dashboardProgressReports
+         )
+    {
+      if (progressReport.equals(findReport))
+      {
+        dashboardProgressReports[0] = null;
+        return true; //Successfully removed the progressReport
+      }
+    }
     //TODO: Implement
-    return true; //Successfully removed the progressReport
+    return false; // the progressReport was not in the dashboard
   }
 
 

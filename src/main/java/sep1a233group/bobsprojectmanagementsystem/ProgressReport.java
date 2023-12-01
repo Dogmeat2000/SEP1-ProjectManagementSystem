@@ -13,6 +13,12 @@ public class ProgressReport
       Finances projectFinances, MyDate projectStartDate, MyDate projectEndDate,
       HumanRessources projectRessources)
   {
+    setProgressReport(customer, projectAddress, projectFinances, projectStartDate, projectEndDate, projectRessources);
+  }
+  public void setProgressReport(Customer customer, Address projectAddress,
+      Finances projectFinances, MyDate projectStartDate, MyDate projectEndDate,
+      HumanRessources projectRessources)
+  {
     this.customer = customer;
     this.projectAddress = projectAddress;
     this.projectFinances = projectFinances;
