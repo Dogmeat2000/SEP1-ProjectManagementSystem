@@ -28,4 +28,16 @@ public class ProgressReport implements Serializable
     this.projectEndDate = projectEndDate;
     this.projectRessources = projectRessources;
   }
+
+  @Override public String toString()
+  {
+    return "ProgressReport{" + "customer=" + customer + ", projectAddress=" + projectAddress + ", projectFinances=" + projectFinances
+        + ", projectStartDate=" + projectStartDate + ", projectEndDate=" + projectEndDate + ", projectRessources=" + projectRessources
+        + '}';
+  }
+
+  public ProgressReport getProgressReport()
+  {
+    return this;
+  }
 }

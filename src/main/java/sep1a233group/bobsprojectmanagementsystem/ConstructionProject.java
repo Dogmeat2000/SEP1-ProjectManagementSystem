@@ -14,7 +14,7 @@ public abstract class ConstructionProject implements Serializable
   private boolean projectConfidentiality; // is the project confidential?
   private MyDate projectStartDate; //When was the project created/initiated?
   private MyDate projectEndDate; //When was the project finished (or expected to finish?)
-  private int projectDuration; // How many months the build will take.
+  private boolean isDashboardProject; //Used to identify projects that should be shown on the dashboard.
 
   //TODO: IMPLEMENT CLASS
 
@@ -24,13 +24,24 @@ public abstract class ConstructionProject implements Serializable
     this.projectInformation = new PromotionalInformation("");
     this.projectAddress = new Address("","","",0);
     this.customer = new Customer("","","",0,new Address("","","",0));
-    this.projectConfidentiality = false;
+    setProjectConfidentiality(false);
     this.projectStartDate = MyDate.now();
     this.projectEndDate = MyDate.now();
     this.humanRessources = new HumanRessources(0,0);
     this.finances = new Finances(0,0);
-    //this.progressReport = new ProgressReport();
+    this.progressReport = new ProgressReport(getCustomer(), getProjectAddress(), getFinances(), getProjectStartDate(), getProjectEndDate(), getHumanRessources());
     isProjectFinished = false;
+    setDashboardProject(false);
+  }
+
+  public boolean isDashboardProject()
+  {
+    return isDashboardProject;
+  }
+
+  public void setDashboardProject(boolean dashboardProject)
+  {
+    isDashboardProject = dashboardProject;
   }
 
   public Address getProjectAddress() { return projectAddress; }
@@ -101,7 +112,7 @@ public abstract class ConstructionProject implements Serializable
    * It is for instance used to validate attempts of adding projects to the system in order to avoid adding duplicates.
    * Author: K. Dashnaw
    * */
-  public abstract boolean equals(ConstructionProject project);
+  public abstract boolean equals(Object project);
 
   /** Abstract method for getting the project duration in months
    * Author: K. Dashnaw
@@ -113,10 +124,14 @@ public abstract class ConstructionProject implements Serializable
    */
   public abstract void setProjectDuration(int projectDuration);
 
-    /**
-   * This abstract method, once implemented, returns the specific type of construction project this is.
+   /** This abstract method, once implemented, returns the specific type of construction project this is.
    * They can either be: Residential, Commercial, Industrial or Road projects
    * Author: K. Dashnaw
    */
   public abstract String getProjectType();
+
+  /** This abstract method, once implemented, returns a string value representing all the project data in single line.
+   * Author: K. Dashnaw
+   */
+  public abstract String toString();
 }

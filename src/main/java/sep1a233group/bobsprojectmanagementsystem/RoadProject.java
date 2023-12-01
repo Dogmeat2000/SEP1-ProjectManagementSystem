@@ -19,7 +19,7 @@ public class RoadProject extends ConstructionProject implements Serializable
   {
     super();
 
-    //TODO: IMPLEMENT THE DEFAULT VALUES HERE!
+    //Note: Default values are called and set in the MainModel when project is created, where user changes to these default values are also saved.
     /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
     setRoadLength(0);
     setRoadWidth(0);
@@ -85,32 +85,83 @@ public class RoadProject extends ConstructionProject implements Serializable
   /** Sets the number of months this project is planned to take to complete. */
   public void setProjectDuration(int projectDuration)
   {
-    //TODO: Implement a calculation based on the set start and finish dates, and use that as the basis for getting the months between!
     this.projectDuration = projectDuration;
   }
 
-  /**
-   * Returns the project type as a String (This being an industrial project).
+  /** Returns the project type as a String (This being an industrial project).
+   * Author: K. Dashnaw
    */
   public String getProjectType()
   {
     return "Road";
   }
 
-  /**
-   * Loads the default construction project settings, set by the user in the GUI,
-   * and sets these as the starting values in this class' constructor!
-   */
-  public DefaultRoadSettings loadDefaultSettings()
+  /** Returns a string value containing all project information. Useful for debugging.
+   * Author: K. Dashnaw
+   * */
+  public String toString()
   {
-    //TODO: Missing implementation. Waiting for the Default Settings Class to be created!
+    String returnValue = this.getProjectType();
+    returnValue += " RoadLength=" + this.getRoadLength() + "\n";
+    returnValue += " RoadWidth=" + this.getRoadWidth() + "\n";
+    returnValue += " BridgeOrTunnelsInfo=" + this.getBridgeOrTunnelDetails() + "\n";
+    returnValue += " EnvironmentalOrGeoInfo=" + this.getEnvironmentalOrGeographicalChallenges() + "\n";
+    returnValue += " displayOnDashboard?=" + this.isDashboardProject() + "\n";
+    returnValue += " ProjectStartDate=" + this.getProjectStartDate().toString() + "\n";
+    returnValue += " ProjectEndDate=" + this.getProjectEndDate().toString() + "\n";
+    returnValue += " ProjectDuration=" + this.getProjectDuration() + "\n";
+    returnValue += " Finances=" + this.getFinances() + "\n";
+    returnValue += " HumanResources=" + this.getHumanRessources() + "\n";
+    returnValue += " IsProjectFinished=" + this.isProjectFinished() + "\n";
+    returnValue += " isProjectConfidential=" + this.isProjectConfidential() + "\n";
+    returnValue += " Customer=" + this.getCustomer() + "\n";
+    returnValue += " Customer=" + this.getProjectAddress() + "\n";
+    returnValue += " Customer=" + this.getProjectInformation() + "\n";
 
-    return new DefaultRoadSettings("","",0);
+    return returnValue;
   }
 
-  public boolean equals(ConstructionProject project)
+  /** Returns a boolean if passed object is identical to this object.
+   * TRUE = They are identical. FALSE = They are not.
+   * Author: K. Dashnaw
+   * */
+  public boolean equals(Object project)
   {
-    //TODO: Missing implementation
-    return false;
+    if (!(project instanceof RoadProject))
+    {
+      return false;
+    }
+    RoadProject other = (RoadProject) project;
+
+    //Compare local attributes for equality:
+    if (!(other.getRoadWidth() == this.getRoadLength() && other.getProjectDuration() == this.getProjectDuration()
+        && other.getRoadLength() == this.getRoadLength() && other.getEnvironmentalOrGeographicalChallenges()
+        .equals(this.getEnvironmentalOrGeographicalChallenges()) && other.getBridgeOrTunnelDetails()
+        .equals(this.getBridgeOrTunnelDetails())))
+    {
+      return false;
+    }
+    //Compare Customer and Address info:
+    else if (!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress()
+        .equals(this.getProjectAddress())))
+    {
+      return false;
+    }
+    //Compare Finances and Human resources info:
+    else if(!(other.getFinances().equals(this.getFinances()) && other.getHumanRessources().equals(this.getHumanRessources()) && other.isProjectConfidential() == this.isProjectConfidential() && other.isProjectFinished() == this.isProjectFinished()))
+    {
+      return false;
+    }
+    //Compare remaining info
+    else if (!(other.getProjectInformation().equals(this.getProjectInformation()) && other.getProjectStartDate()
+        .equals(this.getProjectStartDate()) && other.getProjectEndDate().equals(this.getProjectEndDate())))
+    {
+      return false;
+    }
+    else
+    {
+      //Objects are identical!
+      return true;
+    }
   }
 }

@@ -75,6 +75,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   @FXML TextArea taProjectDescription;
   @FXML TextArea taManagersComments;
   @FXML DatePicker date_EndDateField;
+  @FXML CheckBox checkBox_AddToDashBoard;
 
   //Other field Attributes:
   private MainModel activeModel;
@@ -93,8 +94,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     setActiveModel(activeModel);
     setSceneController(sceneController);
     this.setGUI_Console(this.GUI_Console);
-    this.getGUI_Console()
-        .setText(this.getSceneController().getGUI_ConsoleMessage());
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
     //Ensure the elements shown are in the proper format for a clean view load:
     setProjectTypeSelected(false);
@@ -147,6 +147,10 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
       else if(node instanceof DatePicker)
       {
         ((DatePicker) node).getEditor().setText("");
+      }
+      else if(node instanceof CheckBox)
+      {
+        ((CheckBox) node).setSelected(false);
       }
     }
     taProjectDescription.setText("");
@@ -232,6 +236,22 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     this.projectTypeSelectedString = projectTypeSelectedString;
   }
 
+  /** Returns a reference to the active project model currently providing project related functionality.
+   * Author: K. Dashnaw
+   * */
+  public MainModel getActiveModel()
+  {
+    return activeModel;
+  }
+
+  /** Sets/Initializes the reference to the active project model currently providing project related functionality.
+   * Author: K. Dashnaw
+   * */
+  public void setActiveModel(MainModel activeModel)
+  {
+    this.activeModel = activeModel;
+  }
+
   /** This method prompts a warning the user that unsaved data will be lost on change of view-screen.
    * And then simply calls the common method with the same name, from the SceneController.
    * Check SceneController.openWindow() for a more detailed description.
@@ -278,22 +298,6 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
 
     //Update console message, in case an error occurred above:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-  }
-
-  /** Returns a reference to the active project model currently providing project related functionality.
-   * Author: K. Dashnaw
-   * */
-  public MainModel getActiveModel()
-  {
-    return activeModel;
-  }
-
-  /** Sets/Initializes the reference to the active project model currently providing project related functionality.
-   * Author: K. Dashnaw
-   * */
-  public void setActiveModel(MainModel activeModel)
-  {
-    this.activeModel = activeModel;
   }
 
   /** Is called as an on-action event from the one of the 4 buttons on screen, where you select which project type to create.
@@ -801,37 +805,13 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * Warning: KeyEvent node must have a source type of TextArea, else errors will occur.
    * Author: K. Dashnaw
    * */
-  public void addTemporaryProjectData_TextArea(KeyEvent keyEvent)
+  public void addTemporaryProjectData_TextArea(KeyEvent keyNode)
   {
-    TextArea userInput = (TextArea) keyEvent.getSource();
+    TextArea userInput = (TextArea) keyNode.getSource();
     TextField text2 = new TextField();
     text2.setText(userInput.getText());
     text2.setPromptText(userInput.getPromptText());
     addTemporaryProjectData(text2);
-  }
-
-  /** Is called from "On Action" EventHandlers in the .fxml scene
-   * Method adds the received ActionEvent node to the project data.
-   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.
-   * Warning: ActionEvent node must have a source type of CheckBox, else errors will occur.
-   * Author: K. Dashnaw
-   * */
-  public void checkBoxChecker(ActionEvent actionEvent)
-  {
-    buttonCreateProject.setDisable(true);
-    CheckBox checkBox = (CheckBox) actionEvent.getSource();
-    TextField value = new TextField();
-    value.setText(checkBox.getText());
-
-    if (checkBox.isSelected())
-    {
-      value.setText(value.getText() + "_True");
-    }
-    else
-    {
-      value.setText(value.getText() + "_False");
-    }
-    addTemporaryProjectData(value);
   }
 
   /** This method is used in conjunction with the above input validation methods.
@@ -858,6 +838,31 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         addTemporaryRoadData((RoadProject) this.getActiveModel().getSelectedProject(), text);
         break;
     }
+  }
+
+  /** Is called from "On Action" EventHandlers in the .fxml scene
+   * Method adds the received ActionEvent node to the project data.
+   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.
+   * Warning: ActionEvent node must have a source type of CheckBox, else errors will occur.
+   * Author: K. Dashnaw
+   * */
+  public void checkBoxChecker(ActionEvent actionEvent)
+  {
+    buttonCreateProject.setDisable(true);
+    CheckBox checkBox = (CheckBox) actionEvent.getSource();
+    TextField value = new TextField();
+    value.setText(checkBox.getText());
+
+    if (checkBox.isSelected())
+    {
+      value.setText(value.getText() + "_True");
+    }
+    else
+    {
+      value.setText(value.getText() + "_False");
+    }
+    value.setPromptText(value.getText());
+    addTemporaryProjectData(value);
   }
 
   /** This method is used in conjunction with the "addTemporaryProjectData(TextField text) method".
@@ -952,19 +957,16 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         dataAddedToProject = true;
         break;
       case "In hours":
-        project.getHumanRessources()
-            .setTotalManHoursNeeded(Double.parseDouble(text.getText()));
+        project.getHumanRessources().setTotalManHoursNeeded(Double.parseDouble(text.getText()));
         dataAddedToProject = true;
         break;
       case "in $USD":
         //TODO: Implement check with standard margin ranges to see if budget is within.
-        project.getFinances()
-            .setTotalBudget(Double.parseDouble(text.getText()));
+        project.getFinances().setTotalBudget(Double.parseDouble(text.getText()));
         dataAddedToProject = true;
         break;
       case "Enter any internal only notes directed towards the project manager":
-        project.getProjectInformation()
-            .addProjectManagerComment(text.getText());
+        project.getProjectInformation().setProjectManagerComments(text.getText());
         dataAddedToProject = true;
         break;
       case "Start date":
@@ -973,22 +975,62 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         String dayStart = splitStartData[0];
         String monthStart = splitStartData[1];
         String yearStart = splitStartData[2];
-        MyDate selectedStartDate = new MyDate(Integer.parseInt(dayStart), Integer.parseInt(monthStart), Integer.parseInt(yearStart));
-        project.setProjectStartDate(selectedStartDate);
+        project.getProjectStartDate().set(Integer.parseInt(dayStart), Integer.parseInt(monthStart), Integer.parseInt(yearStart));
+
+        //Reset project duration textField field with new duration:
+        tIndDuration.setText("" + getActiveModel().getDefaultIndustrialSettings().getProjectDuration());
+        tResDuration.setText("" + getActiveModel().getDefaultResidentialSettings().getProjectDuration());
+        tComDuration.setText("" + getActiveModel().getDefaultCommercialSettings().getProjectDuration());
+        tRDDuration.setText("" + getActiveModel().getDefaultRoadSettings().getProjectDuration());
+
+        if(project instanceof ResidentialProject)
+        {
+          project.setProjectDuration(getActiveModel().getDefaultResidentialSettings().getProjectDuration());
+        }
+        else if(project instanceof CommercialProject)
+        {
+          project.setProjectDuration(getActiveModel().getDefaultCommercialSettings().getProjectDuration());
+        }
+        else if(project instanceof IndustrialProject)
+        {
+          project.setProjectDuration(getActiveModel().getDefaultIndustrialSettings().getProjectDuration());
+        }
+        else if(project instanceof RoadProject)
+        {
+          project.setProjectDuration(getActiveModel().getDefaultRoadSettings().getProjectDuration());
+        }
 
         //Update estimated Completion date:
-        for (int i = 0; i < project.getProjectDuration()*31; i++)
+        project.getProjectEndDate().set(project.getProjectStartDate().getDay(), project.getProjectStartDate().getMonth(), project.getProjectStartDate().getYear());
+        for (int i = 0; i < project.getProjectDuration()*30; i++)
         {
-          selectedStartDate.stepForwardOneDay();
+          project.getProjectEndDate().stepForwardOneDay();
         }
-        project.setProjectEndDate(selectedStartDate);
-        splitStartData = selectedStartDate.toString().split("/");
-        dayStart = splitStartData[0];
-        monthStart = splitStartData[1];
-        yearStart = splitStartData[2];
 
-        date_EndDateField.getEditor().setText(dayStart + "." + monthStart + "." + yearStart);
+        //Calculate months between the start and end dates, and update the "project duration" attribute:
+        int daysBetweenStart = project.getProjectEndDate().daysBetween(project.getProjectStartDate());
+        project.setProjectDuration(daysBetweenStart/30);
+        date_EndDateField.getEditor().setText(project.getProjectEndDate().getDay() + "." + project.getProjectEndDate().getMonth() + "." + project.getProjectEndDate().getYear());
         dataAddedToProject = true;
+
+        //Update project duration textField again field with new duration:
+        if(project instanceof ResidentialProject)
+        {
+          tResDuration.setText("" + project.getProjectDuration());
+        }
+        else if(project instanceof CommercialProject)
+        {
+          tComDuration.setText("" + project.getProjectDuration());
+        }
+        else if(project instanceof IndustrialProject)
+        {
+          tIndDuration.setText("" + project.getProjectDuration());
+        }
+        else if(project instanceof RoadProject)
+        {
+          tRDDuration.setText("" + project.getProjectDuration());
+        }
+
         break;
       case "Est. Completion Date":
         String receivedEndDate = text.getText();
@@ -996,10 +1038,18 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         String dayEnd = splitEndData[0];
         String monthEnd = splitEndData[1];
         String yearEnd = splitEndData[2];
-        MyDate selectedEndDate = new MyDate(Integer.parseInt(dayEnd), Integer.parseInt(monthEnd), Integer.parseInt(yearEnd));
-        project.setProjectEndDate(selectedEndDate);
+        project.getProjectEndDate().set(Integer.parseInt(dayEnd), Integer.parseInt(monthEnd), Integer.parseInt(yearEnd));
         dataAddedToProject = true;
-        //TODO: Recalculate project duration in months and apply!
+
+        //Calculate months between the start and end dates, and update the "project duration" attribute:
+        int daysBetween = project.getProjectEndDate().daysBetween(project.getProjectStartDate());
+        project.setProjectDuration(daysBetween/30);
+
+        //Update project duration field with new duration:
+        tIndDuration.setText("" + project.getProjectDuration());
+        tResDuration.setText("" + project.getProjectDuration());
+        tComDuration.setText("" + project.getProjectDuration());
+        tRDDuration.setText("" + project.getProjectDuration());
         break;
       case "Enter a short project description. This information is exported and displayed on the company homepage":
         project.getProjectInformation().setProjectDescription(text.getText());
@@ -1010,11 +1060,14 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         dataAddedToProject = true;
         break;
       case "Add project to Dashboard?_True":
-        //TODO: Missing implementation
+        if(this.getActiveModel().getDashboardProgressReports().getCurrentCapacity() <= this.getActiveModel().getDashboardProgressReports().getMaxCapacity())
+        {
+          project.setDashboardProject(true);
+        }
         dataAddedToProject = true;
         break;
       case "Add project to Dashboard?_False":
-        //TODO: Missing implementation
+        project.setDashboardProject(false);
         dataAddedToProject = true;
         break;
       case "Is project confidential?_True":
@@ -1090,8 +1143,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * "TextField text": This is a reference to the node containing the information to add to the project.
    * Author: K. Dashnaw
    * */
-  public void addTemporaryCommercialData(CommercialProject project,
-      TextField text)
+  public void addTemporaryCommercialData(CommercialProject project, TextField text)
   {
     if (!(addCommonProjectData(project, text)))
     {
@@ -1124,8 +1176,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * "TextField text": This is a reference to the node containing the information to add to the project.
    * Author: K. Dashnaw
    * */
-  public void addTemporaryIndustrialData(IndustrialProject project,
-      TextField text)
+  public void addTemporaryIndustrialData(IndustrialProject project, TextField text)
   {
     if (!(addCommonProjectData(project, text)))
     {
@@ -1358,6 +1409,11 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
       if(this.getActiveModel().addProject(this.getActiveModel().getSelectedProject()))
       {
         //Project successfully added!
+        //Now check if project should be added to the Dashboard:
+        if (this.getActiveModel().getSelectedProject().isDashboardProject())
+        {
+          this.getActiveModel().getDashboardProgressReports().addProgressReport(this.activeModel.getSelectedProject().generateProgressReport());
+        }
         //Update console with message:
         this.getSceneController().setGUI_ConsoleMessage("New projected added to system. System saved.");
         this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
@@ -1368,8 +1424,8 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
       else
       {
         //Project was NOT added successfully.
-        //Update console with message:
-        this.getSceneController().setGUI_ConsoleMessage("Error: New project NOT added! Check for duplicate entries - otherwise unknown error!");
+        //Update console with error message from the model:
+        this.getSceneController().setGUI_ConsoleMessage(this.getActiveModel().getInitializationErrorMessage());
         this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
       }
     }

@@ -133,46 +133,65 @@ public class MyDate implements Serializable
     }
   }
 
-  public int daysbetween(MyDate other)
+  public int daysBetween(MyDate other)
   {
-    boolean date1Bigger;
-    MyDate date1 = (MyDate)other;
-    if (this.getYear() < date1.getYear())
-    {
-      date1Bigger = true;
-    }
-    else if (this.getYear() == date1.getYear() && this.getMonth() < date1.getMonth())
-    {
-      date1Bigger = true;
-    }
-    else if (this.getMonth() == date1.getMonth() && this.getYear() < date1.getMonth())
-    {
-      date1Bigger = true;
-    }
-    else
-    {
-      date1Bigger = false;
-    }
+    int counterDate = 0; //Used to count the number of days between the two.
 
-    MyDate counterdate = new MyDate(this.getDay(), this.getMonth(), this.getYear());
-    int antaldage = 0;
-    if (date1Bigger)
+    if (this.isBefore(other))
     {
-      while (date1.getDay() != counterdate.getDay() || date1.getMonth() != counterdate.getMonth() || date1.getYear() != counterdate.getYear())
+      MyDate copyOfEarlistDateOBJ = this.copy();
+
+      while (copyOfEarlistDateOBJ.isBefore(other))
       {
-        antaldage++;
-        counterdate.stepForwardOneDay();
+        counterDate++;
+        copyOfEarlistDateOBJ.stepForwardOneDay();
       }
+
+    }
+    else if (other.isBefore(this))
+    {
+      MyDate copyOfEarlistDateOBJ = other.copy();
+
+      while (copyOfEarlistDateOBJ.isBefore(this))
+      {
+        counterDate++;
+        copyOfEarlistDateOBJ.stepForwardOneDay();
+      }
+
     }
     else
     {
-      while (date1.getDay() != counterdate.getDay() || date1.getMonth() != counterdate.getMonth() || date1.getYear() != counterdate.getYear())
-      {
-        antaldage++;
-        date1.stepForwardOneDay();
-      }
+      return 0;
     }
-    return antaldage;
+    return counterDate;
+  }
+
+  public boolean isBefore(MyDate other)
+  {
+    if (this.getYear() < other.getYear())
+    {
+      return true;
+    }
+    else if (this.getYear() > other.getYear())
+    {
+      return false;
+    }
+    else if (this.getMonth() < other.getMonth())
+    {
+      return true;
+    }
+    else if (this.getMonth() > other.getMonth())
+    {
+      return false;
+    }
+    else if (this.getDay() < other.getDay())
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   public void set(int day, int month, int year)

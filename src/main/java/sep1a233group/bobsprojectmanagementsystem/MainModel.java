@@ -23,6 +23,7 @@ public class MainModel
 
   private ConstructionProject selectedProject; //Container used to contain currently selected/active project information.
 
+  private String initializationErrorMessage; //Created so the sceneController on initialization can know if there were any errors while loading the system files.
 
   /**
    * Constructs the MainModel.
@@ -39,11 +40,13 @@ public class MainModel
     {
       //loading was successful
       System.out.println("Debug: Data successfully loaded and validated.");
+      setInitializationErrorMessage(""); //Must be initialized!
     }
     else
     {
       //loading failed. The load method re-initialized a clean system file. Any prior data is lost.
       System.out.println("Debug: Data was not loaded successfully. New data has been initialized instead.");
+      setInitializationErrorMessage("Data was not loaded successfully. New data has been initialized instead.");
     }
   }
 
@@ -63,12 +66,38 @@ public class MainModel
     this.dashboardProgressReports = progressReports;
   }
 
+  /** Returns any potentially set error messages. This is especially used during model initialization by the SceneController,
+   * since the SceneController does not know what errors this models internal operations cast.
+   * Author: K. Dashnaw
+   * */
+  public String getInitializationErrorMessage()
+  {
+    return initializationErrorMessage;
+  }
+
+  /** Sets/Initialises an error messages. This is especially used during model initialization by the SceneController,
+   * since the SceneController does not know what errors this models internal operations cast.
+   * Author: K. Dashnaw
+   * */
+  public void setInitializationErrorMessage(String initializationErrorMessage)
+  {
+    this.initializationErrorMessage = initializationErrorMessage;
+  }
+
   /** Returns an ArrayList with ALL the projects in the project management system
    * Author: K. Dashnaw
    */
   public ArrayList<ConstructionProject> getAllProjectsList()
   {
     return allProjectsList;
+  }
+
+  /** Sets/Initializes an ArrayList containing all the projects in the project management system
+   * Author: K. Dashnaw
+   */
+  public void setAllProjectsList(ArrayList<ConstructionProject> allProjectsList)
+  {
+    this.allProjectsList = allProjectsList;
   }
 
   /** Returns the currently "active" project. Especially used when editing or creating projects.
@@ -109,14 +138,6 @@ public class MainModel
   public void setSelectedProject(RoadProject selectedProject)
   {
     this.selectedProject = selectedProject;
-  }
-
-  /** Sets/Initializes an ArrayList containing all the projects in the project management system
-   * Author: K. Dashnaw
-   */
-  public void setAllProjectsList(ArrayList<ConstructionProject> allProjectsList)
-  {
-    this.allProjectsList = allProjectsList;
   }
 
   /** Gets the file manager responsible for maintaining data persistence across sessions
@@ -208,7 +229,18 @@ public class MainModel
    */
   public boolean addProject(ConstructionProject project)
   {
-    //TODO: Perform some validation before adding using the equals method from ConstructionProject Class
+    setInitializationErrorMessage("");
+    //Check if an identical project already exists in the system files:
+    for (int i = 0; i < getAllProjectsList().size(); i++)
+    {
+      if(project.equals(getAllProjectsList().get(i)))
+      {
+        //Identical project identified. Do NOT add project.
+        //Let user know why.
+        setInitializationErrorMessage("ERROR: Duplicate project already exists in system. Unable to add this project.");
+        return false;
+      }
+    }
     //Adds the project to the project list!
     if(this.getAllProjectsList().add(project))
     {
@@ -236,16 +268,36 @@ public class MainModel
     switch (projectType)
     {
       case "ResidentialProjectType":
-        this.setSelectedProject(new ResidentialProject());
+        ResidentialProject newResProject = new ResidentialProject();
+        //Set the default values:
+        newResProject.setProjectDuration(getDefaultResidentialSettings().getProjectDuration());
+        newResProject.setNumberOfKitchens(getDefaultResidentialSettings().getNumberOfKitchens());
+        newResProject.setNumberOfBathrooms(getDefaultResidentialSettings().getNumberOfBathrooms());
+        newResProject.setNumberOfOtherRoomsWithPlumbing(getDefaultResidentialSettings().getNumberOfOtherRoomsWithPlumbing());
+        newResProject.setIsRenovation(getDefaultResidentialSettings().isRenovation());
+        this.setSelectedProject(newResProject);
         break;
       case "CommercialProjectType":
-        this.setSelectedProject(new CommercialProject());
+        CommercialProject newComProject = new CommercialProject();
+        //Set the default values:
+        newComProject.setNumberOfFloors(getDefaultCommercialSettings().getNumberOfFloors());
+        newComProject.setProjectDuration(getDefaultCommercialSettings().getProjectDuration());
+        this.setSelectedProject(newComProject);
         break;
       case "IndustrialProjectType":
-        this.setSelectedProject(new IndustrialProject());
+        IndustrialProject newIndProject = new IndustrialProject();
+        //Set the default values:
+        newIndProject.setProjectDuration(getDefaultIndustrialSettings().getProjectDuration());
+        this.setSelectedProject(newIndProject);
         break;
       case "RoadProjectType":
-        this.setSelectedProject(new RoadProject());
+        RoadProject newRoadProject = new RoadProject();
+        //Set the default values:
+        newRoadProject.setProjectDuration(getDefaultResidentialSettings().getProjectDuration());
+        newRoadProject.setProjectDuration(getDefaultRoadSettings().getProjectDuration());
+        newRoadProject.setEnvironmentalOrGeographicalChallenges(getDefaultRoadSettings().getEnviromentalOrGeographicalChallenges());
+        newRoadProject.setBridgeOrTunnelDetails(getDefaultRoadSettings().getBridgesOrTunnelDetails());
+        this.setSelectedProject(newRoadProject);
         break;
     }
   }
@@ -421,10 +473,10 @@ public class MainModel
     {
       setAllProjectsList(new ArrayList<>());
       setDashboardProgressReport(new DashboardProgressReports());
-      setDefaultResidentialSettings(new DefaultResidentialSettings(0,0,0,0,false));
-      setDefaultCommercialSettings(new DefaultCommercialSettings(0,0));
-      setDefaultIndustrialSettings(new DefaultIndustrialSettings(0));
-      setDefaultRoadSettings(new DefaultRoadSettings("","",0));
+      setDefaultResidentialSettings(new DefaultResidentialSettings(9,1,1,1,false));
+      setDefaultCommercialSettings(new DefaultCommercialSettings(1,18));
+      setDefaultIndustrialSettings(new DefaultIndustrialSettings(30));
+      setDefaultRoadSettings(new DefaultRoadSettings("0","None",18));
     }
     else
     {
@@ -462,7 +514,7 @@ public class MainModel
         //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
         System.out.println("Unable to validate Default Residential Settings. Initializing new files instead!");
         //Data in this class must be corrupted. Re-initialize a clean class!
-        setDefaultResidentialSettings(new DefaultResidentialSettings(0,0,0,0,false));
+        setDefaultResidentialSettings(new DefaultResidentialSettings(9,1,1,1,false));
         returnValue = false;
       }
       try
@@ -474,7 +526,7 @@ public class MainModel
         //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
         System.out.println("Unable to validate Default Commercial Settings. Initializing new files instead!");
         //Data in this class must be corrupted. Re-initialize a clean class!
-        setDefaultCommercialSettings(new DefaultCommercialSettings(0,0));
+        setDefaultCommercialSettings(new DefaultCommercialSettings(1,18));
         returnValue = false;
       }
       try
@@ -486,7 +538,7 @@ public class MainModel
         //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
         System.out.println("Unable to validate Default Industrial Settings. Initializing new files instead!");
         //Data in this class must be corrupted. Re-initialize a clean class!
-        setDefaultIndustrialSettings(new DefaultIndustrialSettings(0));
+        setDefaultIndustrialSettings(new DefaultIndustrialSettings(30));
         returnValue = false;
       }
       try
@@ -498,7 +550,7 @@ public class MainModel
         //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
         System.out.println("Unable to validate Default Road Settings. Initializing new files instead!");
         //Data in this class must be corrupted. Re-initialize a clean class!
-        setDefaultRoadSettings(new DefaultRoadSettings("","",0));
+        setDefaultRoadSettings(new DefaultRoadSettings("0","None",18));
         returnValue = false;
       }
       try
@@ -517,4 +569,4 @@ public class MainModel
   return returnValue;
   }
 
-  }
+}

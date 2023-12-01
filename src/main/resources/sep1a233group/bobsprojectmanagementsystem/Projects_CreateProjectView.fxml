@@ -446,7 +446,7 @@
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <CheckBox layoutX="879.0" layoutY="247.0" mnemonicParsing="false" onAction="#checkBoxChecker" prefHeight="17.0" prefWidth="217.0" text="Add project to Dashboard?" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="9">
+                                                      <CheckBox fx:id="checkBox_AddToDashBoard" layoutX="879.0" layoutY="247.0" mnemonicParsing="false" onAction="#checkBoxChecker" prefHeight="17.0" prefWidth="217.0" text="Add project to Dashboard?" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="9">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>

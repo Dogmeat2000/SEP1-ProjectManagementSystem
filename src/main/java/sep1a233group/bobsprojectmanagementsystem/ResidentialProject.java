@@ -20,7 +20,7 @@ public class ResidentialProject extends ConstructionProject implements Serializa
   {
     super();
 
-    //TODO: IMPLEMENT THE DEFAULT VALUES HERE!
+    //Note: Default values are called and set in the MainModel when project is created, where user changes to these default values are also saved.
     /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
     setIsRenovation(false);
     setBuildingSize(0);
@@ -88,17 +88,7 @@ public class ResidentialProject extends ConstructionProject implements Serializa
   /** Sets the number of months this project is planned to take to complete. */
   public void setProjectDuration(int projectDuration)
   {
-    //TODO: Implement a calculation based on the set start and finish dates, and use that as the basis for getting the months between!
     this.projectDuration = projectDuration;
-  }
-
-  /**
-   * Sets whether this the project is a renovation of an already existing
-   * construction (True) or if it is an entirely new project (False).
-   */
-  public void setIsRenovation(boolean isRenovation)
-  {
-    this.isRenovation = isRenovation;
   }
 
   /**
@@ -111,6 +101,15 @@ public class ResidentialProject extends ConstructionProject implements Serializa
   }
 
   /**
+   * Sets whether this the project is a renovation of an already existing
+   * construction (True) or if it is an entirely new project (False).
+   */
+  public void setIsRenovation(boolean isRenovation)
+  {
+    this.isRenovation = isRenovation;
+  }
+
+    /**
    * Returns the project type as a String (This being a residential project).
    */
   public String getProjectType()
@@ -118,21 +117,70 @@ public class ResidentialProject extends ConstructionProject implements Serializa
     return "Residential";
   }
 
-  /**
-   * Loads the default construction project settings, set by the user in the GUI,
-   * and sets these as the starting values in this class' constructor!
-   */
-  public DefaultResidentialSettings loadDefaultSettings()
+  /** Returns a string value containing all project information. Useful for debugging.
+   * Author: K. Dashnaw
+   * */
+  public String toString()
   {
-    //TODO: Missing implementation. Waiting for the Default Settings Class to be created!
+    String returnValue = this.getProjectType() + "\n";
+    returnValue += " BuildingSize=" + this.getBuildingSize() + "\n";
+    returnValue += " isRenovation=" + this.getIsRenovation() + "\n";
+    returnValue += " NumberOfKitchens=" + this.getNumberOfKitchens() + "\n";
+    returnValue += " numberOfBathrooms=" + this.getNumberOfBathrooms() + "\n";
+    returnValue += " numberOfOtherRoomsWithPlumbing=" + this.getNumberOfOtherRoomsWithPlumbing() + "\n";
+    returnValue += " displayOnDashboard?=" + this.isDashboardProject() + "\n";
+    returnValue += " ProjectStartDate=" + this.getProjectStartDate().toString() + "\n";
+    returnValue += " ProjectEndDate=" + this.getProjectEndDate().toString() + "\n";
+    returnValue += " ProjectDuration=" + this.getProjectDuration() + "\n";
+    returnValue += " Finances=" + this.getFinances() + "\n";
+    returnValue += " HumanResources=" + this.getHumanRessources() + "\n";
+    returnValue += " IsProjectFinished=" + this.isProjectFinished() + "\n";
+    returnValue += " isProjectConfidential=" + this.isProjectConfidential() + "\n";
+    returnValue += " Customer=" + this.getCustomer() + "\n";
+    returnValue += " Customer=" + this.getProjectAddress() + "\n";
+    returnValue += " Customer=" + this.getProjectInformation() + "\n";
 
-    return new DefaultResidentialSettings(0,0,0,0,false);
+    return returnValue;
   }
 
-  public boolean equals(ConstructionProject project)
+  /** Returns a boolean if passed object is identical to this object.
+   * TRUE = They are identical. FALSE = They are not.
+   * Author: K. Dashnaw
+   * */
+  public boolean equals(Object project)
   {
-    //TODO: Missing implementation
-    return false;
+    if (!(project instanceof ResidentialProject))
+    {
+      return false;
+    }
+    ResidentialProject other = (ResidentialProject) project;
+
+    //Compare local attributes for equality:
+    if (!(other.getBuildingSize() == this.getBuildingSize() && other.getProjectDuration() == this.getProjectDuration() && other.getNumberOfKitchens() == this.getNumberOfKitchens() && other.getIsRenovation() == (this.getIsRenovation())
+        && other.getNumberOfBathrooms() == this.getNumberOfBathrooms() && other.getNumberOfOtherRoomsWithPlumbing() == this.getNumberOfOtherRoomsWithPlumbing()))
+    {
+      return false;
+    }
+    //Compare Customer and Address info:
+    else if(!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress().equals(this.getProjectAddress())))
+    {
+      return false;
+    }
+    //Compare Finances and Human resources info:
+    else if(!(other.getFinances().equals(this.getFinances()) && other.getHumanRessources().equals(this.getHumanRessources()) && other.isProjectConfidential() == this.isProjectConfidential() && other.isProjectFinished() == this.isProjectFinished()))
+    {
+      return false;
+    }
+    //Compare remaining info
+    else if(!(other.getProjectInformation().equals(this.getProjectInformation()) && other.getProjectStartDate().equals(this.getProjectStartDate()) && other.getProjectEndDate().equals(this.getProjectEndDate())))
+    {
+      return false;
+    }
+    else
+    {
+      //Objects are identical!
+      return true;
+    }
   }
 
 }

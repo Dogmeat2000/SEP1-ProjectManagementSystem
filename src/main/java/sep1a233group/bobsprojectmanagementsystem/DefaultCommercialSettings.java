@@ -8,6 +8,7 @@ public class DefaultCommercialSettings implements Serializable
   private int numberOfFloors, projectDuration;
 
 
+  //Note: Default values for this class are initialized during MainModel load(). If previous user settings exist in saved files, these are set - else load() defines the hardcoded default values.
   public DefaultCommercialSettings(int numberOfFloors, int projectDuration)
   {
     this.numberOfFloors = numberOfFloors;

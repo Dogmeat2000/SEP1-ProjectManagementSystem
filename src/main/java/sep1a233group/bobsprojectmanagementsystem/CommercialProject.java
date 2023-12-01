@@ -11,15 +11,13 @@ public class CommercialProject extends ConstructionProject implements Serializab
   private String intendedBuildingUse; //Used to describe what the building will be used for.
   private int numberOfFloors; //The number of floors this project is planned to have.
   private double buildingSize; //Size of building project in m^2.
-
   private int projectDuration; // How many months the build will take.
 
   /** Constructs this object the first time it is created/called. */
   public CommercialProject()
   {
     super();
-
-    //TODO: IMPLEMENT THE DEFAULT VALUES HERE!
+    //Note: Default values are called and set in the MainModel when project is created, where user changes to these default values are also saved.
     /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
     setBuildingSize(0);
     setIntendedBuildingUse("");
@@ -72,33 +70,78 @@ public class CommercialProject extends ConstructionProject implements Serializab
   /** Sets the number of months this project is planned to take to complete. */
   public void setProjectDuration(int projectDuration)
   {
-    //TODO: Implement a calculation based on the set start and finish dates, and use that as the basis for getting the months between!
     this.projectDuration = projectDuration;
   }
 
-  /**
-   * Returns the project type as a String (This being a commercial project).
+  /** Returns the project type as a String (This being a commercial project).
    */
   public String getProjectType()
   {
     return "Commercial";
   }
 
-  /**
-   * Loads the default construction project settings, set by the user in the GUI,
-   * and sets these as the starting values in this class' constructor!
-   */
-  public DefaultCommercialSettings loadDefaultSettings()
-  {
-    //TODO: Missing implementation. Waiting for the Default Settings Class to be created!
 
-    return new DefaultCommercialSettings(0,0);
+  /** Returns a boolean if passed object is identical to this object.
+   * TRUE = They are identical. FALSE = They are not.
+   * Author: K. Dashnaw
+   * */
+  public boolean equals(Object project)
+  {
+    if (!(project instanceof CommercialProject))
+    {
+      return false;
+    }
+    CommercialProject other = (CommercialProject) project;
+
+    //Compare local attributes for equality:
+    if (!(other.getNumberOfFloors() == this.getNumberOfFloors() && other.getIntendedBuildingUse().equals(this.getIntendedBuildingUse())
+        && other.getBuildingSize() == this.getBuildingSize() && other.getProjectDuration() == this.getProjectDuration() && other.getProjectType().equals(this.getProjectType())))
+    {
+      return false;
+    }
+    //Compare Customer and Address info:
+    else if(!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress().equals(this.getProjectAddress())))
+    {
+      return false;
+    }
+    //Compare Finances and Human resources info:
+    else if(!(other.getFinances().equals(this.getFinances()) && other.getHumanRessources().equals(this.getHumanRessources()) && other.isProjectConfidential() == this.isProjectConfidential() && other.isProjectFinished() == this.isProjectFinished()))
+    {
+      return false;
+    }
+    //Compare remaining info
+    else if(!(other.getProjectInformation().equals(this.getProjectInformation()) && other.getProjectStartDate().equals(this.getProjectStartDate()) && other.getProjectEndDate().equals(this.getProjectEndDate())))
+    {
+      return false;
+    }
+    else
+    {
+    //Objects are identical!
+      return true;
+    }
   }
 
-  public boolean equals(ConstructionProject project)
+  /** Returns a string value containing all project information. Useful for debugging.
+   * Author: K. Dashnaw
+   * */
+  public String toString()
   {
-    //TODO: Missing implementation
-    return false;
-  }
+    String returnValue = this.getProjectType() + "\n";
+    returnValue += " BuildingSize=" + this.getBuildingSize() + "\n";
+    returnValue += " IntendedUse=" + this.getIntendedBuildingUse() + "\n";
+    returnValue += " NumberOfFloors=" + this.getNumberOfFloors() + "\n";
+    returnValue += " displayOnDashboard?=" + this.isDashboardProject() + "\n";
+    returnValue += " ProjectStartDate=" + this.getProjectStartDate().toString() + "\n";
+    returnValue += " ProjectEndDate=" + this.getProjectEndDate().toString() + "\n";
+    returnValue += " ProjectDuration=" + this.getProjectDuration() + "\n";
+    returnValue += " Finances=" + this.getFinances() + "\n";
+    returnValue += " HumanResources=" + this.getHumanRessources() + "\n";
+    returnValue += " IsProjectFinished=" + this.isProjectFinished() + "\n";
+    returnValue += " isProjectConfidential=" + this.isProjectConfidential() + "\n";
+    returnValue += " Customer=" + this.getCustomer() + "\n";
+    returnValue += " Customer=" + this.getProjectAddress() + "\n";
+    returnValue += " Customer=" + this.getProjectInformation() + "\n";
 
+    return returnValue;
+  }
 }

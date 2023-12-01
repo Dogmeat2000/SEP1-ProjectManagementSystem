@@ -30,47 +30,74 @@ public class SceneController
 
   private String GUI_ConsoleMessage; //Continuously updated by GUI pages and contains the latest console message to display.
 
-  public Stage getActiveStage()
-  {
-    return activeStage;
-  }
 
-  public void setActiveStage(Stage activeStage)
-  {
-    this.activeStage = activeStage;
-  }
-
-  public String getGUI_ConsoleMessage()
-  {
-    return GUI_ConsoleMessage;
-  }
-
-  public void setGUI_ConsoleMessage(String GUI_ConsoleMessage)
-  {
-    this.GUI_ConsoleMessage = GUI_ConsoleMessage;
-  }
-
-  public MainModel getActiveModel()
-  {
-    return activeModel;
-  }
-
-  public void setActiveModel(MainModel activeModel)
-  {
-    this.activeModel = activeModel;
-  }
-
-  /**
-   * The Scene Controller class is used for controlling the active scene in the GUI application.
+  /** The Scene Controller class is used for controlling the active scene in the GUI application.
    * It is inspired by some of the SDJ1 developmental work our Lector, Michael, has presented during the SDJ1 course - specifically relating to the use of a 'viewhandler'
    */
   public SceneController(MainModel activeModel, Stage activeStage)
   {
     setActiveModel(activeModel);
     setActiveStage(activeStage);
-    setGUI_ConsoleMessage("Application successfully loaded");
+    if(getActiveModel().getInitializationErrorMessage().isEmpty())
+    {
+      setGUI_ConsoleMessage("Application successfully loaded");
+    }
+    else
+    {
+      setGUI_ConsoleMessage(getActiveModel().getInitializationErrorMessage());
+    }
     sceneControllers = new HashMap<>();
     scenes = new HashMap<>();
+  }
+
+  /** Returns the screen view that is currently active
+   * Author: K. Dashnaw
+   * */
+  public Stage getActiveStage()
+  {
+    return activeStage;
+  }
+
+  /** Sets the screen view that is currently active
+   * Author: K. Dashnaw
+   * */
+  public void setActiveStage(Stage activeStage)
+  {
+    this.activeStage = activeStage;
+  }
+
+  /** Returns the latest GUI Console message. This attribute ensures cross-view port compatibility so
+   * console on all view panes receive the same messages.
+   * Author: K. Dashnaw
+   * */
+  public String getGUI_ConsoleMessage()
+  {
+    return GUI_ConsoleMessage;
+  }
+
+  /** Sets the latest GUI Console message. This attribute ensures cross-view port compatibility so
+   * console on all view panes receive the same messages.
+   * Author: K. Dashnaw
+   * */
+  public void setGUI_ConsoleMessage(String GUI_ConsoleMessage)
+  {
+    this.GUI_ConsoleMessage = GUI_ConsoleMessage;
+  }
+
+  /** Sets the active project model.
+   * Author: K. Dashnaw
+   * */
+  public MainModel getActiveModel()
+  {
+    return activeModel;
+  }
+
+  /** Gets the active project model.
+   * Author: K. Dashnaw
+   * */
+  public void setActiveModel(MainModel activeModel)
+  {
+    this.activeModel = activeModel;
   }
 
   /**
@@ -149,12 +176,8 @@ public class SceneController
    * If changes are made in the GUI labels, but not updated in this method, the application WILL break.
    * Author: K. Dashnaw
    */
-  public void openWindow(String buttonText, TextField GUI_Console)
-      throws IOException
+  public void openWindow(String buttonText, TextField GUI_Console) throws IOException
   {
-    //TODO: Implement a pop-up message warning the user to confirm (yes/no) if they really wish to proceed to this new view.
-    // However this warning should ONLY be shown when trying to navigate away from the "create project" or "edit project" views, to avoid the user accidentally loosing data.
-
     //Guard against any unexpected errors. Since this method should ONLY be called on buttons using set action any exceptions that might arise are due to programing flaws.
     try
     {
@@ -377,7 +400,7 @@ public class SceneController
    * "String toolTipMessage": The text that should be displayed in the tooltip.
    * Author: K. Dashnaw
    * */
-  private void addErrorTooltip(KeyEvent keyNode, String textStyle, String toolTipMessage)
+  public void addErrorTooltip(KeyEvent keyNode, String textStyle, String toolTipMessage)
   {
     TextField text = (TextField) keyNode.getSource();
     text.setStyle(textStyle);

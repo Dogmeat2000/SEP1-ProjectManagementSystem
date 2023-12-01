@@ -77,8 +77,7 @@ public class Customer implements Serializable
     return this.company;
   }
 
-  public void set(String firstName, String lastName, String email,
-      int phoneNumber)
+  public void set(String firstName, String lastName, String email, int phoneNumber)
   {
     this.firstName = firstName;
     this.lastName = lastName;
@@ -86,8 +85,27 @@ public class Customer implements Serializable
     this.phoneNumber = phoneNumber;
   }
 
+  @Override public String toString()
+  {
+    return "Customer{" + "firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", company="
+        + company + ", customerAddress=" + customerAddress + ", phoneNumber=" + phoneNumber + ", phoneNumberPrefix='" + phoneNumberPrefix
+        + '\'' + '}';
+  }
 
-
-
+  /** Returns a boolean if passed object is identical to this object.
+   * TRUE = They are identical. FALSE = They are not.
+   * Author: K. Dashnaw
+   * */
+  public boolean equals(Object otherCustomer)
+  {
+    if (!(otherCustomer instanceof Customer))
+    {
+      return false;
+    }
+    Customer other = (Customer) otherCustomer;
+    return (other.getEmail().equals(this.getEmail()) && other.getFirstName().equals(this.getFirstName()) && other.getLastName()
+        .equals(this.getLastName()) && other.getPhoneNumber() == this.getPhoneNumber() && other.getCustomerAddress()
+        .equals(this.getCustomerAddress()) && other.getCustomerCompany().equals(this.getCustomerCompany()));
+  }
 
 }

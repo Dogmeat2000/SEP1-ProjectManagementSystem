@@ -6,14 +6,14 @@ import java.util.ArrayList;
 public class PromotionalInformation implements Serializable
 {
   private String photoURL, projectDescription, projectName;
-  private ArrayList<String>projectManagerComments;
+  private String projectManagerComments;
 
   public PromotionalInformation(String projectName)
   {
     this.photoURL = "";
     this.projectDescription = "";
     this.projectName = projectName;
-    this.projectManagerComments = new ArrayList<>();
+    this.projectManagerComments = "";
   }
 
   public String getPhotoURL()
@@ -51,19 +51,34 @@ public class PromotionalInformation implements Serializable
     this.projectName = projectName;
   }
 
-  public ArrayList<String> getProjectManagerComments()
+  public String getProjectManagerComments()
   {
       return projectManagerComments;
   }
 
-  public void addProjectManagerComment(String comment)
+  public void setProjectManagerComments(String message)
   {
-    projectManagerComments.add(comment);
+    this.projectManagerComments = message;
   }
 
-  public void deleteProjectManagerCommentLine(int index)
+  @Override public String toString()
   {
-    projectManagerComments.remove(index);
+    return "PromotionalInformation{" + "photoURL='" + photoURL + '\'' + ", projectDescription='" + projectDescription + '\''
+        + ", projectName='" + projectName + '\'' + ", projectManagerComments=" + projectManagerComments + '}';
+  }
+
+  /** Returns a boolean if passed object is identical to this object.
+   * TRUE = They are identical. FALSE = They are not.
+   * Author: K. Dashnaw
+   * */
+  public boolean equals(Object obj)
+  {
+    if(!(obj instanceof PromotionalInformation))
+    {
+      return false;
+    }
+    PromotionalInformation other = (PromotionalInformation) obj;
+    return (other.getProjectDescription().equals(this.getProjectDescription()) && other.getProjectName().equals(this.getProjectName()) && other.getPhotoURL().equals(this.getPhotoURL()) && other.getProjectManagerComments().equals(this.getProjectManagerComments()));
   }
 
 }

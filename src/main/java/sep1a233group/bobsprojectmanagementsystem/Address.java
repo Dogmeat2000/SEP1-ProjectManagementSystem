@@ -9,7 +9,7 @@ public class Address implements Serializable
 
   private int postalCode;
 
-  public Address (String street, String city, String country, int postalCode)
+  public Address(String street, String city, String country, int postalCode)
   {
     this.street = street;
     this.streetNumber = "";
@@ -79,13 +79,34 @@ public class Address implements Serializable
     return this.country = country;
   }
 
-  public void set(String street, String apartment, String city, String country,
-      int postalCode)
+  public void set(String street, String apartment, String city, String country, int postalCode)
   {
     this.street = street;
     this.apartment = apartment;
     this.city = city;
     this.country = country;
     this.postalCode = postalCode;
+  }
+
+  /** Returns a boolean if passed object is identical to this object.
+   * TRUE = They are identical. FALSE = They are not.
+   * Author: K. Dashnaw
+   * */
+  public boolean equals(Object other)
+  {
+    if (!(other instanceof Address))
+    {
+      return false;
+    }
+    Address otherAddress = (Address) other;
+    return (otherAddress.getStreet().equals(this.getStreet()) && otherAddress.getStreetNumber().equals(this.getStreetNumber()) &&
+        otherAddress.getApartment().equals(this.getApartment()) && otherAddress.getCity().equals(this.getCity())
+            && otherAddress.getPostalCode() == this.getPostalCode() && otherAddress.getCountry().equals(this.getCountry()));
+  }
+
+  @Override public String toString()
+  {
+    return "Address{" + "street='" + street + '\'' + ", streetNumber='" + streetNumber + '\'' + ", apartment='" + apartment + '\''
+        + ", city='" + city + '\'' + ", country='" + country + '\'' + ", postalCode=" + postalCode + '}';
   }
 }
