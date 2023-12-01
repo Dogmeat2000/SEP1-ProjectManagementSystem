@@ -1,6 +1,8 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
-public class Company
+import java.io.Serializable;
+
+public class Company implements Serializable
 {
   private String name;
   private Address companyAddress;

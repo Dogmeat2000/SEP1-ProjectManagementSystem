@@ -1,6 +1,8 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
-public class Customer
+import java.io.Serializable;
+
+public class Customer implements Serializable
 {
   private String firstName, lastName, email;
   private Company company;

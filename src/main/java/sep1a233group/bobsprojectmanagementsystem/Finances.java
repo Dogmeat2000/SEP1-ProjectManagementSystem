@@ -1,6 +1,8 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
-public class Finances
+import java.io.Serializable;
+
+public class Finances implements Serializable
 {
   private double materialExpences, totalBudget;
 

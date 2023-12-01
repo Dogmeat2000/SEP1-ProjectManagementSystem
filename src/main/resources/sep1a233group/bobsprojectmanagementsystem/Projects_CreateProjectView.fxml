@@ -366,7 +366,7 @@
                                                       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="4">
                                                          <children>
                                                             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Select" />
-                                                            <Label prefHeight="17.0" prefWidth="335.0" text="no project picture selected" textAlignment="CENTER">
+                                                            <Label prefHeight="17.0" prefWidth="335.0" text="No project picture selected. Using Default picture instead." textAlignment="CENTER">
                                                                <padding>
                                                                   <Insets left="10.0" />
                                                                </padding>

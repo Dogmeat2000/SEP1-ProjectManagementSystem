@@ -1,8 +1,9 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PromotionalInformation
+public class PromotionalInformation implements Serializable
 {
   private String photoURL, projectDescription, projectName;
   private ArrayList<String>projectManagerComments;

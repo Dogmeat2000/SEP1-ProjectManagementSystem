@@ -10,7 +10,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -276,6 +275,9 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     }
     //Proceed with application termination.
     this.getSceneController().exitApplication();
+
+    //Update console message, in case an error occurred above:
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
   /** Returns a reference to the active project model currently providing project related functionality.
@@ -348,20 +350,16 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     switch (this.getProjectTypeSelectedString())
     {
       case "ResidentialProjectType":
-        this.getActiveModel()
-            .initializeCreateProjectGUI(tResBathroomNumber, tResNumberKitchens, tResNumberOfOtherPlumbing, tResDuration, tResBuildingSize);
+        this.getActiveModel().initializeCreateProjectGUI(tResBathroomNumber, tResNumberKitchens, tResNumberOfOtherPlumbing, tResDuration, tResBuildingSize);
         break;
       case "CommercialProjectType":
-        this.getActiveModel()
-            .initializeCreateProjectGUI(tComNumberFloors, tComDuration, tComBuildingSize, taComIntendedUse);
+        this.getActiveModel().initializeCreateProjectGUI(tComNumberFloors, tComDuration, tComBuildingSize, taComIntendedUse);
         break;
       case "IndustrialProjectType":
-        this.getActiveModel()
-            .initializeCreateProjectGUI(tIndDuration, tIndFacilitySize, taIndFacilityType);
+        this.getActiveModel().initializeCreateProjectGUI(tIndDuration, tIndFacilitySize, taIndFacilityType);
         break;
       case "RoadProjectType":
-        this.getActiveModel()
-            .initializeCreateProjectGUI(tRDLength, tRDWidth, tRDDuration, taRDBridgeTunnelInfo, taRDEnvironmentInfo);
+        this.getActiveModel().initializeCreateProjectGUI(tRDLength, tRDWidth, tRDDuration, taRDBridgeTunnelInfo, taRDEnvironmentInfo);
         break;
     }
   }
@@ -671,23 +669,17 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   public boolean validate_NotEmpty(KeyEvent keyNode)
   {
     resetValidation();
-    TextField text = (TextField) keyNode.getSource();
-    String userText = text.getText();
-
-    //Check if field is empty:
-    if (userText.isBlank())
+    if(getSceneController().validate_NotEmpty(keyNode))
     {
-      emptyTextFieldCode(keyNode);
+      addTemporaryProjectData(keyNode);
+      return true;
+    }
+    else
+    {
+      //Update console with error set in SceneController
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
       return false;
     }
-    //Passed validation, ensure previous tooltips are removed and text colors reverted:
-    if (text.getTooltip() != null)
-    {
-      text.setTooltip(null);
-      text.setStyle("-fx-text-fill: black;");
-    }
-    addTemporaryProjectData(keyNode);
-    return true;
   }
 
   /** Returns FALSE if TextField is either empty OR a number/digit, and TRUE is TextField is none of both.
@@ -699,43 +691,16 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   public boolean validate_NotEmpty_NotNumber(KeyEvent keyNode)
   {
     resetValidation();
-    TextField text = (TextField) keyNode.getSource();
-    String userText = text.getText();
-
-    //Check if field is empty:
-    if (userText.isBlank())
+    if(getSceneController().validate_NotEmpty_NotNumber(keyNode, "Error in data values while creating new project. Please review and correct!"))
     {
-      emptyTextFieldCode(keyNode);
-      return false;
+      addTemporaryProjectData(keyNode);
+      return true;
     }
     else
     {
-      //Check if field is a number:
-      try
-      {
-        //If the below parseTest throws an exception, the string is not a number.
-        Double.parseDouble(userText);
-
-        //Field is a number. Show a tooltip!
-        addErrorTooltip(keyNode, "-fx-text-fill: red;","Field cannot be a number.");
-
-        //Update console with an error:
-        this.getSceneController().setGUI_ConsoleMessage("Error in data values while creating new project. Please review and correct!");
-        this.getGUI_Console()
-            .setText(this.getSceneController().getGUI_ConsoleMessage());
-        return false;
-      }
-      catch (NumberFormatException error)
-      {
-        //Passed validation, ensure previous tooltips are removed and text colors reverted:
-        if (text.getTooltip() != null)
-        {
-          text.setTooltip(null);
-          text.setStyle("-fx-text-fill: black;");
-        }
-        addTemporaryProjectData(keyNode);
-      }
-      return true;
+      //Update console with error set in SceneController
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      return false;
     }
   }
 
@@ -748,48 +713,16 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   public boolean validate_NotEmpty_NotString_NotNegative(KeyEvent keyNode)
   {
     resetValidation();
-    TextField text = (TextField) keyNode.getSource();
-    String userText = text.getText();
-
-    //Check if field is empty:
-    if (userText.isBlank())
+    if(getSceneController().validate_NotEmpty_NotString_NotNegative(keyNode, "Error in data values while creating new project. Please review and correct!"))
     {
-      emptyTextFieldCode(keyNode);
-      return false;
+      addTemporaryProjectData(keyNode);
+      return true;
     }
     else
     {
-      //Check if field is a String:
-      try
-      {
-        //If the below test succeeds, then this is a number.
-        double testValue = Double.parseDouble(userText);
-        if (testValue < 0)
-        {
-          //Check if it is a negative value. If so, throw an error and catch it later.
-          throw new NumberFormatException();
-        }
-
-        //Passed validation, ensure previous tooltips are removed and text colors reverted:
-        if (text.getTooltip() != null)
-        {
-          text.setTooltip(null);
-          text.setStyle("-fx-text-fill: black;");
-        }
-        addTemporaryProjectData(keyNode);
-        return true;
-      }
-      catch (NumberFormatException error)
-      {
-        //Field is a number. Show a tooltip!
-        addErrorTooltip(keyNode, "-fx-text-fill: red;","Field must be a positive number");
-
-        //Update console with an error:
-        this.getSceneController().setGUI_ConsoleMessage("Error in data values while creating new project. Please review and correct!");
-        this.getGUI_Console()
-            .setText(this.getSceneController().getGUI_ConsoleMessage());
-        return false;
-      }
+      //Update console with error set in SceneController
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      return false;
     }
   }
 
@@ -813,28 +746,10 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
    * Author: K. Dashnaw
    * */
-  private void emptyTextFieldCode(KeyEvent keyNode)
-  {
-    TextField text = (TextField) keyNode.getSource();
-
-    //Add a Show a tooltip!
-    addErrorTooltip(keyNode, "-fx-text-fill: red;", "Field cannot be empty.");
-    text.setStyle("-fx-prompt-text-fill: red;");
-
-    //Update console with an error:
-    this.getSceneController().setGUI_ConsoleMessage("Error in data values while creating new project. Please review and correct!");
-    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-  }
-
-  /** This code is run locally in this class. It simply checks if the given TextField contains any data or not.
-   * Takes a KeyEvent and parses this as a TextField.
-   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
-   * Author: K. Dashnaw
-   * */
   private void emptyDatePickerCode(DatePicker node)
   {
     //Add a Show a tooltip!
-    addErrorTooltip(node, "-fx-text-fill: red;", "Field cannot be empty.");
+    this.getSceneController().addErrorTooltip(node, "-fx-text-fill: red;", "Field cannot be empty.");
     node.getEditor().setStyle("-fx-prompt-text-fill: red;");
 
     //Update console with an error:
@@ -849,7 +764,6 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   public void validate_DatePicker(ActionEvent actionEvent)
   {
     buttonCreateProject.setDisable(true);
-    System.out.println("running");
     DatePicker date = (DatePicker) actionEvent.getSource();
 
     TextField dateValue = new TextField();
@@ -865,44 +779,6 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     {
       addTemporaryProjectData(dateValue);
     }
-  }
-
-  /** This code is run locally in this class. It adds a ToolTip to the received node.
-   * Takes a KeyEvent and parses this as a TextField.
-   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
-   * Parameters are:
-   * "KeyEvent keyNode": A reference to the node belonging to the KeyEvent that triggered this method.
-   * "String textStyle": A CSS style format used to ie. color the text in the TextField (or similar).
-   * "String toolTipMessage": The text that should be displayed in the tooltip.
-   * Author: K. Dashnaw
-   * */
-  private void addErrorTooltip(KeyEvent keyNode, String textStyle, String toolTipMessage)
-  {
-    TextField text = (TextField) keyNode.getSource();
-    text.setStyle(textStyle);
-
-    Tooltip tooltip = new Tooltip();
-    tooltip.setText(toolTipMessage);
-    tooltip.setShowDelay(Duration.seconds(0));
-    text.setTooltip(tooltip);
-  }
-
-  /** This code is run locally in this class. It adds a ToolTip to the received node.
-   * Takes a DatePicker
-   * Parameters are:
-   * "DatePicker node": A reference to the node belonging to the DatePicker that triggered this method.
-   * "String textStyle": A CSS style format used to ie. color the text in the TextField (or similar).
-   * "String toolTipMessage": The text that should be displayed in the tooltip.
-   * Author: K. Dashnaw
-   * */
-  private void addErrorTooltip(DatePicker node, String textStyle, String toolTipMessage)
-  {
-    node.getEditor().setStyle(textStyle);
-
-    Tooltip tooltip = new Tooltip();
-    tooltip.setText(toolTipMessage);
-    tooltip.setShowDelay(Duration.seconds(0));
-    node.setTooltip(tooltip);
   }
 
   /** Can be called from eventHandlers in the .fxml scene, which do not require input validation,
@@ -1366,34 +1242,95 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     //Now check project specific data fields:
     else if(activeProject instanceof ResidentialProject project)
     {
-      //Check residential fields with no default values defined. These being; Building size
-      if(project.getBuildingSize() == 0)
+      //Perform some more input validation on the remaining values, since these might not have been evaluated if the user has set illegal default values in the settings view.
+      if(!(Integer.parseInt("" + project.getNumberOfBathrooms()) >= 0 && Integer.parseInt("" + project.getNumberOfBathrooms()) < Integer.MAX_VALUE))
       {
+        //NumberOfBathrooms is not a legal value.
         dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Number Of Bathrooms has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
+      else if(!(Integer.parseInt("" + project.getNumberOfKitchens()) >= 0 && Integer.parseInt("" + project.getNumberOfKitchens()) < Integer.MAX_VALUE))
+      {
+        //NumberOfKitchens is not a legal value.
+        dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Number Of Bathrooms has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
+      else if(!(Double.parseDouble("" + project.getBuildingSize()) > 0 && Double.parseDouble("" + project.getBuildingSize()) < Integer.MAX_VALUE))
+      {
+        //Building Size is not a legal value.
+        dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Building size has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
+      else if(!(Integer.parseInt("" + project.getNumberOfOtherRoomsWithPlumbing()) >= 0 && Integer.parseInt("" + project.getNumberOfOtherRoomsWithPlumbing()) < Integer.MAX_VALUE))
+      {
+        //Other rooms with plumbing number is not a legal value.
+        dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Number of other rooms with plumbing size has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
       }
     }
     else if(activeProject instanceof CommercialProject project)
     {
-      //Check residential fields with no default values defined. These being; Building size
-      if(project.getBuildingSize() == 0 || project.getIntendedBuildingUse().isBlank())
+      //Perform some more input validation on the remaining values, since these might not have been evaluated if the user has set illegal default values in the settings view.
+      if(!(Integer.parseInt("" + project.getNumberOfFloors()) >= 0 && Integer.parseInt("" + project.getNumberOfFloors()) < Integer.MAX_VALUE))
       {
+        //NumberOfFloors is not a legal value.
         dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Number Of Floors has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
+      else if(!(Double.parseDouble("" + project.getBuildingSize()) > 0 && Double.parseDouble("" + project.getBuildingSize()) < Double.MAX_VALUE))
+      {
+        //Building Size is not a legal value.
+        dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Building size has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
       }
     }
     else if(activeProject instanceof IndustrialProject project)
     {
-      //Check residential fields with no default values defined. These being; Building size
-      if(project.getFacilitySize() == 0 || project.getFacilityType().isBlank())
+      //Check Industrial fields with no default values defined. These being; Facility size
+      if(!(Double.parseDouble("" + project.getFacilitySize()) > 0 && Double.parseDouble("" + project.getFacilitySize()) < Integer.MAX_VALUE))
       {
+        //Building Size is not a legal value.
         dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Facility size has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
       }
     }
     else if(activeProject instanceof RoadProject project)
     {
-      //Check residential fields with no default values defined. These being; Building size
-      if(project.getRoadLength() == 0 || project.getRoadWidth() == 0)
+      //Perform some more input validation on the remaining values, since these might not have been evaluated if the user has set illegal default values in the settings view.
+      if(!(Double.parseDouble("" + project.getRoadLength()) >= 0 && Double.parseDouble("" + project.getRoadLength()) < Integer.MAX_VALUE))
       {
+        //Road length is not a legal value.
         dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Road length has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
+      else if(!(Double.parseDouble("" + project.getRoadWidth()) >= 0 && Double.parseDouble("" + project.getRoadWidth()) < Integer.MAX_VALUE))
+      {
+        //Road width is not a legal value.
+        dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Road width has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
+      else if(project.getBridgeOrTunnelDetails().isBlank())
+      {
+        //Any bridges or tunnels is not a legal value.
+        dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Any bridges or tunnels has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
+      else if(project.getEnvironmentalOrGeographicalChallenges().isBlank())
+      {
+        //Any environmental or geographical comments is not a legal value.
+        dataIsMissing = true;
+        this.getSceneController().setGUI_ConsoleMessage("Any environmental or geological field has an illegal value!");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
       }
     }
 

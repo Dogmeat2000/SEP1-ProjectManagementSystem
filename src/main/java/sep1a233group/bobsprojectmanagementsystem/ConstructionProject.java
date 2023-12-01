@@ -1,6 +1,8 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
-public abstract class ConstructionProject
+import java.io.Serializable;
+
+public abstract class ConstructionProject implements Serializable
 {
   private Address projectAddress; //What is the address of the Project?
   private Customer customer; // who is the project for?

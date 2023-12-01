@@ -1,6 +1,8 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
-public class HumanRessources
+import java.io.Serializable;
+
+public class HumanRessources implements Serializable
 {
   private double manHoursSpent, totalManHoursNeeded;
 

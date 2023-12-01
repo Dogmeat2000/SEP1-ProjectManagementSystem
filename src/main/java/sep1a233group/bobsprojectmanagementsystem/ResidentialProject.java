@@ -1,10 +1,12 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import java.io.Serializable;
+
 /**
  * This class defines one of the 4 construction project types.
  * Author: K. Dashnaw (All included methods in class, unless otherwise stated)
  */
-public class ResidentialProject extends ConstructionProject
+public class ResidentialProject extends ConstructionProject implements Serializable
 {
   private boolean isRenovation; //False = Project is a new construction. True = Project is a renovation.
   private int numberOfKitchens, numberOfBathrooms, numberOfOtherRoomsWithPlumbing; //Project data

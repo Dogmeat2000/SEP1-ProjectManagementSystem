@@ -3,6 +3,8 @@ package sep1a233group.bobsprojectmanagementsystem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /** This is the main controller for the project management system.
@@ -24,6 +26,7 @@ public class MainModel
 
   /**
    * Constructs the MainModel.
+   * Also loads any available project details from system file.
    * Author: K. Dashnaw
    */
   public MainModel()
@@ -31,25 +34,20 @@ public class MainModel
     //Initialize the file manager.
     setFileManager();
 
-    //TODO: Implement som coding logic for the initialization of the dashboardProgressReports at this stage, that loads this information from a Binary File - if such a file exists
-    //The below is simply dummy information for now!
-    setDashboardProgressReport(new DashboardProgressReports());
-
-    //TODO: Implement som coding logic for the initialization of the allProjectsList at this stage, that loads this information from a Binary File - if such a file exists
-    //The below is simply dummy information for now!
-    setAllProjectsList(new ArrayList<>());
-
-    //TODO: Implement som coding logic for all the below, attempting to first load data from a file if such a file exists and data is proper!
-    //The below is simply dummy information for now!
-
-    setDefaultResidentialSettings(new DefaultResidentialSettings(0,0,0,0,false));
-    setDefaultCommercialSettings(new DefaultCommercialSettings(0,0));
-    setDefaultIndustrialSettings(new DefaultIndustrialSettings(0));
-    setDefaultRoadSettings(new DefaultRoadSettings("","",0));
+    //Load any system files that might be present:
+    if(load())
+    {
+      //loading was successful
+      System.out.println("Debug: Data successfully loaded and validated.");
+    }
+    else
+    {
+      //loading failed. The load method re-initialized a clean system file. Any prior data is lost.
+      System.out.println("Debug: Data was not loaded successfully. New data has been initialized instead.");
+    }
   }
 
-  /**
-   * Returns an array with the marked Dashboard projects that the user wants shown on the GUI Dashboard.
+  /** Returns an array with the marked Dashboard projects that the user wants shown on the GUI Dashboard.
    * Author: K. Dashnaw
    */
   public DashboardProgressReports getDashboardProgressReports()
@@ -57,8 +55,7 @@ public class MainModel
     return dashboardProgressReports;
   }
 
-  /**
-   * Sets/Initializes the DashboardProgressReports array
+  /** Sets/Initializes the DashboardProgressReports array
    * Author: K. Dashnaw
    */
   public void setDashboardProgressReport(DashboardProgressReports progressReports)
@@ -66,8 +63,7 @@ public class MainModel
     this.dashboardProgressReports = progressReports;
   }
 
-  /**
-   * Returns an ArrayList with ALL the projects in the project management system
+  /** Returns an ArrayList with ALL the projects in the project management system
    * Author: K. Dashnaw
    */
   public ArrayList<ConstructionProject> getAllProjectsList()
@@ -75,23 +71,41 @@ public class MainModel
     return allProjectsList;
   }
 
+  /** Returns the currently "active" project. Especially used when editing or creating projects.
+   * Author: K. Dashnaw
+   */
   public ConstructionProject getSelectedProject()
   {
     return selectedProject;
   }
 
+  /** Sets/Initializes an "active project". Especially used when creating new projects of this type.
+   * Author: K. Dashnaw
+   */
   public void setSelectedProject(ResidentialProject selectedProject)
   {
     this.selectedProject = selectedProject;
   }
+
+  /** Sets/Initializes an "active project". Especially used when creating new projects of this type.
+   * Author: K. Dashnaw
+   */
   public void setSelectedProject(CommercialProject selectedProject)
   {
     this.selectedProject = selectedProject;
   }
+
+  /** Sets/Initializes an "active project". Especially used when creating new projects of this type.
+   * Author: K. Dashnaw
+   */
   public void setSelectedProject(IndustrialProject selectedProject)
   {
     this.selectedProject = selectedProject;
   }
+
+  /** Sets/Initializes an "active project". Especially used when creating new projects of this type.
+   * Author: K. Dashnaw
+   */
   public void setSelectedProject(RoadProject selectedProject)
   {
     this.selectedProject = selectedProject;
@@ -121,8 +135,7 @@ public class MainModel
     this.fileManager = new FileIO();
   }
 
-  /**
-   * Gets the default residential project settings used when creating new projects
+  /** Gets the default residential project settings used when creating new projects
    * Author: K. Dashnaw
    */
   public DefaultResidentialSettings getDefaultResidentialSettings()
@@ -130,8 +143,7 @@ public class MainModel
     return defaultResidentialSettings;
   }
 
-  /**
-   * Sets/Initializes the default residential project settings used when creating new projects
+  /** Sets/Initializes the default residential project settings used when creating new projects
    * Author: K. Dashnaw
    */
   public void setDefaultResidentialSettings(
@@ -140,8 +152,7 @@ public class MainModel
     this.defaultResidentialSettings = defaultResidentialSettings;
   }
 
-  /**
-   * Gets the default commercial project settings used when creating new projects
+  /** Gets the default commercial project settings used when creating new projects
    * Author: K. Dashnaw
    */
   public DefaultCommercialSettings getDefaultCommercialSettings()
@@ -149,8 +160,7 @@ public class MainModel
     return defaultCommercialSettings;
   }
 
-  /**
-   * Sets/Initializes the default commercial project settings used when creating new projects
+  /** Sets/Initializes the default commercial project settings used when creating new projects
    * Author: K. Dashnaw
    */
   public void setDefaultCommercialSettings(
@@ -159,8 +169,7 @@ public class MainModel
     this.defaultCommercialSettings = defaultCommercialSettings;
   }
 
-  /**
-   * Gets the default industrial project settings used when creating new projects
+  /** Gets the default industrial project settings used when creating new projects
    * Author: K. Dashnaw
    */
   public DefaultIndustrialSettings getDefaultIndustrialSettings()
@@ -168,8 +177,7 @@ public class MainModel
     return defaultIndustrialSettings;
   }
 
-  /**
-   * Sets/Initializes the default industrial project settings used when creating new projects
+  /** Sets/Initializes the default industrial project settings used when creating new projects
    * Author: K. Dashnaw
    */
   public void setDefaultIndustrialSettings(
@@ -178,8 +186,7 @@ public class MainModel
     this.defaultIndustrialSettings = defaultIndustrialSettings;
   }
 
-  /**
-   * Gets the default road project settings used when creating new projects
+  /** Gets the default road project settings used when creating new projects
    * Author: K. Dashnaw
    */
   public DefaultRoadSettings getDefaultRoadSettings()
@@ -187,8 +194,7 @@ public class MainModel
     return defaultRoadSettings;
   }
 
-  /**
-   * Sets/Initializes the default road project settings used when creating new projects
+  /** Sets/Initializes the default road project settings used when creating new projects
    * Author: K. Dashnaw
    */
   public void setDefaultRoadSettings(DefaultRoadSettings defaultRoadSettings)
@@ -196,8 +202,7 @@ public class MainModel
     this.defaultRoadSettings = defaultRoadSettings;
   }
 
-  /**
-   * Adds a single construction project to the project management system.
+  /** Adds a single construction project to the project management system.
    * Returns true if operation was successful.
    * Author: K. Dashnaw
    */
@@ -218,6 +223,13 @@ public class MainModel
     }
   }
 
+  /** Initializes a new default project of the given type. Available types are:
+   * 'ResidentialProjectType', 'CommercialProjectType', 'IndustrialProjectType' or 'RoadProjectType'
+   * Parameters are:
+   * "String projectType": String value matching one of the above cases.
+   * If String does not match, no operation is performed here.
+   * Author: K. Dashnaw
+   */
   public void newActiveProject(String projectType)
   {
     //Create a new project of the selected type.
@@ -238,6 +250,11 @@ public class MainModel
     }
   }
 
+  /** Method is called from the 'Create Project' GUI.
+   * It ensures that the proper default project specific data are loaded into proper .fxml elements in the GUI.
+   * Parameters are references to the specific JavaFX elements the default data should be loaded into.
+   * Author: K. Dashnaw
+   */
   public void initializeCreateProjectGUI(TextField bathroomGUIID, TextField kitchenGUIID, TextField otherPlumbingGUIID, TextField durationGUIID, TextField buildingSizeGUIID)
   {
     ResidentialProject currentProject = (ResidentialProject) this.getSelectedProject();
@@ -249,6 +266,11 @@ public class MainModel
     buildingSizeGUIID.setText("" + currentProject.getBuildingSize());
   }
 
+  /** Method is called from the 'Create Project' GUI.
+   * It ensures that the proper default project specific data are loaded into proper .fxml elements in the GUI.
+   * Parameters are references to the specific JavaFX elements the default data should be loaded into.
+   * Author: K. Dashnaw
+   */
   public void initializeCreateProjectGUI(TextField floorsGUIID, TextField durationGUIID, TextField buildingSizeGUIID, TextArea intendedUseGUIID)
   {
     CommercialProject currentProject = (CommercialProject) this.getSelectedProject();
@@ -259,6 +281,11 @@ public class MainModel
     intendedUseGUIID.setText(currentProject.getIntendedBuildingUse());
   }
 
+  /** Method is called from the 'Create Project' GUI.
+   * It ensures that the proper default project specific data are loaded into proper .fxml elements in the GUI.
+   * Parameters are references to the specific JavaFX elements the default data should be loaded into.
+   * Author: K. Dashnaw
+   */
   public void initializeCreateProjectGUI(TextField durationGUIID, TextField buildingSizeGUIID, TextArea intendedUseGUIID)
   {
     IndustrialProject currentProject = (IndustrialProject) this.getSelectedProject();
@@ -268,6 +295,11 @@ public class MainModel
     intendedUseGUIID.setText(currentProject.getFacilityType());
   }
 
+  /** Method is called from the 'Create Project' GUI.
+   * It ensures that the proper default project specific data are loaded into proper .fxml elements in the GUI.
+   * Parameters are references to the specific JavaFX elements the default data should be loaded into.
+   * Author: K. Dashnaw
+   */
   public void initializeCreateProjectGUI(TextField lengthGUIID, TextField widthGUIID, TextField durationGUIID, TextArea bridgeOrTunnelInfoGUIID, TextArea environmentalInfoGUIID)
   {
     RoadProject currentProject = (RoadProject) this.getSelectedProject();
@@ -275,27 +307,23 @@ public class MainModel
     lengthGUIID.setText("" + currentProject.getRoadLength());
     widthGUIID.setText("" + currentProject.getRoadWidth());
     durationGUIID.setText("" + currentProject.getProjectDuration());
-    bridgeOrTunnelInfoGUIID.setText("" + currentProject.getBridgeOrTunnelDetails());
-    environmentalInfoGUIID.setText("" + currentProject.getEnvironmentalOrGeographicalChallenges());
+    bridgeOrTunnelInfoGUIID.setText(currentProject.getBridgeOrTunnelDetails());
+    environmentalInfoGUIID.setText(currentProject.getEnvironmentalOrGeographicalChallenges());
   }
 
-  /**
-   * Edits a single construction project in the project management system.
+  /** Edits a single construction project in the project management system.
    * Returns true if operation was successful.
    * Author:
    */
   public boolean editProject(ConstructionProject project)
   {
     ArrayList<ConstructionProject> filteredProjects = new ArrayList<>();
-
-
       //TODO: Implement method.
 
       return false;
     }
 
-  /**
-   * Removes a single construction project from the project management system.
+  /** Removes a single construction project from the project management system.
    * Returns true if operation was successful.
    * Author:
    */
@@ -305,8 +333,7 @@ public class MainModel
     return false;
   }
 
-  /**
-   * Sets the current filtering options that are applied when projects are displayed in the GUI.
+  /** Sets the current filtering options that are applied when projects are displayed in the GUI.
    * I.e.: For instance a filtering option could be to only show projects with a budget between 100,000 and 500,000.
    * Returns true if operation was successful.
    * Author:
@@ -319,23 +346,25 @@ public class MainModel
     return false;
   }
 
-    /** Sets the current default project settings that are applied when new projects are created.
-     * Returns true if operation was successful.
-     * Author:
-     * */
-    public boolean editDefaultProjectSettings () {
-    //TODO: Implement method.
-    return false;
+  /** Sets the current default project settings that are applied when new projects are created.
+   * Returns true if operation was successful.
+   * Author:
+   * */
+  public boolean editDefaultProjectSettings ()
+  {
+  //TODO: Implement method.
+  return false;
   }
 
-    /** Enables data persistence across sessions by saving relevant system information to a file.
-     *  Note: Validation of data integrity should be conducted prior to calling this save method,
-     *  ideally as early as while adding data to the model field attributes.
-     *  Returns true if operation was successful.
-     *  Author: K. Dashnaw
-     * */
-    public boolean save () {
-    Object[] objectList = new Object[8]; //Pack all the different system Object into a single Object array before saving.
+  /** Enables data persistence across sessions by saving relevant system information to a file.
+   *  Note: Validation of data integrity should be conducted prior to calling this save method,
+   *  ideally as early as while adding data to the model field attributes.
+   *  Returns true if operation was successful.
+   *  Author: K. Dashnaw
+   * */
+  public boolean save ()
+  {
+    Object[] objectList = new Object[7]; //Pack all the different system Object into a single Object array before saving.
 
     objectList[0] = this.getAllProjectsList();
     objectList[1] = this.getDashboardProgressReports();
@@ -343,7 +372,7 @@ public class MainModel
     objectList[3] = this.getDefaultCommercialSettings();
     objectList[4] = this.getDefaultIndustrialSettings();
     objectList[5] = this.getDefaultRoadSettings();
-    objectList[7] = this.getFileManager().getLastDataSaveTime();
+    objectList[6] = this.getFileManager().getLastDataSaveTime();
 
     if (this.getFileManager().writeToBinary(objectList))
     {
@@ -356,13 +385,136 @@ public class MainModel
     }
   }
 
-    /** Enables data persistence across sessions by loading relevant system information from a file.
-     * Returns true if operation was successful.
-     * Author: K. Dashnaw
-     * */
-    public boolean load () {
-    //TODO: Implement method.
-    return false;
+  /** Enables data persistence across sessions by loading relevant system information from a binary file.
+   * Returns true if operation was successful.
+   * Author: K. Dashnaw
+   * */
+  @SuppressWarnings("unchecked")
+  public boolean load ()
+  {
+    Object[] objectList = new Object[7];
+    boolean returnValue = true;
+
+    //Try to load the system binary file:
+    try
+    {
+      objectList = getFileManager().readFromBinary();
+    }
+    catch(FileNotFoundException error1)
+    {
+      System.out.println("Unable to load local system file: " + error1);
+      returnValue = false;
+    }
+    catch(IOException error2)
+    {
+      System.out.println("Unable to load. Unknown exception: " + error2);
+      returnValue = false;
+    }
+    catch(ClassNotFoundException | NullPointerException error3)
+    {
+      System.out.println("Unable to load. Data is corrupted");
+      returnValue = false;
+    }
+
+    //If the above operation failed, we create new project files.
+    if(!returnValue)
+    {
+      setAllProjectsList(new ArrayList<>());
+      setDashboardProgressReport(new DashboardProgressReports());
+      setDefaultResidentialSettings(new DefaultResidentialSettings(0,0,0,0,false));
+      setDefaultCommercialSettings(new DefaultCommercialSettings(0,0));
+      setDefaultIndustrialSettings(new DefaultIndustrialSettings(0));
+      setDefaultRoadSettings(new DefaultRoadSettings("","",0));
+    }
+    else
+    {
+      //Now we evaluate the data integrity of the loaded classes.
+      try
+      {
+        setAllProjectsList((ArrayList<ConstructionProject>) objectList[0]);
+      }
+      catch(Throwable error)
+      {
+        //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
+        System.out.println("Unable to validate construction project files. Initializing new files instead!");
+        //Data in this class must be corrupted. Re-initialize a clean class!
+        setAllProjectsList(new ArrayList<>());
+        returnValue = false;
+      }
+      try
+      {
+        setDashboardProgressReport((DashboardProgressReports) objectList[1]);
+      }
+      catch(Throwable error)
+      {
+        //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
+        System.out.println("Unable to validate DashBoard progress report files. Initializing new files instead!");
+        //Data in this class must be corrupted. Re-initialize a clean class!
+        setDashboardProgressReport(new DashboardProgressReports());
+        returnValue = false;
+      }
+      try
+      {
+        setDefaultResidentialSettings((DefaultResidentialSettings) objectList[2]);
+      }
+      catch(Throwable error)
+      {
+        //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
+        System.out.println("Unable to validate Default Residential Settings. Initializing new files instead!");
+        //Data in this class must be corrupted. Re-initialize a clean class!
+        setDefaultResidentialSettings(new DefaultResidentialSettings(0,0,0,0,false));
+        returnValue = false;
+      }
+      try
+      {
+        setDefaultCommercialSettings((DefaultCommercialSettings) objectList[3]);
+      }
+      catch(Throwable error)
+      {
+        //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
+        System.out.println("Unable to validate Default Commercial Settings. Initializing new files instead!");
+        //Data in this class must be corrupted. Re-initialize a clean class!
+        setDefaultCommercialSettings(new DefaultCommercialSettings(0,0));
+        returnValue = false;
+      }
+      try
+      {
+        setDefaultIndustrialSettings((DefaultIndustrialSettings) objectList[4]);
+      }
+      catch(Throwable error)
+      {
+        //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
+        System.out.println("Unable to validate Default Industrial Settings. Initializing new files instead!");
+        //Data in this class must be corrupted. Re-initialize a clean class!
+        setDefaultIndustrialSettings(new DefaultIndustrialSettings(0));
+        returnValue = false;
+      }
+      try
+      {
+        setDefaultRoadSettings((DefaultRoadSettings) objectList[5]);
+      }
+      catch(Throwable error)
+      {
+        //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
+        System.out.println("Unable to validate Default Road Settings. Initializing new files instead!");
+        //Data in this class must be corrupted. Re-initialize a clean class!
+        setDefaultRoadSettings(new DefaultRoadSettings("","",0));
+        returnValue = false;
+      }
+      try
+      {
+        getFileManager().setLastDataSaveTime((MyDate) objectList[6]);
+      }
+      catch(Throwable error)
+      {
+        //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
+        System.out.println("Unable to validate last save date. Initializing new files instead!");
+        //Data in this class must be corrupted. Re-initialize a clean class!
+        getFileManager().setLastDataSaveTime(MyDate.now());
+        returnValue = false;
+      }
+    }
+  return returnValue;
   }
 
   }

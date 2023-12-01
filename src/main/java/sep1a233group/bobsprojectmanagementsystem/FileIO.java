@@ -179,13 +179,31 @@ public class FileIO
   /** Loads system persistence data from a local binary file.
    * File references are defined directly in FileIO.
    * Return true if loading was successful.
-   * Returns false if not.
+   * Returns an Object Array containing all the system projects and related information, or throws a NullPointerException..
    * Author: K. Dashnaw
    * */
-  public boolean readFromBinary()
+  public Object[] readFromBinary() throws FileNotFoundException, IOException, ClassNotFoundException, NullPointerException
   {
-    //TODO: Implement
-    return false;
-  }
+    System.out.println("Loading data from binary file");
 
+    //Try with resources:
+    //1. Create fileInput Stream:
+    try(FileInputStream fis = new FileInputStream(getSystemSaveFile()))
+    {
+      //2. Create ObjectStream:
+      ObjectInputStream in = new ObjectInputStream(fis);
+      Object[] objectList = (Object[]) in.readObject();
+      System.out.println("Data successfully read from Binary.");
+
+      if(objectList == null)
+      {
+        System.out.println("Data is corrupt!");
+        throw new NullPointerException();
+      }
+      else
+      {
+        return objectList;
+      }
+    }
+  }
 }

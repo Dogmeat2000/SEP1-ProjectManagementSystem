@@ -1,6 +1,8 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
-public class Address
+import java.io.Serializable;
+
+public class Address implements Serializable
 {
 
   private String street, streetNumber, apartment, city, country;

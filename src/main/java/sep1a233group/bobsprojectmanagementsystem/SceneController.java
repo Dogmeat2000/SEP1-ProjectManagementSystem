@@ -2,10 +2,10 @@ package sep1a233group.bobsprojectmanagementsystem;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,13 +50,23 @@ public class SceneController
     this.GUI_ConsoleMessage = GUI_ConsoleMessage;
   }
 
+  public MainModel getActiveModel()
+  {
+    return activeModel;
+  }
+
+  public void setActiveModel(MainModel activeModel)
+  {
+    this.activeModel = activeModel;
+  }
+
   /**
    * The Scene Controller class is used for controlling the active scene in the GUI application.
    * It is inspired by some of the SDJ1 developmental work our Lector, Michael, has presented during the SDJ1 course - specifically relating to the use of a 'viewhandler'
    */
   public SceneController(MainModel activeModel, Stage activeStage)
   {
-    this.activeModel = activeModel;
+    setActiveModel(activeModel);
     setActiveStage(activeStage);
     setGUI_ConsoleMessage("Application successfully loaded");
     sceneControllers = new HashMap<>();
@@ -105,15 +115,20 @@ public class SceneController
   /** This is a common method shared between all GUI scenes. This method saves all system data before terminating the application safely. */
   public void exitApplication()
   {
-
-    //TODO 1: Implement a check before initializing the termination. It is important to verify if the user truly wishes to exit, if this
-    // method is called from the 'Create new project' or 'edit project' view screen. Data might be lost unintentionally if no check is performed here.
-
-    //TODO 2: Implement a method to save the data currently in the system to Binary file (or similar) before exiting the application.
-
     System.out.println(
         "User pressed the 'EXIT' button. System is now attempting to terminate the GUI application.");
-    exit();
+
+    //Saving data, before closing.
+    if(getActiveModel().save())
+    {
+      System.out.println("Data was saved successfully on user exit.");
+      exit();
+    }
+    else
+    {
+      System.out.println("Error occurred while saving. Unable to save.");
+      setGUI_ConsoleMessage("Unknown error occurred while saving. Unable to save. Please backup any critical information before manually terminating.");
+    }
   }
 
   /**
@@ -177,7 +192,6 @@ public class SceneController
    * It creates a simple confirmation window inside the active window area and returns which button the user selected to press.
    * It takes these parameters:
    * "String message": This message is displayed inside the confirmation window.
-   *
    * It returns one of these messages:
    * "cancelPressed": The user decided to press cancel, or exit, in the confirmation window.
    * "confirmationPressed": The user pressed "confirm"/"ok" in the window, signaling the intent to proceed with the prompted action.
@@ -214,6 +228,182 @@ public class SceneController
       //OK button is pressed
       return "confirmationPressed";
     }
+  }
+
+  /** Returns FALSE if TextField is empty and TRUE is they are not.
+   * Input validation method called from the local scene control model, which gets a call from the .fxml scene upon interacting with a
+   * TextField with this method set as an "On Key Typed" event.
+   * This method MUST be run on a TextField in order to avoid potential crashes/errors.
+   * Author: K. Dashnaw
+   */
+  public boolean validate_NotEmpty(KeyEvent keyNode)
+  {
+    TextField text = (TextField) keyNode.getSource();
+    String userText = text.getText();
+
+    //Check if field is empty:
+    if (userText.isBlank())
+    {
+      emptyTextFieldCode(keyNode);
+      return false;
+    }
+    //Passed validation, ensure previous tooltips are removed and text colors reverted:
+    if (text.getTooltip() != null)
+    {
+      text.setTooltip(null);
+      text.setStyle("-fx-text-fill: black;");
+    }
+    return true;
+  }
+
+  /** Returns FALSE if TextField is either empty OR a number/digit, and TRUE is TextField is none of both.
+   * Input validation method called directly from the .fxml scene upon interacting with a
+   * TextField with this method set as an "On Key Typed" event.
+   * This method MUST be run on a TextField in order to avoid potential crashes/errors.
+   * Author: K. Dashnaw
+   */
+  public boolean validate_NotEmpty_NotNumber(KeyEvent keyNode, String errorMessage)
+  {
+    TextField text = (TextField) keyNode.getSource();
+    String userText = text.getText();
+
+    //Check if field is empty:
+    if (userText.isBlank())
+    {
+      emptyTextFieldCode(keyNode);
+      return false;
+    }
+    else
+    {
+      //Check if field is a number:
+      try
+      {
+        //If the below parseTest throws an exception, the string is not a number.
+        Double.parseDouble(userText);
+
+        //Field is a number. Show a tooltip!
+        addErrorTooltip(keyNode, "-fx-text-fill: red;","Field cannot be a number.");
+
+        //Update console with an error:
+        setGUI_ConsoleMessage(errorMessage);
+        return false;
+      }
+      catch (NumberFormatException error)
+      {
+        //Passed validation, ensure previous tooltips are removed and text colors reverted:
+        if (text.getTooltip() != null)
+        {
+          text.setTooltip(null);
+          text.setStyle("-fx-text-fill: black;");
+        }
+      }
+      return true;
+    }
+  }
+
+  /** Returns FALSE if TextField is either empty OR a string OR a negative number/digit, and TRUE is TextField is none of either.
+   * Input validation method called directly from the .fxml scene upon interacting with a
+   * TextField with this method set as an "On Key Typed" event.
+   * This method MUST be run on a TextField in order to avoid potential crashes/errors.
+   * Author: K. Dashnaw
+   */
+  public boolean validate_NotEmpty_NotString_NotNegative(KeyEvent keyNode, String errorMessage)
+  {
+    TextField text = (TextField) keyNode.getSource();
+    String userText = text.getText();
+
+    //Check if field is empty:
+    if (userText.isBlank())
+    {
+      emptyTextFieldCode(keyNode);
+      return false;
+    }
+    else
+    {
+      //Check if field is a String:
+      try
+      {
+        //If the below test succeeds, then this is a number.
+        double testValue = Double.parseDouble(userText);
+        if (testValue < 0)
+        {
+          //Check if it is a negative value. If so, throw an error and catch it later.
+          throw new NumberFormatException();
+        }
+
+        //Passed validation, ensure previous tooltips are removed and text colors reverted:
+        if (text.getTooltip() != null)
+        {
+          text.setTooltip(null);
+          text.setStyle("-fx-text-fill: black;");
+        }
+        return true;
+      }
+      catch (NumberFormatException error)
+      {
+        //Field is a number. Show a tooltip!
+        addErrorTooltip(keyNode, "-fx-text-fill: red;","Field must be a positive number");
+
+        //Update console with an error:
+        setGUI_ConsoleMessage(errorMessage);
+        return false;
+      }
+    }
+  }
+
+  /** This code is run locally in this class. It simply checks if the given TextField contains any data or not.
+   * Takes a KeyEvent and parses this as a TextField.
+   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
+   * Author: K. Dashnaw
+   * */
+  public void emptyTextFieldCode(KeyEvent keyNode)
+  {
+    TextField text = (TextField) keyNode.getSource();
+
+    //Add a Show a tooltip!
+    addErrorTooltip(keyNode, "-fx-text-fill: red;", "Field cannot be empty.");
+    text.setStyle("-fx-prompt-text-fill: red;");
+
+    //Update console with an error:
+    setGUI_ConsoleMessage("Error in data values while creating new project. Please review and correct!");
+  }
+
+  /** This code is run locally in this class. It adds a ToolTip to the received node.
+   * Takes a KeyEvent and parses this as a TextField.
+   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
+   * Parameters are:
+   * "KeyEvent keyNode": A reference to the node belonging to the KeyEvent that triggered this method.
+   * "String textStyle": A CSS style format used to ie. color the text in the TextField (or similar).
+   * "String toolTipMessage": The text that should be displayed in the tooltip.
+   * Author: K. Dashnaw
+   * */
+  private void addErrorTooltip(KeyEvent keyNode, String textStyle, String toolTipMessage)
+  {
+    TextField text = (TextField) keyNode.getSource();
+    text.setStyle(textStyle);
+
+    Tooltip tooltip = new Tooltip();
+    tooltip.setText(toolTipMessage);
+    tooltip.setShowDelay(Duration.seconds(0));
+    text.setTooltip(tooltip);
+  }
+
+  /** This code is run locally in this class. It adds a ToolTip to the received node.
+   * Takes a DatePicker
+   * Parameters are:
+   * "DatePicker node": A reference to the node belonging to the DatePicker that triggered this method.
+   * "String textStyle": A CSS style format used to ie. color the text in the TextField (or similar).
+   * "String toolTipMessage": The text that should be displayed in the tooltip.
+   * Author: K. Dashnaw
+   * */
+  public void addErrorTooltip(DatePicker node, String textStyle, String toolTipMessage)
+  {
+    node.getEditor().setStyle(textStyle);
+
+    Tooltip tooltip = new Tooltip();
+    tooltip.setText(toolTipMessage);
+    tooltip.setShowDelay(Duration.seconds(0));
+    node.setTooltip(tooltip);
   }
 
 }

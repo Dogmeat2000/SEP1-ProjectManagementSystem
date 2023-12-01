@@ -1,6 +1,8 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
-public class ProgressReport
+import java.io.Serializable;
+
+public class ProgressReport implements Serializable
 {
   private Customer customer;
   private Address projectAddress;

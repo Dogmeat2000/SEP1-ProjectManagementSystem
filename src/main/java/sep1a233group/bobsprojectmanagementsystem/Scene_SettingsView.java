@@ -101,6 +101,9 @@ public class Scene_SettingsView implements Scene_ControllerInterface
   public void exitApplication()
   {
     this.getSceneController().exitApplication();
+
+    //Update console message, in case an error occurred above:
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 }
 

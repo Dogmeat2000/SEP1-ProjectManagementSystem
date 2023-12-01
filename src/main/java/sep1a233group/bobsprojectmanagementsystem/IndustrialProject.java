@@ -1,10 +1,12 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import java.io.Serializable;
+
 /**
  * This class defines one of the 4 construction project types.
  * Author: K. Dashnaw (All included methods in class, unless otherwise stated)
  */
-public class IndustrialProject extends ConstructionProject
+public class IndustrialProject extends ConstructionProject implements Serializable
 {
     private String facilityType; //Used to describe what type of facility is planned.
     private double facilitySize; //Size of building project in m^2.
