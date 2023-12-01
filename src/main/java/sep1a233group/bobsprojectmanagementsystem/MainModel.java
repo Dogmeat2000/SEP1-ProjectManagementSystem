@@ -22,18 +22,14 @@ public class MainModel
   private ConstructionProject selectedProject; //Container used to contain currently selected/active project information.
 
 
-  /** Constructs the MainModel.
- * Author: K. Dashnaw
- * */
+  /**
+   * Constructs the MainModel.
+   * Author: K. Dashnaw
+   */
   public MainModel()
   {
     //Initialize the file manager.
     setFileManager();
-
-
-
-
-
 
     //TODO: Implement som coding logic for the initialization of the dashboardProgressReports at this stage, that loads this information from a Binary File - if such a file exists
     //The below is simply dummy information for now!
@@ -52,25 +48,28 @@ public class MainModel
     setDefaultRoadSettings(new DefaultRoadSettings());
   }
 
-  /** Returns an array with the marked Dashboard projects that the user wants shown on the GUI Dashboard.
+  /**
+   * Returns an array with the marked Dashboard projects that the user wants shown on the GUI Dashboard.
    * Author: K. Dashnaw
-   * */
+   */
   public DashboardProgressReports getDashboardProgressReports()
   {
     return dashboardProgressReports;
   }
 
-/** Sets/Initializes the DashboardProgressReports array
- * Author: K. Dashnaw
- * */
+  /**
+   * Sets/Initializes the DashboardProgressReports array
+   * Author: K. Dashnaw
+   */
   public void setDashboardProgressReport(DashboardProgressReports progressReports)
   {
     this.dashboardProgressReports = progressReports;
   }
 
-  /** Returns an ArrayList with ALL the projects in the project management system
+  /**
+   * Returns an ArrayList with ALL the projects in the project management system
    * Author: K. Dashnaw
-   * */
+   */
   public ArrayList<ConstructionProject> getAllProjectsList()
   {
     return allProjectsList;
@@ -98,101 +97,113 @@ public class MainModel
     this.selectedProject = selectedProject;
   }
 
-  /** Sets/Initializes an ArrayList containing all the projects in the project management system
+  /**
+   * Sets/Initializes an ArrayList containing all the projects in the project management system
    * Author: K. Dashnaw
-   * */
+   */
   public void setAllProjectsList(ArrayList<ConstructionProject> allProjectsList)
   {
     this.allProjectsList = allProjectsList;
   }
 
-  /** Gets the file manager responsible for maintaining data persistence across sessions
+  /**
+   * Gets the file manager responsible for maintaining data persistence across sessions
    * Author: K. Dashnaw
-   * */
+   */
   public FileIO getFileManager()
   {
     return fileManager;
   }
 
-  /** Sets/Initializes the file manager responsible for maintaining data persistence across sessions
+  /**
+   * Sets/Initializes the file manager responsible for maintaining data persistence across sessions
    * Author: K. Dashnaw
-   * */
+   */
   public void setFileManager()
   {
     this.fileManager = new FileIO();
   }
 
-  /** Gets the default residential project settings used when creating new projects
+  /**
+   * Gets the default residential project settings used when creating new projects
    * Author: K. Dashnaw
-   * */
+   */
   public DefaultResidentialSettings getDefaultResidentialSettings()
   {
     return defaultResidentialSettings;
   }
 
-  /** Sets/Initializes the default residential project settings used when creating new projects
+  /**
+   * Sets/Initializes the default residential project settings used when creating new projects
    * Author: K. Dashnaw
-   * */
+   */
   public void setDefaultResidentialSettings(
       DefaultResidentialSettings defaultResidentialSettings)
   {
     this.defaultResidentialSettings = defaultResidentialSettings;
   }
 
-  /** Gets the default commercial project settings used when creating new projects
+  /**
+   * Gets the default commercial project settings used when creating new projects
    * Author: K. Dashnaw
-   * */
+   */
   public DefaultCommercialSettings getDefaultCommercialSettings()
   {
     return defaultCommercialSettings;
   }
 
-  /** Sets/Initializes the default commercial project settings used when creating new projects
+  /**
+   * Sets/Initializes the default commercial project settings used when creating new projects
    * Author: K. Dashnaw
-   * */
+   */
   public void setDefaultCommercialSettings(
       DefaultCommercialSettings defaultCommercialSettings)
   {
     this.defaultCommercialSettings = defaultCommercialSettings;
   }
 
-  /** Gets the default industrial project settings used when creating new projects
+  /**
+   * Gets the default industrial project settings used when creating new projects
    * Author: K. Dashnaw
-   * */
+   */
   public DefaultIndustrialSettings getDefaultIndustrialSettings()
   {
     return defaultIndustrialSettings;
   }
 
-  /** Sets/Initializes the default industrial project settings used when creating new projects
+  /**
+   * Sets/Initializes the default industrial project settings used when creating new projects
    * Author: K. Dashnaw
-   * */
+   */
   public void setDefaultIndustrialSettings(
       DefaultIndustrialSettings defaultIndustrialSettings)
   {
     this.defaultIndustrialSettings = defaultIndustrialSettings;
   }
 
-  /** Gets the default road project settings used when creating new projects
+  /**
+   * Gets the default road project settings used when creating new projects
    * Author: K. Dashnaw
-   * */
+   */
   public DefaultRoadSettings getDefaultRoadSettings()
   {
     return defaultRoadSettings;
   }
 
-  /** Sets/Initializes the default road project settings used when creating new projects
+  /**
+   * Sets/Initializes the default road project settings used when creating new projects
    * Author: K. Dashnaw
-   * */
+   */
   public void setDefaultRoadSettings(DefaultRoadSettings defaultRoadSettings)
   {
     this.defaultRoadSettings = defaultRoadSettings;
   }
 
-/** Adds a single construction project to the project management system.
- * Returns true if operation was successful.
- * Author: K. Dashnaw
- * */
+  /**
+   * Adds a single construction project to the project management system.
+   * Returns true if operation was successful.
+   * Author: K. Dashnaw
+   */
   public boolean addProject(ConstructionProject project)
   {
     //TODO: Implement method.
@@ -261,55 +272,62 @@ public class MainModel
     environmentalInfoGUIID.setText("" + currentProject.getEnvironmentalOrGeographicalChallenges());
   }
 
-  /** Edits a single construction project in the project management system.
+  /**
+   * Edits a single construction project in the project management system.
    * Returns true if operation was successful.
    * Author:
-   * */
+   */
   public boolean editProject(ConstructionProject project)
   {
-    //TODO: Implement method.
-    return false;
-  }
+    ArrayList<ConstructionProject> filteredProjects = new ArrayList<>();
 
-  /** Removes a single construction project from the project management system.
+
+      //TODO: Implement method.
+
+      return false;
+    }
+
+  /**
+   * Removes a single construction project from the project management system.
    * Returns true if operation was successful.
    * Author:
-   * */
+   */
   public boolean removeProject(ConstructionProject project)
   {
     //TODO: Implement method.
     return false;
   }
 
-  /** Sets the current filtering options that are applied when projects are displayed in the GUI.
+  /**
+   * Sets the current filtering options that are applied when projects are displayed in the GUI.
    * I.e.: For instance a filtering option could be to only show projects with a budget between 100,000 and 500,000.
    * Returns true if operation was successful.
    * Author:
-   * */
-  public boolean filterProject()
+   */
+
+
+  public boolean filterProject(double minBudget, double maxBudget, int minDuration, int maxDuration)
   {
     //TODO: Implement method.
     return false;
   }
 
-  /** Sets the current default project settings that are applied when new projects are created.
-   * Returns true if operation was successful.
-   * Author:
-   * */
-  public boolean editDefaultProjectSettings()
-  {
+    /** Sets the current default project settings that are applied when new projects are created.
+     * Returns true if operation was successful.
+     * Author:
+     * */
+    public boolean editDefaultProjectSettings () {
     //TODO: Implement method.
     return false;
   }
 
-  /** Enables data persistence across sessions by saving relevant system information to a file.
-   *  Note: Validation of data integrity should be conducted prior to calling this save method,
-   *  ideally as early as while adding data to the model field attributes.
-   *  Returns true if operation was successful.
-   *  Author: K. Dashnaw
-   * */
-  public boolean save()
-  {
+    /** Enables data persistence across sessions by saving relevant system information to a file.
+     *  Note: Validation of data integrity should be conducted prior to calling this save method,
+     *  ideally as early as while adding data to the model field attributes.
+     *  Returns true if operation was successful.
+     *  Author: K. Dashnaw
+     * */
+    public boolean save () {
     Object[] objectList = new Object[8]; //Pack all the different system Object into a single Object array before saving.
 
     objectList[0] = this.getAllProjectsList();
@@ -320,7 +338,7 @@ public class MainModel
     objectList[5] = this.getDefaultRoadSettings();
     objectList[7] = this.getFileManager().getLastDataSaveTime();
 
-    if(this.getFileManager().writeToBinary(objectList))
+    if (this.getFileManager().writeToBinary(objectList))
     {
       System.out.println("Data saved successfully");
       return true; //Saving was successful
@@ -331,14 +349,13 @@ public class MainModel
     }
   }
 
-  /** Enables data persistence across sessions by loading relevant system information from a file.
-   * Returns true if operation was successful.
-   * Author: K. Dashnaw
-   * */
-  public boolean load()
-  {
+    /** Enables data persistence across sessions by loading relevant system information from a file.
+     * Returns true if operation was successful.
+     * Author: K. Dashnaw
+     * */
+    public boolean load () {
     //TODO: Implement method.
     return false;
   }
 
-}
+  }
