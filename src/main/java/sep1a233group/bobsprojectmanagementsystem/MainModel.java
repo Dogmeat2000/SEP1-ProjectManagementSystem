@@ -6,14 +6,16 @@ import javafx.scene.control.TextField;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-/** This is the main controller for the project management system.
- * This controls most of the coding logic and method functionality that is called from the GUI
- * Author: Combined effort from all team members.
+/** <p>This is the main controller for the project management system. This controls most of the coding logic and method functionality that is called from the GUI<br><br></p>
+ * <b>Author:</b> Combined effort from all team members.
  * */
 public class MainModel
 {
   private DashboardProgressReports dashboardProgressReports; //An object containing all the project progress reports that are displayed on the GUI Dashboard.
+
+  //TODO: Note by Kristian, Maybe change the projectList so we store projects in a balanced binary search tree instead, for faster filtering/search operations? NOT IMPORTANT RIGHT NOW!
   private ArrayList<ConstructionProject> allProjectsList; //Contains an ArrayList with ALL the construction projects in the system.
   private FileIO fileManager; //Is the main file managing class, which handles file in and out operations.
   private DefaultResidentialSettings defaultResidentialSettings; //Handles the default residential project settings used when creating new projects!
@@ -229,6 +231,7 @@ public class MainModel
    */
   public boolean addProject(ConstructionProject project)
   {
+    //TODO: Note by Kristian, Maybe change the projectList so we store projects in a balanced binary search tree instead, for faster filtering/search operations?
     setInitializationErrorMessage("");
     //Check if an identical project already exists in the system files:
     for (int i = 0; i < getAllProjectsList().size(); i++)
@@ -370,7 +373,7 @@ public class MainModel
   public boolean editProject(ConstructionProject project)
   {
     ArrayList<ConstructionProject> filteredProjects = new ArrayList<>();
-      //TODO: Implement method.
+      //TODO: Implement editProject Method.
 
       return false;
     }
@@ -381,7 +384,7 @@ public class MainModel
    */
   public boolean removeProject(ConstructionProject project)
   {
-    //TODO: Implement method.
+    //TODO: Implement removeProject method.
     return false;
   }
 
@@ -394,7 +397,7 @@ public class MainModel
 
   public boolean filterProject(double minBudget, double maxBudget, int minDuration, int maxDuration)
   {
-    //TODO: Implement method.
+    //TODO: Implement filterProject method.
     return false;
   }
 
@@ -404,7 +407,7 @@ public class MainModel
    * */
   public boolean editDefaultProjectSettings ()
   {
-  //TODO: Implement method.
+  //TODO: Implement editDefaultProjectSettings method.
   return false;
   }
 
@@ -567,6 +570,119 @@ public class MainModel
       }
     }
   return returnValue;
+  }
+
+  /** <p>Exports progress reports for all projects to JSON files for use on the Company Homepage.<br>
+   * File references are defined directly in FileIO.<br>
+   * Errors are handled within this method, and confirmation messages relating to the successful or failed exported are written to
+   * the 'initializationErrorMessage' attribute in this class.<br> This allows for the scenes calling this method to retrieve
+   * these messages and display in the GUI console.</p>
+   * <p>Note: This method handles the conversion of ongoing and finished projects relevant information into json compatible strings / json array.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * */
+  public void exportAsJson()
+  {
+    //First we separate our projects into 2 categories, the finished ones and the ongoing ones.
+    //Se filter out any confidential projects in this phase also.
+    ArrayList<ConstructionProject> finishedProjectsList = new ArrayList<>();
+    ArrayList<ConstructionProject> ongoingProjectsList = new ArrayList<>();
+    String finishedProjectsFileName = "exported-FinishedProjects";
+    String ongoingProjectsFileName = "exported-OngoingProjects";
+
+    //Run through projects:
+    for (int i = 0; i < this.getAllProjectsList().size(); i++)
+    {
+      if(this.getAllProjectsList().get(i).isProjectFinished() && !(this.getAllProjectsList().get(i).isProjectConfidential()))
+      {
+        //This is a non-confidential finished project.
+        finishedProjectsList.add(this.getAllProjectsList().get(i));
+      }
+      else
+      {
+        //This is a non-confidential ongoing project.
+        ongoingProjectsList.add(this.getAllProjectsList().get(i));
+      }
+    }
+
+    //Projects have now been isolated - an unnecessary/confidential projects filtered out. We now extrapolate the data needed for the website.
+    //Since json, like xml, is a text-based document, we need to ensure that our data can be represented as a String before writing.
+    //Below we format the information as a proper json array with the required information.
+
+    //Add all needed data points from ongoing projects to our String list.
+    List<String> ongoingStringList = new ArrayList<>();
+    String stringData;
+    char asciiQuote = '"';
+    for (int i = 0; i < ongoingProjectsList.size(); i++)
+    {
+      stringData = "{";
+      stringData += asciiQuote + "ProjectType" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getProjectType() + asciiQuote + ","; //ProjectType
+      stringData += asciiQuote + "ProjectName" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getProjectInformation().getProjectName() + asciiQuote + ","; //Project Name
+      stringData += asciiQuote + "ProjectDescription" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getProjectInformation().getProjectDescription() + asciiQuote + ","; //Project Description
+      stringData += asciiQuote + "PhotoURL" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getProjectInformation().getPhotoURL() + asciiQuote + ","; //Project photo URL
+      stringData += asciiQuote + "ProjectStartDate" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getProjectStartDate() + asciiQuote + ","; //Project start date
+      stringData += asciiQuote + "ProjectEndDate" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getProjectEndDate() + asciiQuote + ","; //Project expected finish date
+      stringData += asciiQuote + "ManHoursSpent" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getHumanRessources().getManHoursSpent() + asciiQuote + ","; //Project man-hours spent
+      stringData += asciiQuote + "TotalManHoursNeeded" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getHumanRessources().getTotalManHoursNeeded() + asciiQuote + ","; //Total man-hours expected to use.
+      stringData += asciiQuote + "MaterialExpences" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getFinances().getMaterialExpences() + asciiQuote + ","; //Expenses so far.
+      stringData += asciiQuote + "TotalBudget" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getFinances().getTotalBudget() + asciiQuote; //Total budget/price.
+      stringData += "}";
+
+      ongoingStringList.add(stringData);
+    }
+
+    //Add all needed data points from finished projects to our String list.
+    List<String> finishedStringList = new ArrayList<>();
+    for (int i = 0; i < finishedProjectsList.size(); i++)
+    {
+      stringData = "{";
+      stringData += asciiQuote + "ProjectType" + asciiQuote + ":" + asciiQuote + finishedProjectsList.get(i).getProjectType() + asciiQuote + ","; //ProjectType
+      stringData += asciiQuote + "ProjectName" + asciiQuote + ":" + asciiQuote + finishedProjectsList.get(i).getProjectInformation().getProjectName() + asciiQuote + ","; //Project Name
+      stringData += asciiQuote + "ProjectDescription" + asciiQuote + ":" + asciiQuote + finishedProjectsList.get(i).getProjectInformation().getProjectDescription() + asciiQuote + ","; //Project Description
+      stringData += asciiQuote + "PhotoURL" + asciiQuote + ":" + asciiQuote + finishedProjectsList.get(i).getProjectInformation().getPhotoURL() + asciiQuote + ","; //Project photo URL
+      stringData += asciiQuote + "ProjectEndDate" + asciiQuote + ":" + asciiQuote + finishedProjectsList.get(i).getProjectEndDate() + asciiQuote + ","; //Project finish date
+      stringData += asciiQuote + "TotalManHoursNeeded" + asciiQuote + ":" + asciiQuote + finishedProjectsList.get(i).getHumanRessources().getTotalManHoursNeeded() + asciiQuote + ","; //Total man-hours expected to use.
+      stringData += asciiQuote + "TotalBudget" + asciiQuote + ":" + asciiQuote + finishedProjectsList.get(i).getFinances().getTotalBudget() + asciiQuote; //Total budget/price.
+      stringData += "}";
+
+      finishedStringList.add(stringData);
+    }
+
+    //Convert to single string compatible with the parser:
+    String finalOngoingStr = ongoingStringList.toString(); //Adds '[' before, ',' between elements and ']' at the end, which is required for proper json array format.
+    String finalFinishedStr = finishedStringList.toString(); //Adds '[' before, ',' between elements and ']' at the end, which is required for proper json array format.
+
+    //Check if these are null
+    if(finalOngoingStr.length() <= 2)
+    {
+      finalOngoingStr = "null";
+    }
+
+    if(finalFinishedStr.length() <= 2)
+    {
+      finalFinishedStr = "null";
+    }
+
+    //Export data:
+    try
+    {
+      getFileManager().export(finalOngoingStr, ongoingProjectsFileName, ".json"); //Exports ongoing projects
+      getFileManager().export(finalFinishedStr, finishedProjectsFileName, ".json"); //Exports finished projects
+
+      //Export was successful
+      System.out.println("EXPORT: Successfully exported non-confidential finished and ongoing projects to json.");
+      setInitializationErrorMessage("EXPORT: Successfully exported non-confidential finished and ongoing projects to json.");
+    }
+    catch(FileNotFoundException error)
+    {
+      System.out.println("ERROR: Unable to export data. Parsing failed." + error);
+      setInitializationErrorMessage("ERROR: Failed to export data. Exception occurred. Please contact support for more details.");
+    }
+    catch(RuntimeException error2)
+    {
+      System.out.println("ERROR: RUNTIME EXCEPTION OCCURRED WHILE EXPORTING DATA!" + error2);
+      setInitializationErrorMessage("ERROR: Failed to export data. Exception occurred. Please contact support for more details.");
+    }
+
   }
 
 }

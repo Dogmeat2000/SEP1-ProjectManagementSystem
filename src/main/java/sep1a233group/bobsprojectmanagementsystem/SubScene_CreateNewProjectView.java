@@ -278,6 +278,9 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   public void exportToWeb()
   {
     this.getSceneController().exportToWeb();
+
+    //Update GUI Console message:
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
   /** This method checks if there is any unsaved data and then simply calls the common method with the same name, from the SceneController.

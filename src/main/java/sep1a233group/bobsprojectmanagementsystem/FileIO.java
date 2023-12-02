@@ -11,9 +11,9 @@ import java.io.*;
 public class FileIO
 {
   private File systemSaveFile; //Reference to the system save file object.
-  private File webpageFile; //Reference to the exported webpage compatible file object.
+
+  private String webpageFilePath; //Reference to the exported webpage compatible file object.
   private String systemFileName; //The name used for the system save file.
-  private String webPageFileName; //The name used for the exported webpage compatible file.
   private MyDate lastDataSaveTime; //Contains a MyDate/Time representation of when the system data was last saved.
   private MyDate lastWebExportTime; //Contains a MyDate/Time representation of when the system data was last saved.
 
@@ -25,12 +25,7 @@ public class FileIO
     setSystemFileName("mainProjectSaveFile.bin");
     setSystemSaveFile("Project Data Files/" + this.getSystemFileName());
 
-    setWebPageFileName("webpageFile.json");
-    setWebpageFile("Project Data Files/" + this.getWebPageFileName());
-
-
-
-
+    setWebpageFilePath("Project Data Files/");
 
     //TODO: Implement
     setLastDataSaveTime(new MyDate(1,1,2000));
@@ -72,33 +67,17 @@ public class FileIO
   /** Returns the name of the webpage Project Data file
    * Author: K. Dashnaw
    * */
-  public File getWebpageFile()
+  public String getWebpageFilePath()
   {
-    return webpageFile;
+    return webpageFilePath;
   }
 
   /** Sets/Initializes the name of the webpage Project Data file
    * Author: K. Dashnaw
    * */
-  public void setWebpageFile(String fileName)
+  public void setWebpageFilePath(String path)
   {
-    this.webpageFile = new File(fileName);
-  }
-
-  /** Returns the name of the exported Web Page Compatible file
-   * Author: K. Dashnaw
-   * */
-  public String getWebPageFileName()
-  {
-    return webPageFileName;
-  }
-
-  /** Sets/Initializes the name for the exported Web Page Compatible file
-   * Author: K. Dashnaw
-   * */
-  public void setWebPageFileName(String webPageFileName)
-  {
-    this.webPageFileName = webPageFileName;
+    this.webpageFilePath = path;
   }
 
   /** Returns a MyDate Object containing the last date and time the system files were saved
@@ -164,16 +143,27 @@ public class FileIO
     }
   }
 
-  /** Writes the relevant project data to a local xml/json file for use on the company homepage.
-   * File references are defined directly in FileIO.
-   * Return true if saving was successful.
-   * Returns false if not.
-   * Author: K. Dashnaw
+  /** <p>Writes the relevant project data to a local user defined file type for use on the company homepage.
+   * File path references are defined directly in FileIO.
+   * This implementation is basically a textFile writer, which requires the received String data to already be formatted into the proper string pattern. Used incorrectly this may cause errors.
+   * In this application the text formatting is conducted in the MainModel.exportAsJson() method.
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param exportData A String containing the data to export.
+   * @param fileName A string containing the name the exported JSON file should have.
+   * @param fileType A string containing the file type to append after the name. In the MainModel class we use '.json'.
+   * @throws FileNotFoundException if any exceptions parsing, transforming, writing or reading.
    * */
-  public boolean writeToXML()
+  public void export(String exportData, String fileName, String fileType) throws FileNotFoundException
   {
-    //TODO: Implement
-    return false;
+    File exportFile = new File(getWebpageFilePath() + fileName + fileType);
+
+    //Give the File to the PrintWriter. We use try with resources.
+    try (PrintWriter out = new PrintWriter(exportFile))
+    {
+      //Now we write to the file using
+      out.println(exportData);
+      out.flush(); //Force it to write the text, emptying the buffer.
+    }
   }
 
   /** Loads system persistence data from a local binary file.

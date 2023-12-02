@@ -95,6 +95,9 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
   public void exportToWeb()
   {
     this.getSceneController().exportToWeb();
+
+    //Update GUI Console message:
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
   /** This method simply calls the common method with the same name, from the SceneController.

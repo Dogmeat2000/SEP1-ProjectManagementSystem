@@ -165,9 +165,25 @@ public class SceneController
    */
   public void exportToWeb()
   {
-    //TODO Implement the method!
-    System.out.println(
-        "User pressed the 'Export' button. System will now save all data to binary file, and then export this data to a webpage compatible file!");
+    System.out.println("User pressed the 'Export' button. System will now save all data to binary file, and then export this data to a webpage compatible file!");
+    String promptMessage = "All ongoing and finished projects will be exported as .json files."
+        + "\nPlease refer to the 'Project Data Files' folder once export has been successful to move them into your webpage directory."
+        + "\n\nPlease confirm that you wish to proceed!";
+
+    if(createPromptWindow(promptMessage).equals("confirmationPressed"))
+    {
+      //Execute the export method.
+      this.getActiveModel().exportAsJson();
+
+      //Update the GUI console:
+      setGUI_ConsoleMessage(this.getActiveModel().getInitializationErrorMessage());
+      System.out.println(this.getActiveModel().getInitializationErrorMessage());
+    }
+    else
+    {
+      setGUI_ConsoleMessage("User aborted export sequence. Nothing was exported.");
+      System.out.println("User aborted export sequence. Nothing was exported.");
+    }
   }
 
   /**
@@ -210,15 +226,12 @@ public class SceneController
     }
   }
 
-  /**
-   * This method is called from the various Scene Controllers towards this overall controller.
-   * It creates a simple confirmation window inside the active window area and returns which button the user selected to press.
-   * It takes these parameters:
-   * "String message": This message is displayed inside the confirmation window.
-   * It returns one of these messages:
-   * "cancelPressed": The user decided to press cancel, or exit, in the confirmation window.
-   * "confirmationPressed": The user pressed "confirm"/"ok" in the window, signaling the intent to proceed with the prompted action.
-   * Author: K. Dashnaw
+  /**<p>This method is called from the various Scene Controllers towards this overall controller.
+   * It creates a simple confirmation window inside the active window area and returns which button the user selected to press.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param message A String containing the message to display inside the confirmation window.
+   * @return "cancelPressed" - This String value is returned if the user pressed the cancel button.<br>
+   * "confirmationPressed" - This String value is returned if the user pressed the cancel button.
    */
   public String createPromptWindow(String message)
   {
