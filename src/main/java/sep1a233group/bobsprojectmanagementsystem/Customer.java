@@ -57,6 +57,11 @@ public class Customer implements Serializable
     this.email = email;
   }
 
+  public String getPhoneNumberPrefix()
+  {
+    return phoneNumberPrefix;
+  }
+
   public void setPhoneNumberPrefix(String prefix)
   {
     this.phoneNumberPrefix = prefix;

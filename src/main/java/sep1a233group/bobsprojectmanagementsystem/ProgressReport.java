@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class ProgressReport implements Serializable
 {
+
   private Customer customer;
   private Address projectAddress;
   private Finances projectFinances;
@@ -21,6 +22,7 @@ public class ProgressReport implements Serializable
       Finances projectFinances, MyDate projectStartDate, MyDate projectEndDate,
       HumanRessources projectRessources)
   {
+
     this.customer = customer;
     this.projectAddress = projectAddress;
     this.projectFinances = projectFinances;
@@ -39,5 +41,35 @@ public class ProgressReport implements Serializable
   public ProgressReport getProgressReport()
   {
     return this;
+  }
+
+  public Customer getCustomer()
+  {
+    return customer;
+  }
+
+  public Address getProjectAddress()
+  {
+    return projectAddress;
+  }
+
+  public Finances getProjectFinances()
+  {
+    return projectFinances;
+  }
+
+  public MyDate getProjectStartDate()
+  {
+    return projectStartDate;
+  }
+
+  public MyDate getProjectEndDate()
+  {
+    return projectEndDate;
+  }
+
+  public HumanRessources getProjectRessources()
+  {
+    return projectRessources;
   }
 }

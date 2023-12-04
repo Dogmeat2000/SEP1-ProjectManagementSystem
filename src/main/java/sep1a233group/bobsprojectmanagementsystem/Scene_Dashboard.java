@@ -19,8 +19,14 @@ import java.io.IOException;
 public class Scene_Dashboard implements Scene_ControllerInterface
 {
 
-  private DashboardProgressReports dashboardProgressReports;
-  //private ProgressReport[] progressReports = dashboardProgressReports.getProgressReports();
+
+
+  private ProgressReport[] progressReports;
+  private ProgressReport report1;
+  private ProgressReport report2;
+  private ProgressReport report3;
+  private ProgressReport report4;
+
   @FXML private Text address1, address2, address3, address4;
   @FXML private Label projectType1, projectType2, projectType3, projectType4;
   @FXML private Label tlfNo1, tlfNo2, tlfNo3, tlfNo4;
@@ -47,9 +53,161 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   public void displayProgressReports()
   {
+    if (report1 != null){displayReport1();}
+    if (report2 != null){displayReport2();}
+    if (report3 != null){displayReport3();}
+    if (report4 != null){displayReport4();}
+  }
+
+  public void displayReport1()
+  {
+    address1.setText(report1.getProjectAddress().toString());
+    tlfNo1.setText(report1.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report1.getCustomer().getPhoneNumber()));
+    hoursSpent1.setText(Double.toString(report1.getProjectRessources().getManHoursSpent()));
+    expectedHours1.setText(Double.toString(report1.getProjectRessources().getTotalManHoursNeeded()));
+      if (report1.getProjectRessources().getManHoursSpent() > report1.getProjectRessources().getTotalManHoursNeeded())
+      {
+        hoursStatus1.setText("Over expected");
+      }
+      else
+      {
+        hoursStatus1.setText("Within expected");
+      }
+    expenses1.setText(Double.toString(report1.getProjectFinances().getMaterialExpences()));
+    budget1.setText(Double.toString(report1.getProjectFinances().getTotalBudget()));
+      if (report1.getProjectFinances().getMaterialExpences() > report1.getProjectFinances().getTotalBudget())
+      {
+        budgetStatus1.setText("Over budget");
+      }
+      else
+      {
+        budgetStatus1.setText("Within budget");
+      }
+    startDate1.setText(report1.getProjectStartDate().toString());
+    expectedDate1.setText(report1.getProjectEndDate().toString());
+      if (report1.getProjectEndDate().isBefore(MyDate.now()))
+      {
+        timelineStatus1.setText("Behind schedule");
+      }
+      else
+      {
+        timelineStatus1.setText("On track");
+      }
 
   }
 
+  public void displayReport2()
+  {
+    address2.setText(report2.getProjectAddress().toString());
+    tlfNo2.setText(report2.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report2.getCustomer().getPhoneNumber()));
+    hoursSpent2.setText(Double.toString(report2.getProjectRessources().getManHoursSpent()));
+    expectedHours2.setText(Double.toString(report2.getProjectRessources().getTotalManHoursNeeded()));
+      if (report2.getProjectRessources().getManHoursSpent() > report2.getProjectRessources().getTotalManHoursNeeded())
+      {
+        hoursStatus2.setText("Over expected");
+      }
+      else
+      {
+        hoursStatus2.setText("Within expected");
+      }
+
+    expenses2.setText(Double.toString(report2.getProjectFinances().getMaterialExpences()));
+    budget2.setText(Double.toString(report2.getProjectFinances().getTotalBudget()));
+      if (report2.getProjectFinances().getMaterialExpences() > report2.getProjectFinances().getTotalBudget())
+      {
+        budgetStatus2.setText("Over budget");
+      }
+      else
+      {
+        budgetStatus2.setText("Within budget");
+      }
+
+    startDate2.setText(report2.getProjectStartDate().toString());
+    expectedDate2.setText(report2.getProjectEndDate().toString());
+      if (report2.getProjectEndDate().isBefore(MyDate.now()))
+      {
+        timelineStatus2.setText("Behind schedule");
+      }
+      else
+      {
+        timelineStatus2.setText("On track");
+      }
+
+  }
+
+  public void displayReport3()
+  {
+    address3.setText(report3.getProjectAddress().toString());
+    tlfNo3.setText(report3.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report3.getCustomer().getPhoneNumber()));
+    hoursSpent3.setText(Double.toString(report3.getProjectRessources().getManHoursSpent()));
+    expectedHours3.setText(Double.toString(report3.getProjectRessources().getTotalManHoursNeeded()));
+      if (report3.getProjectRessources().getManHoursSpent() > report3.getProjectRessources().getTotalManHoursNeeded())
+      {
+      hoursStatus3.setText("Over expected");
+      }
+      else
+      {
+        hoursStatus3.setText("Within expected");
+      }
+    expenses3.setText(Double.toString(report3.getProjectFinances().getMaterialExpences()));
+    budget3.setText(Double.toString(report3.getProjectFinances().getTotalBudget()));
+      if (report3.getProjectFinances().getMaterialExpences() > report3.getProjectFinances().getTotalBudget())
+      {
+        budgetStatus3.setText("Over budget");
+      }
+      else
+      {
+        budgetStatus3.setText("Within budget");
+      }
+
+    startDate3.setText(report3.getProjectStartDate().toString());
+    expectedDate3.setText(report3.getProjectEndDate().toString());
+      if (report3.getProjectEndDate().isBefore(MyDate.now()))
+      {
+        timelineStatus3.setText("Behind schedule");
+      }
+      else
+      {
+        timelineStatus3.setText("On track");
+      }
+  }
+
+  public void displayReport4()
+  {
+    address4.setText(report4.getProjectAddress().toString());
+    tlfNo4.setText(report4.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report4.getCustomer().getPhoneNumber()));
+    hoursSpent4.setText(Double.toString(report4.getProjectRessources().getManHoursSpent()));
+    expectedHours4.setText(Double.toString(report4.getProjectRessources().getTotalManHoursNeeded()));
+      if (report4.getProjectRessources().getManHoursSpent() > report4.getProjectRessources().getTotalManHoursNeeded())
+      {
+        hoursStatus4.setText("Over expected");
+      }
+      else
+      {
+        hoursStatus4.setText("Within expected");
+      }
+    expenses4.setText(Double.toString(report4.getProjectFinances().getMaterialExpences()));
+    budget4.setText(Double.toString(report4.getProjectFinances().getTotalBudget()));
+      if (report4.getProjectFinances().getMaterialExpences() > report4.getProjectFinances().getTotalBudget())
+      {
+        budgetStatus4.setText("Over budget");
+      }
+      else
+      {
+        budgetStatus4.setText("Within budget");
+      }
+
+    startDate4.setText(report4.getProjectStartDate().toString());
+    expectedDate4.setText(report4.getProjectEndDate().toString());
+      if (report4.getProjectEndDate().isBefore(MyDate.now()))
+      {
+        timelineStatus4.setText("Behind schedule");
+      }
+      else
+      {
+        timelineStatus4.setText("On track");
+      }
+  }
 
   /** Returns a reference to the GUI_Console on this page.
    * Author: K. Dashnaw
@@ -91,6 +249,34 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     setSceneController(sceneController);
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
+    {
+      if (activeModel.getAllProjectsList().get(i).isDashboardProject())
+      {
+        if (report1 == null)
+        {
+          report1 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          continue;
+        }
+        if (report2 == null)
+        {
+          report2 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          continue;
+        }
+        if (report3 == null)
+        {
+          report3 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          continue;
+        }
+        if (report4 == null)
+        {
+          report4 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          break;
+        }
+      }
+    }
+
+    displayProgressReports();
 
 
     System.out.println("Project Dashboard Scene is now active");
