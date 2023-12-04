@@ -20,7 +20,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 {
 
   private DashboardProgressReports dashboardProgressReports;
-  private ProgressReport[] progressReports = dashboardProgressReports.getProgressReports();
+  //private ProgressReport[] progressReports = dashboardProgressReports.getProgressReports();
   @FXML private Text address1, address2, address3, address4;
   @FXML private Label projectType1, projectType2, projectType3, projectType4;
   @FXML private Label tlfNo1, tlfNo2, tlfNo3, tlfNo4;
