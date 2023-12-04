@@ -18,18 +18,15 @@ import java.io.IOException;
  * Author: */
 public class Scene_Dashboard implements Scene_ControllerInterface
 {
+  private ConstructionProject project1;
+  private ConstructionProject project2;
+  private ConstructionProject project3;
+  private ConstructionProject project4;
 
-
-
-  private ProgressReport[] progressReports;
   private ProgressReport report1;
   private ProgressReport report2;
   private ProgressReport report3;
   private ProgressReport report4;
-
-  private String type1, type2, type3, type4;
-
-
   @FXML private Text address1, address2, address3, address4;
   @FXML private Label projectType1, projectType2, projectType3, projectType4;
   @FXML private Label tlfNo1, tlfNo2, tlfNo3, tlfNo4;
@@ -45,9 +42,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   @FXML private ProgressBar timelineBar1, timelineBar2, timelineBar3, timelineBar4;
   @FXML private Label startDate1, startDate2, startDate3, startDate4;
   @FXML private Label expectedDate1, expectedDate2, expectedDate3, expectedDate4;
-  @FXML private Button updateProject1, updateProject2, updateProject3, updateProject4;
-  @FXML private Button Untrack1, Untrack2, Untrack3, Untrack4;
-  @FXML private Button Details1, Details2, Details3, Details4;
+
 
   @FXML TextField GUI_Console; //textField in the gui, where messages are shown to the user.
   private MainModel activeModel;
@@ -56,45 +51,46 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   public void displayProgressReports()
   {
+    project1 = null;
+    project2 = null;
+    project3 = null;
+    project4 = null;
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
     {
       if (activeModel.getAllProjectsList().get(i).isDashboardProject())
       {
-        if (report1 == null)
+        if (project1 == null)
         {
-          report1 = activeModel.getAllProjectsList().get(i).generateProgressReport();
-          type1 = activeModel.getAllProjectsList().get(i).getProjectType();
+          project1 = activeModel.getAllProjectsList().get(i);
           continue;
         }
-        if (report2 == null)
+        if (project2 == null)
         {
-          report2 = activeModel.getAllProjectsList().get(i).generateProgressReport();
-          type2 = activeModel.getAllProjectsList().get(i).getProjectType();
+          project2 = activeModel.getAllProjectsList().get(i);
           continue;
         }
-        if (report3 == null)
+        if (project3 == null)
         {
-          report3 = activeModel.getAllProjectsList().get(i).generateProgressReport();
-          type3 = activeModel.getAllProjectsList().get(i).getProjectType();
+          project3 = activeModel.getAllProjectsList().get(i);
           continue;
         }
-        if (report4 == null)
+        if (project4 == null)
         {
-          report4 = activeModel.getAllProjectsList().get(i).generateProgressReport();
-          type4 = activeModel.getAllProjectsList().get(i).getProjectType();
+          project4 = activeModel.getAllProjectsList().get(i);
           break;
         }
       }
     }
-    if (report1 != null){displayReport1();}
-    if (report2 != null){displayReport2();}
-    if (report3 != null){displayReport3();}
-    if (report4 != null){displayReport4();}
+    if (project1 != null){displayReport1();}
+    if (project2 != null){displayReport2();}
+    if (project3 != null){displayReport3();}
+    if (project4 != null){displayReport4();}
   }
 
   public void displayReport1()
   {
-    projectType1.setText(type1);
+    report1 = project1.generateProgressReport();
+    projectType1.setText(project1.getProjectType());
     address1.setText(report1.getProjectAddress().toString());
     tlfNo1.setText(report1.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report1.getCustomer().getPhoneNumber()));
     hoursSpent1.setText(Double.toString(report1.getProjectRessources().getManHoursSpent()));
@@ -127,12 +123,24 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         timelineStatus1.setText("On track");
       }
-
+  }
+  public void untrackProject1()
+  {
+    for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
+    {
+      if (project1.equals(activeModel.getAllProjectsList().get(i)))
+      {
+        activeModel.getAllProjectsList().get(i).setDashboardProject(false);
+        displayProgressReports();
+        break;
+      }
+    }
   }
 
   public void displayReport2()
   {
-    projectType2.setText(type2);
+    report2 = project2.generateProgressReport();
+    projectType2.setText(project2.getProjectType());
     address2.setText(report2.getProjectAddress().toString());
     tlfNo2.setText(report2.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report2.getCustomer().getPhoneNumber()));
     hoursSpent2.setText(Double.toString(report2.getProjectRessources().getManHoursSpent()));
@@ -167,12 +175,25 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         timelineStatus2.setText("On track");
       }
+  }
 
+  public void untrackProject2()
+  {
+    for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
+    {
+      if (project2.equals(activeModel.getAllProjectsList().get(i)))
+      {
+        activeModel.getAllProjectsList().get(i).setDashboardProject(false);
+        displayProgressReports();
+        break;
+      }
+    }
   }
 
   public void displayReport3()
   {
-    projectType3.setText(type3);
+    report3 = project3.generateProgressReport();
+    projectType3.setText(project3.getProjectType());
     address3.setText(report3.getProjectAddress().toString());
     tlfNo3.setText(report3.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report3.getCustomer().getPhoneNumber()));
     hoursSpent3.setText(Double.toString(report3.getProjectRessources().getManHoursSpent()));
@@ -208,9 +229,22 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       }
   }
 
+  public void untrackProject3()
+  {
+    for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
+    {
+      if (project3.equals(activeModel.getAllProjectsList().get(i)))
+      {
+        activeModel.getAllProjectsList().get(i).setDashboardProject(false);
+        displayProgressReports();
+        break;
+      }
+    }
+  }
   public void displayReport4()
   {
-    projectType4.setText(type4);
+    report4 = project4.generateProgressReport();
+    projectType4.setText(project4.getProjectType());
     address4.setText(report4.getProjectAddress().toString());
     tlfNo4.setText(report4.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report4.getCustomer().getPhoneNumber()));
     hoursSpent4.setText(Double.toString(report4.getProjectRessources().getManHoursSpent()));
@@ -244,6 +278,19 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         timelineStatus4.setText("On track");
       }
+  }
+
+  public void untrackProject4()
+  {
+    for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
+    {
+      if (project1.equals(activeModel.getAllProjectsList().get(i)))
+      {
+        activeModel.getAllProjectsList().get(i).setDashboardProject(false);
+        displayProgressReports();
+        break;
+      }
+    }
   }
 
   /** Returns a reference to the GUI_Console on this page.
@@ -303,6 +350,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    displayProgressReports();
 
     System.out.println("Dashboard now the active stage.");
   }
