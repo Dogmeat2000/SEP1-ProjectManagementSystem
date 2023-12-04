@@ -56,6 +56,36 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   public void displayProgressReports()
   {
+    for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
+    {
+      if (activeModel.getAllProjectsList().get(i).isDashboardProject())
+      {
+        if (report1 == null)
+        {
+          report1 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          type1 = activeModel.getAllProjectsList().get(i).getProjectType();
+          continue;
+        }
+        if (report2 == null)
+        {
+          report2 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          type2 = activeModel.getAllProjectsList().get(i).getProjectType();
+          continue;
+        }
+        if (report3 == null)
+        {
+          report3 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          type3 = activeModel.getAllProjectsList().get(i).getProjectType();
+          continue;
+        }
+        if (report4 == null)
+        {
+          report4 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          type4 = activeModel.getAllProjectsList().get(i).getProjectType();
+          break;
+        }
+      }
+    }
     if (report1 != null){displayReport1();}
     if (report2 != null){displayReport2();}
     if (report3 != null){displayReport3();}
@@ -256,36 +286,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     setSceneController(sceneController);
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-    for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
-    {
-      if (activeModel.getAllProjectsList().get(i).isDashboardProject())
-      {
-        if (report1 == null)
-        {
-          report1 = activeModel.getAllProjectsList().get(i).generateProgressReport();
-          type1 = activeModel.getAllProjectsList().get(i).getProjectType();
-          continue;
-        }
-        if (report2 == null)
-        {
-          report2 = activeModel.getAllProjectsList().get(i).generateProgressReport();
-          type2 = activeModel.getAllProjectsList().get(i).getProjectType();
-          continue;
-        }
-        if (report3 == null)
-        {
-          report3 = activeModel.getAllProjectsList().get(i).generateProgressReport();
-          type3 = activeModel.getAllProjectsList().get(i).getProjectType();
-          continue;
-        }
-        if (report4 == null)
-        {
-          report4 = activeModel.getAllProjectsList().get(i).generateProgressReport();
-          type4 = activeModel.getAllProjectsList().get(i).getProjectType();
-          break;
-        }
-      }
-    }
+
 
     displayProgressReports();
 
