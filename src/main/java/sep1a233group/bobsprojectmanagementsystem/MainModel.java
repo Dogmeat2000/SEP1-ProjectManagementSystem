@@ -610,8 +610,8 @@ public class MainModel
 
     //Add all needed data points from ongoing projects to our String list.
     List<String> ongoingStringList = new ArrayList<>();
-    String stringData;
     char asciiQuote = '"';
+    String stringData;
     for (int i = 0; i < ongoingProjectsList.size(); i++)
     {
       stringData = "{";
@@ -627,6 +627,10 @@ public class MainModel
       stringData += asciiQuote + "TotalBudget" + asciiQuote + ":" + asciiQuote + ongoingProjectsList.get(i).getFinances().getTotalBudget() + asciiQuote; //Total budget/price.
       stringData += "}";
 
+      if(i != ongoingProjectsList.size()-1)
+      {
+        stringData += ",";
+      }
       ongoingStringList.add(stringData);
     }
 
@@ -644,20 +648,40 @@ public class MainModel
       stringData += asciiQuote + "TotalBudget" + asciiQuote + ":" + asciiQuote + finishedProjectsList.get(i).getFinances().getTotalBudget() + asciiQuote; //Total budget/price.
       stringData += "}";
 
+      if(i != finishedProjectsList.size()-1)
+      {
+        stringData += ",";
+      }
+
       finishedStringList.add(stringData);
     }
 
     //Convert to single string compatible with the parser:
-    String finalOngoingStr = ongoingStringList.toString(); //Adds '[' before, ',' between elements and ']' at the end, which is required for proper json array format.
-    String finalFinishedStr = finishedStringList.toString(); //Adds '[' before, ',' between elements and ']' at the end, which is required for proper json array format.
+    String stringWrapperStart = "{" + asciiQuote + "ongoingProjectArray" + asciiQuote + ":[";
+    String stringWrapperEnd = "]}";
+    String finalOngoingStr = "";
+    for (int i = 0; i < ongoingStringList.size(); i++)
+    {
+      finalOngoingStr += ongoingStringList.get(i);
+    }
+    finalOngoingStr = stringWrapperStart + finalOngoingStr + stringWrapperEnd;
+
+    stringWrapperStart = "{" + asciiQuote + "finishedProjectArray" + asciiQuote + ":[";
+    stringWrapperEnd = "]}";
+    String finalFinishedStr = "";
+    for (int i = 0; i < finishedStringList.size(); i++)
+    {
+      finalFinishedStr += finishedStringList.get(i);
+    }
+    finalFinishedStr = stringWrapperStart + finalFinishedStr + stringWrapperEnd;
 
     //Check if these are null
-    if(finalOngoingStr.length() <= 2)
+    if(finalOngoingStr.length() <= stringWrapperStart.length() + stringWrapperEnd.length())
     {
       finalOngoingStr = "null";
     }
 
-    if(finalFinishedStr.length() <= 2)
+    if(finalFinishedStr.length() <= stringWrapperStart.length() + stringWrapperEnd.length())
     {
       finalFinishedStr = "null";
     }
