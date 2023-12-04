@@ -117,7 +117,7 @@
                                                       <RowConstraints maxHeight="282.3333168029785" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="#1: Address: " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                      <Text fx:id="address1" strokeType="OUTSIDE" strokeWidth="0.0" text="#1: Address: " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                          <font>
                                                             <Font name="System Bold" size="16.0" />
                                                          </font>
@@ -131,10 +131,10 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;On track&quot; or &quot;Behind Schedule&quot;??)" />
+                                                                  <Label fx:id="timelineStatus1" text="(&quot;On track&quot; or &quot;Behind Schedule&quot;??)" />
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="timelineBar1" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -147,12 +147,12 @@
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="DD/MM/YYYY" />
+                                                            <Label fx:id="startDate1" text="DD/MM/YYYY" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="11.0" layoutY="249.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="DD/MM/YYYY">
+                                                            <Label fx:id="expectedDate1" alignment="CENTER_RIGHT" text="DD/MM/YYYY">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
@@ -166,13 +166,13 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Update" />
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" text="Untrack">
+                                                            <Button fx:id="updateProject1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Update" />
+                                                            <Button fx:id="Untrack1" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
                                                             </Button>
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="333.0" layoutY="13.0" mnemonicParsing="false" text="View project details">
+                                                            <Button fx:id="Details1" alignment="CENTER" contentDisplay="CENTER" layoutX="333.0" layoutY="13.0" mnemonicParsing="false" text="View project details">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin></Button>
@@ -187,10 +187,10 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;Within budget&quot; or &quot;Over budget&quot;??)" />
+                                                                  <Label fx:id="budgetStatus1" text="(&quot;Within budget&quot; or &quot;Over budget&quot;??)" />
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="budgetBar1" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -203,12 +203,12 @@
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="\$ XX,XXXX.XX" />
+                                                            <Label fx:id="expenses1" text="\$ XX,XXXX.XX" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="403.0" layoutY="228.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="\$ XX,XXXX.XX">
+                                                            <Label fx:id="budget1" alignment="CENTER_RIGHT" text="\$ XX,XXXX.XX">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
@@ -234,7 +234,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Text>
-                                                            <Label text=": Residential/Commercial/etc" GridPane.columnIndex="1" />
+                                                            <Label fx:id="projectType1" text=": Residential/Commercial/etc" GridPane.columnIndex="1" />
                                                          </children>
                                                          <opaqueInsets>
                                                             <Insets />
@@ -257,7 +257,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Text>
-                                                            <Label text=": +45 12 34 56 78" GridPane.columnIndex="1" />
+                                                            <Label fx:id="tlfNo1" text=": +45 12 34 56 78" GridPane.columnIndex="1" />
                                                          </children>
                                                          <opaqueInsets>
                                                             <Insets />
@@ -275,10 +275,10 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;Within expected&quot; or &quot;Over expected&quot;??)" />
+                                                                  <Label fx:id="hoursStatus1" text="(&quot;Within expected&quot; or &quot;Over expected&quot;??)" />
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="hoursBar1" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -291,12 +291,12 @@
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="XXXX" />
+                                                            <Label fx:id="hoursSpent1" text="XXXX" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="13.0" layoutY="133.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="390.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <children>
-                                                            <Label text="XXXX">
+                                                            <Label fx:id="expectedHours1" text="XXXX">
                                                                <padding>
                                                                   <Insets left="10.0" />
                                                                </padding></Label>
@@ -332,7 +332,7 @@
                                                       <RowConstraints maxHeight="282.3333168029785" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
                                                    </rowConstraints>
                                                    <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="#2: Address: " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                      <Text fx:id="address2" strokeType="OUTSIDE" strokeWidth="0.0" text="#2: Address: " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                          <font>
                                                             <Font name="System Bold" size="16.0" />
                                                          </font>
@@ -349,14 +349,14 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;On track&quot; or &quot;Behind Schedule&quot;??)">
+                                                                  <Label fx:id="timelineStatus2" text="(&quot;On track&quot; or &quot;Behind Schedule&quot;??)">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>
                                                                   </Label>
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="timelineBar2" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -369,12 +369,12 @@
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="DD/MM/YYYY" />
+                                                            <Label fx:id="startDate2" text="DD/MM/YYYY" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="11.0" layoutY="249.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="DD/MM/YYYY">
+                                                            <Label fx:id="expectedDate2" alignment="CENTER_RIGHT" text="DD/MM/YYYY">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
@@ -388,13 +388,13 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Update" />
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" text="Untrack">
+                                                            <Button fx:id="updateProject2" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Update" />
+                                                            <Button fx:id="Untrack2" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
                                                             </Button>
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="View project details">
+                                                            <Button fx:id="Details2" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="View project details">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
@@ -410,10 +410,10 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;Within budget&quot; or &quot;Over budget&quot;??)" />
+                                                                  <Label fx:id="budgetStatus2" text="(&quot;Within budget&quot; or &quot;Over budget&quot;??)" />
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="budgetBar2" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -426,12 +426,12 @@
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="\$ XX,XXXX.XX" />
+                                                            <Label fx:id="expenses2" text="\$ XX,XXXX.XX" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="403.0" layoutY="228.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="\$ XX,XXXX.XX">
+                                                            <Label fx:id="budget2" alignment="CENTER_RIGHT" text="\$ XX,XXXX.XX">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
@@ -457,7 +457,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Text>
-                                                            <Label text=": Residential/Commercial/etc" GridPane.columnIndex="1" />
+                                                            <Label fx:id="projectType2" text=": Residential/Commercial/etc" GridPane.columnIndex="1" />
                                                          </children>
                                                          <opaqueInsets>
                                                             <Insets />
@@ -480,7 +480,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Text>
-                                                            <Label text=": +45 12 34 56 78" GridPane.columnIndex="1" />
+                                                            <Label fx:id="tlfNo2" text=": +45 12 34 56 78" GridPane.columnIndex="1" />
                                                          </children>
                                                          <opaqueInsets>
                                                             <Insets />
@@ -498,10 +498,10 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;Within expected&quot; or &quot;Over expected&quot;??)" />
+                                                                  <Label fx:id="hoursStatus2" text="(&quot;Within expected&quot; or &quot;Over expected&quot;??)" />
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="hoursBar2" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -514,12 +514,12 @@
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="XXXX" />
+                                                            <Label fx:id="hoursSpent2" text="XXXX" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="13.0" layoutY="133.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="390.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <children>
-                                                            <Label text="XXXX">
+                                                            <Label fx:id="expectedHours2" text="XXXX">
                                                                <padding>
                                                                   <Insets left="10.0" />
                                                                </padding>
@@ -556,7 +556,7 @@
                                                       <RowConstraints maxHeight="282.3333168029785" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
                                                    </rowConstraints>
                                                    <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="#3: Address: " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                      <Text fx:id="address3" strokeType="OUTSIDE" strokeWidth="0.0" text="#3: Address: " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                          <font>
                                                             <Font name="System Bold" size="16.0" />
                                                          </font>
@@ -573,14 +573,14 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;On track&quot; or &quot;Behind Schedule&quot;??)">
+                                                                  <Label fx:id="timelineStatus3" text="(&quot;On track&quot; or &quot;Behind Schedule&quot;??)">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>
                                                                   </Label>
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="timelineBar3" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -593,12 +593,12 @@
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="DD/MM/YYYY" />
+                                                            <Label fx:id="startDate3" text="DD/MM/YYYY" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="11.0" layoutY="249.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="DD/MM/YYYY">
+                                                            <Label fx:id="expectedDate3" alignment="CENTER_RIGHT" text="DD/MM/YYYY">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
@@ -612,13 +612,13 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Update" />
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" text="Untrack">
+                                                            <Button fx:id="updateProject3" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Update" />
+                                                            <Button fx:id="Untrack3" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
                                                             </Button>
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="View project details">
+                                                            <Button fx:id="Details3" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="View project details">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
@@ -634,10 +634,10 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;Within budget&quot; or &quot;Over budget&quot;??)" />
+                                                                  <Label fx:id="budgetStatus3" text="(&quot;Within budget&quot; or &quot;Over budget&quot;??)" />
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="budgetBar3" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -650,12 +650,12 @@
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="\$ XX,XXXX.XX" />
+                                                            <Label fx:id="expenses3" text="\$ XX,XXXX.XX" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="403.0" layoutY="228.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="\$ XX,XXXX.XX">
+                                                            <Label fx:id="budget3" alignment="CENTER_RIGHT" text="\$ XX,XXXX.XX">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
@@ -681,7 +681,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Text>
-                                                            <Label text=": Residential/Commercial/etc" GridPane.columnIndex="1" />
+                                                            <Label fx:id="projectType3" text=": Residential/Commercial/etc" GridPane.columnIndex="1" />
                                                          </children>
                                                          <opaqueInsets>
                                                             <Insets />
@@ -704,7 +704,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Text>
-                                                            <Label text=": +45 12 34 56 78" GridPane.columnIndex="1" />
+                                                            <Label fx:id="tlfNo3" text=": +45 12 34 56 78" GridPane.columnIndex="1" />
                                                          </children>
                                                          <opaqueInsets>
                                                             <Insets />
@@ -722,10 +722,10 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;Within expected&quot; or &quot;Over expected&quot;??)" />
+                                                                  <Label fx:id="hoursStatus3" text="(&quot;Within expected&quot; or &quot;Over expected&quot;??)" />
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="hoursBar3" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -738,12 +738,12 @@
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="XXXX" />
+                                                            <Label fx:id="hoursSpent3" text="XXXX" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="13.0" layoutY="133.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="390.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <children>
-                                                            <Label text="XXXX">
+                                                            <Label fx:id="expectedHours3" text="XXXX">
                                                                <padding>
                                                                   <Insets left="10.0" />
                                                                </padding>
@@ -780,7 +780,7 @@
                                                       <RowConstraints maxHeight="282.3333168029785" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
                                                    </rowConstraints>
                                                    <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="#4: Address: " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                      <Text fx:id="address4" strokeType="OUTSIDE" strokeWidth="0.0" text="#4: Address: " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                          <font>
                                                             <Font name="System Bold" size="16.0" />
                                                          </font>
@@ -797,14 +797,14 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;On track&quot; or &quot;Behind Schedule&quot;??)">
+                                                                  <Label fx:id="timelineStatus4" text="(&quot;On track&quot; or &quot;Behind Schedule&quot;??)">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>
                                                                   </Label>
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="timelineBar4" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -817,12 +817,12 @@
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="DD/MM/YYYY" />
+                                                            <Label fx:id="startDate4" text="DD/MM/YYYY" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="11.0" layoutY="249.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="DD/MM/YYYY">
+                                                            <Label fx:id="expectedDate4" alignment="CENTER_RIGHT" text="DD/MM/YYYY">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
@@ -836,13 +836,13 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Update" />
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" text="Untrack">
+                                                            <Button fx:id="updateProject4" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Update" />
+                                                            <Button fx:id="Untrack4" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
                                                             </Button>
-                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="View project details">
+                                                            <Button fx:id="Details4" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="View project details">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
@@ -858,10 +858,10 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;Within budget&quot; or &quot;Over budget&quot;??)" />
+                                                                  <Label fx:id="budgetStatus4" text="(&quot;Within budget&quot; or &quot;Over budget&quot;??)" />
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="budgetBar4" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -874,12 +874,12 @@
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="\$ XX,XXXX.XX" />
+                                                            <Label fx:id="expenses4" text="\$ XX,XXXX.XX" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="403.0" layoutY="228.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Label alignment="CENTER_RIGHT" text="\$ XX,XXXX.XX">
+                                                            <Label fx:id="budget4" alignment="CENTER_RIGHT" text="\$ XX,XXXX.XX">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
@@ -905,7 +905,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Text>
-                                                            <Label text=": Residential/Commercial/etc" GridPane.columnIndex="1" />
+                                                            <Label fx:id="projectType4" text=": Residential/Commercial/etc" GridPane.columnIndex="1" />
                                                          </children>
                                                          <opaqueInsets>
                                                             <Insets />
@@ -928,7 +928,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Text>
-                                                            <Label text=": +45 12 34 56 78" GridPane.columnIndex="1" />
+                                                            <Label fx:id="tlfNo4" text=": +45 12 34 56 78" GridPane.columnIndex="1" />
                                                          </children>
                                                          <opaqueInsets>
                                                             <Insets />
@@ -946,10 +946,10 @@
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin>
                                                                   </Text>
-                                                                  <Label text="(&quot;Within expected&quot; or &quot;Over expected&quot;??)" />
+                                                                  <Label fx:id="hoursStatus4" text="(&quot;Within expected&quot; or &quot;Over expected&quot;??)" />
                                                                </children>
                                                             </HBox>
-                                                            <ProgressBar prefHeight="20.0" prefWidth="785.0" progress="0.5" />
+                                                            <ProgressBar fx:id="hoursBar4" prefHeight="20.0" prefWidth="785.0" progress="0.5" />
                                                          </children>
                                                          <padding>
                                                             <Insets bottom="2.5" />
@@ -962,12 +962,12 @@
                                                                   <Insets left="5.0" right="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <Label text="XXXX" />
+                                                            <Label fx:id="hoursSpent4" text="XXXX" />
                                                          </children>
                                                       </HBox>
                                                       <HBox layoutX="13.0" layoutY="133.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="390.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <children>
-                                                            <Label text="XXXX">
+                                                            <Label fx:id="expectedHours4" text="XXXX">
                                                                <padding>
                                                                   <Insets left="10.0" />
                                                                </padding>

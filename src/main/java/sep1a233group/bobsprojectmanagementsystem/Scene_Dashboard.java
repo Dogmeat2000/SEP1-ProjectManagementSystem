@@ -3,9 +3,14 @@ package sep1a233group.bobsprojectmanagementsystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
+
+
 
 /** This class controls the GUI related view and methods concerning the "Project Dashboard" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
@@ -13,9 +18,37 @@ import java.io.IOException;
  * Author: */
 public class Scene_Dashboard implements Scene_ControllerInterface
 {
+
+  private DashboardProgressReports dashboardProgressReports;
+  private ProgressReport[] progressReports = dashboardProgressReports.getProgressReports();
+  @FXML private Text address1, address2, address3, address4;
+  @FXML private Label projectType1, projectType2, projectType3, projectType4;
+  @FXML private Label tlfNo1, tlfNo2, tlfNo3, tlfNo4;
+  @FXML private Label hoursStatus1, hoursStatus2, hoursStatus3, hoursStatus4;
+  @FXML private ProgressBar hoursBar1, hoursBar2, hoursBar3, hoursBar4;
+  @FXML private Label hoursSpent1, hoursSpent2, hoursSpent3, hoursSpent4;
+  @FXML private Label expectedHours1, expectedHours2, expectedHours3, expectedHours4;
+  @FXML private Label budgetStatus1, budgetStatus2, budgetStatus3, budgetStatus4;
+  @FXML private ProgressBar budgetBar1, budgetBar2, budgetBar3, budgetBar4;
+  @FXML private Label expenses1, expenses2, expenses3, expenses4;
+  @FXML private Label budget1, budget2, budget3, budget4;
+  @FXML private Label timelineStatus1, timelineStatus2, timelineStatus3, timelineStatus4;
+  @FXML private ProgressBar timelineBar1, timelineBar2, timelineBar3, timelineBar4;
+  @FXML private Label startDate1, startDate2, startDate3, startDate4;
+  @FXML private Label expectedDate1, expectedDate2, expectedDate3, expectedDate4;
+  @FXML private Button updateProject1, updateProject2, updateProject3, updateProject4;
+  @FXML private Button Untrack1, Untrack2, Untrack3, Untrack4;
+  @FXML private Button Details1, Details2, Details3, Details4;
+
   @FXML TextField GUI_Console; //textField in the gui, where messages are shown to the user.
   private MainModel activeModel;
   private SceneController sceneController;
+
+
+  public void displayProgressReports()
+  {
+
+  }
 
 
   /** Returns a reference to the GUI_Console on this page.
@@ -58,6 +91,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     setSceneController(sceneController);
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+
 
     System.out.println("Project Dashboard Scene is now active");
   }
