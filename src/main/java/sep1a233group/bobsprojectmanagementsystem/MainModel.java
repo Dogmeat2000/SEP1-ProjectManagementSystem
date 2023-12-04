@@ -384,8 +384,23 @@ public class MainModel
    */
   public boolean removeProject(ConstructionProject project)
   {
-    //TODO: Implement removeProject method.
-    return false;
+    if (!getAllProjectsList().contains(project))
+    {
+      System.out.println("Project not found in the system!");
+      return false;
+    }
+
+    if (getAllProjectsList().remove(project))
+    {
+      save();
+      System.out.println("Project have been successfully removed: " + project.getProjectInformation().getProjectName());
+      return true;
+    }
+    else
+    {
+      System.out.println("Error occured!");
+      return false;
+    }
   }
 
   /** Sets the current filtering options that are applied when projects are displayed in the GUI.
