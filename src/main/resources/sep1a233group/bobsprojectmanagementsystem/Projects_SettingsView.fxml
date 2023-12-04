@@ -83,7 +83,185 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customize your experience here" />
                               <ScrollPane focusTraversable="false" hbarPolicy="NEVER" minHeight="630.0" minWidth="1130.0" prefHeight="630.0" prefWidth="1130.0" vbarPolicy="ALWAYS">
                                  <content>
-                                    <AnchorPane minHeight="600.0" minWidth="1130.0" prefHeight="628.0" prefWidth="1130.0" />
+                                    <AnchorPane minHeight="600.0" minWidth="1130.0" prefHeight="628.0" prefWidth="1130.0">
+                                       <children>
+                                          <HBox layoutX="119.0" layoutY="57.0" prefHeight="25.0" prefWidth="647.0">
+                                             <children>
+                                                <HBox prefHeight="25.0" prefWidth="99.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Residental Project">
+                                                         <font>
+                                                            <Font name="System Bold" size="20.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="25.0" prefWidth="99.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Commercial Projects" wrappingWidth="209.134765625">
+                                                         <font>
+                                                            <Font name="System Bold" size="20.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Industrial Projects">
+                                                         <font>
+                                                            <Font name="System Bold" size="20.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="54.0" prefWidth="318.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Road construction Project">
+                                                         <font>
+                                                            <Font name="System Bold" size="20.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </HBox>
+                                          <VBox layoutX="169.0" layoutY="114.0" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <TextField fx:id="timeLineRP">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="numberOfKitchensRP">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="numberOfBathroomsRP">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="roomsWithPlumbingRP">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="buildOrRenovationRP">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="395.0" layoutY="114.0" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <TextField fx:id="timeLineCP">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="numberOfFloorsCP">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="639.0" layoutY="114.0" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <TextField fx:id="timeLineIP" />
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="876.0" layoutY="114.0" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <TextField fx:id="timeLineRCP">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="bridgesOrTunnelsRCP">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <TextField fx:id="enviromentalOrGeographicalRCP" />
+                                             </children>
+                                          </VBox>
+                                          <Text layoutX="111.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timeline">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="9.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                          <Text layoutX="52.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of kitchens">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="41.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of bathrooms">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="42.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rooms with plumbing">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="54.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Build or renovation">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="339.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timeline">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="293.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of floors">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="582.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timeline">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="822.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timeline">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="760.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bridges or tunnels?">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="704.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enviromental or geographical">
+                                             <font>
+                                                <Font name="Arial Black" size="10.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="saveChangesButton" layoutX="817.0" layoutY="495.0" mnemonicParsing="false" text="Save changes">
+                                             <font>
+                                                <Font size="30.0" />
+                                             </font>
+                                          </Button>
+                                       </children></AnchorPane>
                                  </content>
                               </ScrollPane>
                            </children>
