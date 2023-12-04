@@ -56,6 +56,14 @@
                                     <Insets bottom="5.0" left="20.0" />
                                  </VBox.margin>
                               </Button>
+                              <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="56.0" layoutY="212.0" minHeight="30.0" mnemonicParsing="false" onAction="#editProjectSelected" prefHeight="30.0" prefWidth="120.0" text="Edit project2" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="20.0" />
+                                 </VBox.margin>
+                              </Button>
                               <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="56.0" layoutY="177.0" minHeight="30.0" mnemonicParsing="false" onAction="#openWindow" prefHeight="30.0" prefWidth="120.0" text="New project" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="15.0" />

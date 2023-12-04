@@ -144,4 +144,61 @@ public class CommercialProject extends ConstructionProject implements Serializab
 
     return returnValue;
   }
+
+  public ConstructionProject copy()
+  {
+    //Create fresh project.
+    CommercialProject copyProject = new CommercialProject();
+
+    //Copy attribute values: First project specific values.
+    copyProject.setNumberOfFloors(this.getNumberOfFloors());
+    copyProject.setBuildingSize(this.getBuildingSize());
+    copyProject.setIntendedBuildingUse(this.getIntendedBuildingUse());
+
+    //Copy non-unique project attributes:
+    copyProject.setProjectDuration(this.getProjectDuration());
+    copyProject.setDashboardProject(this.isDashboardProject());
+    copyProject.setProjectConfidentiality(this.isProjectConfidential());
+
+    //Copy Date information:
+    copyProject.setProjectStartDate(new MyDate(this.getProjectStartDate().getDay(), this.getProjectStartDate().getMonth(), this.getProjectStartDate().getYear()));
+    copyProject.setProjectEndDate(new MyDate(this.getProjectEndDate().getDay(), this.getProjectEndDate().getMonth(), this.getProjectEndDate().getYear()));
+
+    //Copy customer information:
+    copyProject.setCustomer(new Customer(this.getCustomer().getFirstName(), this.getCustomer().getLastName(), this.getCustomer().getEmail(), this.getCustomer().getPhoneNumber(), new Address(this.getCustomer().getCustomerAddress().getStreet(), this.getCustomer().getCustomerAddress().getCity(), this.getCustomer().getCustomerAddress().getCountry(), this.getCustomer().getCustomerAddress().getPostalCode())));
+    copyProject.getCustomer().getCustomerAddress().setStreetNumber(this.getCustomer().getCustomerAddress().getStreetNumber());
+    copyProject.getCustomer().setPhoneNumberPrefix(this.getCustomer().getPhoneNumberPrefix());
+    copyProject.getCustomer().getCustomerAddress().setApartment(this.getCustomer().getCustomerAddress().getApartment());
+    copyProject.getCustomer().getCustomerCompany().setName(this.getCustomer().getCustomerCompany().getName());
+    copyProject.getCustomer().getCustomerCompany().setCompanyAddress(new Address(this.getCustomer().getCustomerAddress().getStreet(),this.getCustomer().getCustomerAddress().getCity(), this.getCustomer().getCustomerAddress().getCountry(), this.getCustomer().getCustomerAddress().getPostalCode()));
+    copyProject.getCustomer().getCustomerCompany().getCompanyAddress().setStreetNumber(this.getCustomer().getCustomerCompany().getCompanyAddress().getStreetNumber());
+    copyProject.getCustomer().getCustomerCompany().getCompanyAddress().setApartment(this.getCustomer().getCustomerCompany().getCompanyAddress().getApartment());
+
+    //Copy project location:
+    copyProject.getProjectAddress().setStreet(this.getProjectAddress().getStreet());
+    copyProject.getProjectAddress().setStreetNumber(this.getProjectAddress().getStreetNumber());
+    copyProject.getProjectAddress().setCity(this.getProjectAddress().getCity());
+    copyProject.getProjectAddress().setApartment(this.getProjectAddress().getApartment());
+    copyProject.getProjectAddress().setPostalCode(this.getProjectAddress().getPostalCode());
+    copyProject.getProjectAddress().setCountry(this.getProjectAddress().getCountry());
+
+    //Copy Promotional Information:
+    copyProject.getProjectInformation().setProjectName(this.getProjectInformation().getProjectName());
+    copyProject.getProjectInformation().setProjectManagerComments(this.getProjectInformation().getProjectManagerComments());
+    copyProject.getProjectInformation().setProjectDescription(this.getProjectInformation().getProjectDescription());
+    copyProject.getProjectInformation().addPhotoURL(this.getProjectInformation().getPhotoURL());
+
+    //Copy Human Resources information:
+    copyProject.getHumanRessources().setManHoursSpent(this.getHumanRessources().getManHoursSpent());
+    copyProject.getHumanRessources().setTotalManHoursNeeded(this.getHumanRessources().getTotalManHoursNeeded());
+
+    //Copy Finances information:
+    copyProject.getFinances().setTotalBudget(this.getFinances().getTotalBudget());
+    copyProject.getFinances().setMaterialExpences(this.getFinances().getMaterialExpences());
+
+    //Generate progress report:
+    copyProject.generateProgressReport();
+
+    return copyProject;
+  }
 }

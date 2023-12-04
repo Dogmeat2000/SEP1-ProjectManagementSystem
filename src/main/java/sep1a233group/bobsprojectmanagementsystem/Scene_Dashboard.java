@@ -293,39 +293,39 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
-  /** Returns a reference to the GUI_Console on this page.
-   * Author: K. Dashnaw
+  /** <p>Returns a reference to the GUI_Console on this page.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public TextField getGUI_Console()
   {
     return GUI_Console;
   }
-  /** Sets/Initializes the GUI_Console on this page.
-   * Author: K. Dashnaw
+  /** <p>Sets/Initializes the GUI_Console on this page.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public void setGUI_Console(TextField GUI_Console)
   {
     this.GUI_Console = GUI_Console;
   }
 
-  /** Returns a SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
+  /** <p>Returns a SceneController object containing a reference to this stages parent controller</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public SceneController getSceneController()
   {
     return sceneController;
   }
 
-  /** Sets/Initializes the SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
+  /** <p>Sets/Initializes the SceneController object containing a reference to this stages parent controller</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public void setSceneController(SceneController sceneController)
   {
     this.sceneController = sceneController;
   }
 
-  /** Initializes this scene into the active stage on the GUI - reusing the same window space.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
+  /** <p>Initializes this scene into the active stage on the GUI - reusing the same window space.
+   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
    * */
   public void init(MainModel activeModel, SceneController sceneController)
   {
@@ -341,8 +341,8 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     System.out.println("Project Dashboard Scene is now active");
   }
 
-  /** Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
+  /** <p>Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
+   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
    * */
   @Override public void refresh()
   {
@@ -355,13 +355,10 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     System.out.println("Dashboard now the active stage.");
   }
 
-  /** This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.openWindow() for a more detailed description.*/
+  /** <p>This method simply calls the common method with the same name, from the SceneController.
+   * Check SceneController.openWindow() for a more detailed description.</p>*/
   public void openWindow(ActionEvent actionEvent) throws IOException
   {
-    //TODO: Implement a pop-up message warning the user to confirm (yes/no) if they really wish to proceed to this new view.
-    // However this warning should ONLY be shown when trying to navigate away from the "create project" or "edit project" views, to avoid the user accidentally loosing data.
-
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
@@ -369,8 +366,8 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     this.getSceneController().openWindow(buttonText, this.getGUI_Console());
   }
 
-  /** This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exportToWeb() for a more detailed description.*/
+  /** <p>This method simply calls the common method with the same name, from the SceneController.
+   * Check SceneController.exportToWeb() for a more detailed description.</p>*/
   public void exportToWeb()
   {
     this.getSceneController().exportToWeb();
@@ -379,8 +376,8 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exitApplication() for a more detailed description.*/
+  /** <p>This method simply calls the common method with the same name, from the SceneController.
+   * Check SceneController.exitApplication() for a more detailed description.</p>*/
   public void exitApplication()
   {
     this.getSceneController().exitApplication();

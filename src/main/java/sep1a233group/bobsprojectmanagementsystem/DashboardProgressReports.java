@@ -68,8 +68,7 @@ public class DashboardProgressReports implements Serializable
 
   public boolean removeProgressReport(ProgressReport progressReport)
   {
-    for (ProgressReport findReport:dashboardProgressReports
-         )
+    for (ProgressReport findReport:dashboardProgressReports)
     {
       if (progressReport.equals(findReport))
       {

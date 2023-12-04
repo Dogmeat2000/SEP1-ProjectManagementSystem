@@ -217,6 +217,10 @@ public class SceneController
       {
         this.loadNewWindow("Projects_SettingsView");
       }
+      else if (buttonText.equalsIgnoreCase("Edit project2"))
+      {
+        this.loadNewWindow("Projects_EditProjectView");
+      }
     }
     catch (Exception error)
     {

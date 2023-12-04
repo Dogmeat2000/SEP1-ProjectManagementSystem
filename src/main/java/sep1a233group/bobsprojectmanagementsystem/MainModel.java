@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** <p>This is the main controller for the project management system. This controls most of the coding logic and method functionality that is called from the GUI<br><br></p>
- * <b>Author:</b> Combined effort from all team members.
+ * <p><b>Author:</b> Combined effort from all team members.</p>
  * */
 public class MainModel
 {
@@ -26,11 +26,11 @@ public class MainModel
   private ConstructionProject selectedProject; //Container used to contain currently selected/active project information.
 
   private String initializationErrorMessage; //Created so the sceneController on initialization can know if there were any errors while loading the system files.
+  private int projectIndexPosition; //Holds a reference to the index of the original project, while in the process of modifying existing project copies (before the original is replaced upon user save).
 
-  /**
-   * Constructs the MainModel.
-   * Also loads any available project details from system file.
-   * Author: K. Dashnaw
+  /** <p>Constructs the MainModel.
+   * Also loads any available project details from system file.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public MainModel()
   {
@@ -50,27 +50,28 @@ public class MainModel
       System.out.println("Debug: Data was not loaded successfully. New data has been initialized instead.");
       setInitializationErrorMessage("Data was not loaded successfully. New data has been initialized instead.");
     }
+    refreshDashboardProjects();
   }
 
-  /** Returns an array with the marked Dashboard projects that the user wants shown on the GUI Dashboard.
-   * Author: K. Dashnaw
+  /** <p>Returns an array with the marked Dashboard projects that the user wants shown on the GUI Dashboard.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public DashboardProgressReports getDashboardProgressReports()
   {
     return dashboardProgressReports;
   }
 
-  /** Sets/Initializes the DashboardProgressReports array
-   * Author: K. Dashnaw
+  /** <p>Sets/Initializes the DashboardProgressReports array</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public void setDashboardProgressReport(DashboardProgressReports progressReports)
   {
     this.dashboardProgressReports = progressReports;
   }
 
-  /** Returns any potentially set error messages. This is especially used during model initialization by the SceneController,
-   * since the SceneController does not know what errors this models internal operations cast.
-   * Author: K. Dashnaw
+  /** <p>Returns any potentially set error messages. This is especially used during model initialization by the SceneController,
+   * since the SceneController does not know what errors this models internal operations cast.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public String getInitializationErrorMessage()
   {
@@ -225,13 +226,28 @@ public class MainModel
     this.defaultRoadSettings = defaultRoadSettings;
   }
 
-  /** Adds a single construction project to the project management system.
-   * Returns true if operation was successful.
-   * Author: K. Dashnaw
+  /** <p>Returns a reference to the index position in the master project list from which a copy of the selected project is currently being modified.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * */
+  public int getProjectIndexPosition()
+  {
+    return projectIndexPosition;
+  }
+
+  /** <p>Sets a reference to the index position in the master project list from which a copy of the selected project is currently being modified.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * */
+  public void setProjectIndexPosition(int projectIndexPosition)
+  {
+    this.projectIndexPosition = projectIndexPosition;
+  }
+
+  /** <p>Adds a single construction project to the project management system.</p>
+   * @return true/false depending on if the operation was successful (true) or not (false).
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public boolean addProject(ConstructionProject project)
   {
-    //TODO: Note by Kristian, Maybe change the projectList so we store projects in a balanced binary search tree instead, for faster filtering/search operations?
     setInitializationErrorMessage("");
     //Check if an identical project already exists in the system files:
     for (int i = 0; i < getAllProjectsList().size(); i++)
@@ -366,21 +382,43 @@ public class MainModel
     environmentalInfoGUIID.setText(currentProject.getEnvironmentalOrGeographicalChallenges());
   }
 
-  /** Edits a single construction project in the project management system.
-   * Returns true if operation was successful.
-   * Author:
+  /** <p>Edits a single construction project in the project management system.
+   * Returns true if operation was successful. See more details about the edit code and sequence in the SubScene_EditProjectView.java
+   * This method is mainly here for better understanding with the naming. addProject() is the important one, editProject merely sends
+   * the information on to the addProject() method.</p>
+   * <p><b>Author:</b>K. Dashnaw</p>
    */
   public boolean editProject(ConstructionProject project)
   {
-    ArrayList<ConstructionProject> filteredProjects = new ArrayList<>();
-      //TODO: Implement editProject Method.
-
+    if(this.addProject(project))
+    {
+      return true;
+    }
+    else
+    {
       return false;
     }
+  }
 
-  /** Removes a single construction project from the project management system.
-   * Returns true if operation was successful.
-   * Author:
+  /** <p>This method is used to refresh the contents of the Dashboard project object,
+   * containing references to the projects shown on the Dashboard
+   * It is called whenever projects are modified.</p>
+   * */
+  public void refreshDashboardProjects()
+  {
+    setDashboardProgressReport(new DashboardProgressReports());
+    for (int i = 0; i < getAllProjectsList().size(); i++)
+    {
+      if(getAllProjectsList().get(i).isDashboardProject() && getDashboardProgressReports().getCurrentCapacity() <= getDashboardProgressReports().getMaxCapacity() && getDashboardProgressReports().getCurrentCapacity() > 0)
+      {
+        getDashboardProgressReports().addProgressReport(getAllProjectsList().get(i).getProgressReport());
+      }
+    }
+  }
+
+  /** <p>Removes a single construction project from the project management system.
+   * Returns true if operation was successful.</p>
+   * <p><b>Author:</b> Zakaria</p>
    */
   public boolean removeProject(ConstructionProject project)
   {
@@ -408,8 +446,6 @@ public class MainModel
    * Returns true if operation was successful.
    * Author:
    */
-
-
   public boolean filterProject(double minBudget, double maxBudget, int minDuration, int maxDuration)
   {
     //TODO: Implement filterProject method.
@@ -426,11 +462,11 @@ public class MainModel
   return false;
   }
 
-  /** Enables data persistence across sessions by saving relevant system information to a file.
+  /** <p>Enables data persistence across sessions by saving relevant system information to a file.
    *  Note: Validation of data integrity should be conducted prior to calling this save method,
-   *  ideally as early as while adding data to the model field attributes.
-   *  Returns true if operation was successful.
-   *  Author: K. Dashnaw
+   *  ideally as early as while adding data to the model field attributes.</p>
+   *  <p><b>Author:</b> K. Dashnaw</p>
+   *  @return true if operation was successful, false if unsuccessful.
    * */
   public boolean save ()
   {
@@ -455,9 +491,9 @@ public class MainModel
     }
   }
 
-  /** Enables data persistence across sessions by loading relevant system information from a binary file.
-   * Returns true if operation was successful.
-   * Author: K. Dashnaw
+  /** <p>Enables data persistence across sessions by loading relevant system information from a binary file.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @return true if operation was successful.
    * */
   @SuppressWarnings("unchecked")
   public boolean load ()

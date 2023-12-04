@@ -4,39 +4,28 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 import java.io.IOException;
 
-/** This class controls the GUI related view and methods concerning the "create new project" GUI stage.
+/** <p>This class controls the GUI related view and methods concerning the "edit project" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
- * It refers to MainModel for model specific methods and actions.
- * Author: K. Dashnaw
+ * It refers to MainModel for model specific methods and actions.</p>
+ * <p><b>Author:</b> K. Dashnaw</p>
  */
-public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
+public class SubScene_EditProjectView implements Scene_ControllerInterface
 {
   //Residential Project control attributes
-  @FXML VBox vBoxResidentialProjectType;
-  @FXML Button buttonResidentialProjectType;
-  @FXML ImageView imgResidentialProjectType;
-  @FXML Label labelResidentialProjectType;
   @FXML GridPane gridResidentialUniqueData;
   @FXML TextField tResBathroomNumber;
   @FXML TextField tResNumberKitchens;
   @FXML TextField tResNumberOfOtherPlumbing;
   @FXML TextField tResDuration;
   @FXML TextField tResBuildingSize;
+  @FXML CheckBox isRenovation;
 
   //Commercial Project control attributes
-  @FXML VBox vBoxCommercialProjectType;
-  @FXML Button buttonCommercialProjectType;
-  @FXML ImageView imgCommercialProjectType;
-  @FXML Label labelCommercialProjectType;
   @FXML GridPane gridCommercialUniqueData;
   @FXML TextField tComNumberFloors;
   @FXML TextField tComDuration;
@@ -44,20 +33,12 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   @FXML TextArea taComIntendedUse;
 
   //Industrial Project control attributes
-  @FXML VBox vBoxIndustrialProjectType;
-  @FXML Button buttonIndustrialProjectType;
-  @FXML ImageView imgIndustrialProjectType;
-  @FXML Label labelIndustrialProjectType;
   @FXML GridPane gridIndustrialUniqueData;
   @FXML TextField tIndDuration;
   @FXML TextField tIndFacilitySize;
   @FXML TextArea taIndFacilityType;
 
   //Road Project control attributes
-  @FXML VBox vBoxRoadProjectType;
-  @FXML Button buttonRoadProjectType;
-  @FXML ImageView imgRoadProjectType;
-  @FXML Label labelRoadProjectType;
   @FXML GridPane gridRoadUniqueData;
   @FXML TextField tRDLength;
   @FXML TextField tRDWidth;
@@ -67,26 +48,23 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
 
   //Shared Control attributes
   @FXML TextField GUI_Console;
-  @FXML Label labelProjectTypePrompt;
   @FXML GridPane gridProjectDataContainer;
-  @FXML Label labelProjectDataPrompt;
-  @FXML Button buttonCreateProject;
+  @FXML GridPane gridCommonProjectDataContainer;
+  @FXML Button buttonEditProject;
   @FXML Button buttonCancel;
   @FXML TextArea taProjectDescription;
   @FXML TextArea taManagersComments;
+  @FXML DatePicker date_StartDateField;
   @FXML DatePicker date_EndDateField;
   @FXML CheckBox checkBox_AddToDashBoard;
 
   //Other field Attributes:
   private MainModel activeModel;
   private SceneController sceneController;
-  private boolean projectTypeSelected;
-  private String projectTypeSelectedString;
+  private int projectIndexPosition;
 
-  private int loadCounter; //Keeps track of how many times critical methods have been executed. This is to prevent unnecessary use of confirmation prompts.
-
-  /** Initializes this scene into the active stage on the GUI - reusing the same window space.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
+  /** <p>Initializes this scene into the active stage on the GUI - reusing the same window space.
+   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
    */
   public void init(MainModel activeModel, SceneController sceneController)
   {
@@ -95,46 +73,21 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     setSceneController(sceneController);
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-
-    //Ensure the elements shown are in the proper format for a clean view load:
-    setProjectTypeSelected(false);
-    hideGridElementNode(gridProjectDataContainer, true);
-    hideLabelElementNode(labelProjectDataPrompt, true);
-    hideAllUniqueProjectDataFields(true);
-    hideButtonElementNode(buttonCreateProject, true);
-    hideButtonElementNode(buttonCancel, true);
-
-    System.out.println("current capacity: " + this.getActiveModel().getDashboardProgressReports().getCurrentCapacity());
-    System.out.println("maximum capacity: " + this.activeModel.getDashboardProgressReports().getMaxCapacity());
-
-    //Set the load counter used to check if user has previously performed critical methods or not.
-    loadCounter = 0;
-    System.out.println("Create New Project panel is now active");
+    refresh();
   }
 
-  /** Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
-   * Author: K. Dashnaw
+  /** <p>Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
+   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   @Override public void refresh()
   {
     //Refresh the page, as it is shown on a clean load:
-    setProjectTypeSelected(false);
-    labelProjectTypePrompt.setVisible(true);
-    hideGridElementNode(gridProjectDataContainer, true);
-    hideLabelElementNode(labelProjectDataPrompt, true);
-    hideAllUniqueProjectDataFields(true);
-    hideButtonElementNode(buttonCreateProject, true);
-    hideButtonElementNode(buttonCancel, true);
+    showUniqueProjectDataFields();
 
-    //Reset all windows and fields to initial width/height:
-    resizeAllElementHeight(185);
-    resizeProjectButtonWidth(245);
-    resetProjectTypeImagesTransparency();
-    resetLabelTextSizes();
-    System.out.println("New Project Creation Scene is now the active stage.");
+    System.out.println("Edit Scene is now the active stage.");
 
-    //Loop though non fx:id referenced data fields and reset these.
+    //Loop though the shared project data gridPane and insert selected project values inside TextFields - while also ensuring fields are reset for previous views of this screen.
     for (Node node : gridProjectDataContainer.getChildren())
     {
       if (node instanceof TextArea)
@@ -143,7 +96,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
       }
       else if (node instanceof TextField)
       {
-        ((TextField) node).setText("");
+        ((TextField) node).setText(this.loadProjectData_String((TextField) node));
         ((TextField) node).setTooltip(null);
         node.setStyle("-fx-text-fill: black;");
       }
@@ -151,123 +104,138 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
       {
         ((DatePicker) node).getEditor().setText("");
       }
+    }
+
+    //Loop though the commonly used project data gridPane and insert selected project values inside TextFields - while also ensuring fields are reset for previous views of this screen.
+    //Loop though non fx:id referenced data fields and reset these.
+    for (Node node : gridCommonProjectDataContainer.getChildren())
+    {
+      if (node instanceof TextField)
+      {
+        ((TextField) node).setText(this.loadProjectData_String((TextField) node));
+        ((TextField) node).setTooltip(null);
+        node.setStyle("-fx-text-fill: black;");
+      }
       else if(node instanceof CheckBox)
       {
-        ((CheckBox) node).setSelected(false);
+        ((CheckBox) node).setSelected(this.loadProjectData_Checkbox((CheckBox) node));
         ((CheckBox) node).setDisable(false);
       }
     }
-    taProjectDescription.setText("");
-    taManagersComments.setText("");
-    checkBox_AddToDashBoard.setText("Add project to Dashboard?");
 
-    //Page has been refreshed. Reset the load counter.
-    loadCounter = 0;
+    //Set the remaining more "hard to get to" data fields:
+    taProjectDescription.setText(this.getActiveModel().getSelectedProject().getProjectInformation().getProjectDescription());
+    taManagersComments.setText(this.getActiveModel().getSelectedProject().getProjectInformation().getProjectManagerComments());
+    date_StartDateField.getEditor().setText("" + this.getActiveModel().getSelectedProject().getProjectStartDate());
+    date_EndDateField.getEditor().setText("" + this.getActiveModel().getSelectedProject().getProjectEndDate());
+
+    //Set the Project specific datafields:
+    if(this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("residential"))
+    {
+      ResidentialProject project = (ResidentialProject) this.getActiveModel().getSelectedProject();
+      tResBathroomNumber.setText("" + project.getNumberOfBathrooms());
+      tResNumberKitchens.setText("" + project.getNumberOfKitchens());
+      tResNumberOfOtherPlumbing.setText("" + project.getNumberOfOtherRoomsWithPlumbing());
+      tResDuration.setText("" + project.getProjectDuration());
+      tResBuildingSize.setText("" + project.getBuildingSize());
+      if(project.getIsRenovation())
+      {
+        isRenovation.setSelected(true);
+      } else
+      {
+        isRenovation.setSelected(false);
+      }
+    }
+    else if(this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("commercial"))
+    {
+      CommercialProject project = (CommercialProject) this.getActiveModel().getSelectedProject();
+      tComNumberFloors.setText("" + project.getNumberOfFloors());
+      tComDuration.setText("" + project.getProjectDuration());
+      tComBuildingSize.setText("" + project.getBuildingSize());
+      taComIntendedUse.setText(project.getIntendedBuildingUse());
+    }
+    else if(this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("industrial"))
+    {
+      IndustrialProject project = (IndustrialProject) this.getActiveModel().getSelectedProject();
+      tIndDuration.setText("" + project.getProjectDuration());
+      tIndFacilitySize.setText("" + project.getFacilitySize());
+      taIndFacilityType.setText(project.getFacilityType());
+    }
+    else if(this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("road"))
+    {
+      RoadProject project = (RoadProject) this.getActiveModel().getSelectedProject();
+      tRDLength.setText("" + project.getRoadLength());
+      tRDWidth.setText("" + project.getRoadWidth());
+      tRDDuration.setText("" + project.getProjectDuration());
+      taRDBridgeTunnelInfo.setText(project.getBridgeOrTunnelDetails());
+      taRDEnvironmentInfo.setText(project.getEnvironmentalOrGeographicalChallenges());
+    }
+
+    checkBox_AddToDashBoard.setText("Track on Dashboard");
 
     //Refresh GUI console latest message:
-    this.getGUI_Console()
-        .setText(this.getSceneController().getGUI_ConsoleMessage());
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** Returns a reference to the GUI_Console on this page.
-   * Author: K. Dashnaw
+  /** <p>Returns a reference to the GUI_Console on this page.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public TextField getGUI_Console()
   {
     return GUI_Console;
   }
 
-  /** Sets/Initializes the GUI_Console on this page.
-   * Author: K. Dashnaw
+  /** <p>Sets/Initializes the GUI_Console on this page.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public void setGUI_Console(TextField GUI_Console)
   {
     this.GUI_Console = GUI_Console;
   }
 
-  /** Returns a SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
+  /** <p>Returns a SceneController object containing a reference to this stages parent controller</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public SceneController getSceneController()
   {
     return sceneController;
   }
 
-  /** Sets/Initializes the SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
+  /** <p>Sets/Initializes the SceneController object containing a reference to this stages parent controller</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public void setSceneController(SceneController sceneController)
   {
     this.sceneController = sceneController;
   }
 
-  /** Sets/Initializes a boolean that indicates whether the user has selected a projectType yet, or not.
-   * Parameters are:
-   * True = User has selected a project type to create.
-   * False = User has not selected a project type to create.
-   * Author: K. Dashnaw
-   */
-  private void setProjectTypeSelected(boolean projectTypeSelected)
-  {
-    this.projectTypeSelected = projectTypeSelected;
-  }
-
-  /** Returns a boolean that indicates whether the user has selected a projectType yet, or not.
-   * Parameters are:
-   * True = User has selected a project type to create.
-   * False = User has not selected a project type to create.
-   * Author: K. Dashnaw
-   */
-  public boolean isProjectTypeSelected()
-  {
-    return projectTypeSelected;
-  }
-
-  /** Returns a String value containing the name of the selected project type to create.
-   * This is used for evaluating which project type should be created once the user confirms their data.
-   * Author: K. Dashnaw
-   */
-  public String getProjectTypeSelectedString()
-  {
-    return projectTypeSelectedString;
-  }
-
-  /** Sets/Initializes a String value containing the name of the selected project type to create.
-   * This is used for evaluating which project type should be created once the user confirms their data.
-   * Author: K. Dashnaw
-   */
-  private void setProjectTypeSelectedString(String projectTypeSelectedString)
-  {
-    this.projectTypeSelectedString = projectTypeSelectedString;
-  }
-
-  /** Returns a reference to the active project model currently providing project related functionality.
-   * Author: K. Dashnaw
+  /** <p>Returns a reference to the active project model currently providing project related functionality.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public MainModel getActiveModel()
   {
     return activeModel;
   }
 
-  /** Sets/Initializes the reference to the active project model currently providing project related functionality.
-   * Author: K. Dashnaw
+  /** <p>Sets/Initializes the reference to the active project model currently providing project related functionality.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public void setActiveModel(MainModel activeModel)
   {
     this.activeModel = activeModel;
   }
 
-  /** This method prompts a warning the user that unsaved data will be lost on change of view-screen.
+  /** <p>This method prompts a warning to the user that unsaved data will be lost on change of view-screen.
    * And then simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.openWindow() for a more detailed description.
-   * Author: K. Dashnaw
+   * Check SceneController.openWindow() for a more detailed description.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public void openWindow(ActionEvent actionEvent) throws IOException
   {
-    //Check if user has selected a projectType yet. If not, it is impossible for the user to have entered any data on this GUI view yet.
-    if (this.isProjectTypeSelected() && !(createPromptWindow()))
+    //Prompt the user to confirm they wish to leave this screen.
+    if (!(createPromptWindow()))
     {
-      //Prompt the user to confirm they really wish to navigate away from the creation view - loosing all unsaved data.
+      //Prompt the user to confirm they really wish to navigate away from the edit view - loosing all unsaved data.
       //If the user aborted, we break the current method here.
       return;
     }
@@ -276,9 +244,9 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     this.getSceneController().openWindow(buttonText, this.getGUI_Console());
   }
 
-  /** This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exportToWeb() for a more detailed description.
-   * Author: K. Dashnaw
+  /** <p>This method simply calls the common method with the same name, from the SceneController.
+   * Check SceneController.exportToWeb() for a more detailed description.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public void exportToWeb()
   {
@@ -288,16 +256,16 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** This method checks if there is any unsaved data and then simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exitApplication() for a more detailed description.
-   * Author: K. Dashnaw
+  /** <p>This method checks if there is any unsaved data and then simply calls the common method with the same name, from the SceneController.
+   * Check SceneController.exitApplication() for a more detailed description.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public void exitApplication()
   {
-    //Check if user has selected a projectType yet. If not, it is impossible for the user to have entered any data on this GUI view yet.
-    if (this.isProjectTypeSelected() && !(createPromptWindow()))
+    //Prompt the user to confirm they wish to leave this screen.
+    if (!(createPromptWindow()))
     {
-      //Prompt the user to confirm they really wish to navigate away from the creation view - loosing all unsaved data.
+      //Prompt the user to confirm they really wish to navigate away from the edit view - loosing all unsaved data.
       //If the user aborted, we break the current method here.
       return;
     }
@@ -308,242 +276,9 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** Is called as an on-action event from the one of the 4 buttons on screen, where you select which project type to create.
-   * It initializes the next stage of the creation process, making visible shared project data fields
-   * as well as unique data fields for the selected project type.
-   * Author: K. Dashnaw
-   */
-  public void ProjectTypeSelected(ActionEvent actionEvent)
-  {
-    String buttonText = ((Button) actionEvent.getSource()).getText();
-    setProjectTypeSelected(true);
-    setProjectTypeSelectedString(buttonText);
-
-    //If we already loaded the page, but the user is simply changing project types in view, we display a confirmation window warning about data loss.
-    if (loadCounter > 0)
-    {
-      if (createPromptWindowNoRefresh())
-      {
-        loadPageFields();
-      }
-    }
-    else
-    {
-      loadPageFields();
-    }
-    loadCounter++;
-  }
-
-  /** Loads the data fields on this page, ensuring these are initialized in a reset manner, as well as initializing
-   * a new temporary project of the selected project type for use in regards to input validation while user inputs information
-   * Author: K. Dashnaw
-   * */
-  public void loadPageFields()
-  {
-    //Display the common project data fields:
-    hideGridElementNode(gridProjectDataContainer, false);
-    hideLabelElementNode(labelProjectDataPrompt, false);
-
-    //Display the unique data fields relating to the selected project type:
-    showUniqueProjectDataFields();
-
-    //Display the buttons the user may interact with:
-    hideButtonElementNode(buttonCreateProject, false);
-    hideButtonElementNode(buttonCancel, false);
-
-    //Hide the "Select Project Type" prompt and resize the project type pictures for more space on screen:
-    labelProjectTypePrompt.setVisible(false);
-    resizeAllElementHeight(80);
-    resizeProjectButtonWidth(106);
-    setNonSelectedProjectTypesTransparent();
-
-    //Initialize a new default project of this type.
-    this.getActiveModel().newActiveProject(this.getProjectTypeSelectedString());
-    switch (this.getProjectTypeSelectedString())
-    {
-      case "ResidentialProjectType":
-        this.getActiveModel().initializeCreateProjectGUI(tResBathroomNumber, tResNumberKitchens, tResNumberOfOtherPlumbing, tResDuration, tResBuildingSize);
-        break;
-      case "CommercialProjectType":
-        this.getActiveModel().initializeCreateProjectGUI(tComNumberFloors, tComDuration, tComBuildingSize, taComIntendedUse);
-        break;
-      case "IndustrialProjectType":
-        this.getActiveModel().initializeCreateProjectGUI(tIndDuration, tIndFacilitySize, taIndFacilityType);
-        break;
-      case "RoadProjectType":
-        this.getActiveModel().initializeCreateProjectGUI(tRDLength, tRDWidth, tRDDuration, taRDBridgeTunnelInfo, taRDEnvironmentInfo);
-        break;
-    }
-  }
-
-  /** Resizes all the elements relating to the initial project selection.
-   * This in order to provide more space on screen for data field entries.
-   * Author: K. Dashnaw
-   */
-  private void resizeAllElementHeight(int height)
-  {
-    //Resize the image elements:
-    imgResidentialProjectType.setFitHeight(height - 5);
-    imgCommercialProjectType.setFitHeight(height - 5);
-    imgIndustrialProjectType.setFitHeight(height - 5);
-    imgRoadProjectType.setFitHeight(height - 5);
-
-    //Resize the button elements:
-    resizeButtonHeight(buttonResidentialProjectType, height);
-    resizeButtonHeight(buttonCommercialProjectType, height);
-    resizeButtonHeight(buttonIndustrialProjectType, height);
-    resizeButtonHeight(buttonRoadProjectType, height);
-
-    //Resize the label elements:
-    changeLabelTextSize(labelResidentialProjectType, 11, false);
-    changeLabelTextSize(labelCommercialProjectType, 11, false);
-    changeLabelTextSize(labelIndustrialProjectType, 11, false);
-    changeLabelTextSize(labelRoadProjectType, 11, false);
-    resizeLabelHeight(labelProjectTypePrompt, 0);
-
-    //Resize the vBox elements:
-    vBoxResidentialProjectType.setMaxHeight(height);
-    vBoxCommercialProjectType.setMaxHeight(height);
-    vBoxIndustrialProjectType.setMaxHeight(height);
-    vBoxRoadProjectType.setMaxHeight(height);
-  }
-
-  /** Method used to resize a button's height.
-   * Resizes maxHeight, prefHeight and minHeight at once.
-   * Parameters:
-   * "Button buttonID": a reference to the button to resize.
-   * "int height": what height to set, in pixels.
-   * Author: K. Dashnaw
-   */
-  public void resizeButtonHeight(Button buttonID, int height)
-  {
-    buttonID.setMaxHeight(height);
-    buttonID.setPrefHeight(height);
-    buttonID.setMinHeight(height);
-  }
-
-  /** Method used to resize a button's width.
-   * Parameters:
-   * "Button buttonID": a reference to the label to resize.
-   * "int height": what height to set, in pixels.
-   * Author: K. Dashnaw
-   */
-  public void resizeButtonWidth(Button buttonID, int width)
-  {
-    buttonID.setMinWidth(width);
-    buttonID.setPrefWidth(width);
-    buttonID.setMaxWidth(width);
-  }
-
-  /** Method used to resize a label's height.
-   * Resizes maxHeight, prefHeight and minHeight at once.
-   * Parameters:
-   * "Label labelID": a reference to the label to resize.
-   * "int height": what height to set, in pixels.
-   * Author: K. Dashnaw
-   */
-  public void resizeLabelHeight(Label labelID, int height)
-  {
-    labelID.setMinHeight(height);
-    labelID.setPrefHeight(height);
-    labelID.setMaxHeight(height);
-  }
-
-  /** Method used to resize the 4 project buttons, which have integrated images inside.
-   * Parameters:
-   * "int width": what height to set, in pixels.
-   * Author: K. Dashnaw
-   */
-  private void resizeProjectButtonWidth(int width)
-  {
-    resizeButtonWidth(buttonResidentialProjectType, width);
-    resizeButtonWidth(buttonCommercialProjectType, width);
-    resizeButtonWidth(buttonIndustrialProjectType, width);
-    resizeButtonWidth(buttonRoadProjectType, width);
-  }
-
-  /** Method used to change the text size of a labels integrated text.
-   * Parameters:
-   * "Label labelID": A reference to the label to manipulate.
-   * "int textSize": what text size to set. (Same scale as in word).
-   * "boolean bold": true if text should be bold, otherwise false.
-   * Author: K. Dashnaw
-   */
-  public void changeLabelTextSize(Label labelID, int textSize, boolean bold)
-  {
-    if (bold)
-    {
-      labelID.setFont(Font.font("System", FontWeight.BOLD, textSize));
-    }
-    else
-    {
-      labelID.setFont(Font.font("System", textSize));
-    }
-  }
-
-  /** Method used to reset all project label sizes to their initial values.
-   * Is used upon stage refresh/reset..
-   * Author: K. Dashnaw
-   */
-  private void resetLabelTextSizes()
-  {
-    changeLabelTextSize(labelResidentialProjectType, 14, true);
-    changeLabelTextSize(labelCommercialProjectType, 14, true);
-    changeLabelTextSize(labelIndustrialProjectType, 14, true);
-    changeLabelTextSize(labelRoadProjectType, 14, true);
-    resizeLabelHeight(labelProjectTypePrompt, 30);
-  }
-
-  /** Method used to change the opacity of non-selected project type images for a clearer GUI experience.
-   * Author: K. Dashnaw
-   */
-  private void setNonSelectedProjectTypesTransparent()
-  {
-    double discreetOpacityLevel = 0.3;
-    double nonDiscreetOpacityLevel = 1;
-    switch (this.getProjectTypeSelectedString())
-    {
-      case "ResidentialProjectType":
-        imgResidentialProjectType.setOpacity(nonDiscreetOpacityLevel);
-        imgCommercialProjectType.setOpacity(discreetOpacityLevel);
-        imgIndustrialProjectType.setOpacity(discreetOpacityLevel);
-        imgRoadProjectType.setOpacity(discreetOpacityLevel);
-        break;
-      case "CommercialProjectType":
-        imgResidentialProjectType.setOpacity(discreetOpacityLevel);
-        imgCommercialProjectType.setOpacity(nonDiscreetOpacityLevel);
-        imgIndustrialProjectType.setOpacity(discreetOpacityLevel);
-        imgRoadProjectType.setOpacity(discreetOpacityLevel);
-        break;
-      case "IndustrialProjectType":
-        imgResidentialProjectType.setOpacity(discreetOpacityLevel);
-        imgCommercialProjectType.setOpacity(discreetOpacityLevel);
-        imgIndustrialProjectType.setOpacity(nonDiscreetOpacityLevel);
-        imgRoadProjectType.setOpacity(discreetOpacityLevel);
-        break;
-      case "RoadProjectType":
-        imgResidentialProjectType.setOpacity(discreetOpacityLevel);
-        imgCommercialProjectType.setOpacity(discreetOpacityLevel);
-        imgIndustrialProjectType.setOpacity(discreetOpacityLevel);
-        imgRoadProjectType.setOpacity(nonDiscreetOpacityLevel);
-        break;
-    }
-  }
-
-  /** Method used to reset all project image types to their initial values.
-   * Author: K. Dashnaw
-   */
-  private void resetProjectTypeImagesTransparency()
-  {
-    imgResidentialProjectType.setOpacity(1);
-    imgCommercialProjectType.setOpacity(1);
-    imgIndustrialProjectType.setOpacity(1);
-    imgRoadProjectType.setOpacity(1);
-  }
-
-  /** Method used to hide all unique project data fields.
-   * It is used in conjunction with a show method for the specific data fields, so that only relevant data fields are displayed.
-   * Author: K. Dashnaw
+  /** <p>Method used to hide all unique project data fields.
+   * It is used in conjunction with a show method for the specific data fields, so that only relevant data fields are displayed.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   private void hideAllUniqueProjectDataFields(boolean bool)
   {
@@ -553,11 +288,10 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     hideGridElementNode(gridRoadUniqueData, bool);
   }
 
-  /** Method used to hide a GridPane element.
-   * Parameters are:
-   * "GridPane gridID": A reference to the GridPane element to hide.
-   * "boolean bool": if true, hide the element - if false, show it.
-   * Author: K. Dashnaw
+  /** <p>Method used to hide a GridPane element.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param gridID A reference to the GridPane element to hide.
+   * @param bool if true, hide the element - if false, show it.
    */
   public void hideGridElementNode(GridPane gridID, boolean bool)
   {
@@ -565,57 +299,33 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     gridID.managedProperty().bind(gridID.visibleProperty());
   }
 
-  /** Method used to hide a Button element.
-   * Parameters are:
-   * "Button buttonID": A reference to the Button element to hide.
-   * "boolean bool": if true, hide the element - if false, show it.
-   * Author: K. Dashnaw
-   */
-  public void hideButtonElementNode(Button buttonID, boolean bool)
-  {
-    buttonID.setVisible(!bool);
-    buttonID.managedProperty().bind(buttonID.visibleProperty());
-  }
-
-  /** Method used to hide a Label element.
-   * Parameters are:
-   * "Label labelID": A reference to the Label element to hide.
-   * "boolean bool": if true, hide the element - if false, show it.
-   * Author: K. Dashnaw
-   */
-  public void hideLabelElementNode(Label labelID, boolean bool)
-  {
-    labelID.setVisible(!bool);
-    labelID.managedProperty().bind(labelID.visibleProperty());
-  }
-
-  /** Method used to display the unique data fields specific to the selected project type!
-   * Author: K. Dashnaw
+    /** <p>Method used to display the unique data fields specific to the selected project type!</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   private void showUniqueProjectDataFields()
   {
     hideAllUniqueProjectDataFields(true);
 
-    switch (this.getProjectTypeSelectedString())
+    switch (this.getActiveModel().getSelectedProject().getProjectType())
     {
-      case "ResidentialProjectType":
+      case "Residential":
         hideGridElementNode(gridResidentialUniqueData, false);
         break;
-      case "CommercialProjectType":
+      case "Commercial":
         hideGridElementNode(gridCommercialUniqueData, false);
         break;
-      case "IndustrialProjectType":
+      case "Industrial":
         hideGridElementNode(gridIndustrialUniqueData, false);
         break;
-      case "RoadProjectType":
+      case "Road":
         hideGridElementNode(gridRoadUniqueData, false);
         break;
     }
   }
 
-  /** Method used to create a confirmation prompt window, in order to prompt the user before navigating away from the creation view,
-   * which could otherwise result loss of entered non-saved data.!
-   * Author: K. Dashnaw
+  /** <p>Method used to create a confirmation prompt window, in order to prompt the user before navigating away from the edit view,
+   * which could otherwise result loss of entered non-saved data.!</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public boolean createPromptWindow()
   {
@@ -629,54 +339,115 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         System.out.println("Cancel aborted.");
         return false; //do not proceed with cancel operation
       case "confirmationPressed":
-        this.getSceneController().setGUI_ConsoleMessage("Cancel confirmed. All data fields on 'Create new project' screen have been reset to default values.");
+        this.getSceneController().setGUI_ConsoleMessage("Cancel confirmed. No changes were saved.");
         this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-        System.out.println("Cancel confirmed. Resetting all data fields! Any unsaved data is removed.");
-        refresh();
+        System.out.println("Cancel confirmed. No changes were saved.");
+
+        try
+        {
+          this.getSceneController().openWindow("Projects", this.getGUI_Console());
+        }
+        catch(IOException error)
+        {
+          this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to return to project view. Reason unknown: " + error);
+          this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+        }
         return true; //Proceed with cancel operation
       default:
         return false; //do not proceed with cancel operation
     }
   }
 
-  /** Method used to create a confirmation prompt window, in order to prompt the user before navigating away from the creation view,
-   * which could otherwise result loss of entered non-saved data.!
-   * This method is used when changing project type after already selected an initial type. This method does not refresh all data fields,
-   * but only the ones that are unique to the selected project.
-   * Author: K. Dashnaw
-   */
-  public boolean createPromptWindowNoRefresh()
+
+  /** <p>This method returns the selected projects Data Field values that correspond with the shared project data fields.
+   * This is intended for insertion into the on-screen editable textFields, so that already existing data is pre-entered for the user.</p>
+   * <p><b>Author:</b> K. Dashnaw </p>
+   * @param node is a reference to the TextField node in which the returned String value shall be inserted.
+   * @return A String value intended to be inserted into the above TextField node.
+   * */
+  public String loadProjectData_String (TextField node)
   {
-    String confirmationAction = this.getSceneController().createPromptWindow(
-        "WARNING: Any unsaved date will be lost.\n\nDo you wish to proceed?\n");
-
-    switch (confirmationAction)
+    switch (node.getPromptText())
     {
-      case "cancelPressed":
-        this.getSceneController().setGUI_ConsoleMessage("Cancel aborted.");
-        this.getGUI_Console()
-            .setText(this.getSceneController().getGUI_ConsoleMessage());
-        System.out.println("Cancel aborted.");
-        return false; //do not proceed with cancel operation
-
-      case "confirmationPressed":
-        this.getSceneController().setGUI_ConsoleMessage(
-            "Cancel confirmed. Project specific data fields on screen have been reset to default values.");
-        this.getGUI_Console()
-            .setText(this.getSceneController().getGUI_ConsoleMessage());
-        System.out.println("Cancel confirmed. Project specific data fields on screen have been reset to default values.");
-        return true; //Proceed with cancel operation
-
+      case "first name":
+        return this.getActiveModel().getSelectedProject().getCustomer().getFirstName();
+      case "last name":
+        return this.getActiveModel().getSelectedProject().getCustomer().getLastName();
+      case "Prefix (ie. +45)":
+        return this.getActiveModel().getSelectedProject().getCustomer().getPhoneNumberPrefix();
+      case "Number (8 digits)":
+        return "" + this.getActiveModel().getSelectedProject().getCustomer().getPhoneNumber();
+      case "email":
+        return this.getActiveModel().getSelectedProject().getCustomer().getEmail();
+      case "Company Name the customer is representing":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerCompany().getName();
+      case "Customers Street Name":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getStreet();
+      case "Building number":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getStreetNumber();
+      case "Customer apartment number, if applicable.":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getApartment();
+      case "ZIP code":
+        return "" + this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getPostalCode();
+      case "City":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getCity();
+      case "Country":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getCountry();
+      case "Street name":
+        return this.getActiveModel().getSelectedProject().getProjectAddress().getStreet();
+      case "Property number":
+        return "" + this.getActiveModel().getSelectedProject().getProjectAddress().getStreetNumber();
+      case "Apartment number, if applicable. (else leave empty)":
+        return this.getActiveModel().getSelectedProject().getProjectAddress().getApartment();
+      case "Project ZIP code":
+        return "" + this.getActiveModel().getSelectedProject().getProjectAddress().getPostalCode();
+      case "Project City":
+        return this.getActiveModel().getSelectedProject().getProjectAddress().getCity();
+      case "Project Country":
+        return this.getActiveModel().getSelectedProject().getProjectAddress().getCountry();
+      case "Man-Hours in hours":
+        return "" + this.getActiveModel().getSelectedProject().getHumanRessources().getManHoursSpent();
+      case "Est. total number of hours":
+        return "" + this.getActiveModel().getSelectedProject().getHumanRessources().getTotalManHoursNeeded();
+      case "Expenses in USD":
+        return "" + this.getActiveModel().getSelectedProject().getFinances().getMaterialExpences();
+      case "Budget in USD":
+        return "" + this.getActiveModel().getSelectedProject().getFinances().getTotalBudget();
+      case "Project name. Will be displayed on homepage":
+        return this.getActiveModel().getSelectedProject().getProjectInformation().getProjectName();
       default:
-        return false;
+        break;
     }
+    return "";
+  }
+
+  /** <p>This method returns the selected projects Data Field values that correspond with the shared project data fields.
+   * This is intended for insertion into the on-screen clickable CheckBoxes, so that already existing data is pre-selected for the user.</p>
+   * <p><b>Author:</b> K. Dashnaw </p>
+   * @param node is a reference to the CheckBox node in which the returned boolean value shall be inserted.
+   * @return A boolean value intended to be inserted into the above CheckBox node.
+   * */
+  public boolean loadProjectData_Checkbox (CheckBox node)
+  {
+    switch (node.getText())
+    {
+      case "Mark project as completed":
+        return this.getActiveModel().getSelectedProject().isProjectFinished();
+      case "Mark project as confidential":
+        return this.getActiveModel().getSelectedProject().isProjectConfidential();
+      case "Track on Dashboard":
+        return this.getActiveModel().getSelectedProject().isDashboardProject();
+      default:
+        break;
+    }
+    return false;
   }
 
   /** Returns FALSE if TextField is empty and TRUE is they are not.
    * Input validation method called directly from the .fxml scene upon interacting with a
    * TextField with this method set as an "On Key Typed" event.
    * This method MUST be run on a TextField in order to avoid potential crashes/errors.
-   * Author: K. Dashnaw
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public boolean validate_NotEmpty(KeyEvent keyNode)
   {
@@ -698,7 +469,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * Input validation method called directly from the .fxml scene upon interacting with a
    * TextField with this method set as an "On Key Typed" event.
    * This method MUST be run on a TextField in order to avoid potential crashes/errors.
-   * Author: K. Dashnaw
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public boolean validate_NotEmpty_NotNumber(KeyEvent keyNode)
   {
@@ -720,7 +491,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * Input validation method called directly from the .fxml scene upon interacting with a
    * TextField with this method set as an "On Key Typed" event.
    * This method MUST be run on a TextField in order to avoid potential crashes/errors.
-   * Author: K. Dashnaw
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public boolean validate_NotEmpty_NotString_NotNegative(KeyEvent keyNode)
   {
@@ -740,11 +511,11 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
 
   /** Method disabled the "create project" button and is used in conjunction with the validation fields to ensure that the
    * "create project" button only is enabled when proper data is ready to be added to the system.
-   * Author: K. Dashnaw
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   private void resetValidation()
   {
-    buttonCreateProject.setDisable(true);
+    buttonEditProject.setDisable(true);
 
     //Update console with an error:
     this.getSceneController().setGUI_ConsoleMessage("");
@@ -756,7 +527,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   /** This code is run locally in this class. It simply checks if the given TextField contains any data or not.
    * Takes a KeyEvent and parses this as a TextField.
    * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
-   * Author: K. Dashnaw
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   private void emptyDatePickerCode(DatePicker node)
   {
@@ -771,11 +542,11 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
 
   /** Runs as an "On Action" event in the .fxml scene on a DatePicker upon interacted with.
    * It performs validation on the selected date and adds this to the active project.
-   * Author: K. Dashnaw
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public void validate_DatePicker(ActionEvent actionEvent)
   {
-    buttonCreateProject.setDisable(true);
+    buttonEditProject.setDisable(true);
     DatePicker date = (DatePicker) actionEvent.getSource();
 
     TextField dateValue = new TextField();
@@ -798,7 +569,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * Method adds the received KeyEvent node to the project data.
    * It receives a "KeyEvent node" and parses this to a TextField.
    * Warning: KeyEvent node must have a source type of TextField, else errors will occur.
-   * Author: K. Dashnaw
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public void addTemporaryProjectData(KeyEvent keyNode)
   {
@@ -811,7 +582,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * Method adds the received KeyEvent node to the project data.
    * It receives a "KeyEvent node" and parses this to a TextArea
    * Warning: KeyEvent node must have a source type of TextArea, else errors will occur.
-   * Author: K. Dashnaw
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public void addTemporaryProjectData_TextArea(KeyEvent keyNode)
   {
@@ -826,37 +597,37 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * It allows the typed text fields to be passed onto the "addCommonProjectData" input validation step
    * It simply ensures that the proper add Method is called (based on project Type).
    * It takes a TextField value, which is passed on to the identified proper child method.
-   * Author: K. Dashnaw
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public void addTemporaryProjectData(TextField text)
   {
     //Get the project type:
-    switch (this.getProjectTypeSelectedString())
+    switch (this.getActiveModel().getSelectedProject().getProjectType())
     {
-      case "ResidentialProjectType":
+      case "Residential":
         addTemporaryResidentialData((ResidentialProject) this.getActiveModel().getSelectedProject(), text);
         break;
-      case "CommercialProjectType":
+      case "Commercial":
         addTemporaryCommercialData((CommercialProject) this.getActiveModel().getSelectedProject(), text);
         break;
-      case "IndustrialProjectType":
+      case "Industrial":
         addTemporaryIndustrialData((IndustrialProject) this.getActiveModel().getSelectedProject(), text);
         break;
-      case "RoadProjectType":
+      case "Road":
         addTemporaryRoadData((RoadProject) this.getActiveModel().getSelectedProject(), text);
         break;
     }
   }
 
-  /** Is called from "On Action" EventHandlers in the .fxml scene
+  /** <p>Is called from "On Action" EventHandlers in the .fxml scene
    * Method adds the received ActionEvent node to the project data.
-   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.
-   * Warning: ActionEvent node must have a source type of CheckBox, else errors will occur.
-   * Author: K. Dashnaw
+   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.<br>
+   * <b>Warning: ActionEvent node must have a source type of CheckBox, else errors will occur.</b></p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public void checkBoxChecker(ActionEvent actionEvent)
   {
-    buttonCreateProject.setDisable(true);
+    buttonEditProject.setDisable(true);
     CheckBox checkBox = (CheckBox) actionEvent.getSource();
     TextField value = new TextField();
     value.setText(checkBox.getText());
@@ -873,13 +644,12 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     addTemporaryProjectData(value);
   }
 
-  /** This method is used in conjunction with the "addTemporaryProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.
-   * Returns TRUE if data was added and FALSE if no data was added.
-   * Parameters are:
-   * "ConstructionProject project": This is a reference to the super class that all construction projects are a member of.
-   * "TextField text": This is a reference to the node containing the information to add to the project.
-   * Author: K. Dashnaw
+  /** <p>This method is used in conjunction with the "addTemporaryProjectData(TextField text) method".
+   * It checks if the received data falls within the shared project data fields, and if so modifies the in the active project.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param project This is a reference to the super class that all construction projects are a member of.
+   * @param text This is a reference to the node containing the information to add to the project.
+   * @return A boolean that is either true or false. True means that data was modified. False means that it was not.
    * */
   public boolean addCommonProjectData(ConstructionProject project, TextField text)
   {
@@ -961,13 +731,22 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         project.getProjectAddress().setCountry(text.getText());
         dataAddedToProject = true;
         break;
-      case "In hours":
+      case "Man-Hours in hours":
+        project.getHumanRessources().setManHoursSpent(Double.parseDouble(text.getText().trim()));
+        dataAddedToProject = true;
+        break;
+      case "Est. total number of hours":
         project.getHumanRessources().setTotalManHoursNeeded(Double.parseDouble(text.getText().trim()));
         dataAddedToProject = true;
         break;
-      case "in $USD":
+      case "Budget in USD":
         //TODO: Implement check with standard margin ranges to see if budget is within.
         project.getFinances().setTotalBudget(Double.parseDouble(text.getText().trim()));
+        dataAddedToProject = true;
+        break;
+      case "Expenses in USD":
+        //TODO: Implement check with standard margin ranges to see if budget is within.
+        project.getFinances().setMaterialExpences(Double.parseDouble(text.getText().trim()));
         dataAddedToProject = true;
         break;
       case "Enter any internal only notes directed towards the project manager":
@@ -1064,7 +843,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         project.getProjectInformation().setProjectName(text.getText());
         dataAddedToProject = true;
         break;
-      case "Add project to Dashboard?_True", "Dashboard is already full._True":
+      case "Track on Dashboard_True", "Dashboard is already full._True":
         if(this.getActiveModel().getDashboardProgressReports().getCurrentCapacity() <= this.getActiveModel().getDashboardProgressReports().getMaxCapacity() && this.getActiveModel().getDashboardProgressReports().getCurrentCapacity() > 0)
         {
           project.setDashboardProject(true);
@@ -1081,12 +860,20 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         project.setDashboardProject(false);
         dataAddedToProject = true;
         break;
-      case "Is project confidential?_True":
+      case "Mark project as confidential_True":
         project.setProjectConfidentiality(true);
         dataAddedToProject = true;
         break;
-      case "Is project confidential?_False":
+      case "Mark project as confidential_False":
         project.setProjectConfidentiality(false);
+        dataAddedToProject = true;
+        break;
+      case "Mark project as completed_True":
+        project.setProjectFinished(true);
+        dataAddedToProject = true;
+        break;
+      case "Mark project as completed_False":
+        project.setProjectFinished(false);
         dataAddedToProject = true;
         break;
       default:
@@ -1095,7 +882,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
 
     if(dataAddedToProject)
     {
-      activateCreateButton();
+      activateEditButton();
       return true;
     }
     else
@@ -1104,12 +891,11 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** This method is used in conjunction with the "addCommonProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.
-   * Parameters are:
-   * "ResidentialProject project": This is a reference to the specific project type Class.
-   * "TextField text": This is a reference to the node containing the information to add to the project.
-   * Author: K. Dashnaw
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param project This is a reference to the specific project type Class.
+   * @param text This is a reference to the node containing the information to add to the project.
    * */
   public void addTemporaryResidentialData(ResidentialProject project, TextField text)
   {
@@ -1142,16 +928,15 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         default:
           break;
       }
-      activateCreateButton();
+      activateEditButton();
     }
   }
 
-  /** This method is used in conjunction with the "addCommonProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.
-   * Parameters are:
-   * "CommercialProject project": This is a reference to the specific project type Class.
-   * "TextField text": This is a reference to the node containing the information to add to the project.
-   * Author: K. Dashnaw
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param project This is a reference to the specific project type Class.
+   * @param text This is a reference to the node containing the information to add to the project.
    * */
   public void addTemporaryCommercialData(CommercialProject project, TextField text)
   {
@@ -1175,16 +960,15 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         default:
           break;
       }
-      activateCreateButton();
+      activateEditButton();
     }
   }
 
-  /** This method is used in conjunction with the "addCommonProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.
-   * Parameters are:
-   * "IndustrialProject project": This is a reference to the specific project type Class.
-   * "TextField text": This is a reference to the node containing the information to add to the project.
-   * Author: K. Dashnaw
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param project This is a reference to the specific project type Class.
+   * @param text This is a reference to the node containing the information to add to the project.
    * */
   public void addTemporaryIndustrialData(IndustrialProject project, TextField text)
   {
@@ -1205,16 +989,15 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         default:
           break;
       }
-      activateCreateButton();
+      activateEditButton();
     }
   }
 
-  /** This method is used in conjunction with the "addCommonProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.
-   * Parameters are:
-   * "RoadProject project": This is a reference to the specific project type Class.
-   * "TextField text": This is a reference to the node containing the information to add to the project.
-   * Author: K. Dashnaw
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param project This is a reference to the specific project type Class.
+   * @param text This is a reference to the node containing the information to add to the project.
    * */
   public void addTemporaryRoadData(RoadProject project, TextField text)
   {
@@ -1241,14 +1024,14 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         default:
           break;
       }
-      activateCreateButton();
+      activateEditButton();
     }
   }
 
-  /** This method checks if all required data fields have been filled out before enabling the "create project" button.
-   * Author: K. Dashnaw
+  /** <p>This method checks if all required data fields have been filled out before enabling the "create project" button.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
-  public void activateCreateButton()
+  public void activateEditButton()
   {
     //First check if project has all necessary values for creation:
     boolean dataIsMissing = false;
@@ -1261,40 +1044,33 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     {
       dataIsMissing = true;
     }
-
     //Customer Address: Attributes checked are; Street name, Street number, City, Country and Postal Code
     else if(activeProject.getCustomer().getCustomerAddress().getStreet().isBlank() || activeProject.getCustomer().getCustomerAddress().getStreetNumber().isBlank() || activeProject.getCustomer().getCustomerAddress().getCity().isBlank() || activeProject.getCustomer().getCustomerAddress().getCountry().isBlank() || activeProject.getCustomer().getCustomerAddress().getPostalCode() == 0)
     {
       dataIsMissing = true;
     }
-
     //Customer company: IS NOT CHECKED! Residential projects might not have companies as customers.
-
     //Project Address: Attributes checked are; Street name, Street number, City, Country and Postal Code
     else if(activeProject.getProjectAddress().getStreet().isBlank() || activeProject.getProjectAddress().getStreetNumber().isBlank() || activeProject.getProjectAddress().getCity().isBlank() || activeProject.getProjectAddress().getCountry().isBlank() || activeProject.getProjectAddress().getPostalCode() == 0)
     {
       dataIsMissing = true;
     }
-
     //Promotional Information: Attributes checked are; Project Description & Project Name
     //TODO: Implement the photo URL functionality.
     else if(activeProject.getProjectInformation().getProjectName().isBlank() || activeProject.getProjectInformation().getProjectDescription().isBlank())
     {
       dataIsMissing = true;
     }
-
-    //Human Resources: Attributes checked are; Estimated man-hours required.
+    //Human Resources: Attributes checked are; Human Resources.
     else if(activeProject.getHumanRessources().getTotalManHoursNeeded() == 0)
     {
       dataIsMissing = true;
     }
-
     //Finances: Attributes checked are; Total budget.
     else if(activeProject.getFinances().getTotalBudget() == 0)
     {
       dataIsMissing = true;
     }
-
     //Start and End Dates: If user did not select a start date we know the project is preloaded with todays date!
     else if(activeProject.getProjectStartDate() == null || activeProject.getProjectEndDate() == null || date_EndDateField.getEditor().getText().isBlank())
     {
@@ -1395,41 +1171,50 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
       }
     }
 
-    //If all required fields are present. Activate the create button now.
+    //If all required fields are present. Activate the edit button now.
     if(!dataIsMissing)
     {
-      buttonCreateProject.setDisable(false);
+      buttonEditProject.setDisable(false);
     }
     else
     {
-      buttonCreateProject.setDisable(true);
+      buttonEditProject.setDisable(true);
     }
   }
 
-  /** This method finalizes the project creation by calling relevant methods from the MainModel. It also asks the user to confirm their creation before finalizing.
-   * Author: K. Dashnaw
+  /** <p>This method finalizes the project creation by calling relevant methods from the MainModel. It also asks the user to confirm their creation before finalizing.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
-  public void createNewProject()
+  public void editProject()
   {
-
     //Prompt user to confirm:
-    if(this.getSceneController().createPromptWindow("Add project to system?").equalsIgnoreCase("confirmationPressed"))
+    if(this.getSceneController().createPromptWindow("Save changes?").equalsIgnoreCase("confirmationPressed"))
     {
-      //Add project to system.
-      if(this.getActiveModel().addProject(this.getActiveModel().getSelectedProject()))
+      //Remove the original project from the project_list, and replace with this modified one.
+      this.getActiveModel().removeProject(this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()));
+
+      //Add modified project to system.
+      if(this.getActiveModel().editProject(this.getActiveModel().getSelectedProject()))
       {
         //Project successfully added!
-        //Now check if project should be added to the Dashboard:
-        if (this.getActiveModel().getSelectedProject().isDashboardProject())
-        {
-          this.getActiveModel().getDashboardProgressReports().addProgressReport(this.activeModel.getSelectedProject().generateProgressReport());
-        }
+
+        //Now we refresh the dashboard object container:
+        this.getActiveModel().refreshDashboardProjects();
+
         //Update console with message:
-        this.getSceneController().setGUI_ConsoleMessage("New projected added to system. System saved.");
+        this.getSceneController().setGUI_ConsoleMessage("Project successfully modified. System saved.");
         this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
-        //Reset creation view.
-        refresh();
+        //Re-direct user back to the project view page:
+        try
+        {
+          this.getSceneController().openWindow("Projects", this.getGUI_Console());
+        }
+        catch(IOException error)
+        {
+          this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to return to project view. Reason unknown: " + error);
+          this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+        }
       }
       else
       {

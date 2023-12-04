@@ -108,30 +108,35 @@ public abstract class ConstructionProject implements Serializable
     this.projectEndDate = projectEndDate;
   }
 
-  /** This abstract method is compares the given ConstructionProject object with the current ConstructionProject object and returns true if they are identical.
-   * It is for instance used to validate attempts of adding projects to the system in order to avoid adding duplicates.
-   * Author: K. Dashnaw
+  /** <p>This abstract method is compares the given ConstructionProject object with the current ConstructionProject object and returns true if they are identical.
+   * It is for instance used to validate attempts of adding projects to the system in order to avoid adding duplicates.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public abstract boolean equals(Object project);
 
-  /** Abstract method for getting the project duration in months
-   * Author: K. Dashnaw
+  /** <p>Abstract method for getting the project duration in months</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public abstract int getProjectDuration();
 
-  /** Abstract method for setting the project duration in months
-   * Author: K. Dashnaw
+  /** <p>Abstract method for setting the project duration in months</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public abstract void setProjectDuration(int projectDuration);
 
-   /** This abstract method, once implemented, returns the specific type of construction project this is.
-   * They can either be: Residential, Commercial, Industrial or Road projects
-   * Author: K. Dashnaw
+   /** <p>This abstract method, once implemented, returns the specific type of construction project this is.
+   * They can either be: Residential, Commercial, Industrial or Road projects</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public abstract String getProjectType();
 
-  /** This abstract method, once implemented, returns a string value representing all the project data in single line.
-   * Author: K. Dashnaw
+  /** <p>This abstract method, once implemented, returns a string value representing all the project data in single line.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
    */
   public abstract String toString();
+
+  /** <p>This abstract method, once implemented, returns a copy of the selected Construction Project type.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   */
+  public abstract ConstructionProject copy();
 }

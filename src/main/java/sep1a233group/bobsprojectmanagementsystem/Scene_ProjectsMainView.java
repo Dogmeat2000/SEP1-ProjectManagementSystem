@@ -128,8 +128,8 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     viewArea.setText(viewArea.getText() + "\n\n\n\nPROJECTS MARKED FOR SHOW ON DASHBOARD ARE BELOW\n___________________________________\n" + allProjects);
   }
 
-  /** This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.openWindow() for a more detailed description.*/
+  /** <p>This method simply calls the common method with the same name, from the SceneController.
+   * Check SceneController.openWindow() for a more detailed description.</p>*/
   public void openWindow(ActionEvent actionEvent) throws IOException
   {
     //Refresh GUI console latest message:
@@ -139,8 +139,8 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     this.getSceneController().openWindow(buttonText, this.getGUI_Console());
   }
 
-  /** This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exportToWeb() for a more detailed description.*/
+  /** <p>This method simply calls the common method with the same name, from the SceneController.
+   * Check SceneController.exportToWeb() for a more detailed description.</p>*/
   public void exportToWeb()
   {
     this.getSceneController().exportToWeb();
@@ -149,13 +149,61 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exitApplication() for a more detailed description.*/
+  /** <p>This method simply calls the common method with the same name, from the SceneController.
+   * Check SceneController.exitApplication() for a more detailed description.</p>*/
   public void exitApplication()
   {
     this.getSceneController().exitApplication();
 
     //Update console message, in case an error occurred above:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+  }
+
+  /**<p>This method initializes the edit sequence allowing the user to modify existing projects in the system.
+   * It initializes a temporary copy of the user selected project that collects changes before replacing the
+   * originally selected project with the modified one on user confirmation.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * */
+  public void editProjectSelected(ActionEvent actionEvent)
+  {
+
+    //Find selected project in project array:
+    /*for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
+    {
+      if(this.getActiveModel().getAllProjectsList().get(i).equals( SOMETHING!!! ))
+    }*/
+
+    //Placeholder for now:
+    String projectType = this.getActiveModel().getAllProjectsList().get(0).getProjectType();
+    this.getActiveModel().setProjectIndexPosition(0);
+
+    //Set active project. Make sure we set COPIES, or else unintended changes might be saved directly to the real project before the user presses the save button!
+    if(projectType.equalsIgnoreCase("residential"))
+    {
+      this.getActiveModel().setSelectedProject((ResidentialProject) this.getActiveModel().getAllProjectsList().get(0).copy());
+    }
+    else if(projectType.equalsIgnoreCase("commercial"))
+    {
+      this.getActiveModel().setSelectedProject((CommercialProject) this.getActiveModel().getAllProjectsList().get(0).copy());
+    }
+    else if(projectType.equalsIgnoreCase("industrial"))
+    {
+      this.getActiveModel().setSelectedProject((IndustrialProject) this.getActiveModel().getAllProjectsList().get(0).copy());
+    }
+    else if(projectType.equalsIgnoreCase("road"))
+    {
+      this.getActiveModel().setSelectedProject((RoadProject) this.getActiveModel().getAllProjectsList().get(0).copy());
+    }
+
+    //Open Window
+    try
+    {
+      this.openWindow(actionEvent);
+    }
+    catch (IOException error)
+    {
+      this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to edit selected project. Reason unknown.");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
   }
 }
