@@ -61,7 +61,6 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
   //Other field Attributes:
   private MainModel activeModel;
   private SceneController sceneController;
-  private int projectIndexPosition;
 
   /** <p>Initializes this scene into the active stage on the GUI - reusing the same window space.
    * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
@@ -443,10 +442,10 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     return false;
   }
 
-  /** Returns FALSE if TextField is empty and TRUE is they are not.
+  /** <p>Returns FALSE if TextField is empty and TRUE is they are not.
    * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.
-   * This method MUST be run on a TextField in order to avoid potential crashes/errors.
+   * TextField with this method set as an "On Key Typed" event.</p>
+   * <p><b>This method MUST be run on a TextField in order to avoid potential crashes/errors.</b></p>
    * <p><b>Author:</b> K. Dashnaw</p>
    */
   public boolean validate_NotEmpty(KeyEvent keyNode)
@@ -465,10 +464,10 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** Returns FALSE if TextField is either empty OR a number/digit, and TRUE is TextField is none of both.
+  /** <p>Returns FALSE if TextField is either empty OR a number/digit, and TRUE is TextField is none of both.
    * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.
-   * This method MUST be run on a TextField in order to avoid potential crashes/errors.
+   * TextField with this method set as an "On Key Typed" event.</p>
+   * <p><b>This method MUST be run on a TextField in order to avoid potential crashes/errors.</b></p>
    * <p><b>Author:</b> K. Dashnaw</p>
    */
   public boolean validate_NotEmpty_NotNumber(KeyEvent keyNode)
@@ -487,10 +486,10 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** Returns FALSE if TextField is either empty OR a string OR a negative number/digit, and TRUE is TextField is none of either.
+  /** <p>Returns FALSE if TextField is either empty OR a string OR a negative number/digit, and TRUE is TextField is none of either.
    * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.
-   * This method MUST be run on a TextField in order to avoid potential crashes/errors.
+   * TextField with this method set as an "On Key Typed" event.</p>
+   * <p><b>This method MUST be run on a TextField in order to avoid potential crashes/errors.</b></p>
    * <p><b>Author:</b> K. Dashnaw</p>
    */
   public boolean validate_NotEmpty_NotString_NotNegative(KeyEvent keyNode)
@@ -509,8 +508,8 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** Method disabled the "create project" button and is used in conjunction with the validation fields to ensure that the
-   * "create project" button only is enabled when proper data is ready to be added to the system.
+  /** <p>Method disabled the "create project" button and is used in conjunction with the validation fields to ensure that the
+   * "create project" button only is enabled when proper data is ready to be added to the system.</p>
    * <p><b>Author:</b> K. Dashnaw</p>
    * */
   private void resetValidation()
@@ -524,9 +523,9 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
 
   }
 
-  /** This code is run locally in this class. It simply checks if the given TextField contains any data or not.
-   * Takes a KeyEvent and parses this as a TextField.
-   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
+  /** <p>This code is run locally in this class. It simply checks if the given TextField contains any data or not.
+   * Takes a KeyEvent and parses this as a TextField.</p>
+   * <p><b>Warning: KeyEvent source must be a TextField, otherwise crashes may occur.</b></p>
    * <p><b>Author:</b> K. Dashnaw</p>
    * */
   private void emptyDatePickerCode(DatePicker node)
@@ -540,8 +539,8 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** Runs as an "On Action" event in the .fxml scene on a DatePicker upon interacted with.
-   * It performs validation on the selected date and adds this to the active project.
+  /** <p>Runs as an "On Action" event in the .fxml scene on a DatePicker upon interacted with.
+   * It performs validation on the selected date and adds this to the active project.</p>
    * <p><b>Author:</b> K. Dashnaw</p>
    */
   public void validate_DatePicker(ActionEvent actionEvent)
@@ -564,11 +563,11 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** Can be called from eventHandlers in the .fxml scene, which do not require input validation,
+  /** <p>Can be called from eventHandlers in the .fxml scene, which do not require input validation,
    * or from the input validation methods in this class.
    * Method adds the received KeyEvent node to the project data.
-   * It receives a "KeyEvent node" and parses this to a TextField.
-   * Warning: KeyEvent node must have a source type of TextField, else errors will occur.
+   * It receives a "KeyEvent node" and parses this to a TextField.</p>
+   * <p><b>Warning: KeyEvent node must have a source type of TextField, else errors will occur.</b></p>
    * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public void addTemporaryProjectData(KeyEvent keyNode)
@@ -577,11 +576,11 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     addTemporaryProjectData(userInput);
   }
 
-  /** Can be called from eventHandlers in the .fxml scene, which do not require input validation,
+  /** <p>Can be called from eventHandlers in the .fxml scene, which do not require input validation,
    * or from the input validation methods in this class.
    * Method adds the received KeyEvent node to the project data.
-   * It receives a "KeyEvent node" and parses this to a TextArea
-   * Warning: KeyEvent node must have a source type of TextArea, else errors will occur.
+   * It receives a "KeyEvent node" and parses this to a TextArea</p>
+   * <p>Warning: KeyEvent node must have a source type of TextArea, else errors will occur.</p>
    * <p><b>Author:</b> K. Dashnaw</p>
    * */
   public void addTemporaryProjectData_TextArea(KeyEvent keyNode)
@@ -593,11 +592,11 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     addTemporaryProjectData(text2);
   }
 
-  /** This method is used in conjunction with the above input validation methods.
+  /** <p>This method is used in conjunction with the above input validation methods.
    * It allows the typed text fields to be passed onto the "addCommonProjectData" input validation step
-   * It simply ensures that the proper add Method is called (based on project Type).
-   * It takes a TextField value, which is passed on to the identified proper child method.
+   * It simply ensures that the proper add Method is called (based on project Type).</p>
    * <p><b>Author:</b> K. Dashnaw</p>
+   * @param text It takes a TextField value, which is passed on to the identified proper child method.
    * */
   public void addTemporaryProjectData(TextField text)
   {

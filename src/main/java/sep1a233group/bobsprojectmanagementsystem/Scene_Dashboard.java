@@ -2,15 +2,15 @@ package sep1a233group.bobsprojectmanagementsystem;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-
-
+import java.util.Optional;
 
 /** This class controls the GUI related view and methods concerning the "Project Dashboard" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
@@ -31,6 +31,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   @FXML private Label projectType1, projectType2, projectType3, projectType4;
   @FXML private Label tlfNo1, tlfNo2, tlfNo3, tlfNo4;
   @FXML private Label hoursStatus1, hoursStatus2, hoursStatus3, hoursStatus4;
+
   @FXML private ProgressBar hoursBar1, hoursBar2, hoursBar3, hoursBar4;
   @FXML private Label hoursSpent1, hoursSpent2, hoursSpent3, hoursSpent4;
   @FXML private Label expectedHours1, expectedHours2, expectedHours3, expectedHours4;
@@ -47,7 +48,6 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   @FXML TextField GUI_Console; //textField in the gui, where messages are shown to the user.
   private MainModel activeModel;
   private SceneController sceneController;
-
 
   public void displayProgressReports()
   {
@@ -293,6 +293,51 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
+  public ProgressReport getReport1()
+  {
+    return report1;
+  }
+
+  public ProgressReport getReport2()
+  {
+    return report2;
+  }
+
+  public ProgressReport getReport3()
+  {
+    return report3;
+  }
+
+  public ProgressReport getReport4()
+  {
+    return report4;
+  }
+
+  public MainModel getActiveModel()
+  {
+    return activeModel;
+  }
+
+  public ConstructionProject getProject1()
+  {
+    return project1;
+  }
+
+  public ConstructionProject getProject2()
+  {
+    return project2;
+  }
+
+  public ConstructionProject getProject3()
+  {
+    return project3;
+  }
+
+  public ConstructionProject getProject4()
+  {
+    return project4;
+  }
+
   /** <p>Returns a reference to the GUI_Console on this page.</p>
    * <p><b>Author:</b> K. Dashnaw</p>
    * */
@@ -384,6 +429,147 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
     //Update console message, in case an error occurred above:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+  }
+
+  public void updateProject1()
+  {
+    if(this.getProject1() != null)
+    {
+      this.QuickUpdate_Project(1);
+    }
+    else
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! ");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+  }
+
+  public void updateProject2()
+  {
+
+    if(this.getProject2() != null)
+    {
+      this.QuickUpdate_Project(2);
+    }
+    else
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! ");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+  }
+
+  public void updateProject3()
+  {
+    if(this.getProject3() != null)
+    {
+      this.QuickUpdate_Project(3);
+    }
+    else
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! ");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+  }
+
+  public void updateProject4()
+  {
+    if(this.getProject4() != null)
+    {
+      this.QuickUpdate_Project(4);
+    }
+    else
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! ");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+  }
+
+
+  public void QuickUpdate_Project(int reportNumber)
+  {
+    try
+    {
+      //Find index position of the selected progress report:
+      for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
+      {
+        if(reportNumber == 1 && this.getProject1().equals(this.getActiveModel().getAllProjectsList().get(i)))
+        {
+          this.getActiveModel().setProjectIndexPosition(i);
+        }
+        else if(reportNumber == 2 && this.getProject2().equals(this.getActiveModel().getAllProjectsList().get(i)))
+        {
+          this.getActiveModel().setProjectIndexPosition(i);
+        }
+        else if(reportNumber == 3 && this.getProject3().equals(this.getActiveModel().getAllProjectsList().get(i)))
+        {
+          this.getActiveModel().setProjectIndexPosition(i);
+        }
+        else if(reportNumber == 4 && this.getProject4().equals(this.getActiveModel().getAllProjectsList().get(i)))
+        {
+          this.getActiveModel().setProjectIndexPosition(i);
+        }
+      }
+
+      String projectType = this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).getProjectType();
+
+      //Set active project. Make sure we set COPIES, or else unintended changes might be saved directly to the real project before the user presses the save button!
+      if(projectType.equalsIgnoreCase("residential"))
+      {
+        this.getActiveModel().setSelectedProject((ResidentialProject) this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).copy());
+      }
+      else if(projectType.equalsIgnoreCase("commercial"))
+      {
+        this.getActiveModel().setSelectedProject((CommercialProject) this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).copy());
+      }
+      else if(projectType.equalsIgnoreCase("industrial"))
+      {
+        this.getActiveModel().setSelectedProject((IndustrialProject) this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).copy());
+      }
+      else if(projectType.equalsIgnoreCase("road"))
+      {
+        this.getActiveModel().setSelectedProject((RoadProject) this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).copy());
+      }
+
+
+      //Get the x/y position of the active window:
+      double x = this.getSceneController().getActiveStage().getX();
+      double y = this.getSceneController().getActiveStage().getY();
+
+      //Create the update window:
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Projects_QuickUpdateProjectView.fxml"));
+      try
+      {
+        Stage newStage = new Stage();
+        newStage.initModality(Modality.WINDOW_MODAL);
+        newStage.initOwner(this.getSceneController().getActiveStage());
+
+        Scene updateScene = new Scene(fxmlLoader.load(), 800, 250);
+
+        Scene_ControllerInterface controller = fxmlLoader.getController();
+        controller.init(this.getActiveModel(), this.getSceneController());
+
+        newStage.setScene(updateScene);
+        newStage.setResizable(false);
+        newStage.setTitle("Update project");
+
+        //Set the x/y position of the window to be close to the calling button. This avoids the confirmation popping up on another screen, if more than 1 screen is connected.
+        newStage.setX(x / 2 - 700);
+        newStage.setY(y / 2 + 350);
+
+        // show the dialog
+        newStage.showAndWait();
+        refresh();
+      }
+      catch(IOException error)
+      {
+        System.out.println("Unable to display update pop-up. Something went wrong.");
+      }
+    }
+    catch(NullPointerException error)
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! " + error);
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
   }
 
 }

@@ -166,11 +166,10 @@ public class FileIO
     }
   }
 
-  /** Loads system persistence data from a local binary file.
-   * File references are defined directly in FileIO.
-   * Return true if loading was successful.
-   * Returns an Object Array containing all the system projects and related information, or throws a NullPointerException..
-   * Author: K. Dashnaw
+  /** <p>Loads system persistence data from a local binary file.
+   * File references are defined directly in FileIO.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @return An Object Array containing all the system projects and related information, or throws a NullPointerException..
    * */
   public Object[] readFromBinary() throws FileNotFoundException, IOException, ClassNotFoundException, NullPointerException
   {

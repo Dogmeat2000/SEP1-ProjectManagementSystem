@@ -115,8 +115,7 @@ public class SceneController
     {
       //TODO: Implement a try / catch validation here to guard against trying to open scenes that have been moved from their folder - or that no longer exists.
 
-      FXMLLoader fxmlLoader = new FXMLLoader(
-          getClass().getResource(newWindow + ".fxml"));
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(newWindow + ".fxml"));
       newScene = new Scene(fxmlLoader.load(), 1366, 768);
       Scene_ControllerInterface controller = fxmlLoader.getController();
       controller.init(activeModel, this);

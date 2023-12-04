@@ -166,7 +166,7 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
-                                                            <Button fx:id="updateProject1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#displayReport1" text="Update" />
+                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateProject1" text="Update" />
                                                             <Button fx:id="Untrack1" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#untrackProject1" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
@@ -388,7 +388,7 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
-                                                            <Button fx:id="updateProject2" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#displayReport2" text="Update" />
+                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateProject2" text="Update" />
                                                             <Button fx:id="Untrack2" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#untrackProject2" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
@@ -612,7 +612,7 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
-                                                            <Button fx:id="updateProject3" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#displayReport3" text="Update" />
+                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateProject3" text="Update" />
                                                             <Button fx:id="Untrack3" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#untrackProject3" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
@@ -836,7 +836,7 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
-                                                            <Button fx:id="updateProject4" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#displayReport4" text="Update" />
+                                                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateProject4" text="Update" />
                                                             <Button fx:id="Untrack4" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#untrackProject4" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
