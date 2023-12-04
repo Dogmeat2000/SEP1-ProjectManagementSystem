@@ -897,7 +897,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         dataAddedToProject = true;
         break;
       case "Number (8 digits)":
-        project.getCustomer().setPhoneNumber(Integer.parseInt(text.getText()));
+        project.getCustomer().setPhoneNumber(Integer.parseInt(text.getText().trim()));
         dataAddedToProject = true;
         break;
       case "email":
@@ -913,8 +913,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         dataAddedToProject = true;
         break;
       case "Building number":
-        project.getCustomer().getCustomerAddress()
-            .setStreetNumber(text.getText());
+        project.getCustomer().getCustomerAddress().setStreetNumber(text.getText());
         dataAddedToProject = true;
         break;
       case "Customer apartment number, if applicable.":
@@ -922,8 +921,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         dataAddedToProject = true;
         break;
       case "ZIP code":
-        project.getCustomer().getCustomerAddress()
-            .setPostalCode(Integer.parseInt(text.getText()));
+        project.getCustomer().getCustomerAddress().setPostalCode(Integer.parseInt(text.getText().trim()));
         dataAddedToProject = true;
         break;
       case "City":
@@ -947,8 +945,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         dataAddedToProject = true;
         break;
       case "Project ZIP code":
-        project.getProjectAddress()
-            .setPostalCode(Integer.parseInt(text.getText()));
+        project.getProjectAddress().setPostalCode(Integer.parseInt(text.getText().trim()));
         dataAddedToProject = true;
         break;
       case "Project City":
@@ -960,12 +957,12 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         dataAddedToProject = true;
         break;
       case "In hours":
-        project.getHumanRessources().setTotalManHoursNeeded(Double.parseDouble(text.getText()));
+        project.getHumanRessources().setTotalManHoursNeeded(Double.parseDouble(text.getText().trim()));
         dataAddedToProject = true;
         break;
       case "in $USD":
         //TODO: Implement check with standard margin ranges to see if budget is within.
-        project.getFinances().setTotalBudget(Double.parseDouble(text.getText()));
+        project.getFinances().setTotalBudget(Double.parseDouble(text.getText().trim()));
         dataAddedToProject = true;
         break;
       case "Enter any internal only notes directed towards the project manager":
@@ -1110,21 +1107,20 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
       switch (text.getPromptText())
       {
         case "Number of Bathrooms":
-          project.setNumberOfBathrooms(Integer.parseInt(text.getText()));
+          project.setNumberOfBathrooms(Integer.parseInt(text.getText().trim()));
           break;
         case "Number of Kitchens":
-          project.setNumberOfKitchens(Integer.parseInt(text.getText()));
+          project.setNumberOfKitchens(Integer.parseInt(text.getText().trim()));
           break;
         case "Other plumbing?":
-          project.setNumberOfOtherRoomsWithPlumbing(
-              Integer.parseInt(text.getText()));
+          project.setNumberOfOtherRoomsWithPlumbing(Integer.parseInt(text.getText().trim()));
           break;
         case "Duration in months":
           //TODO: Implement check with standard margin ranges to see if budget is within.
-          project.setProjectDuration(Integer.parseInt(text.getText()));
+          project.setProjectDuration(Integer.parseInt(text.getText().trim()));
           break;
         case "in m^2":
-          project.setBuildingSize(Double.parseDouble(text.getText()));
+          project.setBuildingSize(Double.parseDouble(text.getText().trim()));
           break;
         case "Is project a renovation?_True":
           project.setIsRenovation(true);
@@ -1153,17 +1149,17 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
       switch (text.getPromptText())
       {
         case "Number of floors":
-          project.setNumberOfFloors(Integer.parseInt(text.getText()));
+          project.setNumberOfFloors(Integer.parseInt(text.getText().trim()));
           break;
         case "Describe the intended use of the building":
           project.setIntendedBuildingUse(text.getText());
           break;
         case "Duration in months":
           //TODO: Implement check with standard margin ranges to see if budget is within.
-          project.setProjectDuration(Integer.parseInt(text.getText()));
+          project.setProjectDuration(Integer.parseInt(text.getText().trim()));
           break;
         case "in m^2":
-          project.setBuildingSize(Double.parseDouble(text.getText()));
+          project.setBuildingSize(Double.parseDouble(text.getText().trim()));
           break;
         default:
           break;
@@ -1190,10 +1186,10 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
           break;
         case "Duration in months":
           //TODO: Implement check with standard margin ranges to see if budget is within.
-          project.setProjectDuration(Integer.parseInt(text.getText()));
+          project.setProjectDuration(Integer.parseInt(text.getText().trim()));
           break;
         case "in m^2":
-          project.setFacilitySize(Double.parseDouble(text.getText()));
+          project.setFacilitySize(Double.parseDouble(text.getText().trim()));
           break;
         default:
           break;
@@ -1223,13 +1219,13 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
           break;
         case "Duration in months":
           //TODO: Implement check with standard margin ranges to see if budget is within.
-          project.setProjectDuration(Integer.parseInt(text.getText()));
+          project.setProjectDuration(Integer.parseInt(text.getText().trim()));
           break;
         case "length in meters":
-          project.setRoadLength(Double.parseDouble(text.getText()));
+          project.setRoadLength(Double.parseDouble(text.getText().trim()));
           break;
         case "width in meters":
-          project.setRoadWidth(Double.parseDouble(text.getText()));
+          project.setRoadWidth(Double.parseDouble(text.getText().trim()));
           break;
         default:
           break;
