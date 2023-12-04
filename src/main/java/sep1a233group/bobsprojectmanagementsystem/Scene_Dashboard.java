@@ -27,6 +27,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   private ProgressReport report3;
   private ProgressReport report4;
 
+  private String type1, type2, type3, type4;
+
+
   @FXML private Text address1, address2, address3, address4;
   @FXML private Label projectType1, projectType2, projectType3, projectType4;
   @FXML private Label tlfNo1, tlfNo2, tlfNo3, tlfNo4;
@@ -61,6 +64,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   public void displayReport1()
   {
+    projectType1.setText(type1);
     address1.setText(report1.getProjectAddress().toString());
     tlfNo1.setText(report1.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report1.getCustomer().getPhoneNumber()));
     hoursSpent1.setText(Double.toString(report1.getProjectRessources().getManHoursSpent()));
@@ -98,6 +102,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   public void displayReport2()
   {
+    projectType2.setText(type2);
     address2.setText(report2.getProjectAddress().toString());
     tlfNo2.setText(report2.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report2.getCustomer().getPhoneNumber()));
     hoursSpent2.setText(Double.toString(report2.getProjectRessources().getManHoursSpent()));
@@ -137,6 +142,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   public void displayReport3()
   {
+    projectType3.setText(type3);
     address3.setText(report3.getProjectAddress().toString());
     tlfNo3.setText(report3.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report3.getCustomer().getPhoneNumber()));
     hoursSpent3.setText(Double.toString(report3.getProjectRessources().getManHoursSpent()));
@@ -174,6 +180,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   public void displayReport4()
   {
+    projectType4.setText(type4);
     address4.setText(report4.getProjectAddress().toString());
     tlfNo4.setText(report4.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report4.getCustomer().getPhoneNumber()));
     hoursSpent4.setText(Double.toString(report4.getProjectRessources().getManHoursSpent()));
@@ -256,21 +263,25 @@ public class Scene_Dashboard implements Scene_ControllerInterface
         if (report1 == null)
         {
           report1 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          type1 = activeModel.getAllProjectsList().get(i).getProjectType();
           continue;
         }
         if (report2 == null)
         {
           report2 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          type2 = activeModel.getAllProjectsList().get(i).getProjectType();
           continue;
         }
         if (report3 == null)
         {
           report3 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          type3 = activeModel.getAllProjectsList().get(i).getProjectType();
           continue;
         }
         if (report4 == null)
         {
           report4 = activeModel.getAllProjectsList().get(i).generateProgressReport();
+          type4 = activeModel.getAllProjectsList().get(i).getProjectType();
           break;
         }
       }
