@@ -29,7 +29,7 @@ public class Scene_SettingsView implements Scene_ControllerInterface
   @FXML private TextField timeLineRCP;
   @FXML private TextField bridgesOrTunnelsRCP;
   @FXML private TextField enviromentalOrGeographicalRCP;
-  @FXML private Button saveChangesButton;
+  @FXML private Button saveChangesButton; // not used!
 
   /**
    * Returns a reference to the GUI_Console on this page.
@@ -92,6 +92,10 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     this.activeModel = activeModel;
   }
 
+
+  /* Loading and displaying default values.
+    */
+
   public void loadSystemSettings()
   {
     //Settings for Residential Projects
@@ -113,9 +117,10 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     bridgesOrTunnelsRCP.setText("" + this.getActiveModel().getDefaultRoadSettings().getBridgesOrTunnelDetails());
     enviromentalOrGeographicalRCP.setText("" + this.getActiveModel().getDefaultRoadSettings().getEnviromentalOrGeographicalChallenges());
 
-
   }
 
+  /* Saving and updating system settings, for different type of construction projects.
+   */
   public void saveSystemSettings()
   {
     //Settings for Residential Projects
@@ -135,8 +140,6 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     this.getActiveModel().getDefaultRoadSettings().setProjectDuration(Integer.parseInt(timeLineRCP.getText().trim()));
     this.getActiveModel().getDefaultRoadSettings().setBridgesOrTunnelDetails(bridgesOrTunnelsRCP.getText().trim());
     this.getActiveModel().getDefaultRoadSettings().setEnviromentalOrGeographicalChallenges(enviromentalOrGeographicalRCP.getText().trim());
-
-
 
   }
 

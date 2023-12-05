@@ -421,6 +421,7 @@ public class MainModel
    */
   public boolean removeProject(ConstructionProject project)
   {
+    // Checking if the project is not in the list.
     if (!getAllProjectsList().contains(project))
     {
       System.out.println("Project not found in the system!");
@@ -428,15 +429,20 @@ public class MainModel
       return false;
     }
 
+    // if desired project is found, then removing it from the list.
     if (getAllProjectsList().remove(project))
     {
+      //The updated list gets saved.
       save();
-      System.out.println("Project have been successfully removed: " + project.getProjectInformation().getProjectName());
+      System.out.println("Project have been removed: " + project.getProjectInformation().getProjectName());
+      setInitializationErrorMessage("");
       return true;
     }
     else
     {
-      System.out.println("Error occured!");
+      // In case a removal fails, an error message gets printed.
+      System.out.println("Error occurred!");
+      setInitializationErrorMessage("Error occurred!");
       return false;
     }
   }
@@ -454,8 +460,9 @@ public class MainModel
 
   /** Sets the current default project settings that are applied when new projects are created.
    * Returns true if operation was successful.
-   * Author:
+   * Author: Zakaria - Method not needed!
    * */
+
   public boolean editDefaultProjectSettings()
   {
     return true;
