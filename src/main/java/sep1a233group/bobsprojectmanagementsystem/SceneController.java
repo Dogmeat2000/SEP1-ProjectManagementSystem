@@ -200,7 +200,7 @@ public class SceneController
       {
         this.loadNewWindow("Dashboard");
       }
-      else if (buttonText.equalsIgnoreCase("Projects"))
+      else if (buttonText.equalsIgnoreCase("Projects") || buttonText.equalsIgnoreCase("Cancel"))
       {
         this.loadNewWindow("Projects_MainView");
       }
@@ -219,6 +219,10 @@ public class SceneController
       else if (buttonText.equalsIgnoreCase("Edit"))
       {
         this.loadNewWindow("Projects_EditProjectView");
+      }
+      else if (buttonText.equalsIgnoreCase("View Details") || buttonText.equalsIgnoreCase("View project details"))
+      {
+        this.loadNewWindow("Projects_DetailsView");
       }
     }
     catch (Exception error)

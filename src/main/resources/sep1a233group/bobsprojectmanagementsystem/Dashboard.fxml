@@ -172,7 +172,7 @@
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
                                                             </Button>
-                                                            <Button fx:id="Details1" alignment="CENTER" contentDisplay="CENTER" layoutX="333.0" layoutY="13.0" mnemonicParsing="false" text="View project details">
+                                                            <Button fx:id="Details1" alignment="CENTER" contentDisplay="CENTER" layoutX="333.0" layoutY="13.0" mnemonicParsing="false" onAction="#viewProject1" text="View project details">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin></Button>
@@ -394,7 +394,7 @@
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
                                                             </Button>
-                                                            <Button fx:id="Details2" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="View project details">
+                                                            <Button fx:id="Details2" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#viewProject2" text="View project details">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
@@ -618,7 +618,7 @@
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
                                                             </Button>
-                                                            <Button fx:id="Details3" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="View project details">
+                                                            <Button fx:id="Details3" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#viewProject3" text="View project details">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
@@ -842,7 +842,7 @@
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
                                                             </Button>
-                                                            <Button fx:id="Details4" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="View project details">
+                                                            <Button fx:id="Details4" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#viewProject4" text="View project details">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>

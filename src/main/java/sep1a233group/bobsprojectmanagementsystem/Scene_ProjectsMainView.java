@@ -304,7 +304,6 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
   {
     if(updateSelectedProject())
     {
-      System.out.println("selection updated");
       //Selected project has been marked as the active project. Open the edit project window!
       try
       {
@@ -322,9 +321,7 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
   {
     if(updateSelectedProject())
     {
-      System.out.println("selection updated");
       //Selected project has been marked as the active project. Confirm the user wishes to delete it!
-
       if(this.getSceneController().createPromptWindow("Deleting project can not be undone. Are you sure?").equals("confirmationPressed"))
       {
         //Delete project:
@@ -351,8 +348,20 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     }
   }
 
-  public void viewProjectDetails()
+  public void viewProjectDetails(ActionEvent actionEvent)
   {
-
+    if(updateSelectedProject())
+    {
+      //Selected project has been marked as the active project. Re-direct the user to the "project details" window.!
+      try
+      {
+        this.openWindow(actionEvent);
+      }
+      catch (IOException error)
+      {
+        this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to edit selected project. Reason unknown.");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
+    }
   }
 }

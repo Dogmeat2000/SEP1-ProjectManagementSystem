@@ -104,9 +104,6 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     hideButtonElementNode(buttonCreateProject, true);
     hideButtonElementNode(buttonCancel, true);
 
-    System.out.println("current capacity: " + this.getActiveModel().getDashboardProgressReports().getCurrentCapacity());
-    System.out.println("maximum capacity: " + this.activeModel.getDashboardProgressReports().getMaxCapacity());
-
     //Set the load counter used to check if user has previously performed critical methods or not.
     loadCounter = 0;
     System.out.println("Create New Project panel is now active");
