@@ -26,6 +26,7 @@ public class RoadProject extends ConstructionProject implements Serializable
     setBridgeOrTunnelDetails("");
     setEnvironmentalOrGeographicalChallenges("");
     setProjectDuration(5);
+    setProjectType("Road");
   }
 
   /** Returns a string value containing any details relating to possible bridges or tunnels on the construction route */
@@ -86,14 +87,6 @@ public class RoadProject extends ConstructionProject implements Serializable
   public void setProjectDuration(int projectDuration)
   {
     this.projectDuration = projectDuration;
-  }
-
-  /** Returns the project type as a String (This being an industrial project).
-   * Author: K. Dashnaw
-   */
-  public String getProjectType()
-  {
-    return "Road";
   }
 
   /** Returns a string value containing all project information. Useful for debugging.
@@ -180,6 +173,8 @@ public class RoadProject extends ConstructionProject implements Serializable
     copyProject.setProjectDuration(this.getProjectDuration());
     copyProject.setDashboardProject(this.isDashboardProject());
     copyProject.setProjectConfidentiality(this.isProjectConfidential());
+    copyProject.setProjectType("Road");
+    copyProject.setProjectFinished(this.isProjectFinished());
 
     //Copy Date information:
     copyProject.setProjectStartDate(new MyDate(this.getProjectStartDate().getDay(), this.getProjectStartDate().getMonth(), this.getProjectStartDate().getYear()));

@@ -1,12 +1,13 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /** This class controls the GUI related view and methods concerning the "View Projects" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
@@ -14,11 +15,24 @@ import java.io.IOException;
  * Author: */
 public class Scene_ProjectsMainView implements Scene_ControllerInterface
 {
-  @FXML TextArea viewArea;
+  //@FXML TableColumn colProjectType;
+  @FXML TableView<ConstructionProject> mainTableView;
+  @FXML TableColumn<ConstructionProject, String> colProjectType;
+  @FXML TableColumn<ConstructionProject, String> colProjectStatus;
+  @FXML TableColumn<ConstructionProject, String> colProjectDeadline;
+  @FXML TableColumn<ConstructionProject, String> colProjectBudget;
+  @FXML TableColumn<ConstructionProject, String> colProjectExpenses;
+  @FXML TableColumn<ConstructionProject, String> colProjectManHoursUsed;
+  @FXML TableColumn<ConstructionProject, String> colProjectManHoursTotal;
+  @FXML TableColumn<ConstructionProject, String> colProjectConfidentiality;
+  @FXML TableColumn<ConstructionProject, String> colProjectIsDashboardProject;
+
+
+  //@FXML TextArea viewArea;
   @FXML TextField GUI_Console;
   private MainModel activeModel;
   private SceneController sceneController;
-
+  private ArrayList<ConstructionProject> projectListCopy;
 
   /** Returns a reference to the GUI_Console on this page.
    * Author: K. Dashnaw
@@ -51,6 +65,16 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     this.sceneController = sceneController;
   }
 
+  public ArrayList<ConstructionProject> getProjectListCopy()
+  {
+    return projectListCopy;
+  }
+
+  public void setProjectListCopy(ArrayList<ConstructionProject> projectListCopy)
+  {
+    this.projectListCopy = projectListCopy;
+  }
+
   /** Initializes this scene into the active stage on the GUI - reusing the same window space.
    * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
    * */
@@ -59,15 +83,10 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     //Sets necessary attributes:
     setActiveModel(activeModel);
     setSceneController(sceneController);
-    this.setGUI_Console(this.GUI_Console);
-    this.GUI_Console.setText(this.getSceneController().getGUI_ConsoleMessage());
-    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-
-    //Display all projects in system:
-    displayAllProjects();
-    displayDashboardProjects();
-
-    System.out.println("Project view Scene is now active");
+    setGUI_Console(this.GUI_Console);
+    GUI_Console.setText(this.getSceneController().getGUI_ConsoleMessage());
+    getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    refresh();
   }
 
   /** Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
@@ -75,14 +94,19 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
    * */
   @Override public void refresh()
   {
-    //TODO: Genindlæs indholdet på siden. F.eks. hvis der skal stå noget specifikt tekst i en boks, osv.!
-    displayAllProjects();
-    displayDashboardProjects();
+    setProjectListCopy(this.getActiveModel().filterProject(/* TODO: ADD FILTER PARAMETERS*/));
+
+    mainTableView.getItems().clear();
+
+    if(!getProjectListCopy().isEmpty())
+    {
+      displayProjects();
+    }
 
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
-    System.out.println("Project Main View is now the active stage.");
+    System.out.println("Project Table View is now the active stage.");
   }
 
   public MainModel getActiveModel()
@@ -95,37 +119,22 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     this.activeModel = activeModel;
   }
 
-  public void displayAllProjects()
+  public void displayProjects()
   {
-    String allProjects = "No projects in system!";
-    if(!this.getActiveModel().getAllProjectsList().isEmpty())
-    {
-      allProjects = "";
-      for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
-      {
-        allProjects += "Project #" + i + "\n";
-        allProjects += this.getActiveModel().getAllProjectsList().get(i);
-        allProjects += "\n\n";
-      }
-    }
-    viewArea.setText(allProjects);
-  }
+    mainTableView.setEditable(false);
+    this.setProjectListCopy(this.getActiveModel().filterProject(/* INSERT FILTERS filterArray[0], filterArray[1]*/));
 
-  public void displayDashboardProjects()
-  {
-    String allProjects = "No projects marked for adding to the dashboard";
+    colProjectType.setCellValueFactory(new PropertyValueFactory<>("projectType"));
+    colProjectStatus.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().isProjectFinished())));
+    colProjectDeadline.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getProjectEndDate())));
+    colProjectBudget.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getFinances().getTotalBudget())));
+    colProjectExpenses.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getFinances().getMaterialExpences())));
+    colProjectManHoursUsed.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getHumanRessources().getManHoursSpent())));
+    colProjectManHoursTotal.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getHumanRessources().getTotalManHoursNeeded())));
+    colProjectConfidentiality.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().isProjectConfidential())));
+    colProjectIsDashboardProject.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().isDashboardProject())));
 
-    if(this.getActiveModel().getDashboardProgressReports().getProgressReports().length > 0)
-    {
-      allProjects = "";
-      for (int i = 0; i < this.getActiveModel().getDashboardProgressReports().getProgressReports().length; i++)
-      {
-        allProjects += "Project #" + i + "\n";
-        allProjects += this.getActiveModel().getDashboardProgressReports().getProgressReports()[i];
-        allProjects += "\n\n";
-      }
-    }
-    viewArea.setText(viewArea.getText() + "\n\n\n\nPROJECTS MARKED FOR SHOW ON DASHBOARD ARE BELOW\n___________________________________\n" + allProjects);
+    mainTableView.getItems().addAll(getProjectListCopy());
   }
 
   /** <p>This method simply calls the common method with the same name, from the SceneController.

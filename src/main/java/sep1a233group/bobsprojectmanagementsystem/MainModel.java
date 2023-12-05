@@ -16,6 +16,7 @@ public class MainModel
 {
   private DashboardProgressReports dashboardProgressReports; //An object containing all the project progress reports that are displayed on the GUI Dashboard.
   private ArrayList<ConstructionProject> allProjectsList; //Contains an ArrayList with ALL the construction projects in the system.
+  private ArrayList<ConstructionProject> filteredProjectsList; //Contains a filtered list of projects in accordance to set filters.
   private FileIO fileManager; //Is the main file managing class, which handles file in and out operations.
   private DefaultResidentialSettings defaultResidentialSettings; //Handles the default residential project settings used when creating new projects!
   private DefaultCommercialSettings defaultCommercialSettings; //Handles the default commercial project settings used when creating new projects!
@@ -49,6 +50,8 @@ public class MainModel
       System.out.println("Debug: Data was not loaded successfully. New data has been initialized instead.");
       setInitializationErrorMessage("Data was not loaded successfully. New data has been initialized instead.");
     }
+    setFilteredProjectsList(new ArrayList<>());
+    filterProject();
     refreshDashboardProjects();
   }
 
@@ -100,6 +103,16 @@ public class MainModel
   public void setAllProjectsList(ArrayList<ConstructionProject> allProjectsList)
   {
     this.allProjectsList = allProjectsList;
+  }
+
+  public ArrayList<ConstructionProject> getFilteredProjectsList()
+  {
+    return filteredProjectsList;
+  }
+
+  public void setFilteredProjectsList(ArrayList<ConstructionProject> filteredProjectsList)
+  {
+    this.filteredProjectsList = filteredProjectsList;
   }
 
   /** Returns the currently "active" project. Especially used when editing or creating projects.
@@ -288,6 +301,7 @@ public class MainModel
       case "ResidentialProjectType":
         ResidentialProject newResProject = new ResidentialProject();
         //Set the default values:
+        newResProject.setProjectType("Residential");
         newResProject.setProjectDuration(getDefaultResidentialSettings().getProjectDuration());
         newResProject.setNumberOfKitchens(getDefaultResidentialSettings().getNumberOfKitchens());
         newResProject.setNumberOfBathrooms(getDefaultResidentialSettings().getNumberOfBathrooms());
@@ -298,6 +312,7 @@ public class MainModel
       case "CommercialProjectType":
         CommercialProject newComProject = new CommercialProject();
         //Set the default values:
+        newComProject.setProjectType("Commercial");
         newComProject.setNumberOfFloors(getDefaultCommercialSettings().getNumberOfFloors());
         newComProject.setProjectDuration(getDefaultCommercialSettings().getProjectDuration());
         this.setSelectedProject(newComProject);
@@ -305,12 +320,14 @@ public class MainModel
       case "IndustrialProjectType":
         IndustrialProject newIndProject = new IndustrialProject();
         //Set the default values:
+        newIndProject.setProjectType("Industrial");
         newIndProject.setProjectDuration(getDefaultIndustrialSettings().getProjectDuration());
         this.setSelectedProject(newIndProject);
         break;
       case "RoadProjectType":
         RoadProject newRoadProject = new RoadProject();
         //Set the default values:
+        newRoadProject.setProjectType("Road");
         newRoadProject.setProjectDuration(getDefaultResidentialSettings().getProjectDuration());
         newRoadProject.setProjectDuration(getDefaultRoadSettings().getProjectDuration());
         newRoadProject.setEnvironmentalOrGeographicalChallenges(getDefaultRoadSettings().getEnviromentalOrGeographicalChallenges());
@@ -452,10 +469,30 @@ public class MainModel
    * Returns true if operation was successful.
    * Author:
    */
-  public boolean filterProject(double minBudget, double maxBudget, int minDuration, int maxDuration)
+  public ArrayList<ConstructionProject> filterProject(/*double minBudget, double maxBudget, int minDuration, int maxDuration*/)
   {
-    //TODO: Implement filterProject method.
-    return false;
+    ArrayList<ConstructionProject> projectListCopy = new ArrayList<>();
+
+    for (int i = 0; i < getAllProjectsList().size(); i++)
+    {
+      projectListCopy.add(getAllProjectsList().get(i).copy());
+    }
+
+    //TODO: Missing final filtering steps.
+    //SET THE ACTUAL FILTERS.
+    /*for (int i = 0; i < getAllProjectsList().size(); i++)
+    {
+      if(getAllProjectsList().get(i).getFinances().getTotalBudget() < minBudget || getAllProjectsList().get(i).getFinances().getTotalBudget() > maxBudget)
+      {
+        projectListCopy.remove(getAllProjectsList().get(i));
+      }
+      else if()
+      {
+
+      }
+    }*/
+
+    return projectListCopy;
   }
 
   /** Sets the current default project settings that are applied when new projects are created.

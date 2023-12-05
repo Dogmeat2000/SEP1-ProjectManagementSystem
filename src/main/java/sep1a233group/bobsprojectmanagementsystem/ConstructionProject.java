@@ -16,6 +16,8 @@ public abstract class ConstructionProject implements Serializable
   private MyDate projectEndDate; //When was the project finished (or expected to finish?)
   private boolean isDashboardProject; //Used to identify projects that should be shown on the dashboard.
 
+  private String projectType; //Used to contain the type of project.
+
   //TODO: IMPLEMENT CLASS
 
   public ConstructionProject()
@@ -32,6 +34,7 @@ public abstract class ConstructionProject implements Serializable
     this.progressReport = new ProgressReport(getCustomer(), getProjectAddress(), getFinances(), getProjectStartDate(), getProjectEndDate(), getHumanRessources());
     isProjectFinished = false;
     setDashboardProject(false);
+    setProjectType("Undefined");
   }
 
   public boolean isDashboardProject()
@@ -103,6 +106,19 @@ public abstract class ConstructionProject implements Serializable
 
   public MyDate getProjectEndDate() { return projectEndDate;}
 
+  /** <p>    </p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   */
+  public String getProjectType()
+  {
+    return this.projectType;
+  }
+
+  public void setProjectType(String type)
+  {
+    projectType = type;
+  }
+
   public void setProjectEndDate(MyDate projectEndDate)
   {
     this.projectEndDate = projectEndDate;
@@ -124,12 +140,6 @@ public abstract class ConstructionProject implements Serializable
    */
   public abstract void setProjectDuration(int projectDuration);
 
-   /** <p>This abstract method, once implemented, returns the specific type of construction project this is.
-   * They can either be: Residential, Commercial, Industrial or Road projects</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
-  public abstract String getProjectType();
-
   /** <p>This abstract method, once implemented, returns a string value representing all the project data in single line.</p>
    * <p><b>Author:</b> K. Dashnaw</p>
    */
@@ -139,4 +149,5 @@ public abstract class ConstructionProject implements Serializable
    * <p><b>Author:</b> K. Dashnaw</p>
    */
   public abstract ConstructionProject copy();
+
 }

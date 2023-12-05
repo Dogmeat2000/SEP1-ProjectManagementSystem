@@ -22,6 +22,7 @@ public class IndustrialProject extends ConstructionProject implements Serializab
       setFacilitySize(0);
       setFacilityType("");
       setProjectDuration(5);
+      setProjectType("Industrial");
     }
 
     /** Returns a string value containing a description of the planned type of facility */
@@ -58,14 +59,6 @@ public class IndustrialProject extends ConstructionProject implements Serializab
     public void setProjectDuration(int projectDuration)
     {
       this.projectDuration = projectDuration;
-    }
-
-    /**
-     * Returns the project type as a String (This being an industrial project).
-     */
-    public String getProjectType()
-    {
-      return "Industrial";
     }
 
   /** Returns a string value containing all project information. Useful for debugging.
@@ -144,6 +137,8 @@ public class IndustrialProject extends ConstructionProject implements Serializab
     copyProject.setProjectDuration(this.getProjectDuration());
     copyProject.setDashboardProject(this.isDashboardProject());
     copyProject.setProjectConfidentiality(this.isProjectConfidential());
+    copyProject.setProjectType("Industrial");
+    copyProject.setProjectFinished(this.isProjectFinished());
 
     //Copy Date information:
     copyProject.setProjectStartDate(new MyDate(this.getProjectStartDate().getDay(), this.getProjectStartDate().getMonth(), this.getProjectStartDate().getYear()));
