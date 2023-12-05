@@ -99,6 +99,7 @@ public class Address implements Serializable
       return false;
     }
     Address otherAddress = (Address) other;
+
     return (otherAddress.getStreet().equals(this.getStreet()) && otherAddress.getStreetNumber().equals(this.getStreetNumber()) &&
         otherAddress.getApartment().equals(this.getApartment()) && otherAddress.getCity().equals(this.getCity())
             && otherAddress.getPostalCode() == this.getPostalCode() && otherAddress.getCountry().equals(this.getCountry()));

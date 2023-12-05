@@ -216,7 +216,7 @@ public class SceneController
       {
         this.loadNewWindow("Projects_SettingsView");
       }
-      else if (buttonText.equalsIgnoreCase("Edit project2"))
+      else if (buttonText.equalsIgnoreCase("Edit"))
       {
         this.loadNewWindow("Projects_EditProjectView");
       }

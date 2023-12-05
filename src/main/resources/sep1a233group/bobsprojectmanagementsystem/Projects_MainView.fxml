@@ -54,15 +54,7 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets bottom="5.0" left="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="56.0" layoutY="212.0" minHeight="30.0" mnemonicParsing="false" onAction="#editProjectSelected" prefHeight="30.0" prefWidth="120.0" text="Edit project2" textAlignment="CENTER">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="20.0" />
+                                    <Insets bottom="5.0" left="20.0" top="7.5" />
                                  </VBox.margin>
                               </Button>
                               <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="56.0" layoutY="177.0" minHeight="30.0" mnemonicParsing="false" onAction="#openWindow" prefHeight="30.0" prefWidth="120.0" text="New project" textAlignment="CENTER">
@@ -70,7 +62,31 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets bottom="5.0" left="20.0" />
+                                    <Insets bottom="2.5" left="20.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="detailsButton" alignment="CENTER" contentDisplay="CENTER" disable="true" focusTraversable="false" layoutX="56.0" layoutY="255.0" minHeight="30.0" mnemonicParsing="false" onAction="#viewProjectDetails" prefHeight="30.0" prefWidth="120.0" text="View Details" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="2.5" left="20.0" top="2.5" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" disable="true" focusTraversable="false" layoutX="56.0" layoutY="212.0" minHeight="30.0" mnemonicParsing="false" onAction="#editProjectSelected" prefHeight="30.0" prefWidth="120.0" text="Edit" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="2.5" left="20.0" top="2.5" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="removeButton" alignment="CENTER" contentDisplay="CENTER" disable="true" focusTraversable="false" layoutX="56.0" layoutY="247.0" minHeight="30.0" mnemonicParsing="false" onAction="#removeProjectSelected" prefHeight="30.0" prefWidth="120.0" text="Remove" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="7.5" left="20.0" top="2.5" />
                                  </VBox.margin>
                               </Button>
                               <Button focusTraversable="false" mnemonicParsing="false" onAction="#exportToWeb" prefHeight="40.0" prefWidth="140.0" text="Export HTML">
@@ -109,17 +125,19 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View, create or manage projects" />
                               <ScrollPane focusTraversable="false" hbarPolicy="NEVER" minHeight="630.0" minWidth="1110.0" prefHeight="630.0" prefWidth="1110.0">
                                  <content>
-                                    <TableView fx:id="mainTableView" focusTraversable="false" prefHeight="627.0" prefWidth="1130.0">
+                                    <TableView fx:id="mainTableView" focusTraversable="false" onMouseClicked="#validateClick_ActivateButtons" prefHeight="627.0" prefWidth="1130.0">
                                       <columns>
-                                        <TableColumn fx:id="colProjectType" maxWidth="247.77774810791016" minWidth="76.00000762939453" prefWidth="76.00000762939453" text="Type" />
-                                          <TableColumn fx:id="colProjectStatus" maxWidth="199.33328247070312" minWidth="93.11116027832031" prefWidth="93.11116027832031" text="Status" />
-                                          <TableColumn fx:id="colProjectDeadline" maxWidth="212.88897705078125" minWidth="100.0" prefWidth="103.11102294921875" text="Deadline" />
-                                        <TableColumn fx:id="colProjectBudget" maxWidth="159.77783203125" minWidth="56.44439697265625" prefWidth="102.888916015625" text="Budget" />
-                                          <TableColumn fx:id="colProjectExpenses" maxWidth="212.88897705078125" minWidth="79.99993896484375" prefWidth="125.3333740234375" text="Materiel Expenses" />
-                                          <TableColumn fx:id="colProjectManHoursUsed" maxWidth="193.77777099609375" minWidth="66.66656494140625" prefWidth="115.55548095703125" text="Man-Hours Used" />
-                                          <TableColumn fx:id="colProjectManHoursTotal" maxWidth="193.77777099609375" minWidth="66.66656494140625" prefWidth="171.1112060546875" text="Total Man-Hours Required" />
-                                          <TableColumn fx:id="colProjectConfidentiality" maxWidth="237.7777099609375" minWidth="81.11114501953125" prefWidth="125.77783203125" text="Confidential Project" />
-                                          <TableColumn fx:id="colProjectIsDashboardProject" maxWidth="294.6666259765625" minWidth="82.4444580078125" prefWidth="116.888671875" text="Dashboard Project" />
+                                        <TableColumn fx:id="colProjectType" maxWidth="80.0" minWidth="80.0" text="Type" />
+                                          <TableColumn fx:id="colProjectName" maxWidth="199.33328247070312" minWidth="74.00001525878906" prefWidth="74.00001525878906" text="Name" />
+                                          <TableColumn fx:id="colProjectCity" maxWidth="80.0" minWidth="80.0" text="City" />
+                                          <TableColumn fx:id="colProjectStatus" maxWidth="80.0" minWidth="80.0" text="Status" />
+                                          <TableColumn fx:id="colProjectDeadline" maxWidth="80.0" minWidth="80.0" text="Deadline" />
+                                        <TableColumn fx:id="colProjectBudget" maxWidth="80.0" minWidth="80.0" text="Budget" />
+                                          <TableColumn fx:id="colProjectExpenses" maxWidth="80.0" minWidth="80.0" text="Expenses" />
+                                          <TableColumn fx:id="colProjectManHoursUsed" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Man-Hours Used" />
+                                          <TableColumn fx:id="colProjectManHoursTotal" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Man-Hours Total" />
+                                          <TableColumn fx:id="colProjectConfidentiality" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Confidential Project" />
+                                          <TableColumn fx:id="colProjectIsDashboardProject" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Dashboard Project" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

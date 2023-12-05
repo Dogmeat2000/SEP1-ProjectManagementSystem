@@ -1,10 +1,12 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,9 +17,10 @@ import java.util.ArrayList;
  * Author: */
 public class Scene_ProjectsMainView implements Scene_ControllerInterface
 {
-  //@FXML TableColumn colProjectType;
   @FXML TableView<ConstructionProject> mainTableView;
   @FXML TableColumn<ConstructionProject, String> colProjectType;
+  @FXML TableColumn<ConstructionProject, String> colProjectName;
+  @FXML TableColumn<ConstructionProject, String> colProjectCity;
   @FXML TableColumn<ConstructionProject, String> colProjectStatus;
   @FXML TableColumn<ConstructionProject, String> colProjectDeadline;
   @FXML TableColumn<ConstructionProject, String> colProjectBudget;
@@ -26,6 +29,9 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
   @FXML TableColumn<ConstructionProject, String> colProjectManHoursTotal;
   @FXML TableColumn<ConstructionProject, String> colProjectConfidentiality;
   @FXML TableColumn<ConstructionProject, String> colProjectIsDashboardProject;
+  @FXML Button editButton;
+  @FXML Button removeButton;
+  @FXML Button detailsButton;
 
 
   //@FXML TextArea viewArea;
@@ -97,6 +103,9 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     setProjectListCopy(this.getActiveModel().filterProject(/* TODO: ADD FILTER PARAMETERS*/));
 
     mainTableView.getItems().clear();
+    editButton.setDisable(true);
+    removeButton.setDisable(true);
+    detailsButton.setDisable(true);
 
     if(!getProjectListCopy().isEmpty())
     {
@@ -124,17 +133,73 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     mainTableView.setEditable(false);
     this.setProjectListCopy(this.getActiveModel().filterProject(/* INSERT FILTERS filterArray[0], filterArray[1]*/));
 
-    colProjectType.setCellValueFactory(new PropertyValueFactory<>("projectType"));
+    colProjectType.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getProjectType())));
+    colProjectType.setStyle( "-fx-alignment: CENTER;");
+    colProjectName.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getProjectInformation().getProjectName())));
+    colProjectName.setStyle( "-fx-alignment: CENTER;");
+    colProjectCity.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getProjectAddress().getCity())));
+    colProjectCity.setStyle( "-fx-alignment: CENTER;");
     colProjectStatus.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().isProjectFinished())));
+    colProjectStatus.setStyle( "-fx-alignment: CENTER;");
     colProjectDeadline.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getProjectEndDate())));
+    colProjectDeadline.setStyle( "-fx-alignment: CENTER;");
     colProjectBudget.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getFinances().getTotalBudget())));
+    colProjectBudget.setStyle( "-fx-alignment: CENTER;");
     colProjectExpenses.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getFinances().getMaterialExpences())));
+    colProjectExpenses.setStyle( "-fx-alignment: CENTER;");
     colProjectManHoursUsed.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getHumanRessources().getManHoursSpent())));
+    colProjectManHoursUsed.setStyle( "-fx-alignment: CENTER;");
     colProjectManHoursTotal.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getHumanRessources().getTotalManHoursNeeded())));
+    colProjectManHoursTotal.setStyle( "-fx-alignment: CENTER;");
     colProjectConfidentiality.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().isProjectConfidential())));
+    colProjectConfidentiality.setStyle( "-fx-alignment: CENTER;");
     colProjectIsDashboardProject.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().isDashboardProject())));
+    colProjectIsDashboardProject.setStyle( "-fx-alignment: CENTER;");
 
     mainTableView.getItems().addAll(getProjectListCopy());
+
+    //Manipulate the booleans for better readability:
+    colProjectStatus.setCellValueFactory(cellData -> {
+          boolean status = cellData.getValue().isProjectFinished();
+          String statusAsString;
+          if(status)
+          {
+            statusAsString = "Completed";
+          }
+          else
+          {
+            statusAsString = "Ongoing";
+          }
+          return new ReadOnlyStringWrapper(statusAsString);
+    });
+
+    colProjectConfidentiality.setCellValueFactory(cellData -> {
+      boolean confidentiality = cellData.getValue().isProjectConfidential();
+      String statusAsString;
+      if(confidentiality)
+      {
+        statusAsString = "Confidential";
+      }
+      else
+      {
+        statusAsString = "Non-Confidential";
+      }
+      return new ReadOnlyStringWrapper(statusAsString);
+    });
+
+    colProjectIsDashboardProject.setCellValueFactory(cellData -> {
+      boolean dashboardStatus = cellData.getValue().isDashboardProject();
+      String statusAsString;
+      if(dashboardStatus)
+      {
+        statusAsString = "Yes";
+      }
+      else
+      {
+        statusAsString = "No";
+      }
+      return new ReadOnlyStringWrapper(statusAsString);
+    });
   }
 
   /** <p>This method simply calls the common method with the same name, from the SceneController.
@@ -168,6 +233,68 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
+  public boolean updateSelectedProject()
+  {
+    ConstructionProject selectedProject = mainTableView.getSelectionModel().getSelectedItem();
+    String projectType = mainTableView.getSelectionModel().getSelectedItem().getProjectType();
+    int originalProjectIndex = -1;
+
+    for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
+    {
+      if(selectedProject.equals(this.getActiveModel().getAllProjectsList().get(i)))
+      {
+        originalProjectIndex = i;
+      }
+    }
+    if(originalProjectIndex == -1)
+    {
+      return false; //The project was not found in the system files.
+    }
+
+    //Set active project. Make sure we set COPIES, or else unintended changes might be saved directly to the real project before the user presses the save button!
+    if(projectType.equalsIgnoreCase("residential"))
+    {
+      this.getActiveModel().setSelectedProject((ResidentialProject) this.getActiveModel().getAllProjectsList().get(originalProjectIndex).copy());
+      return true; //The active project has been updated!
+    }
+    else if(projectType.equalsIgnoreCase("commercial"))
+    {
+      this.getActiveModel().setSelectedProject((CommercialProject) this.getActiveModel().getAllProjectsList().get(originalProjectIndex).copy());
+      return true; //The active project has been updated!
+    }
+    else if(projectType.equalsIgnoreCase("industrial"))
+    {
+      this.getActiveModel().setSelectedProject((IndustrialProject) this.getActiveModel().getAllProjectsList().get(originalProjectIndex).copy());
+      return true; //The active project has been updated!
+    }
+    else if(projectType.equalsIgnoreCase("road"))
+    {
+      this.getActiveModel().setSelectedProject((RoadProject) this.getActiveModel().getAllProjectsList().get(originalProjectIndex).copy());
+      return true; //The active project has been updated!
+    }
+    return false; //The project was not found in the system files.
+  }
+
+  public void validateClick_ActivateButtons()
+  {
+    if(mainTableView.getSelectionModel().getSelectedItem() != null &&
+        (mainTableView.getSelectionModel().getSelectedItem() instanceof ResidentialProject ||
+            mainTableView.getSelectionModel().getSelectedItem() instanceof CommercialProject ||
+              mainTableView.getSelectionModel().getSelectedItem() instanceof IndustrialProject ||
+                mainTableView.getSelectionModel().getSelectedItem() instanceof RoadProject))
+    {
+      editButton.setDisable(false);
+      removeButton.setDisable(false);
+      detailsButton.setDisable(false);
+    }
+    else
+    {
+      editButton.setDisable(true);
+      removeButton.setDisable(true);
+      detailsButton.setDisable(true);
+    }
+  }
+
   /**<p>This method initializes the edit sequence allowing the user to modify existing projects in the system.
    * It initializes a temporary copy of the user selected project that collects changes before replacing the
    * originally selected project with the modified one on user confirmation.</p>
@@ -175,44 +302,57 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
    * */
   public void editProjectSelected(ActionEvent actionEvent)
   {
+    if(updateSelectedProject())
+    {
+      System.out.println("selection updated");
+      //Selected project has been marked as the active project. Open the edit project window!
+      try
+      {
+        this.openWindow(actionEvent);
+      }
+      catch (IOException error)
+      {
+        this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to edit selected project. Reason unknown.");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
+    }
+  }
 
-    //Find selected project in project array:
-    /*for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
+  public void removeProjectSelected()
+  {
+    if(updateSelectedProject())
     {
-      if(this.getActiveModel().getAllProjectsList().get(i).equals( SOMETHING!!! ))
-    }*/
+      System.out.println("selection updated");
+      //Selected project has been marked as the active project. Confirm the user wishes to delete it!
 
-    //Placeholder for now:
-    String projectType = this.getActiveModel().getAllProjectsList().get(0).getProjectType();
-    this.getActiveModel().setProjectIndexPosition(0);
+      if(this.getSceneController().createPromptWindow("Deleting project can not be undone. Are you sure?").equals("confirmationPressed"))
+      {
+        //Delete project:
+        this.getActiveModel().removeProject(this.getActiveModel().getSelectedProject());
 
-    //Set active project. Make sure we set COPIES, or else unintended changes might be saved directly to the real project before the user presses the save button!
-    if(projectType.equalsIgnoreCase("residential"))
-    {
-      this.getActiveModel().setSelectedProject((ResidentialProject) this.getActiveModel().getAllProjectsList().get(0).copy());
-    }
-    else if(projectType.equalsIgnoreCase("commercial"))
-    {
-      this.getActiveModel().setSelectedProject((CommercialProject) this.getActiveModel().getAllProjectsList().get(0).copy());
-    }
-    else if(projectType.equalsIgnoreCase("industrial"))
-    {
-      this.getActiveModel().setSelectedProject((IndustrialProject) this.getActiveModel().getAllProjectsList().get(0).copy());
-    }
-    else if(projectType.equalsIgnoreCase("road"))
-    {
-      this.getActiveModel().setSelectedProject((RoadProject) this.getActiveModel().getAllProjectsList().get(0).copy());
-    }
+        //Update console:
+        this.getSceneController().setGUI_ConsoleMessage("Project has been permanently deleted.");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
-    //Open Window
-    try
-    {
-      this.openWindow(actionEvent);
+        //Refresh view:
+        refresh();
+      }
+      else
+      {
+        //DO NOT DELETE PROJECT:
+        this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to delete selected project. Reason unknown.");
+        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+      }
     }
-    catch (IOException error)
+    else
     {
-      this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to edit selected project. Reason unknown.");
+      this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to delete selected project. Reason unknown.");
       this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
     }
+  }
+
+  public void viewProjectDetails()
+  {
+
   }
 }

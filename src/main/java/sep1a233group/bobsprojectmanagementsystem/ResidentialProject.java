@@ -140,6 +140,7 @@ public class ResidentialProject extends ConstructionProject implements Serializa
    * TRUE = They are identical. FALSE = They are not.
    * Author: K. Dashnaw
    * */
+  @Override
   public boolean equals(Object project)
   {
     if (!(project instanceof ResidentialProject))
@@ -152,21 +153,25 @@ public class ResidentialProject extends ConstructionProject implements Serializa
     if (!(other.getBuildingSize() == this.getBuildingSize() && other.getProjectDuration() == this.getProjectDuration() && other.getNumberOfKitchens() == this.getNumberOfKitchens() && other.getIsRenovation() == (this.getIsRenovation())
         && other.getNumberOfBathrooms() == this.getNumberOfBathrooms() && other.getNumberOfOtherRoomsWithPlumbing() == this.getNumberOfOtherRoomsWithPlumbing()))
     {
+      System.out.println("1");
       return false;
     }
     //Compare Customer and Address info:
     else if(!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress().equals(this.getProjectAddress())))
     {
+      System.out.println("2");
       return false;
     }
     //Compare Finances and Human resources info:
     else if(!(other.getFinances().equals(this.getFinances()) && other.getHumanRessources().equals(this.getHumanRessources()) && other.isProjectConfidential() == this.isProjectConfidential() && other.isProjectFinished() == this.isProjectFinished()))
     {
+      System.out.println("3");
       return false;
     }
     //Compare remaining info
     else if(!(other.getProjectInformation().equals(this.getProjectInformation()) && other.getProjectStartDate().equals(this.getProjectStartDate()) && other.getProjectEndDate().equals(this.getProjectEndDate())))
     {
+      System.out.println("4");
       return false;
     }
     else
@@ -205,7 +210,7 @@ public class ResidentialProject extends ConstructionProject implements Serializa
     copyProject.getCustomer().setPhoneNumberPrefix(this.getCustomer().getPhoneNumberPrefix());
     copyProject.getCustomer().getCustomerAddress().setApartment(this.getCustomer().getCustomerAddress().getApartment());
     copyProject.getCustomer().getCustomerCompany().setName(this.getCustomer().getCustomerCompany().getName());
-    copyProject.getCustomer().getCustomerCompany().setCompanyAddress(new Address(this.getCustomer().getCustomerAddress().getStreet(),this.getCustomer().getCustomerAddress().getCity(), this.getCustomer().getCustomerAddress().getCountry(), this.getCustomer().getCustomerAddress().getPostalCode()));
+    copyProject.getCustomer().getCustomerCompany().setCompanyAddress(new Address(this.getCustomer().getCustomerCompany().getCompanyAddress().getStreet(),this.getCustomer().getCustomerCompany().getCompanyAddress().getCity(), this.getCustomer().getCustomerCompany().getCompanyAddress().getCountry(), this.getCustomer().getCustomerCompany().getCompanyAddress().getPostalCode()));
     copyProject.getCustomer().getCustomerCompany().getCompanyAddress().setStreetNumber(this.getCustomer().getCustomerCompany().getCompanyAddress().getStreetNumber());
     copyProject.getCustomer().getCustomerCompany().getCompanyAddress().setApartment(this.getCustomer().getCustomerCompany().getCompanyAddress().getApartment());
 

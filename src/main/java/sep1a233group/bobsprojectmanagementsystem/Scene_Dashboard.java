@@ -596,10 +596,6 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       }
 
 
-      //Get the x/y position of the active window:
-      double x = this.getSceneController().getActiveStage().getX();
-      double y = this.getSceneController().getActiveStage().getY();
-
       //Create the update window:
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Projects_QuickUpdateProjectView.fxml"));
       try
@@ -616,10 +612,6 @@ public class Scene_Dashboard implements Scene_ControllerInterface
         newStage.setScene(updateScene);
         newStage.setResizable(false);
         newStage.setTitle("Update project");
-
-        //Set the x/y position of the window to be close to the calling button. This avoids the confirmation popping up on another screen, if more than 1 screen is connected.
-        newStage.setX(x / 2 - 700);
-        newStage.setY(y / 2 + 350);
 
         // show the dialog
         newStage.showAndWait();

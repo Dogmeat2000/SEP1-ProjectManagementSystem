@@ -108,6 +108,7 @@ public class Customer implements Serializable
       return false;
     }
     Customer other = (Customer) otherCustomer;
+
     return (other.getEmail().equals(this.getEmail()) && other.getFirstName().equals(this.getFirstName()) && other.getLastName()
         .equals(this.getLastName()) && other.getPhoneNumber() == this.getPhoneNumber() && other.getCustomerAddress()
         .equals(this.getCustomerAddress()) && other.getCustomerCompany().equals(this.getCustomerCompany()));
