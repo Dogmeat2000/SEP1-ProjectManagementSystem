@@ -23,6 +23,7 @@ public class CommercialProject extends ConstructionProject implements Serializab
     setIntendedBuildingUse("");
     setNumberOfFloors(0);
     setProjectDuration(5);
+    setProjectType("Commercial");
   }
 
   /** Returns a string value containing a description of the planned use of this building */
@@ -71,13 +72,6 @@ public class CommercialProject extends ConstructionProject implements Serializab
   public void setProjectDuration(int projectDuration)
   {
     this.projectDuration = projectDuration;
-  }
-
-  /** Returns the project type as a String (This being a commercial project).
-   */
-  public String getProjectType()
-  {
-    return "Commercial";
   }
 
 
@@ -159,6 +153,8 @@ public class CommercialProject extends ConstructionProject implements Serializab
     copyProject.setProjectDuration(this.getProjectDuration());
     copyProject.setDashboardProject(this.isDashboardProject());
     copyProject.setProjectConfidentiality(this.isProjectConfidential());
+    copyProject.setProjectType("Commercial");
+    copyProject.setProjectFinished(this.isProjectFinished());
 
     //Copy Date information:
     copyProject.setProjectStartDate(new MyDate(this.getProjectStartDate().getDay(), this.getProjectStartDate().getMonth(), this.getProjectStartDate().getYear()));

@@ -5,6 +5,7 @@ import java.io.Serializable; //Needed in order to save class object as Binary fi
 public class DefaultCommercialSettings implements Serializable
 {
 
+
   private int numberOfFloors, projectDuration;
 
 
@@ -25,12 +26,15 @@ public class DefaultCommercialSettings implements Serializable
     return projectDuration;
   }
 
-  public void set(int numberOfFloors, int projectDuration)
+
+  public void setNumberOfFloors(int numberOfFloors)
   {
     this.numberOfFloors = numberOfFloors;
-    this.projectDuration = projectDuration;
   }
 
-
+  public void setProjectDuration(int projectDuration)
+  {
+    this.projectDuration = projectDuration;
+  }
 
 }

@@ -28,6 +28,7 @@ public class ResidentialProject extends ConstructionProject implements Serializa
     setNumberOfBathrooms(0);
     setNumberOfOtherRoomsWithPlumbing(0);
     setProjectDuration(5);
+    setProjectType("Residential");
   }
 
   /** Returns the number of kitchens the construction build has assigned. */
@@ -107,14 +108,6 @@ public class ResidentialProject extends ConstructionProject implements Serializa
   public void setIsRenovation(boolean isRenovation)
   {
     this.isRenovation = isRenovation;
-  }
-
-    /**
-   * Returns the project type as a String (This being a residential project).
-   */
-  public String getProjectType()
-  {
-    return "Residential";
   }
 
   /** Returns a string value containing all project information. Useful for debugging.
@@ -199,6 +192,8 @@ public class ResidentialProject extends ConstructionProject implements Serializa
     copyProject.setProjectDuration(this.getProjectDuration());
     copyProject.setDashboardProject(this.isDashboardProject());
     copyProject.setProjectConfidentiality(this.isProjectConfidential());
+    copyProject.setProjectType("Residential");
+    copyProject.setProjectFinished(this.isProjectFinished());
 
     //Copy Date information:
     copyProject.setProjectStartDate(new MyDate(this.getProjectStartDate().getDay(), this.getProjectStartDate().getMonth(), this.getProjectStartDate().getYear()));

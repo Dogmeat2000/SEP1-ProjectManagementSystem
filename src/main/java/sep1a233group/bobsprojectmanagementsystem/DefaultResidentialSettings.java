@@ -10,6 +10,8 @@ public class DefaultResidentialSettings implements Serializable
 
   private boolean isRenovation;
 
+
+
   public DefaultResidentialSettings(int projectDuration, int numberOfKitchens,
       int numberOfBathrooms, int numberOfOtherRoomsWithPlumbing,
       boolean isRenovation)
@@ -21,26 +23,12 @@ public class DefaultResidentialSettings implements Serializable
     this.isRenovation = isRenovation;
   }
 
-  public void set(int projectDuration, int numberOfKitchens,
-      int numberOfBathrooms, int numberOfOtherRoomsWithPlumbing,
-      boolean isRenovation)
-  {
-    this.projectDuration = projectDuration;
-    this.numberOfKitchens = numberOfKitchens;
-    this.numberOfBathrooms = numberOfBathrooms;
-    this.numberOfOtherRoomsWithPlumbing = numberOfOtherRoomsWithPlumbing;
-    this.isRenovation = isRenovation;
-  }
 
   public int getProjectDuration()
   {
     return projectDuration;
   }
 
-  public void setProjectDuration(int projectDuration)
-  {
-    this.projectDuration = projectDuration;
-  }
 
   public int getNumberOfKitchens()
   {
@@ -62,5 +50,30 @@ public class DefaultResidentialSettings implements Serializable
     return isRenovation;
   }
 
+  public void setNumberOfKitchens(int numberOfKitchens)
+  {
+    this.numberOfKitchens = numberOfKitchens;
+  }
+
+  public void setNumberOfBathrooms(int numberOfBathrooms)
+  {
+    this.numberOfBathrooms = numberOfBathrooms;
+  }
+
+  public void setNumberOfOtherRoomsWithPlumbing(
+      int numberOfOtherRoomsWithPlumbing)
+  {
+    this.numberOfOtherRoomsWithPlumbing = numberOfOtherRoomsWithPlumbing;
+  }
+
+  public void setRenovation(boolean renovation)
+  {
+    isRenovation = renovation;
+  }
+
+  public void setProjectDuration(int projectDuration)
+  {
+    this.projectDuration = projectDuration;
+  }
 
 }
