@@ -73,12 +73,33 @@ public class Scene_SettingsView implements Scene_ControllerInterface
    */
   public void init(MainModel activeModel, SceneController sceneController)
   {
-    this.activeModel = activeModel;
+    this.setActiveModel(activeModel);
     setSceneController(sceneController);
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    loadSystemSettings();
 
     System.out.println("Project Settings view Scene is now active");
+  }
+
+  public MainModel getActiveModel()
+  {
+    return activeModel;
+  }
+
+  public void setActiveModel(MainModel activeModel)
+  {
+    this.activeModel = activeModel;
+  }
+
+  public void loadSystemSettings()
+  {
+    timeLineRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().getProjectDuration());
+  }
+
+  public void saveSystemSettings()
+  {
+    this.getActiveModel().getDefaultResidentialSettings().setProjectDuration(Integer.parseInt(timeLineRP.getText().trim()));
   }
 
   /**
@@ -87,7 +108,7 @@ public class Scene_SettingsView implements Scene_ControllerInterface
    */
   @Override public void refresh()
   {
-    //TODO: Genindlæs indholdet på siden. F.eks. hvis der skal stå noget specifikt tekst i en boks, osv.!
+    loadSystemSettings();
 
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());

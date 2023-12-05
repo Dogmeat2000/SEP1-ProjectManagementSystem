@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,30 +28,43 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   private ProgressReport report2;
   private ProgressReport report3;
   private ProgressReport report4;
-  @FXML private Text address1, address2, address3, address4;
-  @FXML private Label projectType1, projectType2, projectType3, projectType4;
-  @FXML private Label tlfNo1, tlfNo2, tlfNo3, tlfNo4;
-  @FXML private Label hoursStatus1, hoursStatus2, hoursStatus3, hoursStatus4;
+  @FXML Text address1, address2, address3, address4;
+  @FXML Label projectType1, projectType2, projectType3, projectType4;
+  @FXML Label tlfNo1, tlfNo2, tlfNo3, tlfNo4;
+  @FXML Label hoursStatus1, hoursStatus2, hoursStatus3, hoursStatus4;
+  @FXML GridPane slot2;
 
-  @FXML private ProgressBar hoursBar1, hoursBar2, hoursBar3, hoursBar4;
-  @FXML private Label hoursSpent1, hoursSpent2, hoursSpent3, hoursSpent4;
-  @FXML private Label expectedHours1, expectedHours2, expectedHours3, expectedHours4;
-  @FXML private Label budgetStatus1, budgetStatus2, budgetStatus3, budgetStatus4;
-  @FXML private ProgressBar budgetBar1, budgetBar2, budgetBar3, budgetBar4;
-  @FXML private Label expenses1, expenses2, expenses3, expenses4;
-  @FXML private Label budget1, budget2, budget3, budget4;
-  @FXML private Label timelineStatus1, timelineStatus2, timelineStatus3, timelineStatus4;
-  @FXML private ProgressBar timelineBar1, timelineBar2, timelineBar3, timelineBar4;
-  @FXML private Label startDate1, startDate2, startDate3, startDate4;
-  @FXML private Label expectedDate1, expectedDate2, expectedDate3, expectedDate4;
+  @FXML ProgressBar hoursBar1, hoursBar2, hoursBar3, hoursBar4;
+  @FXML Label hoursSpent1, hoursSpent2, hoursSpent3, hoursSpent4;
+  @FXML Label expectedHours1, expectedHours2, expectedHours3, expectedHours4;
+  @FXML Label budgetStatus1, budgetStatus2, budgetStatus3, budgetStatus4;
+  @FXML ProgressBar budgetBar1, budgetBar2, budgetBar3, budgetBar4;
+  @FXML Label expenses1, expenses2, expenses3, expenses4;
+  @FXML Label budget1, budget2, budget3, budget4;
+  @FXML Label timelineStatus1, timelineStatus2, timelineStatus3, timelineStatus4;
+  @FXML ProgressBar timelineBar1, timelineBar2, timelineBar3, timelineBar4;
+  @FXML Label startDate1, startDate2, startDate3, startDate4;
+  @FXML Label expectedDate1, expectedDate2, expectedDate3, expectedDate4;
 
 
   @FXML TextField GUI_Console; //textField in the gui, where messages are shown to the user.
   private MainModel activeModel;
   private SceneController sceneController;
 
+  public void hideInactiveSlots()
+  {
+    slot2.setVisible(false);
+  }
+
+  public void resetDataFieldsToDefault()
+  {
+    address1.setText("#1: Empty");
+  }
+
   public void displayProgressReports()
   {
+    budgetBar1.setProgress(.75);
+
     project1 = null;
     project2 = null;
     project3 = null;
@@ -131,10 +145,10 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       if (project1.equals(activeModel.getAllProjectsList().get(i)))
       {
         activeModel.getAllProjectsList().get(i).setDashboardProject(false);
-        displayProgressReports();
         break;
       }
     }
+    refresh();
   }
 
   public void displayReport2()
@@ -184,10 +198,10 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       if (project2.equals(activeModel.getAllProjectsList().get(i)))
       {
         activeModel.getAllProjectsList().get(i).setDashboardProject(false);
-        displayProgressReports();
         break;
       }
     }
+    refresh();
   }
 
   public void displayReport3()
@@ -236,10 +250,10 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       if (project3.equals(activeModel.getAllProjectsList().get(i)))
       {
         activeModel.getAllProjectsList().get(i).setDashboardProject(false);
-        displayProgressReports();
         break;
       }
     }
+    refresh();
   }
   public void displayReport4()
   {
@@ -287,10 +301,10 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       if (project1.equals(activeModel.getAllProjectsList().get(i)))
       {
         activeModel.getAllProjectsList().get(i).setDashboardProject(false);
-        displayProgressReports();
         break;
       }
     }
+    refresh();
   }
 
   public ProgressReport getReport1()
@@ -379,8 +393,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
-
+    resetDataFieldsToDefault();
     displayProgressReports();
+    hideInactiveSlots();
 
 
     System.out.println("Project Dashboard Scene is now active");
@@ -391,11 +406,14 @@ public class Scene_Dashboard implements Scene_ControllerInterface
    * */
   @Override public void refresh()
   {
-    //TODO: Genindlæs indholdet på siden. F.eks. hvis der skal stå noget specifikt tekst i en boks, osv.!
-
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+
+    resetDataFieldsToDefault();
     displayProgressReports();
+    hideInactiveSlots();
+
+    this.getActiveModel().refreshDashboardProjects();
 
     System.out.println("Dashboard now the active stage.");
   }

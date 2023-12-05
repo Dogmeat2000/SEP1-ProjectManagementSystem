@@ -26,7 +26,7 @@ public abstract class ConstructionProject implements Serializable
     this.customer = new Customer("","","",0,new Address("","","",0));
     setProjectConfidentiality(false);
     this.projectStartDate = MyDate.now();
-    this.projectEndDate = MyDate.now();
+    setProjectEndDate(MyDate.now());
     this.humanRessources = new HumanRessources(0,0);
     this.finances = new Finances(0,0);
     this.progressReport = new ProgressReport(getCustomer(), getProjectAddress(), getFinances(), getProjectStartDate(), getProjectEndDate(), getHumanRessources());

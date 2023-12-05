@@ -256,7 +256,7 @@
                                                 <Font name="Arial Black" size="10.0" />
                                              </font>
                                           </Text>
-                                          <Button fx:id="saveChangesButton" layoutX="817.0" layoutY="495.0" mnemonicParsing="false" text="Save changes">
+                                          <Button fx:id="saveChangesButton" layoutX="817.0" layoutY="495.0" mnemonicParsing="false" onAction="#saveSystemSettings" text="Save changes">
                                              <font>
                                                 <Font size="30.0" />
                                              </font>

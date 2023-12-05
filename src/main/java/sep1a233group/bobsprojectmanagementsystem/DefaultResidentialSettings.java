@@ -14,7 +14,7 @@ public class DefaultResidentialSettings implements Serializable
       int numberOfBathrooms, int numberOfOtherRoomsWithPlumbing,
       boolean isRenovation)
   {
-    this.projectDuration = projectDuration;
+    setProjectDuration(projectDuration);
     this.numberOfKitchens = numberOfKitchens;
     this.numberOfBathrooms = numberOfBathrooms;
     this.numberOfOtherRoomsWithPlumbing = numberOfOtherRoomsWithPlumbing;
@@ -35,6 +35,11 @@ public class DefaultResidentialSettings implements Serializable
   public int getProjectDuration()
   {
     return projectDuration;
+  }
+
+  public void setProjectDuration(int projectDuration)
+  {
+    this.projectDuration = projectDuration;
   }
 
   public int getNumberOfKitchens()

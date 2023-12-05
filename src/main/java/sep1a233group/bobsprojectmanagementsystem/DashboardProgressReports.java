@@ -7,13 +7,11 @@ public class DashboardProgressReports implements Serializable
 {
   private ProgressReport[] dashboardProgressReports; // Contains the 4 progress reports that are shown on the GUI dashboard.
   private int maxCapacity; //Used to control the maximum number of progress reports to store here.
-  //TODO: Implement Class!
 
   public DashboardProgressReports()
   {
     setMaxCapacity(4);
     setProgressReports(new ProgressReport[getMaxCapacity()]);//Max 4! DUMMY DATA FOR NOW! SHOULD BE DELETED AND WRITTEN BETTER!
-    //TODO: Implement
   }
 
   public int getMaxCapacity()
@@ -46,10 +44,8 @@ public class DashboardProgressReports implements Serializable
         return true; //Successfully added the progressReport
       }
     }
-    //TODO: Implement
     return false; //All dashboard places are full
   }
-
 
   /** Returns an integer value with the number of free Dashboard slots.*/
   public int getCurrentCapacity()

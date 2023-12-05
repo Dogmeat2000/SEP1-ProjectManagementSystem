@@ -14,8 +14,6 @@ import java.util.List;
 public class MainModel
 {
   private DashboardProgressReports dashboardProgressReports; //An object containing all the project progress reports that are displayed on the GUI Dashboard.
-
-  //TODO: Note by Kristian, Maybe change the projectList so we store projects in a balanced binary search tree instead, for faster filtering/search operations? NOT IMPORTANT RIGHT NOW!
   private ArrayList<ConstructionProject> allProjectsList; //Contains an ArrayList with ALL the construction projects in the system.
   private FileIO fileManager; //Is the main file managing class, which handles file in and out operations.
   private DefaultResidentialSettings defaultResidentialSettings; //Handles the default residential project settings used when creating new projects!
@@ -425,6 +423,7 @@ public class MainModel
     if (!getAllProjectsList().contains(project))
     {
       System.out.println("Project not found in the system!");
+      setInitializationErrorMessage("Project not found in the system!");
       return false;
     }
 

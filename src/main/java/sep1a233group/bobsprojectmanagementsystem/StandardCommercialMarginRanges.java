@@ -2,19 +2,20 @@ package sep1a233group.bobsprojectmanagementsystem;
 
 public class StandardCommercialMarginRanges {
   // Attributes
-  private double budgetFloor, budgetCeiling;
+  private static double budgetFloor;
+  private double budgetCeiling;
   private int projectDurationFloor, projectDurationCeiling;
 
   // Constructor
-  public StandardCommercialMarginRanges(double budgetFloor, double budgetCeiling, int projectDurationFloor, int projectDurationCeiling) {
-    this.budgetFloor = budgetFloor;
-    this.budgetCeiling = budgetCeiling;
+  public StandardCommercialMarginRanges(/*double budgetFloor, double budgetCeiling, int projectDurationFloor, int projectDurationCeiling*/) {
+    this.budgetFloor = 100000;
+    this.budgetCeiling = 500000;
     this.projectDurationFloor = projectDurationFloor;
     this.projectDurationCeiling = projectDurationCeiling;
   }
 
   // Getter for budgetFloor
-  public double getBudgetFloor() {
+  public static double getBudgetFloor() {
     return budgetFloor;
   }
 
