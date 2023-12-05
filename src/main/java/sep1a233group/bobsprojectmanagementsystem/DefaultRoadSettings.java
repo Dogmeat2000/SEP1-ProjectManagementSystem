@@ -6,6 +6,7 @@ import java.io.Serializable; //Needed in order to save class object as Binary fi
 public class DefaultRoadSettings implements Serializable
 {
 
+
   private String bridgesOrTunnelDetails, enviromentalOrGeographicalChallenges;
 
   private int projectDuration;
@@ -18,13 +19,6 @@ public class DefaultRoadSettings implements Serializable
     this.projectDuration = projectDuration;
   }
 
-  public void set(String bridgesOrTunnelDetails,
-      String enviromentalOrGeographicalChallenges, int projectDuration)
-  {
-    this.bridgesOrTunnelDetails = bridgesOrTunnelDetails;
-    this.enviromentalOrGeographicalChallenges = enviromentalOrGeographicalChallenges;
-    this.projectDuration = projectDuration;
-  }
 
   public String getBridgesOrTunnelDetails()
   {
@@ -41,6 +35,21 @@ public class DefaultRoadSettings implements Serializable
     return projectDuration;
   }
 
+  public void setBridgesOrTunnelDetails(String bridgesOrTunnelDetails)
+  {
+    this.bridgesOrTunnelDetails = bridgesOrTunnelDetails;
+  }
+
+  public void setEnviromentalOrGeographicalChallenges(
+      String enviromentalOrGeographicalChallenges)
+  {
+    this.enviromentalOrGeographicalChallenges = enviromentalOrGeographicalChallenges;
+  }
+
+  public void setProjectDuration(int projectDuration)
+  {
+    this.projectDuration = projectDuration;
+  }
 
 
 }

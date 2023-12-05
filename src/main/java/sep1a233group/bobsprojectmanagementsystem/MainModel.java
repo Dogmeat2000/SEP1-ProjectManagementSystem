@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /** <p>This is the main controller for the project management system. This controls most of the coding logic and method functionality that is called from the GUI<br><br></p>
  * <p><b>Author:</b> Combined effort from all team members.</p>
@@ -455,10 +456,9 @@ public class MainModel
    * Returns true if operation was successful.
    * Author:
    * */
-  public boolean editDefaultProjectSettings ()
+  public boolean editDefaultProjectSettings()
   {
-  //TODO: Implement editDefaultProjectSettings method.
-  return false;
+    return true;
   }
 
   /** <p>Enables data persistence across sessions by saving relevant system information to a file.

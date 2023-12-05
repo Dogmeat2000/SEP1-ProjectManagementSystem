@@ -94,12 +94,50 @@ public class Scene_SettingsView implements Scene_ControllerInterface
 
   public void loadSystemSettings()
   {
+    //Settings for Residential Projects
     timeLineRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().getProjectDuration());
+    numberOfKitchensRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().getNumberOfKitchens());
+    numberOfBathroomsRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().getNumberOfBathrooms());
+    roomsWithPlumbingRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().getNumberOfOtherRoomsWithPlumbing());
+    buildOrRenovationRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().isRenovation());
+
+    //Settings for Commercial Projects
+    timeLineCP.setText("" + this.getActiveModel().getDefaultCommercialSettings().getProjectDuration());
+    numberOfFloorsCP.setText("" + this.getActiveModel().getDefaultCommercialSettings().getNumberOfFloors());
+
+    //Settings for Industrial Projects
+    timeLineIP.setText("" + this.getActiveModel().getDefaultIndustrialSettings().getProjectDuration());
+
+    //Settings for Road construction Projects
+    timeLineRCP.setText("" + this.getActiveModel().getDefaultRoadSettings().getProjectDuration());
+    bridgesOrTunnelsRCP.setText("" + this.getActiveModel().getDefaultRoadSettings().getBridgesOrTunnelDetails());
+    enviromentalOrGeographicalRCP.setText("" + this.getActiveModel().getDefaultRoadSettings().getEnviromentalOrGeographicalChallenges());
+
+
   }
 
   public void saveSystemSettings()
   {
+    //Settings for Residential Projects
     this.getActiveModel().getDefaultResidentialSettings().setProjectDuration(Integer.parseInt(timeLineRP.getText().trim()));
+    this.getActiveModel().getDefaultResidentialSettings().setNumberOfKitchens(Integer.parseInt(numberOfKitchensRP.getText().trim()));
+    this.getActiveModel().getDefaultResidentialSettings().setNumberOfBathrooms(Integer.parseInt(numberOfBathroomsRP.getText().trim()));
+    this.getActiveModel().getDefaultResidentialSettings().setNumberOfOtherRoomsWithPlumbing(Integer.parseInt(roomsWithPlumbingRP.getText().trim()));
+    this.getActiveModel().getDefaultResidentialSettings().setRenovation(true);
+    //Settings for Commercial Projects
+    this.getActiveModel().getDefaultCommercialSettings().setProjectDuration(Integer.parseInt(timeLineCP.getText().trim()));
+    this.getActiveModel().getDefaultCommercialSettings().setNumberOfFloors(Integer.parseInt(numberOfFloorsCP.getText().trim()));
+
+    //Settings for Industrial Projects
+    this.getActiveModel().getDefaultIndustrialSettings().setProjectDuration(Integer.parseInt(timeLineIP.getText().trim()));
+
+    //Settings for Road construction Projects
+    this.getActiveModel().getDefaultRoadSettings().setProjectDuration(Integer.parseInt(timeLineRCP.getText().trim()));
+    this.getActiveModel().getDefaultRoadSettings().setBridgesOrTunnelDetails(bridgesOrTunnelsRCP.getText().trim());
+    this.getActiveModel().getDefaultRoadSettings().setEnviromentalOrGeographicalChallenges(enviromentalOrGeographicalRCP.getText().trim());
+
+
+
   }
 
   /**
@@ -152,3 +190,4 @@ public class Scene_SettingsView implements Scene_ControllerInterface
 
 
 }
+
