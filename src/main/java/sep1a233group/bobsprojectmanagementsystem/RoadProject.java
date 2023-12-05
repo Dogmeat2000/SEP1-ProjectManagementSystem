@@ -127,16 +127,14 @@ public class RoadProject extends ConstructionProject implements Serializable
     RoadProject other = (RoadProject) project;
 
     //Compare local attributes for equality:
-    if (!(other.getRoadWidth() == this.getRoadLength() && other.getProjectDuration() == this.getProjectDuration()
-        && other.getRoadLength() == this.getRoadLength() && other.getEnvironmentalOrGeographicalChallenges()
-        .equals(this.getEnvironmentalOrGeographicalChallenges()) && other.getBridgeOrTunnelDetails()
-        .equals(this.getBridgeOrTunnelDetails())))
+    if (!(other.getRoadWidth() == this.getRoadWidth() && other.getProjectDuration() == this.getProjectDuration() &&
+        other.getRoadLength() == this.getRoadLength() && other.getEnvironmentalOrGeographicalChallenges().equals(this.getEnvironmentalOrGeographicalChallenges()) &&
+        other.getBridgeOrTunnelDetails().equals(this.getBridgeOrTunnelDetails())))
     {
       return false;
     }
     //Compare Customer and Address info:
-    else if (!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress()
-        .equals(this.getProjectAddress())))
+    else if (!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress().equals(this.getProjectAddress())))
     {
       return false;
     }
@@ -146,8 +144,7 @@ public class RoadProject extends ConstructionProject implements Serializable
       return false;
     }
     //Compare remaining info
-    else if (!(other.getProjectInformation().equals(this.getProjectInformation()) && other.getProjectStartDate()
-        .equals(this.getProjectStartDate()) && other.getProjectEndDate().equals(this.getProjectEndDate())))
+    else if (!(other.getProjectInformation().equals(this.getProjectInformation()) && other.getProjectStartDate().equals(this.getProjectStartDate()) && other.getProjectEndDate().equals(this.getProjectEndDate())))
     {
       return false;
     }

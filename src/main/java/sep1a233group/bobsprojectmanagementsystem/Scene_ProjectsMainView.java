@@ -5,8 +5,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -325,14 +323,20 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
       if(this.getSceneController().createPromptWindow("Deleting project can not be undone. Are you sure?").equals("confirmationPressed"))
       {
         //Delete project:
-        this.getActiveModel().removeProject(this.getActiveModel().getSelectedProject());
+        if(this.getActiveModel().removeProject(this.getActiveModel().getSelectedProject()))
+        {
+          //Update console:
+          this.getSceneController().setGUI_ConsoleMessage("Project has been permanently deleted.");
+          this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
-        //Update console:
-        this.getSceneController().setGUI_ConsoleMessage("Project has been permanently deleted.");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-
-        //Refresh view:
-        refresh();
+          //Refresh view:
+          refresh();
+        }
+        else
+        {
+          this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to delete selected project. Reason unknown.");
+          this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+        }
       }
       else
       {

@@ -1,9 +1,11 @@
 package sep1a233group.bobsprojectmanagementsystem;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -416,7 +418,7 @@ public class SceneController
    * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
    * Parameters are:
    * "KeyEvent keyNode": A reference to the node belonging to the KeyEvent that triggered this method.
-   * "String textStyle": A CSS style format used to ie. color the text in the TextField (or similar).
+   * "String textStyle": A CSS style format used to i.e. color the text in the TextField (or similar).
    * "String toolTipMessage": The text that should be displayed in the tooltip.
    * Author: K. Dashnaw
    * */
@@ -435,7 +437,7 @@ public class SceneController
    * Takes a DatePicker
    * Parameters are:
    * "DatePicker node": A reference to the node belonging to the DatePicker that triggered this method.
-   * "String textStyle": A CSS style format used to ie. color the text in the TextField (or similar).
+   * "String textStyle": A CSS style format used to i.e. color the text in the TextField (or similar).
    * "String toolTipMessage": The text that should be displayed in the tooltip.
    * Author: K. Dashnaw
    * */
@@ -448,5 +450,444 @@ public class SceneController
     tooltip.setShowDelay(Duration.seconds(0));
     node.setTooltip(tooltip);
   }
+
+  /** <p>This method returns the selected projects Data Field values that correspond with the shared project data fields.
+   * This is intended for insertion into the on-screen editable textFields, so that already existing data is pre-entered for the user.
+   * This method is especially used on: The Project Details view page and _________________________________</p>
+   * <p><b>Author:</b> K. Dashnaw </p>
+   * @param node is a reference to the TextField node in which the returned String value shall be inserted.
+   * @return A String value intended to be inserted into the above TextField node.
+   * */
+  public String loadProjectData_String (TextField node)
+  {
+    switch (node.getPromptText())
+    {
+      case "first name":
+        return this.getActiveModel().getSelectedProject().getCustomer().getFirstName();
+      case "last name":
+        return this.getActiveModel().getSelectedProject().getCustomer().getLastName();
+      case "Prefix (ie. +45)":
+        return this.getActiveModel().getSelectedProject().getCustomer().getPhoneNumberPrefix();
+      case "Number (8 digits)":
+        return "" + this.getActiveModel().getSelectedProject().getCustomer().getPhoneNumber();
+      case "email":
+        return this.getActiveModel().getSelectedProject().getCustomer().getEmail();
+      case "Company Name the customer is representing":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerCompany().getName();
+      case "Customers Street Name":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getStreet();
+      case "Building number":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getStreetNumber();
+      case "Customer apartment number, if applicable.":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getApartment();
+      case "ZIP code":
+        return "" + this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getPostalCode();
+      case "City":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getCity();
+      case "Country":
+        return this.getActiveModel().getSelectedProject().getCustomer().getCustomerAddress().getCountry();
+      case "Street name":
+        return this.getActiveModel().getSelectedProject().getProjectAddress().getStreet();
+      case "Property number":
+        return this.getActiveModel().getSelectedProject().getProjectAddress().getStreetNumber();
+      case "Apartment number, if applicable. (else leave empty)":
+        return this.getActiveModel().getSelectedProject().getProjectAddress().getApartment();
+      case "Project ZIP code":
+        return "" + this.getActiveModel().getSelectedProject().getProjectAddress().getPostalCode();
+      case "Project City":
+        return this.getActiveModel().getSelectedProject().getProjectAddress().getCity();
+      case "Project Country":
+        return this.getActiveModel().getSelectedProject().getProjectAddress().getCountry();
+      case "Man-Hours in hours":
+        return "" + this.getActiveModel().getSelectedProject().getHumanRessources().getManHoursSpent();
+      case "Est. total number of hours":
+        return "" + this.getActiveModel().getSelectedProject().getHumanRessources().getTotalManHoursNeeded();
+      case "Expenses in USD":
+        return "" + this.getActiveModel().getSelectedProject().getFinances().getMaterialExpences();
+      case "Budget in USD":
+        return "" + this.getActiveModel().getSelectedProject().getFinances().getTotalBudget();
+      case "Project name. Will be displayed on homepage":
+        return this.getActiveModel().getSelectedProject().getProjectInformation().getProjectName();
+      default:
+        break;
+    }
+    return "";
+  }
+
+  /** <p>Is called from "On Action" EventHandlers in the .fxml scene
+   * Method adds the received ActionEvent node to the project data.
+   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.<br>
+   * <b>Warning: ActionEvent node must have a source type of CheckBox, else errors will occur.</b></p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * */
+  public void checkBoxChecker(ActionEvent actionEvent)
+  {
+    CheckBox checkBox = (CheckBox) actionEvent.getSource();
+
+    TextField value = new TextField();
+    value.setText(checkBox.getText());
+
+    if (checkBox.isSelected())
+    {
+      value.setText(value.getText() + "_True");
+    }
+    else
+    {
+      value.setText(value.getText() + "_False");
+    }
+    value.setPromptText(value.getText());
+  }
+
+  /** <p>This method returns the selected projects Data Field values that correspond with the shared project data fields.
+   * This is intended for insertion into the on-screen clickable CheckBoxes, so that already existing data is pre-selected for the user.</p>
+   * <p><b>Author:</b> K. Dashnaw </p>
+   * @param node is a reference to the CheckBox node in which the returned boolean value shall be inserted.
+   * @return A boolean value intended to be inserted into the above CheckBox node.
+   * */
+  public boolean loadProjectData_Checkbox (CheckBox node)
+  {
+    switch (node.getText())
+    {
+      case "Mark project as completed":
+        return this.getActiveModel().getSelectedProject().isProjectFinished();
+      case "Mark project as confidential":
+        return this.getActiveModel().getSelectedProject().isProjectConfidential();
+      case "Track on Dashboard":
+        return this.getActiveModel().getSelectedProject().isDashboardProject();
+      default:
+        break;
+    }
+    return false;
+  }
+
+  /** <p>Method used to display the unique data fields specific to the selected project type!</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   */
+  public void showUniqueProjectDataFields(GridPane gridResidentialUniqueData, GridPane gridCommercialUniqueData, GridPane gridIndustrialUniqueData, GridPane gridRoadUniqueData)
+  {
+    hideAllUniqueProjectDataFields(true, gridResidentialUniqueData, gridCommercialUniqueData, gridIndustrialUniqueData, gridRoadUniqueData);
+
+    switch (this.getActiveModel().getSelectedProject().getProjectType())
+    {
+      case "Residential":
+        hideGridElementNode(gridResidentialUniqueData, false);
+        break;
+      case "Commercial":
+        hideGridElementNode(gridCommercialUniqueData, false);
+        break;
+      case "Industrial":
+        hideGridElementNode(gridIndustrialUniqueData, false);
+        break;
+      case "Road":
+        hideGridElementNode(gridRoadUniqueData, false);
+        break;
+    }
+  }
+
+  /** <p>Method used to hide all unique project data fields.
+   * It is used in conjunction with a show method for the specific data fields, so that only relevant data fields are displayed.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   */
+  public void hideAllUniqueProjectDataFields(boolean bool, GridPane gridResidentialUniqueData, GridPane gridCommercialUniqueData, GridPane gridIndustrialUniqueData, GridPane gridRoadUniqueData)
+  {
+    hideGridElementNode(gridResidentialUniqueData, bool);
+    hideGridElementNode(gridCommercialUniqueData, bool);
+    hideGridElementNode(gridIndustrialUniqueData, bool);
+    hideGridElementNode(gridRoadUniqueData, bool);
+  }
+
+  /** <p>Method used to hide a GridPane element.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param gridID A reference to the GridPane element to hide.
+   * @param bool if true, hide the element - if false, show it.
+   */
+  public void hideGridElementNode(GridPane gridID, boolean bool)
+  {
+    gridID.setVisible(!bool);
+    gridID.managedProperty().bind(gridID.visibleProperty());
+  }
+
+  /** Method used to hide a Button element.
+   * Parameters are:
+   * "Button buttonID": A reference to the Button element to hide.
+   * "boolean bool": if true, hide the element - if false, show it.
+   * Author: K. Dashnaw
+   */
+  public void hideButtonElementNode(Button buttonID, boolean bool)
+  {
+    buttonID.setVisible(!bool);
+    buttonID.managedProperty().bind(buttonID.visibleProperty());
+  }
+
+  /** Method used to hide a Label element.
+   * Parameters are:
+   * "Label labelID": A reference to the Label element to hide.
+   * "boolean bool": if true, hide the element - if false, show it.
+   * Author: K. Dashnaw
+   */
+  public void hideLabelElementNode(Label labelID, boolean bool)
+  {
+    labelID.setVisible(!bool);
+    labelID.managedProperty().bind(labelID.visibleProperty());
+  }
+
+  public boolean validateActiveProject(DatePicker date_EndDateField)
+  {
+    ConstructionProject activeProject = this.getActiveModel().getSelectedProject();
+
+    //Check Shared Data First:
+    //Customer: Attributes checked are; first name, last name, phone number and email.
+    if(activeProject.getCustomer().getFirstName().isBlank() || activeProject.getCustomer().getLastName().isBlank() || activeProject.getCustomer().getPhoneNumber() == 0 || activeProject.getCustomer().getEmail().isBlank())
+    {
+      return true;
+    }
+    //Customer Address: Attributes checked are; Street name, Street number, City, Country and Postal Code
+    else if(activeProject.getCustomer().getCustomerAddress().getStreet().isBlank() || activeProject.getCustomer().getCustomerAddress().getStreetNumber().isBlank() || activeProject.getCustomer().getCustomerAddress().getCity().isBlank() || activeProject.getCustomer().getCustomerAddress().getCountry().isBlank() || activeProject.getCustomer().getCustomerAddress().getPostalCode() == 0)
+    {
+      return true;
+    }
+    //Customer company: IS NOT CHECKED! Residential projects might not have companies as customers.
+    //Project Address: Attributes checked are; Street name, Street number, City, Country and Postal Code
+    else if(activeProject.getProjectAddress().getStreet().isBlank() || activeProject.getProjectAddress().getStreetNumber().isBlank() || activeProject.getProjectAddress().getCity().isBlank() || activeProject.getProjectAddress().getCountry().isBlank() || activeProject.getProjectAddress().getPostalCode() == 0)
+    {
+      return true;
+    }
+    //Promotional Information: Attributes checked are; Project Description & Project Name
+    //TODO: Implement the photo URL functionality.
+    else if(activeProject.getProjectInformation().getProjectName().isBlank() || activeProject.getProjectInformation().getProjectDescription().isBlank())
+    {
+      return true;
+    }
+    //Human Resources: Attributes checked are; Human Resources.
+    else if(activeProject.getHumanRessources().getTotalManHoursNeeded() == 0)
+    {
+      return true;
+    }
+    //Finances: Attributes checked are; Total budget.
+    else if(activeProject.getFinances().getTotalBudget() == 0)
+    {
+      return true;
+    }
+    //Start and End Dates: If user did not select a start date we know the project is preloaded with todays' date!
+    else if(activeProject.getProjectStartDate() == null || activeProject.getProjectEndDate() == null || date_EndDateField.getEditor().getText().isBlank())
+    {
+      return true;
+    }
+    //Now check project specific data fields:
+    else if(activeProject instanceof ResidentialProject project)
+    {
+      //Perform some more input validation on the remaining values, since these might not have been evaluated if the user has set illegal default values in the settings view.
+      if(!(Integer.parseInt("" + project.getNumberOfBathrooms()) >= 0 && Integer.parseInt("" + project.getNumberOfBathrooms()) < Integer.MAX_VALUE))
+      {
+        //NumberOfBathrooms is not a legal value.
+        setGUI_ConsoleMessage("Number Of Bathrooms has an illegal value!");
+        return true;
+      }
+      else if(!(Integer.parseInt("" + project.getNumberOfKitchens()) >= 0 && Integer.parseInt("" + project.getNumberOfKitchens()) < Integer.MAX_VALUE))
+      {
+        //NumberOfKitchens is not a legal value.
+        setGUI_ConsoleMessage("Number Of Bathrooms has an illegal value!");
+        return true;
+      }
+      else if(!(Double.parseDouble("" + project.getBuildingSize()) > 0 && Double.parseDouble("" + project.getBuildingSize()) < Integer.MAX_VALUE))
+      {
+        //Building Size is not a legal value.
+        setGUI_ConsoleMessage("Building size has an illegal value!");
+        return true;
+      }
+      else if(!(Integer.parseInt("" + project.getNumberOfOtherRoomsWithPlumbing()) >= 0 && Integer.parseInt("" + project.getNumberOfOtherRoomsWithPlumbing()) < Integer.MAX_VALUE))
+      {
+        //Other rooms with plumbing number is not a legal value.
+        setGUI_ConsoleMessage("Number of other rooms with plumbing size has an illegal value!");
+        return true;
+      }
+    }
+    else if(activeProject instanceof CommercialProject project)
+    {
+      //Perform some more input validation on the remaining values, since these might not have been evaluated if the user has set illegal default values in the settings view.
+      if(!(Integer.parseInt("" + project.getNumberOfFloors()) >= 0 && Integer.parseInt("" + project.getNumberOfFloors()) < Integer.MAX_VALUE))
+      {
+        //NumberOfFloors is not a legal value.
+        setGUI_ConsoleMessage("Number Of Floors has an illegal value!");
+        return true;
+      }
+      else if(!(Double.parseDouble("" + project.getBuildingSize()) > 0 && Double.parseDouble("" + project.getBuildingSize()) < Double.MAX_VALUE))
+      {
+        //Building Size is not a legal value.
+        setGUI_ConsoleMessage("Building size has an illegal value!");
+        return true;
+      }
+    }
+    else if(activeProject instanceof IndustrialProject project)
+    {
+      //Check Industrial fields with no default values defined. These being; Facility size
+      if(!(Double.parseDouble("" + project.getFacilitySize()) > 0 && Double.parseDouble("" + project.getFacilitySize()) < Integer.MAX_VALUE))
+      {
+        //Building Size is not a legal value.
+        setGUI_ConsoleMessage("Facility size has an illegal value!");
+        return true;
+      }
+    }
+    else if(activeProject instanceof RoadProject project)
+    {
+      //Perform some more input validation on the remaining values, since these might not have been evaluated if the user has set illegal default values in the settings view.
+      if(!(Double.parseDouble("" + project.getRoadLength()) >= 0 && Double.parseDouble("" + project.getRoadLength()) < Integer.MAX_VALUE))
+      {
+        //Road length is not a legal value.
+        setGUI_ConsoleMessage("Road length has an illegal value!");
+        return true;
+      }
+      else if(!(Double.parseDouble("" + project.getRoadWidth()) >= 0 && Double.parseDouble("" + project.getRoadWidth()) < Integer.MAX_VALUE))
+      {
+        //Road width is not a legal value.
+        setGUI_ConsoleMessage("Road width has an illegal value!");
+        return true;
+      }
+      else if(project.getBridgeOrTunnelDetails().isBlank())
+      {
+        //Any bridges or tunnels is not a legal value.
+        setGUI_ConsoleMessage("Any bridges or tunnels has an illegal value!");
+        return true;
+      }
+      else if(project.getEnvironmentalOrGeographicalChallenges().isBlank())
+      {
+        //Any environmental or geographical comments is not a legal value.
+        setGUI_ConsoleMessage("Any environmental or geological field has an illegal value!");
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * <p><b>Warning: Switch cases are based on the promptText's associated with the given TextField element.</b></p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param project This is a reference to the specific project type Class.
+   * @param text This is a reference to the node containing the information to add to the project.
+   * */
+
+  public void setTemporaryRoadData(RoadProject project, TextField text)
+  {
+    switch (text.getPromptText())
+    {
+      case "Type any relevant information about bridges or tunnels":
+        project.setBridgeOrTunnelDetails(text.getText());
+        break;
+      case "Type any relevant environmental or geographical information":
+        project.setEnvironmentalOrGeographicalChallenges(text.getText());
+        break;
+      case "Duration in months":
+        //TODO: Implement check with standard margin ranges to see if budget is within.
+        project.setProjectDuration(Integer.parseInt(text.getText().trim()));
+        break;
+      case "length in meters":
+        project.setRoadLength(Double.parseDouble(text.getText().trim()));
+        break;
+      case "width in meters":
+        project.setRoadWidth(Double.parseDouble(text.getText().trim()));
+        break;
+      default:
+        break;
+    }
+  }
+
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * <p><b>Warning: Switch cases are based on the promptText's associated with the given TextField element.</b></p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param project This is a reference to the specific project type Class.
+   * @param text This is a reference to the node containing the information to add to the project.
+   * */
+
+  public void setTemporaryIndustrialData(IndustrialProject project, TextField text)
+  {
+    switch (text.getPromptText())
+    {
+      case "Describe the intended use of the facility":
+        project.setFacilityType(text.getText());
+        break;
+      case "Duration in months":
+        //TODO: Implement check with standard margin ranges to see if budget is within.
+        project.setProjectDuration(Integer.parseInt(text.getText().trim()));
+        break;
+      case "in m^2":
+        project.setFacilitySize(Double.parseDouble(text.getText().trim()));
+        break;
+      default:
+        break;
+    }
+  }
+
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * <p><b>Warning: Switch cases are based on the promptText's associated with the given TextField element.</b></p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param project This is a reference to the specific project type Class.
+   * @param text This is a reference to the node containing the information to add to the project.
+   * */
+
+  public void setTemporaryCommercialData(CommercialProject project, TextField text)
+  {
+    switch (text.getPromptText())
+    {
+      case "Number of floors":
+        project.setNumberOfFloors(Integer.parseInt(text.getText().trim()));
+        break;
+      case "Describe the intended use of the building":
+        project.setIntendedBuildingUse(text.getText());
+        break;
+      case "Duration in months":
+        //TODO: Implement check with standard margin ranges to see if budget is within.
+        project.setProjectDuration(Integer.parseInt(text.getText().trim()));
+        break;
+      case "in m^2":
+        project.setBuildingSize(Double.parseDouble(text.getText().trim()));
+        break;
+      default:
+        break;
+    }
+  }
+
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * <p><b>Warning: Switch cases are based on the promptText's associated with the given TextField element.</b></p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param project This is a reference to the specific project type Class.
+   * @param text This is a reference to the node containing the information to add to the project.
+   * */
+
+  public void setTemporaryResidentialData(ResidentialProject project, TextField text)
+  {
+    switch (text.getPromptText())
+    {
+      case "Number of Bathrooms":
+        project.setNumberOfBathrooms(Integer.parseInt(text.getText().trim()));
+        break;
+      case "Number of Kitchens":
+        project.setNumberOfKitchens(Integer.parseInt(text.getText().trim()));
+        break;
+      case "Other plumbing?":
+        project.setNumberOfOtherRoomsWithPlumbing(Integer.parseInt(text.getText().trim()));
+        break;
+      case "Duration in months":
+        //TODO: Implement check with standard margin ranges to see if budget is within.
+        project.setProjectDuration(Integer.parseInt(text.getText().trim()));
+        break;
+      case "in m^2":
+        project.setBuildingSize(Double.parseDouble(text.getText().trim()));
+        break;
+      case "Is project a renovation?_True":
+        project.setIsRenovation(true);
+        break;
+      case "Is project a renovation?_False":
+        project.setIsRenovation(false);
+        break;
+      default:
+        break;
+    }
+  }
+
 
 }

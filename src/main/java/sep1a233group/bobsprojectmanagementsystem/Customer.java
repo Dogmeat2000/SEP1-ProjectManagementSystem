@@ -13,13 +13,13 @@ public class Customer implements Serializable
 
   public Customer(String firstName, String lastName, String email, int phoneNumber, Address customerAddress)
   {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.phoneNumber = phoneNumber;
-    this.customerAddress = customerAddress;
-    this.phoneNumberPrefix = "";
-    this.company = new Company("", new Address("", "", "", 0));
+    setFirstName(firstName);
+    setLastName(lastName);
+    setEmail(email);
+    setPhoneNumber(phoneNumber);
+    setCustomerAddress(customerAddress);
+    setPhoneNumberPrefix("");
+    setCustomerCompany(new Company("", new Address("", "", "", 0)));
   }
 
   public String getFirstName()
@@ -77,9 +77,19 @@ public class Customer implements Serializable
     return this.customerAddress;
   }
 
+  public void setCustomerAddress(Address address)
+  {
+    this.customerAddress = address;
+  }
+
   public Company getCustomerCompany()
   {
     return this.company;
+  }
+
+  public void setCustomerCompany(Company company)
+  {
+    this.company = company;
   }
 
   public void set(String firstName, String lastName, String email, int phoneNumber)

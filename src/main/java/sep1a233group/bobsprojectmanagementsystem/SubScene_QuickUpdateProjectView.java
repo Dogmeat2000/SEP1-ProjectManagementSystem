@@ -63,8 +63,8 @@ public class SubScene_QuickUpdateProjectView implements Scene_ControllerInterfac
       }
      else if(node instanceof CheckBox)
      {
-       ((CheckBox) node).setSelected(this.loadProjectData_Checkbox((CheckBox) node));
-       ((CheckBox) node).setDisable(false);
+       ((CheckBox) node).setSelected(this.getSceneController().loadProjectData_Checkbox((CheckBox) node));
+       node.setDisable(false);
      }
     }
     checkBox_AddToDashBoard.setText("Track on Dashboard");
@@ -192,28 +192,6 @@ public class SubScene_QuickUpdateProjectView implements Scene_ControllerInterfac
     return "";
   }
 
-  /** <p>This method returns the selected projects Data Field values that correspond with the shared project data fields.
-   * This is intended for insertion into the on-screen clickable CheckBoxes, so that already existing data is pre-selected for the user.</p>
-   * <p><b>Author:</b> K. Dashnaw </p>
-   * @param node is a reference to the CheckBox node in which the returned boolean value shall be inserted.
-   * @return A boolean value intended to be inserted into the above CheckBox node.
-   * */
-  public boolean loadProjectData_Checkbox (CheckBox node)
-  {
-    switch (node.getText())
-    {
-      case "Mark project as completed":
-        return this.getActiveModel().getSelectedProject().isProjectFinished();
-      case "Mark project as confidential":
-        return this.getActiveModel().getSelectedProject().isProjectConfidential();
-      case "Track on Dashboard":
-        return this.getActiveModel().getSelectedProject().isDashboardProject();
-      default:
-        break;
-    }
-    return false;
-  }
-
   /** <p>Returns FALSE if TextField is either empty OR a string OR a negative number/digit, and TRUE is TextField is none of either.
    * Input validation method called directly from the .fxml scene upon interacting with a
    * TextField with this method set as an "On Key Typed" event.</p>
@@ -294,9 +272,8 @@ public class SubScene_QuickUpdateProjectView implements Scene_ControllerInterfac
    * <p><b>Author:</b> K. Dashnaw</p>
    * @param project This is a reference to the super class that all construction projects are a member of.
    * @param text This is a reference to the node containing the information to add to the project.
-   * @return A boolean that is either true or false. True means that data was modified. False means that it was not.
    * */
-  public boolean addCommonProjectData(ConstructionProject project, TextField text)
+  public void addCommonProjectData(ConstructionProject project, TextField text)
   {
     boolean dataAddedToProject = false;
 
@@ -362,11 +339,6 @@ public class SubScene_QuickUpdateProjectView implements Scene_ControllerInterfac
     if(dataAddedToProject)
     {
       activateEditButton();
-      return true;
-    }
-    else
-    {
-      return false;
     }
   }
 
@@ -391,14 +363,7 @@ public class SubScene_QuickUpdateProjectView implements Scene_ControllerInterfac
     }
 
     //If all required fields are present. Activate the edit button now.
-    if(!dataIsMissing)
-    {
-      buttonEditProject.setDisable(false);
-    }
-    else
-    {
-      buttonEditProject.setDisable(true);
-    }
+    buttonEditProject.setDisable(dataIsMissing);
   }
 
   /** <p>This method finalizes the project creation by calling relevant methods from the MainModel. It also asks the user to confirm their creation before finalizing.</p>

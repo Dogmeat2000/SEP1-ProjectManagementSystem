@@ -26,10 +26,6 @@ public class FileIO
     setSystemSaveFile("Project Data Files/" + this.getSystemFileName());
 
     setWebpageFilePath("Project Data Files/");
-
-    //TODO: Implement Dates!
-    setLastDataSaveTime(new MyDate(1,1,2000));
-    setLastWebExportTime(new MyDate(1,1,2000));
   }
 
   /** Returns the name of the system data file
@@ -132,6 +128,7 @@ public class FileIO
         out.flush(); //Force it to write the text, emptying the buffer.
         //out.close(); - Not needed since we are using "try-with-resources"
 
+        setLastDataSaveTime(MyDate.now());
         return true; //Data successfully saved.
       }
     }
@@ -163,6 +160,7 @@ public class FileIO
       //Now we write to the file using
       out.println(exportData);
       out.flush(); //Force it to write the text, emptying the buffer.
+      setLastWebExportTime(MyDate.now());
     }
   }
 

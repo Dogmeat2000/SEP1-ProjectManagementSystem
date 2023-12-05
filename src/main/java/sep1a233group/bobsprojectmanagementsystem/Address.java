@@ -11,12 +11,7 @@ public class Address implements Serializable
 
   public Address(String street, String city, String country, int postalCode)
   {
-    this.street = street;
-    this.streetNumber = "";
-    this.apartment = "";
-    this.city = city;
-    this.country = country;
-    this.postalCode = postalCode;
+    set(street, "", city, country, postalCode);
   }
 
   public String getStreet()
@@ -49,43 +44,44 @@ public class Address implements Serializable
     return streetNumber;
   }
 
-  public String setStreet(String street)
+  public void setStreet(String street)
   {
-    return this.street = street;
+    this.street = street;
   }
 
-  public String setStreetNumber(String streetNumber)
+  public void setStreetNumber(String streetNumber)
   {
-    return this.streetNumber = streetNumber;
+    this.streetNumber = streetNumber;
   }
 
-  public String setApartment(String apartment)
+  public void setApartment(String apartment)
   {
-    return this.apartment = apartment;
+    this.apartment = apartment;
   }
 
-  public int setPostalCode(int postalCode)
+  public void setPostalCode(int postalCode)
   {
-    return this.postalCode = postalCode;
+    this.postalCode = postalCode;
   }
 
-  public String setCity(String city)
+  public void setCity(String city)
   {
-    return this.city = city;
+    this.city = city;
   }
 
-  public String setCountry(String country)
+  public void setCountry(String country)
   {
-    return this.country = country;
+    this.country = country;
   }
 
   public void set(String street, String apartment, String city, String country, int postalCode)
   {
-    this.street = street;
-    this.apartment = apartment;
-    this.city = city;
-    this.country = country;
-    this.postalCode = postalCode;
+    setStreet(street);
+    setCity(city);
+    setCountry(country);
+    setPostalCode(postalCode);
+    setStreetNumber("");
+    setApartment(apartment);
   }
 
   /** Returns a boolean if passed object is identical to this object.

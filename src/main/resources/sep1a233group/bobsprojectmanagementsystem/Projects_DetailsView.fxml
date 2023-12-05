@@ -20,7 +20,7 @@
 
 <VBox minHeight="768.0" minWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sep1a233group.bobsprojectmanagementsystem.SubScene_DetailsView">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+    <AnchorPane VBox.vgrow="ALWAYS">
       <children>
             <VBox minHeight="768.0" minWidth="1366.0" prefHeight="768.0" prefWidth="1366.0">
                <children>
@@ -101,7 +101,7 @@
                                     <Font name="System Bold" size="30.0" />
                                  </font>
                               </Label>
-                              <ScrollPane focusTraversable="false" hbarPolicy="NEVER" minHeight="630.0" minWidth="1130.0" prefHeight="1300.0" prefWidth="1130.0">
+                              <ScrollPane hbarPolicy="NEVER" minHeight="630.0" minWidth="1130.0" prefHeight="1300.0" prefWidth="1130.0">
                                  <content>
                                     <AnchorPane minHeight="600.0" minWidth="1130.0" prefHeight="640.0" prefWidth="1130.0">
                                        <children>
@@ -127,7 +127,7 @@
                                                    <children>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="298.0" text="Materiel Expenses:" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="65.0" prefHeight="17.0" prefWidth="299.0" text="Total budget" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                                                      <TextField fx:id="tResBathroomNumber1" editable="false" promptText="Expenses in USD" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                      <TextField editable="false" promptText="Expenses in USD" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
@@ -138,7 +138,7 @@
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </CheckBox>
-                                                      <Label alignment="CENTER" focusTraversable="false" minWidth="1130.0" text="Frequently used data:" textAlignment="CENTER" GridPane.columnSpan="7">
+                                                      <Label alignment="CENTER" minWidth="1130.0" text="Frequently used data:" textAlignment="CENTER" GridPane.columnSpan="7">
                                                          <font>
                                                             <Font name="System Bold" size="18.0" />
                                                          </font>
@@ -171,7 +171,7 @@
                                                       </CheckBox>
                                                    </children>
                                                 </GridPane>
-                                                <Label alignment="CENTER" focusTraversable="false" minWidth="1130.0" text="Other Project Details:" textAlignment="CENTER">
+                                                <Label alignment="CENTER" minWidth="1130.0" text="Other Project Details:" textAlignment="CENTER">
                                                    <font>
                                                       <Font name="System Bold" size="18.0" />
                                                    </font>
@@ -421,8 +421,8 @@
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="37.0" prefHeight="17.0" prefWidth="301.0" text="Number of other rooms with Plumming" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="37.0" prefHeight="17.0" prefWidth="301.0" text="Number of other rooms with Plumbing" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="3" />
                                                       <CheckBox fx:id="isRenovation" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#checkBoxChecker" prefHeight="17.0" prefWidth="237.0" text="Is project a renovation?" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="3">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="5.0" top="2.5" />
@@ -475,7 +475,7 @@
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="535.0" layoutY="247.0" prefHeight="17.0" prefWidth="285.0" text="Building Size:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                                                       <TextField fx:id="tComDuration" editable="false" layoutX="145.0" layoutY="333.0" promptText="Duration in months" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                                          <GridPane.margin>
@@ -526,7 +526,7 @@
                                                          </font>
                                                       </Label>
                                                       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="65.0" prefHeight="17.0" prefWidth="299.0" text="Facility Type:" textAlignment="RIGHT" GridPane.rowIndex="2" />
-                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets bottom="5.0" />
                                                          </GridPane.margin>
@@ -596,7 +596,7 @@
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                                                          </GridPane.margin>
                                                       </TextField>
-                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration:" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="37.0" prefHeight="17.0" prefWidth="285.0" text="Project Duration:" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                       <TextField fx:id="tRDDuration" editable="false" layoutX="145.0" layoutY="333.0" promptText="Duration in months" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                          <GridPane.margin>
                                                             <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
@@ -659,7 +659,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="1024.0">
                      <children>
-                        <Label focusTraversable="false" text="Console:" HBox.hgrow="NEVER">
+                        <Label text="Console:" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
