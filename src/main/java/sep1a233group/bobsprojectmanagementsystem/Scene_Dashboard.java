@@ -16,7 +16,7 @@ import java.util.Optional;
 /** This class controls the GUI related view and methods concerning the "Project Dashboard" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
  * It refers to MainModel for model specific methods and actions.
- * Author: */
+ * Author: Alperen & Kristian*/
 public class Scene_Dashboard implements Scene_ControllerInterface
 {
   private ConstructionProject project1;
@@ -58,7 +58,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   /**
    * this method resets all the 4 dashboard-projects, and finds the dashboard-projects from the project list again,
    * to get the updates' information. If there is less than 4 projects in dashboard then the remaining slots will be hidden
-   * */
+   * Author: Alperen Ö.*/
   public void displayProgressReports()
   {
     project1 = null;
@@ -107,7 +107,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   /**
    * this method generates a progress report for the 1st project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
-   */
+   * Author: Alperen Ö.*/
   public void displayReport1()
   {
     report1 = project1.generateProgressReport();
@@ -150,8 +150,8 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   }
 
   /**
-   this method removes the 1st project from the dashboard, and then refreshes the page to show the new dashboard.
-   */
+   * this method removes the 1st project from the dashboard, and then refreshes the page to show the new dashboard.
+   * Author: Alperen Ö.*/
   public void untrackProject1()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -166,8 +166,8 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   }
 
   /**
-   * this method removes the 4th project from the dashboard, and then refreshes the page to show the new dashboard.
-   */
+   * this method generates a progress report for the 2nd project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
+   * Author: Alperen Ö.*/
   public void displayReport2()
   {
     report2 = project2.generateProgressReport();
@@ -209,8 +209,8 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   }
 
   /**
-   * this method untracks the 2nd project in dashboard, which means it will be removed from the dashbaord.
-   * */
+   * this method removes the 1st project from the dashboard, and then refreshes the page to show the new dashboard.
+   * Author: Alperen Ö.*/
   public void untrackProject2()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -226,7 +226,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   /**
    * this method generates a progress report for the 3rd project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
-   */
+   * Author: Alperen Ö.*/
   public void displayReport3()
   {
     report3 = project3.generateProgressReport();
@@ -268,8 +268,8 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   }
 
   /**
-   * this method untracks the 3rd project in dashboard, which means it will be removed from the dashboard.
-   * */
+   * this method removes the 1st project from the dashboard, and then refreshes the page to show the new dashboard.
+   * Author: Alperen Ö.*/
   public void untrackProject3()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -284,8 +284,8 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   }
 
   /**
-   * this method removess the 3rd project from the dashboard, and then refreshes the page to show the new dashboard.
-   */
+   * this method generates a progress report for the 4th project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
+   * Author: Alperen Ö.*/
   public void displayReport4()
   {
     report4 = project4.generateProgressReport();
@@ -327,8 +327,8 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   }
 
   /**
-   * this method removess the 4th project from the dashboard, and then refreshes the page to show the new dashboard.
-   * */
+   * this method removes the 4th project from the dashboard, and then refreshes the page to show the new dashboard.
+   * Author: Alperen Ö.*/
   public void untrackProject4()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
