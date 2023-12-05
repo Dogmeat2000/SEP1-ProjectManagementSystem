@@ -20,6 +20,7 @@ public abstract class ConstructionProject implements Serializable
 
   //TODO: IMPLEMENT CLASS
 
+
   public ConstructionProject()
   {
     //TODO: Implement... ALSO CONVERT THESE TEMPORARY DATA SETS TO SETTERS AND GETTERS!
@@ -82,6 +83,9 @@ public abstract class ConstructionProject implements Serializable
     this.finances = finances;
   }
 
+  /**
+   * this method generates a progress report based on the given project and returns the progress report
+   * Author: Alperen Ö. */
   public ProgressReport generateProgressReport() { return new ProgressReport(this.customer,this.projectAddress,this.finances,this.projectStartDate,this.projectEndDate,this.humanRessources); }
 
   public ProgressReport getProgressReport()
@@ -148,6 +152,10 @@ public abstract class ConstructionProject implements Serializable
   /** <p>This abstract method, once implemented, returns a copy of the selected Construction Project type.</p>
    * <p><b>Author:</b> K. Dashnaw</p>
    */
+
+  /**
+   * <p>returns a new project with the same values as the given project</p>
+   * */
   public abstract ConstructionProject copy();
 
 }
