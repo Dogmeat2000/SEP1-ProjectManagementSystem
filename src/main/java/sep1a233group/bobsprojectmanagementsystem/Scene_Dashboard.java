@@ -32,8 +32,10 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   @FXML Label projectType1, projectType2, projectType3, projectType4;
   @FXML Label tlfNo1, tlfNo2, tlfNo3, tlfNo4;
   @FXML Label hoursStatus1, hoursStatus2, hoursStatus3, hoursStatus4;
+  @FXML GridPane slot1;
   @FXML GridPane slot2;
-
+  @FXML GridPane slot3;
+  @FXML GridPane slot4;
   @FXML ProgressBar hoursBar1, hoursBar2, hoursBar3, hoursBar4;
   @FXML Label hoursSpent1, hoursSpent2, hoursSpent3, hoursSpent4;
   @FXML Label expectedHours1, expectedHours2, expectedHours3, expectedHours4;
@@ -51,24 +53,20 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   private MainModel activeModel;
   private SceneController sceneController;
 
-  public void hideInactiveSlots()
-  {
-    slot2.setVisible(false);
-  }
 
-  public void resetDataFieldsToDefault()
-  {
-    address1.setText("#1: Empty");
-  }
 
+  /**
+   * this method resets all the 4 dashboard-projects, and finds the dashboard-projects from the project list again,
+   * to get the updates' information. If there is less than 4 projects in dashboard then the remaining slots will be hidden
+   * */
   public void displayProgressReports()
   {
-    budgetBar1.setProgress(.75);
-
     project1 = null;
     project2 = null;
     project3 = null;
     project4 = null;
+
+    //a loop to look through all projects and see if they are marked as a dashboard project.
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
     {
       if (activeModel.getAllProjectsList().get(i).isDashboardProject())
@@ -95,12 +93,21 @@ public class Scene_Dashboard implements Scene_ControllerInterface
         }
       }
     }
-    if (project1 != null){displayReport1();}
-    if (project2 != null){displayReport2();}
-    if (project3 != null){displayReport3();}
-    if (project4 != null){displayReport4();}
+
+    //After we find the dashboard-projects, they will be displayed, and the empty slots will be hidden
+    if (project1 != null){slot1.setVisible(true); displayReport1();}
+    else {slot1.setVisible(false);}
+    if (project2 != null){slot2.setVisible(true); displayReport2();}
+    else {slot2.setVisible(false);}
+    if (project3 != null){slot3.setVisible(true); displayReport3();}
+    else {slot3.setVisible(false);}
+    if (project4 != null){slot4.setVisible(true); displayReport4();}
+    else {slot4.setVisible(false);}
   }
 
+  /**
+   * this method generates a progress report for the 1st project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
+   */
   public void displayReport1()
   {
     report1 = project1.generateProgressReport();
@@ -117,6 +124,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         hoursStatus1.setText("Within expected");
       }
+    hoursBar1.setProgress(report1.getProjectRessources().getManHoursSpent()/report1.getProjectRessources().getTotalManHoursNeeded());
     expenses1.setText(Double.toString(report1.getProjectFinances().getMaterialExpences()));
     budget1.setText(Double.toString(report1.getProjectFinances().getTotalBudget()));
       if (report1.getProjectFinances().getMaterialExpences() > report1.getProjectFinances().getTotalBudget())
@@ -127,6 +135,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         budgetStatus1.setText("Within budget");
       }
+    budgetBar1.setProgress(report1.getProjectFinances().getMaterialExpences()/report1.getProjectFinances().getTotalBudget());
     startDate1.setText(report1.getProjectStartDate().toString());
     expectedDate1.setText(report1.getProjectEndDate().toString());
       if (report1.getProjectEndDate().isBefore(MyDate.now()))
@@ -137,7 +146,12 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         timelineStatus1.setText("On track");
       }
+    timelineBar1.setProgress((double) report1.getProjectStartDate().daysBetween(MyDate.now())/report1.getProjectStartDate().daysBetween(report1.getProjectEndDate()));
   }
+
+  /**
+   this method removes the 1st project from the dashboard, and then refreshes the page to show the new dashboard.
+   */
   public void untrackProject1()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -151,6 +165,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     refresh();
   }
 
+  /**
+   * this method removes the 4th project from the dashboard, and then refreshes the page to show the new dashboard.
+   */
   public void displayReport2()
   {
     report2 = project2.generateProgressReport();
@@ -167,7 +184,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         hoursStatus2.setText("Within expected");
       }
-
+    hoursBar2.setProgress(report2.getProjectRessources().getManHoursSpent()/report2.getProjectRessources().getTotalManHoursNeeded());
     expenses2.setText(Double.toString(report2.getProjectFinances().getMaterialExpences()));
     budget2.setText(Double.toString(report2.getProjectFinances().getTotalBudget()));
       if (report2.getProjectFinances().getMaterialExpences() > report2.getProjectFinances().getTotalBudget())
@@ -178,7 +195,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         budgetStatus2.setText("Within budget");
       }
-
+    budgetBar2.setProgress(report2.getProjectFinances().getMaterialExpences()/report2.getProjectFinances().getTotalBudget());
     startDate2.setText(report2.getProjectStartDate().toString());
     expectedDate2.setText(report2.getProjectEndDate().toString());
       if (report2.getProjectEndDate().isBefore(MyDate.now()))
@@ -191,6 +208,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       }
   }
 
+  /**
+   * this method untracks the 2nd project in dashboard, which means it will be removed from the dashbaord.
+   * */
   public void untrackProject2()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -204,6 +224,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     refresh();
   }
 
+  /**
+   * this method generates a progress report for the 3rd project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
+   */
   public void displayReport3()
   {
     report3 = project3.generateProgressReport();
@@ -220,6 +243,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         hoursStatus3.setText("Within expected");
       }
+    hoursBar3.setProgress(report3.getProjectRessources().getManHoursSpent()/report3.getProjectRessources().getTotalManHoursNeeded());
     expenses3.setText(Double.toString(report3.getProjectFinances().getMaterialExpences()));
     budget3.setText(Double.toString(report3.getProjectFinances().getTotalBudget()));
       if (report3.getProjectFinances().getMaterialExpences() > report3.getProjectFinances().getTotalBudget())
@@ -230,7 +254,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         budgetStatus3.setText("Within budget");
       }
-
+    budgetBar3.setProgress(report3.getProjectFinances().getMaterialExpences()/report3.getProjectFinances().getTotalBudget());
     startDate3.setText(report3.getProjectStartDate().toString());
     expectedDate3.setText(report3.getProjectEndDate().toString());
       if (report3.getProjectEndDate().isBefore(MyDate.now()))
@@ -243,6 +267,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       }
   }
 
+  /**
+   * this method untracks the 3rd project in dashboard, which means it will be removed from the dashboard.
+   * */
   public void untrackProject3()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -255,6 +282,10 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
     refresh();
   }
+
+  /**
+   * this method removess the 3rd project from the dashboard, and then refreshes the page to show the new dashboard.
+   */
   public void displayReport4()
   {
     report4 = project4.generateProgressReport();
@@ -271,6 +302,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         hoursStatus4.setText("Within expected");
       }
+    hoursBar4.setProgress(report4.getProjectRessources().getManHoursSpent()/report4.getProjectRessources().getTotalManHoursNeeded());
     expenses4.setText(Double.toString(report4.getProjectFinances().getMaterialExpences()));
     budget4.setText(Double.toString(report4.getProjectFinances().getTotalBudget()));
       if (report4.getProjectFinances().getMaterialExpences() > report4.getProjectFinances().getTotalBudget())
@@ -281,7 +313,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       {
         budgetStatus4.setText("Within budget");
       }
-
+    budgetBar4.setProgress(report4.getProjectFinances().getMaterialExpences()/report4.getProjectFinances().getTotalBudget());
     startDate4.setText(report4.getProjectStartDate().toString());
     expectedDate4.setText(report4.getProjectEndDate().toString());
       if (report4.getProjectEndDate().isBefore(MyDate.now()))
@@ -294,6 +326,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       }
   }
 
+  /**
+   * this method removess the 4th project from the dashboard, and then refreshes the page to show the new dashboard.
+   * */
   public void untrackProject4()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -393,9 +428,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
-    resetDataFieldsToDefault();
+
     displayProgressReports();
-    hideInactiveSlots();
+
 
 
     System.out.println("Project Dashboard Scene is now active");
@@ -409,9 +444,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
-    resetDataFieldsToDefault();
+
     displayProgressReports();
-    hideInactiveSlots();
+
 
     this.getActiveModel().refreshDashboardProjects();
 
@@ -449,6 +484,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
+  /**
+   * This method updates the 1st project in the dashboard menu, based on the humanressources and finances values given.
+   * */
   public void updateProject1()
   {
     if(this.getProject1() != null)
@@ -462,6 +500,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
+  /**
+   * This method updates the 2nd project in the dashboard menu, based on the humanressources and finances values given.
+   * */
   public void updateProject2()
   {
 
@@ -476,6 +517,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
+  /**
+   * This method updates the 3rd project in the dashboard menu, based on the humanressources and finances values given.
+   * */
   public void updateProject3()
   {
     if(this.getProject3() != null)
@@ -489,6 +533,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
+  /**
+   * This method updates the 4rd project in the dashboard menu, based on the humanressources and finances values given.
+   * */
   public void updateProject4()
   {
     if(this.getProject4() != null)

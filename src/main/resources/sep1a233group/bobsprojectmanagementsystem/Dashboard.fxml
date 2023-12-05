@@ -100,7 +100,7 @@
                                               <RowConstraints maxHeight="315.0" minHeight="315.0" prefHeight="315.0" vgrow="NEVER" />
                                             </rowConstraints>
                                              <children>
-                                                <GridPane minWidth="540.0" prefWidth="565.0" style="-fx-border-color: black;">
+                                                <GridPane fx:id="slot1" minWidth="540.0" prefWidth="565.0" style="-fx-border-color: black;">
                                                   <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -167,7 +167,7 @@
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
                                                             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateProject1" text="Update" />
-                                                            <Button fx:id="Untrack1" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#untrackProject1" text="Untrack">
+                                                            <Button fx:id="Untrack1" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onAction="#untrackProject1" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
@@ -389,7 +389,7 @@
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
                                                             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateProject2" text="Update" />
-                                                            <Button fx:id="Untrack2" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#untrackProject2" text="Untrack">
+                                                            <Button fx:id="Untrack2" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onAction="#untrackProject2" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
@@ -539,7 +539,7 @@
                                                       <Insets bottom="5.0" top="2.5" />
                                                    </GridPane.margin>
                                                 </GridPane>
-                                                <GridPane layoutX="10.0" layoutY="310.0" prefWidth="783.0" style="-fx-border-color: black;" GridPane.rowIndex="1">
+                                                <GridPane fx:id="slot3" layoutX="10.0" layoutY="310.0" prefWidth="783.0" style="-fx-border-color: black;" GridPane.rowIndex="1">
                                                    <columnConstraints>
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -613,7 +613,7 @@
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
                                                             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateProject3" text="Update" />
-                                                            <Button fx:id="Untrack3" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#untrackProject3" text="Untrack">
+                                                            <Button fx:id="Untrack3" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onAction="#untrackProject3" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
@@ -763,7 +763,7 @@
                                                       <Insets bottom="10.0" />
                                                    </GridPane.margin>
                                                 </GridPane>
-                                                <GridPane layoutX="10.0" layoutY="650.0" prefWidth="783.0" style="-fx-border-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <GridPane fx:id="slot4" layoutX="10.0" layoutY="650.0" prefWidth="783.0" style="-fx-border-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                    <columnConstraints>
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -837,7 +837,7 @@
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                          <children>
                                                             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateProject4" text="Update" />
-                                                            <Button fx:id="Untrack4" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#untrackProject4" text="Untrack">
+                                                            <Button fx:id="Untrack4" alignment="CENTER" contentDisplay="CENTER" layoutX="371.0" layoutY="13.0" mnemonicParsing="false" onAction="#untrackProject4" text="Untrack">
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
