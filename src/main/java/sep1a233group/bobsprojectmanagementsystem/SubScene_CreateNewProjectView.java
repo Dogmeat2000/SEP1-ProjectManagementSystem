@@ -1142,6 +1142,16 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
 
         //Reset creation view.
         refresh();
+
+        //Redirect user back to the "view project" page:
+        try
+        {
+          this.getSceneController().openWindow("Projects", this.getGUI_Console());
+        }
+        catch(IOException error)
+        {
+          System.out.println("Unknown error occurred after project creation. No data has been lost.");
+        }
       }
       else
       {
