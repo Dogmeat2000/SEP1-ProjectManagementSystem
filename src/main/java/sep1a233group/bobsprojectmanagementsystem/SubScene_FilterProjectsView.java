@@ -4,9 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -17,8 +17,20 @@ import java.io.IOException;
  * Author: */
 public class SubScene_FilterProjectsView implements Scene_ControllerInterface
 {
-  private MainModel activeModel;
-  private SceneController sceneController;
+  @FXML CheckBox hideFinishedProjects;
+  @FXML CheckBox hideOngoingProjects;
+  @FXML Button buttonSetFilers;
+  @FXML CheckBox residentialProject;
+  @FXML CheckBox commercialProject;
+  @FXML CheckBox industrialProject;
+  @FXML CheckBox roadBuildingProject;
+  @FXML TextField ownerPhoneNumber;
+  @FXML TextField budgetRangeMax;
+  @FXML TextField durationMax;
+  @FXML TextField durationMin;
+  @FXML TextField budgetRangeMin;
+  @FXML MainModel activeModel;
+  @FXML SceneController sceneController;
 
   /** Initializes this scene into the active stage on the GUI - reusing the same window space.
    * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
@@ -64,48 +76,16 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
   {
     //This method should do nothing apart from the below internal debug note. Not refreshing this page will let the previously entered
     //filters remain in view. On session restart these will likewise be reset to nothing, as intended.
-
-    //buttonEditProject.setDisable(true);
+    buttonSetFilers.setDisable(true);
     System.out.println("Set project filters scene is now the active stage.");
   }
-
-  /** <p>Returns FALSE if TextField is either empty OR a string OR a negative number/digit, and TRUE is TextField is none of either.
-   * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.</p>
-   * <p><b>This method MUST be run on a TextField in order to avoid potential crashes/errors.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
-  public boolean validate_NotEmpty_NotString_NotNegative(KeyEvent keyNode)
-  {
-    resetValidation();
-    if(getSceneController().validate_NotEmpty_NotString_NotNegative(keyNode, "Error in data values while creating new project. Please review and correct!"))
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
-
-  /** <p>Method disabled the "Apply filters" button and is used in conjunction with the validation fields to ensure that the
-   * "apply filters" button only is enabled when proper data is ready to be added to the system.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   * */
-  private void resetValidation()
-  {
-    //buttonEditProject.setDisable(true);
-  }
-
 
   public void enableSetFiltersButton()
   {
     boolean validationPassed = true;
     //Enables the filters button after input validation has been performed.
 
-    TextField one = new TextField();
-
-    TextField[] textFields = {one}; //Insert TextFields from screen page
+    TextField[] textFields = {this.budgetRangeMin, this.budgetRangeMax, this.durationMin, this.durationMax}; //Insert TextFields from screen page
 
     //Validate all textFields:
     for (int i = 0; i < 3 /*Replace with number of TextFields*/; i++)
@@ -142,25 +122,60 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
 
     if(validationPassed)
     {
-      //enable setFilters button
+      buttonSetFilers.setDisable(false);
+    }
+    else
+    {
+      buttonSetFilers.setDisable(true);
     }
   }
 
-  public void cancel() throws IOException
+  public void cancel(ActionEvent actionEvent) throws IOException
   {
     //Should be tied to the cancel button only!
-      this.getSceneController().loadNewWindow("Projects_MainView");
+    this.getSceneController().loadNewWindow("Projects_MainView");
+
+    Button cancelButton = (Button) actionEvent.getSource();
+
+    Stage stage = (Stage) cancelButton.getScene().getWindow();
+    stage.close();
   }
 
   public void setFiltersButton()
   {
-    double minBudget = 0; //Replace with userText from TextField
-    double maxBudget = 10000; //Replace with userText from TextField
-    int minDuration = 0; //Replace with userText from TextField
-    int maxDuration = 10; //Replace with userText from TextField
-    boolean projectStatus = false; //Replace with userText from TextField
+    double minBudget = 0;
+    double maxBudget = 0;
+    int minDuration = 0;
+    int maxDuration = 0;
+    String ownerPhoneNumber = this.ownerPhoneNumber.getText();
+    boolean hideFinished = hideFinishedProjects.isSelected();
+    boolean hideOngoing = hideOngoingProjects.isSelected();
+    boolean hideResidential = residentialProject.isSelected();
+    boolean hideCommercial = commercialProject.isSelected();
+    boolean hideIndustrial = industrialProject.isSelected();
+    boolean hideRoad = roadBuildingProject.isSelected();
+
+    if(!this.budgetRangeMin.getText().isBlank())
+    {
+      minBudget = Integer.parseInt(this.budgetRangeMin.getText());
+    }
+    if(!this.budgetRangeMax.getText().isBlank())
+    {
+      maxBudget = Integer.parseInt(this.budgetRangeMax.getText());
+    }
+    if(!this.durationMin.getText().isBlank())
+    {
+      minDuration = Integer.parseInt(this.durationMin.getText());
+    }
+    if(!this.durationMax.getText().isBlank())
+    {
+      maxDuration = Integer.parseInt(this.durationMax.getText());
+    }
 
     //Applies the filters.
-    this.getActiveModel().setFilteredProjectsList(this.getActiveModel().filterProject(minBudget,maxBudget,minDuration,maxDuration,projectStatus));
+    this.getActiveModel().setFilteredProjectsList(this.getActiveModel().filterProject(minBudget,maxBudget,minDuration,maxDuration, ownerPhoneNumber, hideFinished, hideOngoing, hideResidential, hideCommercial, hideIndustrial, hideRoad));
+
+    Stage stage = (Stage) buttonSetFilers.getScene().getWindow();
+    stage.close();
   }
 }

@@ -520,7 +520,7 @@ public class MainModel
    * I.e.: For instance a filtering option could be to only show projects with a budget between 100,000 and 500,000.
    * Author:
    */
-  public ArrayList<ConstructionProject> filterProject(double minBudget, double maxBudget, int minDuration, int maxDuration, boolean projectStatus)
+  public ArrayList<ConstructionProject> filterProject(double minBudget, double maxBudget, int minDuration, int maxDuration, String phoneNumber, boolean hideFinishedProjects, boolean hideOngoingProjects, boolean hideResidential, boolean hideCommercial, boolean hideIndustrial, boolean hideRoad)
   {
     ArrayList<ConstructionProject> projectListCopy = new ArrayList<>();
 
@@ -531,17 +531,21 @@ public class MainModel
 
     //TODO: Missing final filtering steps.
     //SET THE ACTUAL FILTERS.
-    /*for (int i = 0; i < getAllProjectsList().size(); i++)
+    for (int i = 0; i < getAllProjectsList().size(); i++)
     {
       if(getAllProjectsList().get(i).getFinances().getTotalBudget() < minBudget || getAllProjectsList().get(i).getFinances().getTotalBudget() > maxBudget)
       {
         projectListCopy.remove(getAllProjectsList().get(i));
       }
-      else if()
+      else if(getAllProjectsList().get(i).getProjectDuration() < minDuration || getAllProjectsList().get(i).getProjectDuration() > maxDuration)
       {
-
+        projectListCopy.remove(getAllProjectsList().get(i));
       }
-    }*/
+      /*
+      INSERT THE REMAINING FILTERS HERE
+
+      */
+    }
 
     return projectListCopy;
   }
