@@ -57,6 +57,8 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
   @FXML DatePicker date_StartDateField;
   @FXML DatePicker date_EndDateField;
   @FXML CheckBox checkBox_AddToDashBoard;
+  @FXML Label labelLastProjectSave;
+  @FXML Label labelHTMLExportDate;
 
   //Other field Attributes:
   private MainModel activeModel;
@@ -83,6 +85,22 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
   {
     //Refresh the page, as it is shown on a clean load:
     this.getSceneController().showUniqueProjectDataFields(gridResidentialUniqueData, gridCommercialUniqueData, gridIndustrialUniqueData, gridRoadUniqueData);
+    if(this.getActiveModel().getFileManager().getLastDataSaveTime() != null)
+    {
+      labelLastProjectSave.setText("Project file version: " + this.getActiveModel().getFileManager().getLastDataSaveTime());
+    }
+    else
+    {
+      labelLastProjectSave.setText("Project file version: Unknown");
+    }
+    if(this.getActiveModel().getFileManager().getLastWebExportTime() != null)
+    {
+      labelHTMLExportDate.setText("Last HTML export : " + this.getActiveModel().getFileManager().getLastWebExportTime());
+    }
+    else
+    {
+      labelHTMLExportDate.setText("Last HTML export : Unknown");
+    }
 
     System.out.println("Edit Scene is now the active stage.");
 
@@ -679,10 +697,9 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
         break;
       case "Start date":
         String receivedStartDate = text.getText();
-        String[] splitStartData = receivedStartDate.split("\\.");
-        String dayStart = splitStartData[0];
-        String monthStart = splitStartData[1];
-        String yearStart = splitStartData[2];
+        String dayStart = receivedStartDate.substring(0,1);
+        String monthStart = receivedStartDate.substring(3,4);
+        String yearStart = receivedStartDate.substring(6,10);
         project.getProjectStartDate().set(Integer.parseInt(dayStart), Integer.parseInt(monthStart), Integer.parseInt(yearStart));
 
         //Reset project duration textField field with new duration:
@@ -742,10 +759,9 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
         break;
       case "Est. Completion Date":
         String receivedEndDate = text.getText();
-        String[] splitEndData = receivedEndDate.split("\\.");
-        String dayEnd = splitEndData[0];
-        String monthEnd = splitEndData[1];
-        String yearEnd = splitEndData[2];
+        String dayEnd = receivedEndDate.substring(0,1);
+        String monthEnd = receivedEndDate.substring(3,4);
+        String yearEnd = receivedEndDate.substring(6,10);
         project.getProjectEndDate().set(Integer.parseInt(dayEnd), Integer.parseInt(monthEnd), Integer.parseInt(yearEnd));
         dataAddedToProject = true;
 

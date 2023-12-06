@@ -3,6 +3,7 @@ package sep1a233group.bobsprojectmanagementsystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ import java.io.IOException;
 public class SubScene_FilterProjectsView implements Scene_ControllerInterface
 {
   @FXML TextField GUI_Console;
+  @FXML Label labelLastProjectSave;
+  @FXML Label labelHTMLExportDate;
   private MainModel activeModel;
   private SceneController sceneController;
 
@@ -54,13 +57,23 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
    * */
   public void init(MainModel activeModel, SceneController sceneController)
   {
-    this.activeModel = activeModel;
+    setActiveModel(activeModel);
     setSceneController(sceneController);
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
 
     System.out.println("Project Settings view Scene is now active");
+  }
+
+  public MainModel getActiveModel()
+  {
+    return activeModel;
+  }
+
+  public void setActiveModel(MainModel activeModel)
+  {
+    this.activeModel = activeModel;
   }
 
   /** Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
@@ -72,6 +85,22 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
 
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    if(this.getActiveModel().getFileManager().getLastDataSaveTime() != null)
+    {
+      labelLastProjectSave.setText("Project file version: " + this.getActiveModel().getFileManager().getLastDataSaveTime());
+    }
+    else
+    {
+      labelLastProjectSave.setText("Project file version: Unknown");
+    }
+    if(this.getActiveModel().getFileManager().getLastWebExportTime() != null)
+    {
+      labelHTMLExportDate.setText("Last HTML export : " + this.getActiveModel().getFileManager().getLastWebExportTime());
+    }
+    else
+    {
+      labelHTMLExportDate.setText("Last HTML export : Unknown");
+    }
 
     System.out.println("Set project filters scene is now the active stage.");
   }
