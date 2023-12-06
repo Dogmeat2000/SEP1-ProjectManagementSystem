@@ -128,17 +128,17 @@
                   </HBox>
                   <HBox alignment="BOTTOM_CENTER" prefHeight="32.0" prefWidth="1004.0" VBox.vgrow="NEVER">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="509.0" text="Developer information" HBox.hgrow="NEVER">
+                        <Label prefHeight="27.0" prefWidth="509.0" text="Developed by 1st Semester Students at VIA University College, Denmark, on the Danish Software Engineering course.              Developers are: Z. Banouri, A. Özer, E. Kadrolli &amp; K. Dashnaw" wrapText="true" HBox.hgrow="NEVER">
                            <font>
                               <Font size="9.0" />
                            </font></Label>
                         <VBox alignment="TOP_RIGHT" prefHeight="32.0" prefWidth="843.0" HBox.hgrow="NEVER">
                            <children>
-                              <Label prefHeight="13.0" prefWidth="193.0" text="Project file version: (DD/MM/YYYY - HH:MM)">
+                              <Label fx:id="labelLastProjectSave" prefHeight="13.0" prefWidth="193.0" text="Project file version: (DD/MM/YYYY - HH:MM)">
                                  <font>
                                     <Font size="9.0" />
                                  </font></Label>
-                              <Label layoutX="286.0" layoutY="10.0" prefHeight="19.0" prefWidth="194.0" text="Last HTML export : (DD/MM/YYYY - HH:MM)">
+                              <Label fx:id="labelHTMLExportDate" layoutX="286.0" layoutY="10.0" prefHeight="19.0" prefWidth="194.0" text="Last HTML export : (DD/MM/YYYY - HH:MM)">
                                  <font>
                                     <Font size="9.0" />
                                  </font></Label>

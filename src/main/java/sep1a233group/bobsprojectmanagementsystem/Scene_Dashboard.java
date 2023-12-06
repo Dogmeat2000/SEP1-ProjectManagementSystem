@@ -50,6 +50,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
 
   @FXML TextField GUI_Console; //textField in the gui, where messages are shown to the user.
+  @FXML Label labelLastProjectSave;
+  @FXML Label labelHTMLExportDate;
+
   private MainModel activeModel;
   private SceneController sceneController;
 
@@ -428,10 +431,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
-
-    displayProgressReports();
-
-
+    refresh();
 
     System.out.println("Project Dashboard Scene is now active");
   }
@@ -443,12 +443,28 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   {
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    if(this.getActiveModel().getFileManager().getLastDataSaveTime() != null)
+    {
+      labelLastProjectSave.setText("Project file version: " + this.getActiveModel().getFileManager().getLastDataSaveTime());
+    }
+    else
+    {
+      labelLastProjectSave.setText("Project file version: Unknown");
+    }
+    if(this.getActiveModel().getFileManager().getLastWebExportTime() != null)
+    {
+      labelHTMLExportDate.setText("Last HTML export : " + this.getActiveModel().getFileManager().getLastWebExportTime());
+    }
+    else
+    {
+      labelHTMLExportDate.setText("Last HTML export : Unknown");
+    }
 
-
-    displayProgressReports();
 
 
     this.getActiveModel().refreshDashboardProjects();
+
+    displayProgressReports();
 
     System.out.println("Dashboard now the active stage.");
   }

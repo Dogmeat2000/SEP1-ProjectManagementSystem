@@ -32,8 +32,9 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
   @FXML Button detailsButton;
 
 
-  //@FXML TextArea viewArea;
   @FXML TextField GUI_Console;
+  @FXML Label labelLastProjectSave;
+  @FXML Label labelHTMLExportDate;
   private MainModel activeModel;
   private SceneController sceneController;
   private ArrayList<ConstructionProject> projectListCopy;
@@ -112,6 +113,22 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
 
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    if(this.getActiveModel().getFileManager().getLastDataSaveTime() != null)
+    {
+      labelLastProjectSave.setText("Project file version: " + this.getActiveModel().getFileManager().getLastDataSaveTime());
+    }
+    else
+    {
+      labelLastProjectSave.setText("Project file version: Unknown");
+    }
+    if(this.getActiveModel().getFileManager().getLastWebExportTime() != null)
+    {
+      labelHTMLExportDate.setText("Last HTML export : " + this.getActiveModel().getFileManager().getLastWebExportTime());
+    }
+    else
+    {
+      labelHTMLExportDate.setText("Last HTML export : Unknown");
+    }
 
     System.out.println("Project Table View is now the active stage.");
   }
@@ -242,6 +259,7 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
       if(selectedProject.equals(this.getActiveModel().getAllProjectsList().get(i)))
       {
         originalProjectIndex = i;
+        break;
       }
     }
     if(originalProjectIndex == -1)

@@ -56,6 +56,8 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
   @FXML DatePicker date_StartDateField;
   @FXML DatePicker date_EndDateField;
   @FXML CheckBox checkBox_AddToDashBoard;
+  @FXML Label labelLastProjectSave;
+  @FXML Label labelHTMLExportDate;
 
   //Other field Attributes:
   private MainModel activeModel;
@@ -82,6 +84,22 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
   {
     //Refresh the page, as it is shown on a clean load:
     this.getSceneController().showUniqueProjectDataFields(gridResidentialUniqueData, gridCommercialUniqueData, gridIndustrialUniqueData, gridRoadUniqueData);
+    if(this.getActiveModel().getFileManager().getLastDataSaveTime() != null)
+    {
+      labelLastProjectSave.setText("Project file version: " + this.getActiveModel().getFileManager().getLastDataSaveTime());
+    }
+    else
+    {
+      labelLastProjectSave.setText("Project file version: Unknown");
+    }
+    if(this.getActiveModel().getFileManager().getLastWebExportTime() != null)
+    {
+      labelHTMLExportDate.setText("Last HTML export : " + this.getActiveModel().getFileManager().getLastWebExportTime());
+    }
+    else
+    {
+      labelHTMLExportDate.setText("Last HTML export : Unknown");
+    }
 
     System.out.println("Edit Scene is now the active stage.");
 

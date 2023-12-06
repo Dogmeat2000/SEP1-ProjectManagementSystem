@@ -2,7 +2,6 @@ package sep1a233group.bobsprojectmanagementsystem;
 
 import java.io.Serializable; //Needed in order to save class object as Binary file!
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -19,9 +18,9 @@ public class MyDate implements Serializable
   public MyDate()
   {
     Calendar now = GregorianCalendar.getInstance();
-    this.setDay(now.get(Calendar.DAY_OF_MONTH));
-    this.setMonth(now.get(Calendar.MONTH) + 1);
-    this.setYear(now.get(Calendar.YEAR));
+    setYear(now.get(Calendar.YEAR));
+    setMonth(now.get(Calendar.MONTH) + 1);
+    setDay(now.get(Calendar.DAY_OF_MONTH));
   }
 
   public int getDay()
@@ -280,10 +279,7 @@ public class MyDate implements Serializable
 
   @Override public String toString()
   {
-    java.util.Date date = new java.util.Date(this.getYear() - 1900, this.getMonth() - 1, this.getDay());
-    SimpleDateFormat Date = new SimpleDateFormat("dd/MM/yyyy");
-
-    return Date.format(date);
+    return this.getDay() + "." + this.getMonth() + "." + this.getYear();
   }
 
   public MyDate copy()

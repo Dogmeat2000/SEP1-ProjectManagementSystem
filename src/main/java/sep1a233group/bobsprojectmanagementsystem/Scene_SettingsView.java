@@ -3,6 +3,7 @@ package sep1a233group.bobsprojectmanagementsystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class Scene_SettingsView implements Scene_ControllerInterface
   @FXML private TextField timeLineRCP;
   @FXML private TextField bridgesOrTunnelsRCP;
   @FXML private TextField enviromentalOrGeographicalRCP;
+  @FXML Label labelLastProjectSave;
+  @FXML Label labelHTMLExportDate;
 
   /**
    * Returns a reference to the GUI_Console on this page.
@@ -150,6 +153,22 @@ public class Scene_SettingsView implements Scene_ControllerInterface
 
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    if(this.getActiveModel().getFileManager().getLastDataSaveTime() != null)
+    {
+      labelLastProjectSave.setText("Project file version: " + this.getActiveModel().getFileManager().getLastDataSaveTime());
+    }
+    else
+    {
+      labelLastProjectSave.setText("Project file version: Unknown");
+    }
+    if(this.getActiveModel().getFileManager().getLastWebExportTime() != null)
+    {
+      labelHTMLExportDate.setText("Last HTML export : " + this.getActiveModel().getFileManager().getLastWebExportTime());
+    }
+    else
+    {
+      labelHTMLExportDate.setText("Last HTML export : Unknown");
+    }
 
     System.out.println("Project Main View Scene is now the active stage.");
   }
