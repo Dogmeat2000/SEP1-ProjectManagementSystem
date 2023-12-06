@@ -115,7 +115,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   {
     report1 = project1.generateProgressReport();
     projectType1.setText(project1.getProjectType());
-    address1.setText(report1.getProjectAddress().toString());
+    address1.setText("#1:" + this.getProject1().getProjectInformation().getProjectName() + ", " + this.getProject1().getProjectAddress().getPostalCode() + " " + this.getProject1().getProjectAddress().getCity());
     tlfNo1.setText(report1.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report1.getCustomer().getPhoneNumber()));
     hoursSpent1.setText(Double.toString(report1.getProjectRessources().getManHoursSpent()));
     expectedHours1.setText(Double.toString(report1.getProjectRessources().getTotalManHoursNeeded()));
@@ -175,7 +175,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   {
     report2 = project2.generateProgressReport();
     projectType2.setText(project2.getProjectType());
-    address2.setText(report2.getProjectAddress().toString());
+    address2.setText("#2:" + this.getProject2().getProjectInformation().getProjectName() + ", " + this.getProject2().getProjectAddress().getPostalCode() + " " + this.getProject2().getProjectAddress().getCity());
     tlfNo2.setText(report2.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report2.getCustomer().getPhoneNumber()));
     hoursSpent2.setText(Double.toString(report2.getProjectRessources().getManHoursSpent()));
     expectedHours2.setText(Double.toString(report2.getProjectRessources().getTotalManHoursNeeded()));
@@ -234,7 +234,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   {
     report3 = project3.generateProgressReport();
     projectType3.setText(project3.getProjectType());
-    address3.setText(report3.getProjectAddress().toString());
+    address3.setText("#3:" + this.getProject3().getProjectInformation().getProjectName() + ", " + this.getProject3().getProjectAddress().getPostalCode() + " " + this.getProject3().getProjectAddress().getCity());
     tlfNo3.setText(report3.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report3.getCustomer().getPhoneNumber()));
     hoursSpent3.setText(Double.toString(report3.getProjectRessources().getManHoursSpent()));
     expectedHours3.setText(Double.toString(report3.getProjectRessources().getTotalManHoursNeeded()));
@@ -293,7 +293,7 @@ public class Scene_Dashboard implements Scene_ControllerInterface
   {
     report4 = project4.generateProgressReport();
     projectType4.setText(project4.getProjectType());
-    address4.setText(report4.getProjectAddress().toString());
+    address4.setText("#4:" + this.getProject4().getProjectInformation().getProjectName() + ", " + this.getProject4().getProjectAddress().getPostalCode() + " " + this.getProject4().getProjectAddress().getCity());
     tlfNo4.setText(report4.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report4.getCustomer().getPhoneNumber()));
     hoursSpent4.setText(Double.toString(report4.getProjectRessources().getManHoursSpent()));
     expectedHours4.setText(Double.toString(report4.getProjectRessources().getTotalManHoursNeeded()));
@@ -482,9 +482,9 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
   /** <p>This method simply calls the common method with the same name, from the SceneController.
    * Check SceneController.exportToWeb() for a more detailed description.</p>*/
-  public void exportToWeb(ActionEvent actionEvent)
+  public void exportToWeb()
   {
-    this.getSceneController().exportToWeb(actionEvent);
+    this.getSceneController().exportToWeb();
 
     //Update GUI Console message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
@@ -564,7 +564,6 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
     }
   }
-
 
   public void QuickUpdate_Project(int reportNumber)
   {

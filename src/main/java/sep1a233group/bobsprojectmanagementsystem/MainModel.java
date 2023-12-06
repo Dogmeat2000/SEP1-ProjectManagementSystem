@@ -50,8 +50,7 @@ public class MainModel
       System.out.println("Debug: Data was not loaded successfully. New data has been initialized instead.");
       setInitializationErrorMessage("Data was not loaded successfully. New data has been initialized instead.");
     }
-    setFilteredProjectsList(new ArrayList<>());
-    filterProject();
+    setFilteredProjectsList(this.getAllProjectsList());
     refreshDashboardProjects();
   }
 
@@ -521,7 +520,7 @@ public class MainModel
    * I.e.: For instance a filtering option could be to only show projects with a budget between 100,000 and 500,000.
    * Author:
    */
-  public ArrayList<ConstructionProject> filterProject(/*double minBudget, double maxBudget, int minDuration, int maxDuration*/)
+  public ArrayList<ConstructionProject> filterProject(double minBudget, double maxBudget, int minDuration, int maxDuration, boolean projectStatus)
   {
     ArrayList<ConstructionProject> projectListCopy = new ArrayList<>();
 

@@ -259,9 +259,9 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
    * Check SceneController.exportToWeb() for a more detailed description.</p>
    * <p><b>Author:</b> K. Dashnaw</p>
    */
-  public void exportToWeb(ActionEvent actionEvent)
+  public void exportToWeb()
   {
-    this.getSceneController().exportToWeb(actionEvent);
+    this.getSceneController().exportToWeb();
 
     //Update GUI Console message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());

@@ -166,7 +166,7 @@ public class SceneController
    * progress reports on all non-confidential projects to a webpage compatible file that can be readily loaded
    * on the company's webpage.
    */
-  public void exportToWeb(ActionEvent actionEvent)
+  public void exportToWeb()
   {
     System.out.println("User pressed the 'Export' button. System will now save all data to binary file, and then export this data to a webpage compatible file!");
     String promptMessage = "All ongoing and finished projects will be exported as .json files."
@@ -220,10 +220,6 @@ public class SceneController
       else if (buttonText.equalsIgnoreCase("Projects") || buttonText.equalsIgnoreCase("Cancel"))
       {
         this.loadNewWindow("Projects_MainView");
-      }
-      else if (buttonText.equalsIgnoreCase("Filter results"))
-      {
-        this.loadNewWindow("Projects_FilterView");
       }
       else if (buttonText.equalsIgnoreCase("New project"))
       {
@@ -458,6 +454,24 @@ public class SceneController
   public void addErrorTooltip(DatePicker node, String textStyle, String toolTipMessage)
   {
     node.getEditor().setStyle(textStyle);
+
+    Tooltip tooltip = new Tooltip();
+    tooltip.setText(toolTipMessage);
+    tooltip.setShowDelay(Duration.seconds(0));
+    node.setTooltip(tooltip);
+  }
+
+  /** This code is run locally in this class. It adds a ToolTip to the received node.
+   * Takes a TextField
+   * Parameters are:
+   * "TextField node": A reference to the node belonging to the TextField that triggered this method.
+   * "String textStyle": A CSS style format used to i.e. color the text in the TextField (or similar).
+   * "String toolTipMessage": The text that should be displayed in the tooltip.
+   * Author: K. Dashnaw
+   * */
+  public void addErrorTooltip(TextField node, String textStyle, String toolTipMessage)
+  {
+    node.setStyle(textStyle);
 
     Tooltip tooltip = new Tooltip();
     tooltip.setText(toolTipMessage);

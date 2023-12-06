@@ -49,7 +49,7 @@
                                     <Insets bottom="5.0" top="5.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="36.0" layoutY="131.0" minHeight="30.0" mnemonicParsing="false" onAction="#openWindow" prefHeight="30.0" prefWidth="120.0" text="Filter results" textAlignment="CENTER">
+                              <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="36.0" layoutY="131.0" minHeight="30.0" mnemonicParsing="false" onAction="#setFilters" prefHeight="30.0" prefWidth="120.0" text="Filter results" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>

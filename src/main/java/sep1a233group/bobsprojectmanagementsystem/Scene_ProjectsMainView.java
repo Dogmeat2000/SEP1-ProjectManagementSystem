@@ -4,7 +4,11 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -99,7 +103,7 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
    * */
   @Override public void refresh()
   {
-    setProjectListCopy(this.getActiveModel().filterProject(/* TODO: ADD FILTER PARAMETERS*/));
+    setProjectListCopy(this.getActiveModel().getFilteredProjectsList());
 
     mainTableView.getItems().clear();
     editButton.setDisable(true);
@@ -146,7 +150,7 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
   public void displayProjects()
   {
     mainTableView.setEditable(false);
-    this.setProjectListCopy(this.getActiveModel().filterProject(/* INSERT FILTERS filterArray[0], filterArray[1]*/));
+    this.setProjectListCopy(this.getActiveModel().getFilteredProjectsList());
 
     colProjectType.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getProjectType())));
     colProjectType.setStyle( "-fx-alignment: CENTER;");
@@ -230,9 +234,9 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
 
   /** <p>This method simply calls the common method with the same name, from the SceneController.
    * Check SceneController.exportToWeb() for a more detailed description.</p>*/
-  public void exportToWeb(ActionEvent actionEvent)
+  public void exportToWeb()
   {
-    this.getSceneController().exportToWeb(actionEvent);
+    this.getSceneController().exportToWeb();
 
     //Update GUI Console message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
@@ -429,6 +433,37 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
         this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to edit selected project. Reason unknown.");
         this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
       }
+    }
+  }
+
+  public void setFilters()
+  {
+    //Create the set filters window:
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Projects_FilterView.fxml"));
+    try
+    {
+      Stage newStage = new Stage();
+      newStage.initModality(Modality.WINDOW_MODAL);
+      newStage.initOwner(this.getSceneController().getActiveStage());
+
+      Scene updateScene = new Scene(fxmlLoader.load(), 800, 250);
+
+      Scene_ControllerInterface controller = fxmlLoader.getController();
+      controller.init(this.getActiveModel(), this.getSceneController());
+
+      newStage.setScene(updateScene);
+      newStage.setResizable(false);
+      newStage.setTitle("Set filters");
+
+      // show the dialog
+      newStage.showAndWait();
+      refresh();
+      this.getSceneController().setGUI_ConsoleMessage("Selected filters have been applied.");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+    catch(IOException error)
+    {
+      System.out.println("Unable to display refresh pop-up. Something went wrong.");
     }
   }
 }
