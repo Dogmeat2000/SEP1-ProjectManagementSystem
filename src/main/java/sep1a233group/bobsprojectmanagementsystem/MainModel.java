@@ -431,7 +431,67 @@ public class MainModel
   public boolean removeProject(ConstructionProject project)
   {
     // Checking if the project is not in the list.
-    if (!getAllProjectsList().contains(project))
+    boolean projectFound = false;
+    int projectIndex = -1;
+
+    if(project.getProjectType().equalsIgnoreCase("residential"))
+    {
+      ResidentialProject selectedProject = (ResidentialProject) project;
+      for (int i = 0; i < getAllProjectsList().size(); i++)
+      {
+        if(getAllProjectsList().get(i) instanceof ResidentialProject &&
+            selectedProject.equals(getAllProjectsList().get(i)))
+        {
+          projectIndex = i;
+          projectFound = true;
+          break;
+        }
+      }
+    }
+    else if(project.getProjectType().equalsIgnoreCase("commercial"))
+    {
+      CommercialProject selectedProject = (CommercialProject) project;
+      for (int i = 0; i < getAllProjectsList().size(); i++)
+      {
+        if(getAllProjectsList().get(i) instanceof CommercialProject &&
+            selectedProject.equals(getAllProjectsList().get(i)))
+        {
+          projectIndex = i;
+          projectFound = true;
+          break;
+        }
+      }
+    }
+    else if(project.getProjectType().equalsIgnoreCase("industrial"))
+    {
+      IndustrialProject selectedProject = (IndustrialProject) project;
+      for (int i = 0; i < getAllProjectsList().size(); i++)
+      {
+        if(getAllProjectsList().get(i) instanceof IndustrialProject &&
+            selectedProject.equals(getAllProjectsList().get(i)))
+        {
+          projectIndex = i;
+          projectFound = true;
+          break;
+        }
+      }
+    }
+    else if(project.getProjectType().equalsIgnoreCase("road"))
+    {
+      RoadProject selectedProject = (RoadProject) project;
+      for (int i = 0; i < getAllProjectsList().size(); i++)
+      {
+        if(getAllProjectsList().get(i) instanceof RoadProject &&
+            selectedProject.equals(getAllProjectsList().get(i)))
+        {
+          projectIndex = i;
+          projectFound = true;
+          break;
+        }
+      }
+    }
+
+    if (!projectFound)
     {
       System.out.println("Project not found in the system!");
       setInitializationErrorMessage("Project not found in the system!");
@@ -439,11 +499,12 @@ public class MainModel
     }
 
     // if desired project is found, then removing it from the list.
-    if (getAllProjectsList().remove(project))
+    if (getAllProjectsList().remove(projectIndex) != null)
     {
       //The updated list gets saved.
       save();
       setInitializationErrorMessage("");
+      setProjectIndexPosition(-1);
       return true;
     }
     else

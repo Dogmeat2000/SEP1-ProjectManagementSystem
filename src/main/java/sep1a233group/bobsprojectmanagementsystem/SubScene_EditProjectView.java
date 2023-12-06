@@ -914,6 +914,7 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     {
       //Remove the original project from the project_list, and replace with this modified one.
       this.getActiveModel().removeProject(this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()));
+ /**/     System.out.println("Project at index #" + this.getActiveModel().getProjectIndexPosition() + " removed");
 
       //Add modified project to system.
       if(this.getActiveModel().editProject(this.getActiveModel().getSelectedProject()))

@@ -250,22 +250,67 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
 
   public boolean updateSelectedProject()
   {
-    ConstructionProject selectedProject = mainTableView.getSelectionModel().getSelectedItem();
     String projectType = mainTableView.getSelectionModel().getSelectedItem().getProjectType();
     int originalProjectIndex = -1;
 
-    for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
+    if(projectType.equalsIgnoreCase("residential"))
     {
-      if(selectedProject.equals(this.getActiveModel().getAllProjectsList().get(i)))
+      ResidentialProject selectedProject = (ResidentialProject) mainTableView.getSelectionModel().getSelectedItem();
+      for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
       {
-        originalProjectIndex = i;
-        break;
+        if(this.getActiveModel().getAllProjectsList().get(i) instanceof ResidentialProject &&
+            selectedProject.equals(this.getActiveModel().getAllProjectsList().get(i)))
+        {
+          originalProjectIndex = i;
+          break;
+        }
       }
     }
+    else if(projectType.equalsIgnoreCase("commercial"))
+    {
+      CommercialProject selectedProject = (CommercialProject) mainTableView.getSelectionModel().getSelectedItem();
+      for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
+      {
+        if(this.getActiveModel().getAllProjectsList().get(i) instanceof CommercialProject &&
+            selectedProject.equals(this.getActiveModel().getAllProjectsList().get(i)))
+          {
+            originalProjectIndex = i;
+            break;
+          }
+      }
+    }
+    else if(projectType.equalsIgnoreCase("industrial"))
+    {
+      IndustrialProject selectedProject = (IndustrialProject) mainTableView.getSelectionModel().getSelectedItem();
+      for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
+      {
+        if(this.getActiveModel().getAllProjectsList().get(i) instanceof IndustrialProject &&
+            selectedProject.equals(this.getActiveModel().getAllProjectsList().get(i)))
+        {
+          originalProjectIndex = i;
+          break;
+        }
+      }
+    }
+    else if(projectType.equalsIgnoreCase("road"))
+    {
+      RoadProject selectedProject = (RoadProject) mainTableView.getSelectionModel().getSelectedItem();
+      for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
+      {
+        if(this.getActiveModel().getAllProjectsList().get(i) instanceof RoadProject &&
+            selectedProject.equals(this.getActiveModel().getAllProjectsList().get(i)))
+        {
+          originalProjectIndex = i;
+          break;
+        }
+      }
+    }
+
     if(originalProjectIndex == -1)
     {
       return false; //The project was not found in the system files.
     }
+    this.getActiveModel().setProjectIndexPosition(originalProjectIndex);
 
     //Set active project. Make sure we set COPIES, or else unintended changes might be saved directly to the real project before the user presses the save button!
     if(projectType.equalsIgnoreCase("residential"))

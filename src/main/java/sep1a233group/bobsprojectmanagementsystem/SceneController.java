@@ -888,6 +888,4 @@ public class SceneController
         break;
     }
   }
-
-
 }

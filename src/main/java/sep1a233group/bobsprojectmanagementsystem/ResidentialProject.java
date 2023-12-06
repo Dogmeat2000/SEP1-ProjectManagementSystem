@@ -150,28 +150,34 @@ public class ResidentialProject extends ConstructionProject implements Serializa
     ResidentialProject other = (ResidentialProject) project;
 
     //Compare local attributes for equality:
-    if (!(other.getBuildingSize() == this.getBuildingSize() && other.getProjectDuration() == this.getProjectDuration() && other.getNumberOfKitchens() == this.getNumberOfKitchens() && other.getIsRenovation() == (this.getIsRenovation())
-        && other.getNumberOfBathrooms() == this.getNumberOfBathrooms() && other.getNumberOfOtherRoomsWithPlumbing() == this.getNumberOfOtherRoomsWithPlumbing()))
+    if (!(other.getBuildingSize() == this.getBuildingSize() &&
+        other.getProjectDuration() == this.getProjectDuration() &&
+        other.getNumberOfKitchens() == this.getNumberOfKitchens() &&
+        other.getIsRenovation() == (this.getIsRenovation()) &&
+        other.getNumberOfBathrooms() == this.getNumberOfBathrooms() &&
+        other.getNumberOfOtherRoomsWithPlumbing() == this.getNumberOfOtherRoomsWithPlumbing()))
     {
-      System.out.println("1");
       return false;
     }
     //Compare Customer and Address info:
-    else if(!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress().equals(this.getProjectAddress())))
+    else if(!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) &&
+        other.getProjectAddress().equals(this.getProjectAddress())))
     {
-      System.out.println("2");
       return false;
     }
     //Compare Finances and Human resources info:
-    else if(!(other.getFinances().equals(this.getFinances()) && other.getHumanRessources().equals(this.getHumanRessources()) && other.isProjectConfidential() == this.isProjectConfidential() && other.isProjectFinished() == this.isProjectFinished()))
+    else if(!(other.getFinances().equals(this.getFinances()) &&
+        other.getHumanRessources().equals(this.getHumanRessources()) &&
+        other.isProjectConfidential() == this.isProjectConfidential() &&
+        other.isProjectFinished() == this.isProjectFinished()))
     {
-      System.out.println("3");
       return false;
     }
     //Compare remaining info
-    else if(!(other.getProjectInformation().equals(this.getProjectInformation()) && other.getProjectStartDate().equals(this.getProjectStartDate()) && other.getProjectEndDate().equals(this.getProjectEndDate())))
+    else if(!(other.getProjectInformation().equals(this.getProjectInformation()) &&
+        other.getProjectStartDate().equals(this.getProjectStartDate()) &&
+        other.getProjectEndDate().equals(this.getProjectEndDate())))
     {
-      System.out.println("4");
       return false;
     }
     else
