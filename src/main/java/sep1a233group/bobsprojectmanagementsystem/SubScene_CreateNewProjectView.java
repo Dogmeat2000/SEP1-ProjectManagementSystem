@@ -12,7 +12,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 /** This class controls the GUI related view and methods concerning the "create new project" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
