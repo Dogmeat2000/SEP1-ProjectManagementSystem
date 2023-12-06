@@ -77,7 +77,7 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     setSceneController(sceneController);
     this.setGUI_Console(this.GUI_Console);
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-    loadSystemSettings();
+    refresh();
 
     System.out.println("Project Settings view Scene is now active");
   }
@@ -93,7 +93,7 @@ public class Scene_SettingsView implements Scene_ControllerInterface
   }
 
 
-  /* Loading and displaying default values.
+  /** Loading and displaying default values.
     */
 
   public void loadSystemSettings()
@@ -119,7 +119,7 @@ public class Scene_SettingsView implements Scene_ControllerInterface
 
   }
 
-  /* Saving and updating system settings, for different type of construction projects.
+  /** Saving and updating system settings, for different type of construction projects.
    */
   public void saveSystemSettings()
   {
@@ -179,9 +179,6 @@ public class Scene_SettingsView implements Scene_ControllerInterface
    */
   public void openWindow(ActionEvent actionEvent) throws IOException
   {
-    //TODO: Implement a pop-up message warning the user to confirm (yes/no) if they really wish to proceed to this new view.
-    // However this warning should ONLY be shown when trying to navigate away from the "create project" or "edit project" views, to avoid the user accidentally loosing data.
-
     //Refresh GUI console latest message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
