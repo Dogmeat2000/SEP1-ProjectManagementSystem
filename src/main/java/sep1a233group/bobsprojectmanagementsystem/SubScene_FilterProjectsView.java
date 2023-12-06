@@ -17,13 +17,13 @@ import java.io.IOException;
  * Author: */
 public class SubScene_FilterProjectsView implements Scene_ControllerInterface
 {
-  @FXML CheckBox hideFinishedProjects;
-  @FXML CheckBox hideOngoingProjects;
   @FXML Button buttonSetFilers;
   @FXML CheckBox residentialProject;
   @FXML CheckBox commercialProject;
   @FXML CheckBox industrialProject;
   @FXML CheckBox roadBuildingProject;
+  @FXML CheckBox hideFinishedProjects;
+  @FXML CheckBox hideOngoingProjects;
   @FXML TextField ownerPhoneNumber;
   @FXML TextField budgetRangeMax;
   @FXML TextField durationMax;

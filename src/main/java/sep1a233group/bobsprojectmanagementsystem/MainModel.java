@@ -537,10 +537,23 @@ public class MainModel
       {
         projectListCopy.remove(getAllProjectsList().get(i));
       }
-      else if(getAllProjectsList().get(i).getProjectDuration() < minDuration || getAllProjectsList().get(i).getProjectDuration() > maxDuration)
+      /*else if(getAllProjectsList().get(i).getProjectDuration() < minDuration || getAllProjectsList().get(i).getProjectDuration() > maxDuration)
       {
         projectListCopy.remove(getAllProjectsList().get(i));
       }
+      else if(getAllProjectsList().get(i).getCustomer().getPhoneNumber() != Integer.parseInt(phoneNumber))
+      {
+        projectListCopy.remove(getAllProjectsList().get(i));
+      }
+      else if(getAllProjectsList().get(i).isProjectFinished() == hideFinishedProjects)
+      {
+        projectListCopy.remove(getAllProjectsList().get(i));
+      }
+      else if(!(getAllProjectsList().get(i).isProjectFinished()) == hideOngoingProjects)
+      {
+        projectListCopy.remove(getAllProjectsList().get(i));
+      }*/
+
       /*
       INSERT THE REMAINING FILTERS HERE
 
