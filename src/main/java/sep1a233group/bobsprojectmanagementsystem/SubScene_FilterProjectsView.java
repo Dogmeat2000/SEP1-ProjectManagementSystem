@@ -39,8 +39,7 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
   {
     setActiveModel(activeModel);
     setSceneController(sceneController);
-
-    System.out.println("Set project filters scene is now the active stage.");
+    refresh();
   }
 
   /** Returns a SceneController object containing a reference to this stages parent controller
@@ -76,7 +75,8 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
   {
     //This method should do nothing apart from the below internal debug note. Not refreshing this page will let the previously entered
     //filters remain in view. On session restart these will likewise be reset to nothing, as intended.
-    buttonSetFilers.setDisable(true);
+    loadFilterSettings();
+    enableSetFiltersButton();
     System.out.println("Set project filters scene is now the active stage.");
   }
 
@@ -141,12 +141,29 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     stage.close();
   }
 
+  public void loadFilterSettings()
+  {
+    Object[] filterSettings = this.getActiveModel().getFilterSettings();
+
+    this.budgetRangeMin.setText("" + (filterSettings[0]));
+    this.budgetRangeMax.setText("" + (filterSettings[1]));
+    this.durationMin.setText("" + (filterSettings[2]));
+    this.durationMax.setText("" + (filterSettings[3]));
+    this.ownerPhoneNumber.setText("" + filterSettings[4]);
+    this.hideFinishedProjects.setSelected((Boolean) filterSettings[5]);
+    this.hideOngoingProjects.setSelected((Boolean) filterSettings[6]);
+    this.residentialProject.setSelected((Boolean) filterSettings[7]);
+    this.commercialProject.setSelected((Boolean) filterSettings[8]);
+    this.industrialProject.setSelected((Boolean) filterSettings[9]);
+    this.roadBuildingProject.setSelected((Boolean) filterSettings[10]);
+  }
+
   public void setFiltersButton()
   {
-    double minBudget = 0;
-    double maxBudget = 0;
-    int minDuration = 0;
-    int maxDuration = 0;
+    String minBudget = this.budgetRangeMin.getText();
+    String maxBudget = this.budgetRangeMax.getText();
+    String minDuration = this.durationMin.getText();
+    String maxDuration = this.durationMax.getText();
     String ownerPhoneNumber = this.ownerPhoneNumber.getText();
     boolean hideFinished = hideFinishedProjects.isSelected();
     boolean hideOngoing = hideOngoingProjects.isSelected();
@@ -155,25 +172,27 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     boolean hideIndustrial = industrialProject.isSelected();
     boolean hideRoad = roadBuildingProject.isSelected();
 
-    if(!this.budgetRangeMin.getText().isBlank())
+    this.getActiveModel().setFilterSettings(minBudget, maxBudget, minDuration, maxDuration, ownerPhoneNumber, hideFinished, hideOngoing, hideResidential, hideCommercial, hideIndustrial, hideRoad);
+
+    if(this.budgetRangeMin.getText().isBlank())
     {
-      minBudget = Integer.parseInt(this.budgetRangeMin.getText());
+      minBudget = "" + Integer.MIN_VALUE;
     }
-    if(!this.budgetRangeMax.getText().isBlank())
+    if(this.budgetRangeMax.getText().isBlank())
     {
-      maxBudget = Integer.parseInt(this.budgetRangeMax.getText());
+      maxBudget = "" + Integer.MAX_VALUE;
     }
-    if(!this.durationMin.getText().isBlank())
+    if(this.durationMin.getText().isBlank())
     {
-      minDuration = Integer.parseInt(this.durationMin.getText());
+      minDuration = "" + Integer.MIN_VALUE;
     }
-    if(!this.durationMax.getText().isBlank())
+    if(this.durationMax.getText().isBlank())
     {
-      maxDuration = Integer.parseInt(this.durationMax.getText());
+      maxDuration = "" + Integer.MAX_VALUE;
     }
 
     //Applies the filters.
-    this.getActiveModel().setFilteredProjectsList(this.getActiveModel().filterProject(minBudget,maxBudget,minDuration,maxDuration, ownerPhoneNumber, hideFinished, hideOngoing, hideResidential, hideCommercial, hideIndustrial, hideRoad));
+    this.getActiveModel().setFilteredProjectsList(this.getActiveModel().filterProject(Integer.parseInt(minBudget),Integer.parseInt(maxBudget),Integer.parseInt(minDuration),Integer.parseInt(maxDuration), ownerPhoneNumber, hideFinished, hideOngoing, hideResidential, hideCommercial, hideIndustrial, hideRoad));
 
     Stage stage = (Stage) buttonSetFilers.getScene().getWindow();
     stage.close();

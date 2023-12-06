@@ -44,28 +44,12 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Button focusTraversable="false" layoutX="13.0" layoutY="10.0" mnemonicParsing="false" onAction="#openWindow" prefHeight="40.0" prefWidth="140.0" text="Projects">
+                              <Button defaultButton="true" focusTraversable="false" layoutX="13.0" layoutY="10.0" mnemonicParsing="false" onAction="#openWindow" prefHeight="40.0" prefWidth="140.0" text="Projects">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets bottom="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="36.0" layoutY="131.0" minHeight="30.0" mnemonicParsing="false" onAction="#openWindow" prefHeight="30.0" prefWidth="120.0" text="Filter results" textAlignment="CENTER">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="56.0" layoutY="177.0" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="New project" textAlignment="CENTER">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="20.0" />
+                                    <Insets bottom="2.5" top="5.0" />
                                  </VBox.margin>
                               </Button>
                               <Button focusTraversable="false" mnemonicParsing="false" onAction="#exportToWeb" prefHeight="40.0" prefWidth="140.0" text="Export HTML">
@@ -73,7 +57,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="2.5" />
                                  </VBox.margin>
                               </Button>
                               <Button focusTraversable="false" layoutX="24.0" layoutY="101.0" mnemonicParsing="false" onAction="#openWindow" prefHeight="40.0" prefWidth="140.0" text="Settings">

@@ -28,6 +28,8 @@ public class MainModel
   private String initializationErrorMessage; //Created so the sceneController on initialization can know if there were any errors while loading the system files.
   private int projectIndexPosition; //Holds a reference to the index of the original project, while in the process of modifying existing project copies (before the original is replaced upon user save).
 
+  private Object[] filterSettings; //Holds the active filtering settings used when displaying projects in a filtered manner.
+
   /** <p>Constructs the MainModel.
    * Also loads any available project details from system file.</p>
    * <p><b>Author:</b> K. Dashnaw</p>
@@ -251,6 +253,16 @@ public class MainModel
   public void setProjectIndexPosition(int projectIndexPosition)
   {
     this.projectIndexPosition = projectIndexPosition;
+  }
+
+  public Object[] getFilterSettings()
+  {
+    return filterSettings;
+  }
+
+  public void setFilterSettings(String minBudget,String maxBudget,String minDuration, String maxDuration, String ownerPhoneNumber, Boolean hideFinished, Boolean hideOngoing, Boolean hideResidential, Boolean hideCommercial, Boolean hideIndustrial, Boolean hideRoad)
+  {
+    this.filterSettings = new Object[] {minBudget, maxBudget, minDuration, maxDuration, ownerPhoneNumber, hideFinished, hideOngoing, hideResidential, hideCommercial, hideIndustrial, hideRoad};
   }
 
   /** <p>Adds a single construction project to the project management system.</p>
@@ -529,35 +541,17 @@ public class MainModel
       projectListCopy.add(getAllProjectsList().get(i).copy());
     }
 
-    //TODO: Missing final filtering steps.
     //SET THE ACTUAL FILTERS.
-    for (int i = 0; i < getAllProjectsList().size(); i++)
+    for (int i = 0; i < projectListCopy.size(); i++)
     {
-      if(getAllProjectsList().get(i).getFinances().getTotalBudget() < minBudget || getAllProjectsList().get(i).getFinances().getTotalBudget() > maxBudget)
+      if(projectListCopy.get(i).getFinances().getTotalBudget() < minBudget || projectListCopy.get(i).getFinances().getTotalBudget() > maxBudget)
       {
-        projectListCopy.remove(getAllProjectsList().get(i));
+        projectListCopy.remove(projectListCopy.get(i));
+        i--;
       }
-      /*else if(getAllProjectsList().get(i).getProjectDuration() < minDuration || getAllProjectsList().get(i).getProjectDuration() > maxDuration)
-      {
-        projectListCopy.remove(getAllProjectsList().get(i));
-      }
-      else if(getAllProjectsList().get(i).getCustomer().getPhoneNumber() != Integer.parseInt(phoneNumber))
-      {
-        projectListCopy.remove(getAllProjectsList().get(i));
-      }
-      else if(getAllProjectsList().get(i).isProjectFinished() == hideFinishedProjects)
-      {
-        projectListCopy.remove(getAllProjectsList().get(i));
-      }
-      else if(!(getAllProjectsList().get(i).isProjectFinished()) == hideOngoingProjects)
-      {
-        projectListCopy.remove(getAllProjectsList().get(i));
-      }*/
 
-      /*
-      INSERT THE REMAINING FILTERS HERE
 
-      */
+
     }
 
     return projectListCopy;

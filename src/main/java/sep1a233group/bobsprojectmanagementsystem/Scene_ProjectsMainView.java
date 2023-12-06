@@ -95,6 +95,8 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     setGUI_Console(this.GUI_Console);
     GUI_Console.setText(this.getSceneController().getGUI_ConsoleMessage());
     getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    //Set the default view filter settings:
+    this.getActiveModel().setFilterSettings("", "", "", "", "", false, false, false, false, false, false);
     refresh();
   }
 
