@@ -9,8 +9,8 @@ public class Company implements Serializable
 
   public Company(String name, Address companyAddress)
   {
-    this.name = name;
-    this.companyAddress = companyAddress;
+    setName(name);
+    setCompanyAddress(companyAddress);
   }
   public String getName()
   {

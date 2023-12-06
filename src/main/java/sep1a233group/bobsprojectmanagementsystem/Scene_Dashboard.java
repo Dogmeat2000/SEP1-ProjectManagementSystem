@@ -596,10 +596,6 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       }
 
 
-      //Get the x/y position of the active window:
-      double x = this.getSceneController().getActiveStage().getX();
-      double y = this.getSceneController().getActiveStage().getY();
-
       //Create the update window:
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Projects_QuickUpdateProjectView.fxml"));
       try
@@ -617,10 +613,6 @@ public class Scene_Dashboard implements Scene_ControllerInterface
         newStage.setResizable(false);
         newStage.setTitle("Update project");
 
-        //Set the x/y position of the window to be close to the calling button. This avoids the confirmation popping up on another screen, if more than 1 screen is connected.
-        newStage.setX(x / 2 - 700);
-        newStage.setY(y / 2 + 350);
-
         // show the dialog
         newStage.showAndWait();
         refresh();
@@ -633,6 +625,126 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     catch(NullPointerException error)
     {
       this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! " + error);
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+  }
+
+  public void viewProjectDetails(int reportNumber, ActionEvent actionEvent)
+  {
+    //Find index position of the selected progress report:
+    for (int i = 0; i < this.getActiveModel().getAllProjectsList().size(); i++)
+    {
+      if(reportNumber == 1 && this.getProject1().equals(this.getActiveModel().getAllProjectsList().get(i)))
+      {
+        this.getActiveModel().setProjectIndexPosition(i);
+      }
+      else if(reportNumber == 2 && this.getProject2().equals(this.getActiveModel().getAllProjectsList().get(i)))
+      {
+        this.getActiveModel().setProjectIndexPosition(i);
+      }
+      else if(reportNumber == 3 && this.getProject3().equals(this.getActiveModel().getAllProjectsList().get(i)))
+      {
+        this.getActiveModel().setProjectIndexPosition(i);
+      }
+      else if(reportNumber == 4 && this.getProject4().equals(this.getActiveModel().getAllProjectsList().get(i)))
+      {
+        this.getActiveModel().setProjectIndexPosition(i);
+      }
+    }
+
+    String projectType = this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).getProjectType();
+
+    //Set active project. Make sure we set COPIES, or else unintended changes might be saved directly to the real project before the user presses the save button!
+    if(projectType.equalsIgnoreCase("residential"))
+    {
+      this.getActiveModel().setSelectedProject((ResidentialProject) this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).copy());
+    }
+    else if(projectType.equalsIgnoreCase("commercial"))
+    {
+      this.getActiveModel().setSelectedProject((CommercialProject) this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).copy());
+    }
+    else if(projectType.equalsIgnoreCase("industrial"))
+    {
+      this.getActiveModel().setSelectedProject((IndustrialProject) this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).copy());
+    }
+    else if(projectType.equalsIgnoreCase("road"))
+    {
+      this.getActiveModel().setSelectedProject((RoadProject) this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()).copy());
+    }
+    //Selected project has been marked as the active project. Re-direct the user to the "project details" window.!
+
+    try
+    {
+      this.openWindow(actionEvent);
+    }
+    catch (IOException error)
+    {
+      this.getSceneController().setGUI_ConsoleMessage("ERROR: Unable to edit selected project. Reason unknown.");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+  }
+
+  /**
+   * This method re-directs the user to the 1st project's details.
+   * */
+  public void viewProject1(ActionEvent actionEvent)
+  {
+    if(this.getProject1() != null)
+    {
+      this.viewProjectDetails(1, actionEvent);
+    }
+    else
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! ");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+  }
+
+  /**
+   * This method re-directs the user to the 2nd project's details.
+   * */
+  public void viewProject2(ActionEvent actionEvent)
+  {
+
+    if(this.getProject2() != null)
+    {
+      this.viewProjectDetails(2, actionEvent);
+    }
+    else
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! ");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+  }
+
+  /**
+   * This method re-directs the user to the 3rd project's details.
+   * */
+  public void viewProject3(ActionEvent actionEvent)
+  {
+    if(this.getProject3() != null)
+    {
+      this.viewProjectDetails(3, actionEvent);
+    }
+    else
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! ");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+  }
+
+  /**
+   * This method re-directs the user to the 4th project's details.
+   * */
+  public void viewProject4(ActionEvent actionEvent)
+  {
+    if(this.getProject4() != null)
+    {
+      this.viewProjectDetails(4, actionEvent);
+    }
+    else
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Button does nothing! No project assigned to this dashboard position! ");
       this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
     }
   }

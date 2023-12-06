@@ -76,6 +76,8 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   @FXML TextArea taManagersComments;
   @FXML DatePicker date_EndDateField;
   @FXML CheckBox checkBox_AddToDashBoard;
+  @FXML Label labelLastProjectSave;
+  @FXML Label labelHTMLExportDate;
 
   //Other field Attributes:
   private MainModel activeModel;
@@ -97,15 +99,13 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
 
     //Ensure the elements shown are in the proper format for a clean view load:
-    setProjectTypeSelected(false);
-    hideGridElementNode(gridProjectDataContainer, true);
-    hideLabelElementNode(labelProjectDataPrompt, true);
-    hideAllUniqueProjectDataFields(true);
-    hideButtonElementNode(buttonCreateProject, true);
-    hideButtonElementNode(buttonCancel, true);
-
-    System.out.println("current capacity: " + this.getActiveModel().getDashboardProgressReports().getCurrentCapacity());
-    System.out.println("maximum capacity: " + this.activeModel.getDashboardProgressReports().getMaxCapacity());
+    refresh();
+    /*setProjectTypeSelected(false);
+    this.getSceneController().hideGridElementNode(gridProjectDataContainer, true);
+    this.getSceneController().hideLabelElementNode(labelProjectDataPrompt, true);
+    this.getSceneController().hideAllUniqueProjectDataFields(true, gridResidentialUniqueData, gridCommercialUniqueData, gridIndustrialUniqueData, gridRoadUniqueData);
+    this.getSceneController().hideButtonElementNode(buttonCreateProject, true);
+    this.getSceneController().hideButtonElementNode(buttonCancel, true);*/
 
     //Set the load counter used to check if user has previously performed critical methods or not.
     loadCounter = 0;
@@ -121,11 +121,13 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     //Refresh the page, as it is shown on a clean load:
     setProjectTypeSelected(false);
     labelProjectTypePrompt.setVisible(true);
-    hideGridElementNode(gridProjectDataContainer, true);
-    hideLabelElementNode(labelProjectDataPrompt, true);
-    hideAllUniqueProjectDataFields(true);
-    hideButtonElementNode(buttonCreateProject, true);
-    hideButtonElementNode(buttonCancel, true);
+    labelLastProjectSave.setText("Project file version: " + this.getActiveModel().getFileManager().getLastDataSaveTime());
+    labelHTMLExportDate.setText("Last HTML export : " + this.getActiveModel().getFileManager().getLastWebExportTime());
+    this.getSceneController().hideGridElementNode(gridProjectDataContainer, true);
+    this.getSceneController().hideLabelElementNode(labelProjectDataPrompt, true);
+    this.getSceneController().hideAllUniqueProjectDataFields(true, gridResidentialUniqueData, gridCommercialUniqueData, gridIndustrialUniqueData, gridRoadUniqueData);
+    this.getSceneController().hideButtonElementNode(buttonCreateProject, true);
+    this.getSceneController().hideButtonElementNode(buttonCancel, true);
 
     //Reset all windows and fields to initial width/height:
     resizeAllElementHeight(185);
@@ -154,7 +156,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
       else if(node instanceof CheckBox)
       {
         ((CheckBox) node).setSelected(false);
-        ((CheckBox) node).setDisable(false);
+        node.setDisable(false);
       }
     }
     taProjectDescription.setText("");
@@ -165,8 +167,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     loadCounter = 0;
 
     //Refresh GUI console latest message:
-    this.getGUI_Console()
-        .setText(this.getSceneController().getGUI_ConsoleMessage());
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
   /** Returns a reference to the GUI_Console on this page.
@@ -319,45 +320,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     setProjectTypeSelected(true);
     setProjectTypeSelectedString(buttonText);
 
-    //If we already loaded the page, but the user is simply changing project types in view, we display a confirmation window warning about data loss.
-    if (loadCounter > 0)
-    {
-      if (createPromptWindowNoRefresh())
-      {
-        loadPageFields();
-      }
-    }
-    else
-    {
-      loadPageFields();
-    }
-    loadCounter++;
-  }
-
-  /** Loads the data fields on this page, ensuring these are initialized in a reset manner, as well as initializing
-   * a new temporary project of the selected project type for use in regards to input validation while user inputs information
-   * Author: K. Dashnaw
-   * */
-  public void loadPageFields()
-  {
-    //Display the common project data fields:
-    hideGridElementNode(gridProjectDataContainer, false);
-    hideLabelElementNode(labelProjectDataPrompt, false);
-
-    //Display the unique data fields relating to the selected project type:
-    showUniqueProjectDataFields();
-
-    //Display the buttons the user may interact with:
-    hideButtonElementNode(buttonCreateProject, false);
-    hideButtonElementNode(buttonCancel, false);
-
-    //Hide the "Select Project Type" prompt and resize the project type pictures for more space on screen:
-    labelProjectTypePrompt.setVisible(false);
-    resizeAllElementHeight(80);
-    resizeProjectButtonWidth(106);
-    setNonSelectedProjectTypesTransparent();
-
-    //Initialize a new default project of this type.
+    //Initialize a new default project of the selected type.
     this.getActiveModel().newActiveProject(this.getProjectTypeSelectedString());
     switch (this.getProjectTypeSelectedString())
     {
@@ -374,6 +337,44 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         this.getActiveModel().initializeCreateProjectGUI(tRDLength, tRDWidth, tRDDuration, taRDBridgeTunnelInfo, taRDEnvironmentInfo);
         break;
     }
+
+    //If we already loaded the page, but the user is simply changing project types in view, we display a confirmation window warning about data loss.
+    if (loadCounter > 0)
+    {
+      if (createPromptWindowNoRefresh())
+      {
+        loadPageFields();
+      }
+    }
+    else
+    {
+      loadPageFields();
+    }
+    loadCounter++;
+  }
+
+  /** Loads the data fields on this page, ensuring these are initialized in a reset manner, as well as initializing
+   * a new temporary project of the selected project type for use in regard to input validation while user inputs information
+   * Author: K. Dashnaw
+   * */
+  public void loadPageFields()
+  {
+    //Display the common project data fields:
+    this.getSceneController().hideGridElementNode(gridProjectDataContainer, false);
+    this.getSceneController().hideLabelElementNode(labelProjectDataPrompt, false);
+
+    //Display the unique data fields relating to the selected project type:
+    this.getSceneController().showUniqueProjectDataFields(gridResidentialUniqueData, gridCommercialUniqueData, gridIndustrialUniqueData, gridRoadUniqueData);
+
+    //Display the buttons the user may interact with:
+    this.getSceneController().hideButtonElementNode(buttonCreateProject, false);
+    this.getSceneController().hideButtonElementNode(buttonCancel, false);
+
+    //Hide the "Select Project Type" prompt and resize the project type pictures for more space on screen:
+    labelProjectTypePrompt.setVisible(false);
+    resizeAllElementHeight(80);
+    resizeProjectButtonWidth(106);
+    setNonSelectedProjectTypesTransparent();
   }
 
   /** Resizes all the elements relating to the initial project selection.
@@ -482,7 +483,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   }
 
   /** Method used to reset all project label sizes to their initial values.
-   * Is used upon stage refresh/reset..
+   * Is used upon stage refresh/reset.
    * Author: K. Dashnaw
    */
   private void resetLabelTextSizes()
@@ -539,78 +540,6 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
     imgCommercialProjectType.setOpacity(1);
     imgIndustrialProjectType.setOpacity(1);
     imgRoadProjectType.setOpacity(1);
-  }
-
-  /** Method used to hide all unique project data fields.
-   * It is used in conjunction with a show method for the specific data fields, so that only relevant data fields are displayed.
-   * Author: K. Dashnaw
-   */
-  private void hideAllUniqueProjectDataFields(boolean bool)
-  {
-    hideGridElementNode(gridResidentialUniqueData, bool);
-    hideGridElementNode(gridCommercialUniqueData, bool);
-    hideGridElementNode(gridIndustrialUniqueData, bool);
-    hideGridElementNode(gridRoadUniqueData, bool);
-  }
-
-  /** Method used to hide a GridPane element.
-   * Parameters are:
-   * "GridPane gridID": A reference to the GridPane element to hide.
-   * "boolean bool": if true, hide the element - if false, show it.
-   * Author: K. Dashnaw
-   */
-  public void hideGridElementNode(GridPane gridID, boolean bool)
-  {
-    gridID.setVisible(!bool);
-    gridID.managedProperty().bind(gridID.visibleProperty());
-  }
-
-  /** Method used to hide a Button element.
-   * Parameters are:
-   * "Button buttonID": A reference to the Button element to hide.
-   * "boolean bool": if true, hide the element - if false, show it.
-   * Author: K. Dashnaw
-   */
-  public void hideButtonElementNode(Button buttonID, boolean bool)
-  {
-    buttonID.setVisible(!bool);
-    buttonID.managedProperty().bind(buttonID.visibleProperty());
-  }
-
-  /** Method used to hide a Label element.
-   * Parameters are:
-   * "Label labelID": A reference to the Label element to hide.
-   * "boolean bool": if true, hide the element - if false, show it.
-   * Author: K. Dashnaw
-   */
-  public void hideLabelElementNode(Label labelID, boolean bool)
-  {
-    labelID.setVisible(!bool);
-    labelID.managedProperty().bind(labelID.visibleProperty());
-  }
-
-  /** Method used to display the unique data fields specific to the selected project type!
-   * Author: K. Dashnaw
-   */
-  private void showUniqueProjectDataFields()
-  {
-    hideAllUniqueProjectDataFields(true);
-
-    switch (this.getProjectTypeSelectedString())
-    {
-      case "ResidentialProjectType":
-        hideGridElementNode(gridResidentialUniqueData, false);
-        break;
-      case "CommercialProjectType":
-        hideGridElementNode(gridCommercialUniqueData, false);
-        break;
-      case "IndustrialProjectType":
-        hideGridElementNode(gridIndustrialUniqueData, false);
-        break;
-      case "RoadProjectType":
-        hideGridElementNode(gridRoadUniqueData, false);
-        break;
-    }
   }
 
   /** Method used to create a confirmation prompt window, in order to prompt the user before navigating away from the creation view,
@@ -1115,33 +1044,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   {
     if (!(addCommonProjectData(project, text)))
     {
-      switch (text.getPromptText())
-      {
-        case "Number of Bathrooms":
-          project.setNumberOfBathrooms(Integer.parseInt(text.getText().trim()));
-          break;
-        case "Number of Kitchens":
-          project.setNumberOfKitchens(Integer.parseInt(text.getText().trim()));
-          break;
-        case "Other plumbing?":
-          project.setNumberOfOtherRoomsWithPlumbing(Integer.parseInt(text.getText().trim()));
-          break;
-        case "Duration in months":
-          //TODO: Implement check with standard margin ranges to see if budget is within.
-          project.setProjectDuration(Integer.parseInt(text.getText().trim()));
-          break;
-        case "in m^2":
-          project.setBuildingSize(Double.parseDouble(text.getText().trim()));
-          break;
-        case "Is project a renovation?_True":
-          project.setIsRenovation(true);
-          break;
-        case "Is project a renovation?_False":
-          project.setIsRenovation(false);
-          break;
-        default:
-          break;
-      }
+      this.getSceneController().setTemporaryResidentialData(project, text);
       activateCreateButton();
     }
   }
@@ -1157,24 +1060,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   {
     if (!(addCommonProjectData(project, text)))
     {
-      switch (text.getPromptText())
-      {
-        case "Number of floors":
-          project.setNumberOfFloors(Integer.parseInt(text.getText().trim()));
-          break;
-        case "Describe the intended use of the building":
-          project.setIntendedBuildingUse(text.getText());
-          break;
-        case "Duration in months":
-          //TODO: Implement check with standard margin ranges to see if budget is within.
-          project.setProjectDuration(Integer.parseInt(text.getText().trim()));
-          break;
-        case "in m^2":
-          project.setBuildingSize(Double.parseDouble(text.getText().trim()));
-          break;
-        default:
-          break;
-      }
+      this.getSceneController().setTemporaryCommercialData(project, text);
       activateCreateButton();
     }
   }
@@ -1190,21 +1076,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   {
     if (!(addCommonProjectData(project, text)))
     {
-      switch (text.getPromptText())
-      {
-        case "Describe the intended use of the facility":
-          project.setFacilityType(text.getText());
-          break;
-        case "Duration in months":
-          //TODO: Implement check with standard margin ranges to see if budget is within.
-          project.setProjectDuration(Integer.parseInt(text.getText().trim()));
-          break;
-        case "in m^2":
-          project.setFacilitySize(Double.parseDouble(text.getText().trim()));
-          break;
-        default:
-          break;
-      }
+      this.getSceneController().setTemporaryIndustrialData(project, text);
       activateCreateButton();
     }
   }
@@ -1220,27 +1092,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   {
     if (!(addCommonProjectData(project, text)))
     {
-      switch (text.getPromptText())
-      {
-        case "Type any relevant information about bridges or tunnels":
-          project.setBridgeOrTunnelDetails(text.getText());
-          break;
-        case "Type any relevant environmental or geographical information":
-          project.setEnvironmentalOrGeographicalChallenges(text.getText());
-          break;
-        case "Duration in months":
-          //TODO: Implement check with standard margin ranges to see if budget is within.
-          project.setProjectDuration(Integer.parseInt(text.getText().trim()));
-          break;
-        case "length in meters":
-          project.setRoadLength(Double.parseDouble(text.getText().trim()));
-          break;
-        case "width in meters":
-          project.setRoadWidth(Double.parseDouble(text.getText().trim()));
-          break;
-        default:
-          break;
-      }
+      this.getSceneController().setTemporaryRoadData(project, text);
       activateCreateButton();
     }
   }
@@ -1251,159 +1103,11 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
   public void activateCreateButton()
   {
     //First check if project has all necessary values for creation:
-    boolean dataIsMissing = false;
-    ConstructionProject activeProject = this.getActiveModel().getSelectedProject();
 
-    //Check Shared Data First:
-
-    //Customer: Attributes checked are; first name, last name, phone number and email.
-    if(activeProject.getCustomer().getFirstName().isBlank() || activeProject.getCustomer().getLastName().isBlank() || activeProject.getCustomer().getPhoneNumber() == 0 || activeProject.getCustomer().getEmail().isBlank())
-    {
-      dataIsMissing = true;
-    }
-
-    //Customer Address: Attributes checked are; Street name, Street number, City, Country and Postal Code
-    else if(activeProject.getCustomer().getCustomerAddress().getStreet().isBlank() || activeProject.getCustomer().getCustomerAddress().getStreetNumber().isBlank() || activeProject.getCustomer().getCustomerAddress().getCity().isBlank() || activeProject.getCustomer().getCustomerAddress().getCountry().isBlank() || activeProject.getCustomer().getCustomerAddress().getPostalCode() == 0)
-    {
-      dataIsMissing = true;
-    }
-
-    //Customer company: IS NOT CHECKED! Residential projects might not have companies as customers.
-
-    //Project Address: Attributes checked are; Street name, Street number, City, Country and Postal Code
-    else if(activeProject.getProjectAddress().getStreet().isBlank() || activeProject.getProjectAddress().getStreetNumber().isBlank() || activeProject.getProjectAddress().getCity().isBlank() || activeProject.getProjectAddress().getCountry().isBlank() || activeProject.getProjectAddress().getPostalCode() == 0)
-    {
-      dataIsMissing = true;
-    }
-
-    //Promotional Information: Attributes checked are; Project Description & Project Name
-    //TODO: Implement the photo URL functionality.
-    else if(activeProject.getProjectInformation().getProjectName().isBlank() || activeProject.getProjectInformation().getProjectDescription().isBlank())
-    {
-      dataIsMissing = true;
-    }
-
-    //Human Resources: Attributes checked are; Estimated man-hours required.
-    else if(activeProject.getHumanRessources().getTotalManHoursNeeded() == 0)
-    {
-      dataIsMissing = true;
-    }
-
-    //Finances: Attributes checked are; Total budget.
-    else if(activeProject.getFinances().getTotalBudget() == 0)
-    {
-      dataIsMissing = true;
-    }
-
-    //Start and End Dates: If user did not select a start date we know the project is preloaded with todays date!
-    else if(activeProject.getProjectStartDate() == null || activeProject.getProjectEndDate() == null || date_EndDateField.getEditor().getText().isBlank())
-    {
-      dataIsMissing = true;
-    }
-    //Now check project specific data fields:
-    else if(activeProject instanceof ResidentialProject project)
-    {
-      //Perform some more input validation on the remaining values, since these might not have been evaluated if the user has set illegal default values in the settings view.
-      if(!(Integer.parseInt("" + project.getNumberOfBathrooms()) >= 0 && Integer.parseInt("" + project.getNumberOfBathrooms()) < Integer.MAX_VALUE))
-      {
-        //NumberOfBathrooms is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Number Of Bathrooms has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-      else if(!(Integer.parseInt("" + project.getNumberOfKitchens()) >= 0 && Integer.parseInt("" + project.getNumberOfKitchens()) < Integer.MAX_VALUE))
-      {
-        //NumberOfKitchens is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Number Of Bathrooms has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-      else if(!(Double.parseDouble("" + project.getBuildingSize()) > 0 && Double.parseDouble("" + project.getBuildingSize()) < Integer.MAX_VALUE))
-      {
-        //Building Size is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Building size has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-      else if(!(Integer.parseInt("" + project.getNumberOfOtherRoomsWithPlumbing()) >= 0 && Integer.parseInt("" + project.getNumberOfOtherRoomsWithPlumbing()) < Integer.MAX_VALUE))
-      {
-        //Other rooms with plumbing number is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Number of other rooms with plumbing size has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-    }
-    else if(activeProject instanceof CommercialProject project)
-    {
-      //Perform some more input validation on the remaining values, since these might not have been evaluated if the user has set illegal default values in the settings view.
-      if(!(Integer.parseInt("" + project.getNumberOfFloors()) >= 0 && Integer.parseInt("" + project.getNumberOfFloors()) < Integer.MAX_VALUE))
-      {
-        //NumberOfFloors is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Number Of Floors has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-      else if(!(Double.parseDouble("" + project.getBuildingSize()) > 0 && Double.parseDouble("" + project.getBuildingSize()) < Double.MAX_VALUE))
-      {
-        //Building Size is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Building size has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-    }
-    else if(activeProject instanceof IndustrialProject project)
-    {
-      //Check Industrial fields with no default values defined. These being; Facility size
-      if(!(Double.parseDouble("" + project.getFacilitySize()) > 0 && Double.parseDouble("" + project.getFacilitySize()) < Integer.MAX_VALUE))
-      {
-        //Building Size is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Facility size has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-    }
-    else if(activeProject instanceof RoadProject project)
-    {
-      //Perform some more input validation on the remaining values, since these might not have been evaluated if the user has set illegal default values in the settings view.
-      if(!(Double.parseDouble("" + project.getRoadLength()) >= 0 && Double.parseDouble("" + project.getRoadLength()) < Integer.MAX_VALUE))
-      {
-        //Road length is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Road length has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-      else if(!(Double.parseDouble("" + project.getRoadWidth()) >= 0 && Double.parseDouble("" + project.getRoadWidth()) < Integer.MAX_VALUE))
-      {
-        //Road width is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Road width has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-      else if(project.getBridgeOrTunnelDetails().isBlank())
-      {
-        //Any bridges or tunnels is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Any bridges or tunnels has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-      else if(project.getEnvironmentalOrGeographicalChallenges().isBlank())
-      {
-        //Any environmental or geographical comments is not a legal value.
-        dataIsMissing = true;
-        this.getSceneController().setGUI_ConsoleMessage("Any environmental or geological field has an illegal value!");
-        this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
-      }
-    }
-
+    boolean dataIsMissing = this.getSceneController().validateActiveProject(date_EndDateField);
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
     //If all required fields are present. Activate the create button now.
-    if(!dataIsMissing)
-    {
-      buttonCreateProject.setDisable(false);
-    }
-    else
-    {
-      buttonCreateProject.setDisable(true);
-    }
+    buttonCreateProject.setDisable(dataIsMissing);
   }
 
   /** This method finalizes the project creation by calling relevant methods from the MainModel. It also asks the user to confirm their creation before finalizing.

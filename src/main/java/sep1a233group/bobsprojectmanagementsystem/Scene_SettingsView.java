@@ -4,8 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
 
@@ -29,7 +27,6 @@ public class Scene_SettingsView implements Scene_ControllerInterface
   @FXML private TextField timeLineRCP;
   @FXML private TextField bridgesOrTunnelsRCP;
   @FXML private TextField enviromentalOrGeographicalRCP;
-  @FXML private Button saveChangesButton; // not used!
 
   /**
    * Returns a reference to the GUI_Console on this page.
@@ -114,8 +111,8 @@ public class Scene_SettingsView implements Scene_ControllerInterface
 
     //Settings for Road construction Projects
     timeLineRCP.setText("" + this.getActiveModel().getDefaultRoadSettings().getProjectDuration());
-    bridgesOrTunnelsRCP.setText("" + this.getActiveModel().getDefaultRoadSettings().getBridgesOrTunnelDetails());
-    enviromentalOrGeographicalRCP.setText("" + this.getActiveModel().getDefaultRoadSettings().getEnviromentalOrGeographicalChallenges());
+    bridgesOrTunnelsRCP.setText(this.getActiveModel().getDefaultRoadSettings().getBridgesOrTunnelDetails());
+    enviromentalOrGeographicalRCP.setText(this.getActiveModel().getDefaultRoadSettings().getEnviromentalOrGeographicalChallenges());
 
   }
 

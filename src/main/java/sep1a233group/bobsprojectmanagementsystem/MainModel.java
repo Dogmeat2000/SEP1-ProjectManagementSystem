@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /** <p>This is the main controller for the project management system. This controls most of the coding logic and method functionality that is called from the GUI<br><br></p>
  * <p><b>Author:</b> Combined effort from all team members.</p>
@@ -406,14 +405,7 @@ public class MainModel
    */
   public boolean editProject(ConstructionProject project)
   {
-    if(this.addProject(project))
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return this.addProject(project);
   }
 
   /** <p>This method is used to refresh the contents of the Dashboard project object,
@@ -451,7 +443,6 @@ public class MainModel
     {
       //The updated list gets saved.
       save();
-      System.out.println("Project have been removed: " + project.getProjectInformation().getProjectName());
       setInitializationErrorMessage("");
       return true;
     }
@@ -466,7 +457,6 @@ public class MainModel
 
   /** Sets the current filtering options that are applied when projects are displayed in the GUI.
    * I.e.: For instance a filtering option could be to only show projects with a budget between 100,000 and 500,000.
-   * Returns true if operation was successful.
    * Author:
    */
   public ArrayList<ConstructionProject> filterProject(/*double minBudget, double maxBudget, int minDuration, int maxDuration*/)
@@ -495,16 +485,6 @@ public class MainModel
     return projectListCopy;
   }
 
-  /** Sets the current default project settings that are applied when new projects are created.
-   * Returns true if operation was successful.
-   * Author: Zakaria - Method not needed!
-   * */
-
-  public boolean editDefaultProjectSettings()
-  {
-    return true;
-  }
-
   /** <p>Enables data persistence across sessions by saving relevant system information to a file.
    *  Note: Validation of data integrity should be conducted prior to calling this save method,
    *  ideally as early as while adding data to the model field attributes.</p>
@@ -513,7 +493,7 @@ public class MainModel
    * */
   public boolean save ()
   {
-    Object[] objectList = new Object[7]; //Pack all the different system Object into a single Object array before saving.
+    Object[] objectList = new Object[8]; //Pack all the different system Object into a single Object array before saving.
 
     objectList[0] = this.getAllProjectsList();
     objectList[1] = this.getDashboardProgressReports();
@@ -522,6 +502,7 @@ public class MainModel
     objectList[4] = this.getDefaultIndustrialSettings();
     objectList[5] = this.getDefaultRoadSettings();
     objectList[6] = this.getFileManager().getLastDataSaveTime();
+    objectList[7] = this.getFileManager().getLastWebExportTime();
 
     if (this.getFileManager().writeToBinary(objectList))
     {
@@ -657,9 +638,19 @@ public class MainModel
       catch(Throwable error)
       {
         //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
-        System.out.println("Unable to validate last save date. Initializing new files instead!");
-        //Data in this class must be corrupted. Re-initialize a clean class!
-        getFileManager().setLastDataSaveTime(MyDate.now());
+        System.out.println("Unable to validate last save date.");
+        //Data in this class must be corrupted.
+        returnValue = false;
+      }
+      try
+      {
+        getFileManager().setLastWebExportTime((MyDate) objectList[7]);
+      }
+      catch(Throwable error)
+      {
+        //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
+        System.out.println("Unable to validate last HTML export date.");
+        //Data in this class must be corrupted.
         returnValue = false;
       }
     }
@@ -754,18 +745,18 @@ public class MainModel
     String stringWrapperStart = "{" + asciiQuote + "ongoingProjectArray" + asciiQuote + ":[";
     String stringWrapperEnd = "]}";
     String finalOngoingStr = "";
-    for (int i = 0; i < ongoingStringList.size(); i++)
+    for (String s : ongoingStringList)
     {
-      finalOngoingStr += ongoingStringList.get(i);
+      finalOngoingStr += s;
     }
     finalOngoingStr = stringWrapperStart + finalOngoingStr + stringWrapperEnd;
 
     stringWrapperStart = "{" + asciiQuote + "finishedProjectArray" + asciiQuote + ":[";
     stringWrapperEnd = "]}";
     String finalFinishedStr = "";
-    for (int i = 0; i < finishedStringList.size(); i++)
+    for (String s : finishedStringList)
     {
-      finalFinishedStr += finishedStringList.get(i);
+      finalFinishedStr += s;
     }
     finalFinishedStr = stringWrapperStart + finalFinishedStr + stringWrapperEnd;
 

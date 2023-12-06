@@ -127,16 +127,14 @@ public class RoadProject extends ConstructionProject implements Serializable
     RoadProject other = (RoadProject) project;
 
     //Compare local attributes for equality:
-    if (!(other.getRoadWidth() == this.getRoadLength() && other.getProjectDuration() == this.getProjectDuration()
-        && other.getRoadLength() == this.getRoadLength() && other.getEnvironmentalOrGeographicalChallenges()
-        .equals(this.getEnvironmentalOrGeographicalChallenges()) && other.getBridgeOrTunnelDetails()
-        .equals(this.getBridgeOrTunnelDetails())))
+    if (!(other.getRoadWidth() == this.getRoadWidth() && other.getProjectDuration() == this.getProjectDuration() &&
+        other.getRoadLength() == this.getRoadLength() && other.getEnvironmentalOrGeographicalChallenges().equals(this.getEnvironmentalOrGeographicalChallenges()) &&
+        other.getBridgeOrTunnelDetails().equals(this.getBridgeOrTunnelDetails())))
     {
       return false;
     }
     //Compare Customer and Address info:
-    else if (!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress()
-        .equals(this.getProjectAddress())))
+    else if (!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress().equals(this.getProjectAddress())))
     {
       return false;
     }
@@ -146,8 +144,7 @@ public class RoadProject extends ConstructionProject implements Serializable
       return false;
     }
     //Compare remaining info
-    else if (!(other.getProjectInformation().equals(this.getProjectInformation()) && other.getProjectStartDate()
-        .equals(this.getProjectStartDate()) && other.getProjectEndDate().equals(this.getProjectEndDate())))
+    else if (!(other.getProjectInformation().equals(this.getProjectInformation()) && other.getProjectStartDate().equals(this.getProjectStartDate()) && other.getProjectEndDate().equals(this.getProjectEndDate())))
     {
       return false;
     }
@@ -186,7 +183,7 @@ public class RoadProject extends ConstructionProject implements Serializable
     copyProject.getCustomer().setPhoneNumberPrefix(this.getCustomer().getPhoneNumberPrefix());
     copyProject.getCustomer().getCustomerAddress().setApartment(this.getCustomer().getCustomerAddress().getApartment());
     copyProject.getCustomer().getCustomerCompany().setName(this.getCustomer().getCustomerCompany().getName());
-    copyProject.getCustomer().getCustomerCompany().setCompanyAddress(new Address(this.getCustomer().getCustomerAddress().getStreet(),this.getCustomer().getCustomerAddress().getCity(), this.getCustomer().getCustomerAddress().getCountry(), this.getCustomer().getCustomerAddress().getPostalCode()));
+    copyProject.getCustomer().getCustomerCompany().setCompanyAddress(new Address(this.getCustomer().getCustomerCompany().getCompanyAddress().getStreet(),this.getCustomer().getCustomerCompany().getCompanyAddress().getCity(), this.getCustomer().getCustomerCompany().getCompanyAddress().getCountry(), this.getCustomer().getCustomerCompany().getCompanyAddress().getPostalCode()));
     copyProject.getCustomer().getCustomerCompany().getCompanyAddress().setStreetNumber(this.getCustomer().getCustomerCompany().getCompanyAddress().getStreetNumber());
     copyProject.getCustomer().getCustomerCompany().getCompanyAddress().setApartment(this.getCustomer().getCustomerCompany().getCompanyAddress().getApartment());
 
