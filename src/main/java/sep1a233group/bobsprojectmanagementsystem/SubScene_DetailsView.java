@@ -248,9 +248,9 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
    * Check SceneController.exportToWeb() for a more detailed description.</p>
    * <p><b>Author:</b> K. Dashnaw</p>
    */
-  public void exportToWeb()
+  public void exportToWeb(ActionEvent actionEvent)
   {
-    this.getSceneController().exportToWeb();
+    this.getSceneController().exportToWeb(actionEvent);
 
     //Update GUI Console message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());

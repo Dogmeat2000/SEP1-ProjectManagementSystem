@@ -6,9 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -164,15 +166,28 @@ public class SceneController
    * progress reports on all non-confidential projects to a webpage compatible file that can be readily loaded
    * on the company's webpage.
    */
-  public void exportToWeb()
+  public void exportToWeb(ActionEvent actionEvent)
   {
     System.out.println("User pressed the 'Export' button. System will now save all data to binary file, and then export this data to a webpage compatible file!");
     String promptMessage = "All ongoing and finished projects will be exported as .json files."
         + "\nPlease refer to the 'Project Data Files' folder once export has been successful to move them into your webpage directory."
         + "\n\nPlease confirm that you wish to proceed!";
 
-    if(createPromptWindow(promptMessage).equals("confirmationPressed"))
+    //Create a pop-up window with a directory chooser:
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setInitialDirectory(new File("Project Data Files"));
+
+    if(this.getActiveModel().getFileManager().getWebpageFile() != null)
     {
+      directoryChooser.setInitialDirectory(this.getActiveModel().getFileManager().getWebpageFile());
+    }
+
+    File fileDirectory = directoryChooser.showDialog(this.getActiveStage());
+
+    if(fileDirectory != null)
+    {
+      this.getActiveModel().getFileManager().setWebpageFile(fileDirectory);
+
       //Execute the export method.
       this.getActiveModel().exportAsJson();
 
@@ -182,8 +197,8 @@ public class SceneController
     }
     else
     {
-      setGUI_ConsoleMessage("User aborted export sequence. Nothing was exported.");
-      System.out.println("User aborted export sequence. Nothing was exported.");
+      setGUI_ConsoleMessage("Export HTML aborted by user. Nothing was exported.");
+      System.out.println("Export HTML aborted by user. Nothing was exported.");
     }
   }
 
@@ -229,8 +244,7 @@ public class SceneController
     }
     catch (Exception error)
     {
-      GUI_Console.setText(
-          "Unexpected error occurred while attempting to load stage. Code: " + error);
+      GUI_Console.setText("Unexpected error occurred while attempting to load stage. Code: " + error);
       System.out.println("Unexpected error occurred while attempting to load stage. Code: " + error);
     }
   }

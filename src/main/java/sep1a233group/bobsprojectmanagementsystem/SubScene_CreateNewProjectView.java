@@ -290,9 +290,9 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
    * Check SceneController.exportToWeb() for a more detailed description.
    * Author: K. Dashnaw
    */
-  public void exportToWeb()
+  public void exportToWeb(ActionEvent actionEvent)
   {
-    this.getSceneController().exportToWeb();
+    this.getSceneController().exportToWeb(actionEvent);
 
     //Update GUI Console message:
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());

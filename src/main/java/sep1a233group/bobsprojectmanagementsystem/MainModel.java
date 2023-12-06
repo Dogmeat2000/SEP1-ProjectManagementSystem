@@ -3,6 +3,7 @@ package sep1a233group.bobsprojectmanagementsystem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -554,7 +555,7 @@ public class MainModel
    * */
   public boolean save ()
   {
-    Object[] objectList = new Object[8]; //Pack all the different system Object into a single Object array before saving.
+    Object[] objectList = new Object[9]; //Pack all the different system Object into a single Object array before saving.
 
     objectList[0] = this.getAllProjectsList();
     objectList[1] = this.getDashboardProgressReports();
@@ -564,6 +565,7 @@ public class MainModel
     objectList[5] = this.getDefaultRoadSettings();
     objectList[6] = this.getFileManager().getLastDataSaveTime();
     objectList[7] = this.getFileManager().getLastWebExportTime();
+    objectList[8] = this.getFileManager().getLastWebExportTime();
 
     if (this.getFileManager().writeToBinary(objectList))
     {
@@ -700,8 +702,6 @@ public class MainModel
       {
         //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
         System.out.println("Unable to validate last save date.");
-        //Data in this class must be corrupted.
-        returnValue = false;
       }
       try
       {
@@ -711,8 +711,15 @@ public class MainModel
       {
         //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
         System.out.println("Unable to validate last HTML export date.");
-        //Data in this class must be corrupted.
-        returnValue = false;
+      }
+      try
+      {
+        getFileManager().setWebpageFile((File) objectList[8]);
+      }
+      catch(Throwable error)
+      {
+        //Since we are performing an unchecked cast above, I expect that some error might pop up. If so we catch it here.
+        System.out.println("Unable to find any prior export directory.");
       }
     }
   return returnValue;

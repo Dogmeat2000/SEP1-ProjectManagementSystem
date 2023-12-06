@@ -12,7 +12,7 @@ public class FileIO
 {
   private File systemSaveFile; //Reference to the system save file object.
 
-  private String webpageFilePath; //Reference to the exported webpage compatible file object.
+  private File webpageFile; //Reference to the exported webpage compatible file object.
   private String systemFileName; //The name used for the system save file.
   private MyDate lastDataSaveTime; //Contains a MyDate/Time representation of when the system data was last saved.
   private MyDate lastWebExportTime; //Contains a MyDate/Time representation of when the system data was last saved.
@@ -24,8 +24,6 @@ public class FileIO
   {
     setSystemFileName("mainProjectSaveFile.bin");
     setSystemSaveFile("Project Data Files/" + this.getSystemFileName());
-
-    setWebpageFilePath("Project Data Files/");
   }
 
   /** Returns the name of the system data file
@@ -63,17 +61,17 @@ public class FileIO
   /** Returns the name of the webpage Project Data file
    * Author: K. Dashnaw
    * */
-  public String getWebpageFilePath()
+  public File getWebpageFile()
   {
-    return webpageFilePath;
+    return webpageFile;
   }
 
   /** Sets/Initializes the name of the webpage Project Data file
    * Author: K. Dashnaw
    * */
-  public void setWebpageFilePath(String path)
+  public void setWebpageFile(File file)
   {
-    this.webpageFilePath = path;
+    this.webpageFile = file;
   }
 
   /** Returns a MyDate Object containing the last date and time the system files were saved
@@ -152,7 +150,9 @@ public class FileIO
    * */
   public void export(String exportData, String fileName, String fileType) throws FileNotFoundException
   {
-    File exportFile = new File(getWebpageFilePath() + fileName + fileType);
+    File exportFile = new File(getWebpageFile().getAbsolutePath() + "\\" + fileName + fileType);
+
+    System.out.println("Data exported to: " + getWebpageFile().getAbsolutePath() + "\\" + fileName + fileType);
 
     //Give the File to the PrintWriter. We use try with resources.
     try (PrintWriter out = new PrintWriter(exportFile))
