@@ -12,6 +12,8 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -169,9 +171,6 @@ public class SceneController
   public void exportToWeb()
   {
     System.out.println("User pressed the 'Export' button. System will now save all data to binary file, and then export this data to a webpage compatible file!");
-    String promptMessage = "All ongoing and finished projects will be exported as .json files."
-        + "\nPlease refer to the 'Project Data Files' folder once export has been successful to move them into your webpage directory."
-        + "\n\nPlease confirm that you wish to proceed!";
 
     //Create a pop-up window with a directory chooser:
     DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -406,6 +405,128 @@ public class SceneController
     }
   }
 
+  /** Checks if input is within standard margin ranges for this input type.
+   * If not, it displays a warning, for the user to confirm the value.
+   * The user can choose to ignore the warning. If there is no conflict it returns true.
+   * Author: K. Dashnaw
+   * */
+  public void validateIsWithinNormalMargins(TextField node)
+  {
+    String userText = node.getText();
+    String toolTipMessage = "";
+
+    //Check if field is empty:
+    if (userText.isBlank())
+    {
+      emptyTextFieldCode(node);
+    }
+    else
+    {
+      //Check if field is a String:
+      try
+      {
+        //If the below test succeeds, then this is a number.
+        double testValue = Double.parseDouble(userText);
+        DecimalFormat dFormat = new DecimalFormat("#.####");
+        dFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+        //Identify which textField that is calling this method:
+        if(node.getPromptText().equalsIgnoreCase("in $USD"))
+        {
+          //This is the budget TextField.
+          if (this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("residential") && (
+              testValue < StandardResidentialMarginRanges.getBudgetFloor()
+                  || testValue > StandardResidentialMarginRanges.getBudgetCeiling()))
+          {
+            //Budget it outside the normal range for this type of project. Throw an error.
+            toolTipMessage =
+                "Entered value is outside the standard margin range ($" + dFormat.format(StandardResidentialMarginRanges.getBudgetFloor()/1000) + "k - "
+                    + dFormat.format(StandardResidentialMarginRanges.getBudgetCeiling()/1000) + "k)\nDouble check your entry";
+            throw new NumberFormatException();
+          }
+          else if (this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("commercial") && (
+              testValue < StandardCommercialMarginRanges.getBudgetFloor() || testValue > StandardCommercialMarginRanges.getBudgetCeiling()))
+          {
+            //Budget it outside the normal range for this type of project. Throw an error.
+            toolTipMessage =
+                "Entered value is outside the standard margin range ($" + dFormat.format(StandardCommercialMarginRanges.getBudgetFloor()/1000) + "k - "
+                    + dFormat.format(StandardCommercialMarginRanges.getBudgetCeiling()/1000) + "k)\nDouble check your entry";
+            throw new NumberFormatException();
+          }
+          else if (this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("industrial") && (
+              testValue < StandardIndustrialMarginRanges.getBudgetFloor() || testValue > StandardIndustrialMarginRanges.getBudgetCeiling()))
+          {
+            toolTipMessage =
+                "Entered value is outside the standard margin range ($" + dFormat.format(StandardIndustrialMarginRanges.getBudgetFloor()/1000) + "k - "
+                    + dFormat.format(StandardIndustrialMarginRanges.getBudgetCeiling()/1000) + "k)\nDouble check your entry";
+            throw new NumberFormatException();
+          }
+          else if (this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("road") && (
+              testValue < StandardRoadMarginRanges.getBudgetFloor() || testValue > StandardRoadMarginRanges.getBudgetCeiling()))
+          {
+            toolTipMessage =
+                "Entered value is outside the standard margin range ($" + dFormat.format(StandardRoadMarginRanges.getBudgetFloor()/1000) + "k - "
+                    + dFormat.format(StandardRoadMarginRanges.getBudgetCeiling()/1000) + "k)\nDouble check your entry";
+            throw new NumberFormatException();
+          }
+        }
+        else if(node.getPromptText().equalsIgnoreCase("Duration in months"))
+        {
+          //This is the project duration TextField.
+          if (this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("residential") && (
+              this.getActiveModel().getSelectedProject().getProjectDuration() < StandardResidentialMarginRanges.getProjectDurationFloor()
+                  || this.getActiveModel().getSelectedProject().getProjectDuration() > StandardResidentialMarginRanges.getProjectDurationCeiling()))
+          {
+            //Budget it outside the normal range for this type of project. Throw an error.
+            toolTipMessage =
+                "Entered value is outside the standard margin range (" + StandardResidentialMarginRanges.getProjectDurationFloor() + " - "
+                    + StandardResidentialMarginRanges.getProjectDurationCeiling() + ")\nDouble check your entry";
+            throw new NumberFormatException();
+          }
+          else if (this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("commercial") && (
+              this.getActiveModel().getSelectedProject().getProjectDuration() < StandardCommercialMarginRanges.getProjectDurationFloor()
+                  || this.getActiveModel().getSelectedProject().getProjectDuration() > StandardCommercialMarginRanges.getProjectDurationCeiling()))
+          {
+            //Budget it outside the normal range for this type of project. Throw an error.
+            toolTipMessage =
+                "Entered value is outside the standard margin range (" + StandardCommercialMarginRanges.getProjectDurationFloor() + " - "
+                    + StandardCommercialMarginRanges.getProjectDurationCeiling() + ")\nDouble check your entry";
+            throw new NumberFormatException();
+          }
+          else if (this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("industrial") && (
+              this.getActiveModel().getSelectedProject().getProjectDuration() < StandardIndustrialMarginRanges.getProjectDurationFloor()
+                  || this.getActiveModel().getSelectedProject().getProjectDuration() > StandardIndustrialMarginRanges.getProjectDurationCeiling()))
+          {
+            toolTipMessage =
+                "Entered value is outside the standard margin range (" + StandardIndustrialMarginRanges.getProjectDurationFloor() + " - "
+                    + StandardIndustrialMarginRanges.getProjectDurationCeiling() + ")\nDouble check your entry";
+            throw new NumberFormatException();
+          }
+          else if (this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("road") && (
+              this.getActiveModel().getSelectedProject().getProjectDuration() < StandardRoadMarginRanges.getProjectDurationFloor()
+                  || this.getActiveModel().getSelectedProject().getProjectDuration() > StandardRoadMarginRanges.getProjectDurationCeiling()))
+          {
+            toolTipMessage =
+                "Entered value is outside the standard margin range (" + StandardRoadMarginRanges.getProjectDurationFloor() + " - "
+                    + StandardRoadMarginRanges.getProjectDurationCeiling() + ")\nDouble check your entry";
+            throw new NumberFormatException();
+          }
+        }
+        //Passed validation, ensure previous tooltips are removed and text colors reverted:
+        if (node.getTooltip() != null && !(node.getTooltip().getText().isBlank()))
+        {
+          node.setTooltip(null);
+          node.setStyle("-fx-text-fill: black;");
+        }
+      }
+      catch (NumberFormatException error)
+      {
+        //Add the warning tooltip and color the text orange!
+        addErrorTooltip(node, "-fx-text-fill: orange;",toolTipMessage);
+      }
+    }
+  }
+
   /** This code is run locally in this class. It simply checks if the given TextField contains any data or not.
    * Takes a KeyEvent and parses this as a TextField.
    * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
@@ -420,7 +541,22 @@ public class SceneController
     text.setStyle("-fx-prompt-text-fill: red;");
 
     //Update console with an error:
-    setGUI_ConsoleMessage("Error in data values while creating new project. Please review and correct!");
+    setGUI_ConsoleMessage("Error in entered data values. Please review and correct!");
+  }
+
+  /** This code is run locally in this class. It simply checks if the given TextField contains any data or not.
+   * Takes a KeyEvent and parses this as a TextField.
+   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
+   * Author: K. Dashnaw
+   * */
+  public void emptyTextFieldCode(TextField Node)
+  {
+    //Add a Show a tooltip!
+    addErrorTooltip(Node, "-fx-text-fill: red;", "Field cannot be empty.");
+    Node.setStyle("-fx-prompt-text-fill: red;");
+
+    //Update console with an error:
+    setGUI_ConsoleMessage("Error in entered data values. Please review and correct!");
   }
 
   /** This code is run locally in this class. It adds a ToolTip to the received node.
@@ -488,6 +624,9 @@ public class SceneController
    * */
   public String loadProjectData_String (TextField node)
   {
+    DecimalFormat dFormat = new DecimalFormat("###,###.####");
+    dFormat.setRoundingMode(RoundingMode.HALF_UP);
+
     switch (node.getPromptText())
     {
       case "first name":
@@ -527,13 +666,13 @@ public class SceneController
       case "Project Country":
         return this.getActiveModel().getSelectedProject().getProjectAddress().getCountry();
       case "Man-Hours in hours":
-        return "" + this.getActiveModel().getSelectedProject().getHumanRessources().getManHoursSpent();
+        return dFormat.format(this.getActiveModel().getSelectedProject().getHumanRessources().getManHoursSpent());
       case "Est. total number of hours":
-        return "" + this.getActiveModel().getSelectedProject().getHumanRessources().getTotalManHoursNeeded();
+        return dFormat.format(this.getActiveModel().getSelectedProject().getHumanRessources().getTotalManHoursNeeded());
       case "Expenses in USD":
-        return "" + this.getActiveModel().getSelectedProject().getFinances().getMaterialExpences();
+        return dFormat.format(this.getActiveModel().getSelectedProject().getFinances().getMaterialExpences());
       case "Budget in USD":
-        return "" + this.getActiveModel().getSelectedProject().getFinances().getTotalBudget();
+        return dFormat.format(this.getActiveModel().getSelectedProject().getFinances().getTotalBudget());
       case "Project name. Will be displayed on homepage":
         return this.getActiveModel().getSelectedProject().getProjectInformation().getProjectName();
       default:

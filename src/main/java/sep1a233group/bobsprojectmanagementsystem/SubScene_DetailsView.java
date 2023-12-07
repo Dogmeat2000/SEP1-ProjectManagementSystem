@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 /** <p>This class controls the GUI related view and methods concerning the "View Project Details" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
@@ -138,6 +140,9 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
       }
     }
 
+    DecimalFormat dFormat = new DecimalFormat("###,###.####");
+    dFormat.setRoundingMode(RoundingMode.HALF_UP);
+
     //Set the remaining more "hard to get to" data fields:
     taProjectDescription.setText(this.getActiveModel().getSelectedProject().getProjectInformation().getProjectDescription());
     taManagersComments.setText(this.getActiveModel().getSelectedProject().getProjectInformation().getProjectManagerComments());
@@ -152,7 +157,7 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
       tResNumberKitchens.setText("" + project.getNumberOfKitchens());
       tResNumberOfOtherPlumbing.setText("" + project.getNumberOfOtherRoomsWithPlumbing());
       tResDuration.setText("" + project.getProjectDuration());
-      tResBuildingSize.setText("" + project.getBuildingSize());
+      tResBuildingSize.setText(dFormat.format(project.getBuildingSize()));
       isRenovation.setSelected(project.getIsRenovation());
     }
     else if(this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("commercial"))
@@ -160,21 +165,21 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
       CommercialProject project = (CommercialProject) this.getActiveModel().getSelectedProject();
       tComNumberFloors.setText("" + project.getNumberOfFloors());
       tComDuration.setText("" + project.getProjectDuration());
-      tComBuildingSize.setText("" + project.getBuildingSize());
+      tComBuildingSize.setText(dFormat.format(project.getBuildingSize()));
       taComIntendedUse.setText(project.getIntendedBuildingUse());
     }
     else if(this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("industrial"))
     {
       IndustrialProject project = (IndustrialProject) this.getActiveModel().getSelectedProject();
       tIndDuration.setText("" + project.getProjectDuration());
-      tIndFacilitySize.setText("" + project.getFacilitySize());
+      tIndFacilitySize.setText(dFormat.format(project.getFacilitySize()));
       taIndFacilityType.setText(project.getFacilityType());
     }
     else if(this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("road"))
     {
       RoadProject project = (RoadProject) this.getActiveModel().getSelectedProject();
-      tRDLength.setText("" + project.getRoadLength());
-      tRDWidth.setText("" + project.getRoadWidth());
+      tRDLength.setText(dFormat.format(project.getRoadLength()));
+      tRDWidth.setText(dFormat.format(project.getRoadWidth()));
       tRDDuration.setText("" + project.getProjectDuration());
       taRDBridgeTunnelInfo.setText(project.getBridgeOrTunnelDetails());
       taRDEnvironmentInfo.setText(project.getEnvironmentalOrGeographicalChallenges());

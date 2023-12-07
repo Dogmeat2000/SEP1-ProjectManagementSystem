@@ -463,7 +463,6 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     this.getSceneController().setGUI_ConsoleMessage("");
     this.getGUI_Console()
         .setText(this.getSceneController().getGUI_ConsoleMessage());
-
   }
 
   /** <p>This code is run locally in this class. It simply checks if the given TextField contains any data or not.
@@ -742,18 +741,22 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
         if(project instanceof ResidentialProject)
         {
           tResDuration.setText("" + project.getProjectDuration());
+          this.getSceneController().validateIsWithinNormalMargins(tResDuration);
         }
         else if(project instanceof CommercialProject)
         {
           tComDuration.setText("" + project.getProjectDuration());
+          this.getSceneController().validateIsWithinNormalMargins(tComDuration);
         }
         else if(project instanceof IndustrialProject)
         {
           tIndDuration.setText("" + project.getProjectDuration());
+          this.getSceneController().validateIsWithinNormalMargins(tIndDuration);
         }
         else if(project instanceof RoadProject)
         {
           tRDDuration.setText("" + project.getProjectDuration());
+          this.getSceneController().validateIsWithinNormalMargins(tRDDuration);
         }
 
         break;
@@ -771,9 +774,13 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
 
         //Update project duration field with new duration:
         tIndDuration.setText("" + project.getProjectDuration());
+        this.getSceneController().validateIsWithinNormalMargins(tIndDuration);
         tResDuration.setText("" + project.getProjectDuration());
+        this.getSceneController().validateIsWithinNormalMargins(tResDuration);
         tComDuration.setText("" + project.getProjectDuration());
+        this.getSceneController().validateIsWithinNormalMargins(tComDuration);
         tRDDuration.setText("" + project.getProjectDuration());
+        this.getSceneController().validateIsWithinNormalMargins(tRDDuration);
         break;
       case "Enter a short project description. This information is exported and displayed on the company homepage":
         project.getProjectInformation().setProjectDescription(text.getText());

@@ -903,7 +903,7 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         dataAddedToProject = true;
         break;
       case "in $USD":
-        //TODO: Implement check with standard margin ranges to see if budget is within.
+        this.getSceneController().validateIsWithinNormalMargins(text);
         project.getFinances().setTotalBudget(Double.parseDouble(text.getText().trim()));
         dataAddedToProject = true;
         break;
@@ -958,20 +958,23 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         if(project instanceof ResidentialProject)
         {
           tResDuration.setText("" + project.getProjectDuration());
+          this.getSceneController().validateIsWithinNormalMargins(tResDuration);
         }
         else if(project instanceof CommercialProject)
         {
           tComDuration.setText("" + project.getProjectDuration());
+          this.getSceneController().validateIsWithinNormalMargins(tComDuration);
         }
         else if(project instanceof IndustrialProject)
         {
           tIndDuration.setText("" + project.getProjectDuration());
+          this.getSceneController().validateIsWithinNormalMargins(tIndDuration);
         }
         else if(project instanceof RoadProject)
         {
           tRDDuration.setText("" + project.getProjectDuration());
+          this.getSceneController().validateIsWithinNormalMargins(tRDDuration);
         }
-
         break;
       case "Est. Completion Date":
         String receivedEndDate = text.getText();
@@ -987,9 +990,13 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
 
         //Update project duration field with new duration:
         tIndDuration.setText("" + project.getProjectDuration());
+        this.getSceneController().validateIsWithinNormalMargins(tIndDuration);
         tResDuration.setText("" + project.getProjectDuration());
+        this.getSceneController().validateIsWithinNormalMargins(tResDuration);
         tComDuration.setText("" + project.getProjectDuration());
+        this.getSceneController().validateIsWithinNormalMargins(tComDuration);
         tRDDuration.setText("" + project.getProjectDuration());
+        this.getSceneController().validateIsWithinNormalMargins(tRDDuration);
         break;
       case "Enter a short project description. This information is exported and displayed on the company homepage":
         project.getProjectInformation().setProjectDescription(text.getText());

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -137,29 +138,24 @@
                                                 </HBox>
                                              </children>
                                           </HBox>
-                                          <VBox layoutX="169.0" layoutY="114.0" prefHeight="200.0" prefWidth="100.0">
+                                          <VBox layoutX="169.0" layoutY="114.0" prefHeight="164.0" prefWidth="100.0">
                                              <children>
-                                                <TextField fx:id="timeLineRP">
+                                                <TextField fx:id="timeLineRP" onKeyReleased="#enableSaveButton" promptText="Months">
                                                    <VBox.margin>
                                                       <Insets bottom="20.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <TextField fx:id="numberOfKitchensRP">
+                                                <TextField fx:id="numberOfKitchensRP" onKeyReleased="#enableSaveButton" promptText="Number">
                                                    <VBox.margin>
                                                       <Insets bottom="20.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <TextField fx:id="numberOfBathroomsRP">
+                                                <TextField fx:id="numberOfBathroomsRP" onKeyReleased="#enableSaveButton" promptText="Number">
                                                    <VBox.margin>
                                                       <Insets bottom="20.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <TextField fx:id="roomsWithPlumbingRP">
-                                                   <VBox.margin>
-                                                      <Insets bottom="20.0" />
-                                                   </VBox.margin>
-                                                </TextField>
-                                                <TextField fx:id="buildOrRenovationRP">
+                                                <TextField fx:id="roomsWithPlumbingRP" onKeyReleased="#enableSaveButton" promptText="Number">
                                                    <VBox.margin>
                                                       <Insets bottom="20.0" />
                                                    </VBox.margin>
@@ -168,12 +164,12 @@
                                           </VBox>
                                           <VBox layoutX="395.0" layoutY="114.0" prefHeight="200.0" prefWidth="100.0">
                                              <children>
-                                                <TextField fx:id="timeLineCP">
+                                                <TextField fx:id="timeLineCP" onKeyReleased="#enableSaveButton" promptText="Months">
                                                    <VBox.margin>
                                                       <Insets bottom="20.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <TextField fx:id="numberOfFloorsCP">
+                                                <TextField fx:id="numberOfFloorsCP" onKeyReleased="#enableSaveButton" promptText="Number">
                                                    <VBox.margin>
                                                       <Insets bottom="20.0" />
                                                    </VBox.margin>
@@ -182,22 +178,22 @@
                                           </VBox>
                                           <VBox layoutX="639.0" layoutY="114.0" prefHeight="200.0" prefWidth="100.0">
                                              <children>
-                                                <TextField fx:id="timeLineIP" />
+                                                <TextField fx:id="timeLineIP" onKeyReleased="#enableSaveButton" promptText="Months" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="876.0" layoutY="114.0" prefHeight="200.0" prefWidth="100.0">
                                              <children>
-                                                <TextField fx:id="timeLineRCP">
+                                                <TextField fx:id="timeLineRCP" onKeyReleased="#enableSaveButton" promptText="Months">
                                                    <VBox.margin>
                                                       <Insets bottom="20.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <TextField fx:id="bridgesOrTunnelsRCP">
+                                                <TextField fx:id="bridgesOrTunnelsRCP" onKeyReleased="#validate_NotEmpty" promptText="Info">
                                                    <VBox.margin>
                                                       <Insets bottom="20.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <TextField fx:id="enviromentalOrGeographicalRCP" />
+                                                <TextField fx:id="enviromentalOrGeographicalRCP" onKeyReleased="#validate_NotEmpty" promptText="Info" />
                                              </children>
                                           </VBox>
                                           <Text layoutX="111.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timeline">
@@ -221,7 +217,7 @@
                                                 <Font name="Arial Black" size="10.0" />
                                              </font>
                                           </Text>
-                                          <Text layoutX="54.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Build or renovation">
+                                          <Text layoutX="23.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New projects are by default:">
                                              <font>
                                                 <Font name="Arial Black" size="10.0" />
                                              </font>
@@ -261,6 +257,8 @@
                                                 <Font size="30.0" />
                                              </font>
                                           </Button>
+                                          <CheckBox fx:id="renovationCheckbox" layoutX="195.0" layoutY="297.0" mnemonicParsing="false" onAction="#checkBoxChecker" text="Renovation project" />
+                                          <CheckBox fx:id="newBuildCheckbox" layoutX="195.0" layoutY="324.0" mnemonicParsing="false" onAction="#checkBoxChecker" text="New construction" />
                                        </children></AnchorPane>
                                  </content>
                               </ScrollPane>

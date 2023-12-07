@@ -11,6 +11,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /** This class controls the GUI related view and methods concerning the "View Projects" GUI stage.
@@ -154,6 +157,12 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     mainTableView.setEditable(false);
     this.setProjectListCopy(this.getActiveModel().getFilteredProjectsList());
 
+    DecimalFormat dFormat = new DecimalFormat("#.##");
+    dFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+    DecimalFormat dFormat1 = new DecimalFormat("###,###.##");
+    dFormat.setRoundingMode(RoundingMode.HALF_UP);
+
     colProjectType.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getProjectType())));
     colProjectType.setStyle( "-fx-alignment: CENTER;");
     colProjectName.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getProjectInformation().getProjectName())));
@@ -164,13 +173,13 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     colProjectStatus.setStyle( "-fx-alignment: CENTER;");
     colProjectDeadline.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getProjectEndDate())));
     colProjectDeadline.setStyle( "-fx-alignment: CENTER;");
-    colProjectBudget.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getFinances().getTotalBudget())));
+    colProjectBudget.setCellValueFactory(data -> new SimpleStringProperty("$" + dFormat.format((data.getValue().getFinances().getTotalBudget() / 1000)) + "k"));
     colProjectBudget.setStyle( "-fx-alignment: CENTER;");
-    colProjectExpenses.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getFinances().getMaterialExpences())));
+    colProjectExpenses.setCellValueFactory(data -> new SimpleStringProperty("$" + dFormat.format(data.getValue().getFinances().getMaterialExpences() / 1000) + "k"));
     colProjectExpenses.setStyle( "-fx-alignment: CENTER;");
-    colProjectManHoursUsed.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getHumanRessources().getManHoursSpent())));
+    colProjectManHoursUsed.setCellValueFactory(data -> new SimpleStringProperty(dFormat1.format(data.getValue().getHumanRessources().getManHoursSpent())));
     colProjectManHoursUsed.setStyle( "-fx-alignment: CENTER;");
-    colProjectManHoursTotal.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getHumanRessources().getTotalManHoursNeeded())));
+    colProjectManHoursTotal.setCellValueFactory(data -> new SimpleStringProperty(dFormat1.format(data.getValue().getHumanRessources().getTotalManHoursNeeded())));
     colProjectManHoursTotal.setStyle( "-fx-alignment: CENTER;");
     colProjectConfidentiality.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().isProjectConfidential())));
     colProjectConfidentiality.setStyle( "-fx-alignment: CENTER;");

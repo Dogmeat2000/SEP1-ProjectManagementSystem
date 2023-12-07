@@ -3,8 +3,10 @@ package sep1a233group.bobsprojectmanagementsystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
@@ -14,6 +16,9 @@ import java.io.IOException;
  * Author: */
 public class Scene_SettingsView implements Scene_ControllerInterface
 {
+  @FXML CheckBox renovationCheckbox;
+  @FXML CheckBox newBuildCheckbox;
+  @FXML Button saveChangesButton;
   @FXML TextField GUI_Console;
   private MainModel activeModel;
   private SceneController sceneController;
@@ -21,7 +26,7 @@ public class Scene_SettingsView implements Scene_ControllerInterface
   @FXML private TextField numberOfKitchensRP;
   @FXML private TextField numberOfBathroomsRP;
   @FXML private TextField roomsWithPlumbingRP;
-  @FXML private TextField buildOrRenovationRP;
+
   @FXML private TextField timeLineCP;
   @FXML private TextField numberOfFloorsCP;
   @FXML private TextField timeLineIP;
@@ -103,7 +108,17 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     numberOfKitchensRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().getNumberOfKitchens());
     numberOfBathroomsRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().getNumberOfBathrooms());
     roomsWithPlumbingRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().getNumberOfOtherRoomsWithPlumbing());
-    buildOrRenovationRP.setText("" + this.getActiveModel().getDefaultResidentialSettings().isRenovation());
+
+    if(this.getActiveModel().getDefaultResidentialSettings().isRenovation())
+    {
+      renovationCheckbox.setSelected(true);
+      newBuildCheckbox.setSelected(false);
+    }
+    else
+    {
+      renovationCheckbox.setSelected(false);
+      newBuildCheckbox.setSelected(true);
+    }
 
     //Settings for Commercial Projects
     timeLineCP.setText("" + this.getActiveModel().getDefaultCommercialSettings().getProjectDuration());
@@ -128,7 +143,8 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     this.getActiveModel().getDefaultResidentialSettings().setNumberOfKitchens(Integer.parseInt(numberOfKitchensRP.getText().trim()));
     this.getActiveModel().getDefaultResidentialSettings().setNumberOfBathrooms(Integer.parseInt(numberOfBathroomsRP.getText().trim()));
     this.getActiveModel().getDefaultResidentialSettings().setNumberOfOtherRoomsWithPlumbing(Integer.parseInt(roomsWithPlumbingRP.getText().trim()));
-    this.getActiveModel().getDefaultResidentialSettings().setRenovation(true);
+    this.getActiveModel().getDefaultResidentialSettings().setRenovation(!newBuildCheckbox.isSelected());
+
     //Settings for Commercial Projects
     this.getActiveModel().getDefaultCommercialSettings().setProjectDuration(Integer.parseInt(timeLineCP.getText().trim()));
     this.getActiveModel().getDefaultCommercialSettings().setNumberOfFloors(Integer.parseInt(numberOfFloorsCP.getText().trim()));
@@ -141,6 +157,20 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     this.getActiveModel().getDefaultRoadSettings().setBridgesOrTunnelDetails(bridgesOrTunnelsRCP.getText().trim());
     this.getActiveModel().getDefaultRoadSettings().setEnviromentalOrGeographicalChallenges(enviromentalOrGeographicalRCP.getText().trim());
 
+    //Update console
+    this.getSceneController().setGUI_ConsoleMessage("Default project settings saved.");
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+
+    //Send user back to dashboard:
+    try
+    {
+      this.getSceneController().loadNewWindow("Dashboard");
+    }
+    catch(IOException error)
+    {
+      this.getSceneController().setGUI_ConsoleMessage("Unknown error occurred after saving settings. Try restarting the application");
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
   }
 
   /**
@@ -170,7 +200,7 @@ public class Scene_SettingsView implements Scene_ControllerInterface
       labelHTMLExportDate.setText("Last HTML export : Unknown");
     }
 
-    System.out.println("Project Main View Scene is now the active stage.");
+    System.out.println("Project Settings Scene is now the active stage.");
   }
 
   /**
@@ -204,6 +234,103 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     this.getSceneController().exitApplication();
   }
 
+  /** <p>Returns FALSE if TextField is empty and TRUE is they are not.
+   * Input validation method called directly from the .fxml scene upon interacting with a
+   * TextField with this method set as an "On Key Typed" event.</p>
+   * <p><b>This method MUST be run on a TextField in order to avoid potential crashes/errors.</b></p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   */
+  public void validate_NotEmpty(KeyEvent keyNode)
+  {
+    resetValidation();
+    if(!(getSceneController().validate_NotEmpty(keyNode)))
+    {
+      //Update console with error set in SceneController
+      this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+    }
+    else
+    {
+      enableSaveButton();
+    }
+  }
 
+  /** <p>Method disabled the "save" button and is used in conjunction with the validation fields to ensure that the
+   * "save" button only is enabled when proper data is ready to be added to the system.</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * */
+  private void resetValidation()
+  {
+    saveChangesButton.setDisable(true);
+
+    //Update console:
+    this.getSceneController().setGUI_ConsoleMessage("");
+    this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
+  }
+
+  public void enableSaveButton()
+  {
+    boolean validationPassed = true;
+    //Enables the filters button after input validation has been performed.
+
+    TextField[] textFields = {this.timeLineRP, this.numberOfKitchensRP, this.numberOfBathroomsRP, this.roomsWithPlumbingRP,
+        this.timeLineCP, this.numberOfFloorsCP, this.timeLineIP, this.timeLineRCP}; //Insert TextFields from screen page
+
+    //Validate all textFields:
+    for (int i = 0; i < textFields.length; i++)
+    {
+      if(!(textFields[i].getText().isBlank()))
+      {
+        //Check if field is a String:
+        try
+        {
+          //If the below test succeeds, then this is a number.
+          double testValue = Double.parseDouble(textFields[i].getText());
+          if (testValue < 0)
+          {
+            //Check if it is a negative value. If so, throw an error and catch it later.
+            throw new NumberFormatException();
+          }
+
+          //Passed validation, ensure previous tooltips are removed and text colors reverted:
+          if (textFields[i].getTooltip() != null)
+          {
+            textFields[i].setTooltip(null);
+            textFields[i].setStyle("-fx-text-fill: black;");
+          }
+        }
+        catch (NumberFormatException error)
+        {
+          //Field is a number. Show a tooltip!
+          this.getSceneController().addErrorTooltip(textFields[i], "-fx-text-fill: red;", "Field must be a positive number");
+          validationPassed = false;
+
+        }
+      }
+    }
+    saveChangesButton.setDisable(!validationPassed);
+  }
+
+  /** <p>****</p>
+   * <p><b>Author:</b> K. Dashnaw</p>
+   * */
+  public void checkBoxChecker(ActionEvent actionEvent)
+  {
+    saveChangesButton.setDisable(true);
+    CheckBox checkBox = (CheckBox) actionEvent.getSource();
+
+    //Check which box has been selected, and unselect the other
+    if(checkBox.getText().equalsIgnoreCase("Renovation project") && checkBox.isSelected())
+    {
+      //RenovationCheckbox was selected
+      newBuildCheckbox.setSelected(false);
+      renovationCheckbox.setSelected((true));
+    }
+    else
+    {
+      newBuildCheckbox.setSelected(true);
+      renovationCheckbox.setSelected((false));
+    }
+    enableSaveButton();
+  }
 }
 
