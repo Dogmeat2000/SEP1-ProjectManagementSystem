@@ -549,9 +549,46 @@ public class MainModel
         projectListCopy.remove(projectListCopy.get(i));
         i--;
       }
-
-
-
+      else if(projectListCopy.get(i).getProjectDuration() < minDuration || projectListCopy.get(i).getProjectDuration() > maxDuration)
+      {
+        projectListCopy.remove(projectListCopy.get(i));
+        i--;
+      }
+      else if(!phoneNumber.isBlank() && projectListCopy.get(i).getCustomer().getPhoneNumber() != Integer.parseInt(phoneNumber))
+      {
+        projectListCopy.remove(projectListCopy.get(i));
+        i--;
+      }
+      else if(hideFinishedProjects && projectListCopy.get(i).isProjectFinished())
+      {
+        projectListCopy.remove(projectListCopy.get(i));
+        i--;
+      }
+      else if(hideOngoingProjects && !projectListCopy.get(i).isProjectFinished())
+      {
+        projectListCopy.remove(projectListCopy.get(i));
+        i--;
+      }
+      else if(hideResidential && projectListCopy.get(i).getProjectType().equalsIgnoreCase("residential"))
+      {
+        projectListCopy.remove(projectListCopy.get(i));
+        i--;
+      }
+      else if(hideCommercial && projectListCopy.get(i).getProjectType().equalsIgnoreCase("commercial"))
+      {
+        projectListCopy.remove(projectListCopy.get(i));
+        i--;
+      }
+      else if(hideIndustrial && projectListCopy.get(i).getProjectType().equalsIgnoreCase("industrial"))
+      {
+        projectListCopy.remove(projectListCopy.get(i));
+        i--;
+      }
+      else if(hideRoad && projectListCopy.get(i).getProjectType().equalsIgnoreCase("road"))
+      {
+        projectListCopy.remove(projectListCopy.get(i));
+        i--;
+      }
     }
 
     return projectListCopy;
