@@ -913,10 +913,9 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         break;
       case "Start date":
         String receivedStartDate = text.getText();
-        String dayStart = receivedStartDate.substring(0,1);
-        String monthStart = receivedStartDate.substring(3,4);
+        String dayStart = receivedStartDate.substring(0,2);
+        String monthStart = receivedStartDate.substring(3,5);
         String yearStart = receivedStartDate.substring(6,10);
-        System.out.println("day: " + dayStart + ", month: " + monthStart + ", year: " + yearStart);
         project.getProjectStartDate().set(Integer.parseInt(dayStart), Integer.parseInt(monthStart), Integer.parseInt(yearStart));
 
         //Reset project duration textField field with new duration:
@@ -976,8 +975,8 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         break;
       case "Est. Completion Date":
         String receivedEndDate = text.getText();
-        String dayEnd = receivedEndDate.substring(0,1);
-        String monthEnd = receivedEndDate.substring(3,4);
+        String dayEnd = receivedEndDate.substring(0,2);
+        String monthEnd = receivedEndDate.substring(3,5);
         String yearEnd = receivedEndDate.substring(6,10);
         project.getProjectEndDate().set(Integer.parseInt(dayEnd), Integer.parseInt(monthEnd), Integer.parseInt(yearEnd));
         dataAddedToProject = true;

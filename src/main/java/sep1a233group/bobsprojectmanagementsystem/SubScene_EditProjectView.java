@@ -697,8 +697,8 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
         break;
       case "Start date":
         String receivedStartDate = text.getText();
-        String dayStart = receivedStartDate.substring(0,1);
-        String monthStart = receivedStartDate.substring(3,4);
+        String dayStart = receivedStartDate.substring(0,2);
+        String monthStart = receivedStartDate.substring(3,5);
         String yearStart = receivedStartDate.substring(6,10);
         project.getProjectStartDate().set(Integer.parseInt(dayStart), Integer.parseInt(monthStart), Integer.parseInt(yearStart));
 

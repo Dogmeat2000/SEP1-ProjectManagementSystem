@@ -612,7 +612,7 @@ public class MainModel
     objectList[5] = this.getDefaultRoadSettings();
     objectList[6] = this.getFileManager().getLastDataSaveTime();
     objectList[7] = this.getFileManager().getLastWebExportTime();
-    objectList[8] = this.getFileManager().getLastWebExportTime();
+    objectList[8] = this.getFileManager().getWebpageFile();
 
     if (this.getFileManager().writeToBinary(objectList))
     {
