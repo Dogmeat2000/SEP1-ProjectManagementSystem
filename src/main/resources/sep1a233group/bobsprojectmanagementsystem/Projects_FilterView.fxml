@@ -50,7 +50,7 @@
                               <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField fx:id="ownerPhoneNumber" promptText="tlf. (No prefix)" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="ownerPhoneNumber" onKeyReleased="#enableSetFiltersButton" promptText="tlf. (No prefix)" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets bottom="2.5" left="5.0" right="2.5" top="2.5" />
                            </GridPane.margin>
@@ -91,21 +91,26 @@
             <Insets bottom="2.5" top="2.5" />
          </VBox.margin>
          <children>
-            <Button fx:id="buttonSetFilers" disable="true" focusTraversable="false" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setFiltersButton" prefHeight="30.0" prefWidth="120.0" text="Save Changes" textAlignment="CENTER">
+            <Button fx:id="buttonSetFilers" defaultButton="true" disable="true" focusTraversable="false" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setFiltersButton" prefHeight="30.0" prefWidth="120.0" text="Save Changes" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
                <HBox.margin>
-                  <Insets left="25.0" right="150.0" />
+                  <Insets left="25.0" right="50.0" />
                </HBox.margin>
             </Button>
-            <Button cancelButton="true" focusTraversable="false" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="120.0" text="Cancel" textAlignment="CENTER">
+            <Button focusTraversable="false" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#resetFilters" prefHeight="30.0" prefWidth="120.0" text="Reset Filters" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
                <HBox.margin>
-                  <Insets />
+                  <Insets right="50.0" />
                </HBox.margin>
+            </Button>
+            <Button cancelButton="true" focusTraversable="false" layoutX="498.0" layoutY="14.0" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="120.0" text="Cancel" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
             </Button>
          </children>
       </HBox>

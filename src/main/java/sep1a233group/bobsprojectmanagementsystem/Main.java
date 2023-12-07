@@ -14,9 +14,6 @@ public class Main extends Application
 
   @Override public void start(Stage activeStage) throws IOException
   {
-    //Application name:
-    activeStage.setTitle("Bob's Project Management System");
-
     //Scene controller:
     MainModel activeModel = new MainModel();
     SceneController sceneController = new SceneController(activeModel, activeStage);

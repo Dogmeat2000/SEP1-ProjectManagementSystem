@@ -85,10 +85,10 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     boolean validationPassed = true;
     //Enables the filters button after input validation has been performed.
 
-    TextField[] textFields = {this.budgetRangeMin, this.budgetRangeMax, this.durationMin, this.durationMax}; //Insert TextFields from screen page
+    TextField[] textFields = {this.budgetRangeMin, this.budgetRangeMax, this.durationMin, this.durationMax, this.ownerPhoneNumber}; //Insert TextFields from screen page
 
     //Validate all textFields:
-    for (int i = 0; i < 3 /*Replace with number of TextFields*/; i++)
+    for (int i = 0; i < textFields.length; i++)
     {
       if(!(textFields[i].getText().isBlank()))
       {
@@ -156,6 +156,23 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     this.commercialProject.setSelected((Boolean) filterSettings[8]);
     this.industrialProject.setSelected((Boolean) filterSettings[9]);
     this.roadBuildingProject.setSelected((Boolean) filterSettings[10]);
+  }
+
+  public void resetFilters()
+  {
+    this.budgetRangeMin.setText("");
+    this.budgetRangeMax.setText("");
+    this.durationMin.setText("");
+    this.durationMax.setText("");
+    this.ownerPhoneNumber.setText("");
+    this.hideFinishedProjects.setSelected(false);
+    this.hideOngoingProjects.setSelected(false);
+    this.residentialProject.setSelected(false);
+    this.commercialProject.setSelected(false);
+    this.industrialProject.setSelected(false);
+    this.roadBuildingProject.setSelected(false);
+
+    this.getActiveModel().setFilterSettings("", "", "", "", "", false, false, false, false, false, false);
   }
 
   public void setFiltersButton()
