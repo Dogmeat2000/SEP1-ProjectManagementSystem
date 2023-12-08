@@ -2,11 +2,12 @@ package sep1a233group.bobsprojectmanagementsystem;
 
 import java.io.*;
 
-/** This is the main file in-and-out controller used for maintaining data persistence across sessions,
- * and providing cross-platform functionality so project information can be generically loaded in the company homepage.
- * Local files are saves in binary format.
- * Exported files for webpage use are exported in xml/json format.
- * Author: K. Dashnaw
+/** <p>This is the main file in-and-out controller used for maintaining data persistence across sessions,
+ * and providing cross-platform functionality so project information can be dynamically loaded in the company homepage.<br><br>
+ * Local files are saved in binary format.<br><br>
+ * Exported files for webpage use are exported as json format, provided the proper
+ * information is passed to this class as described in the documentation for the export method</p>
+ * @Author: K. Dashnaw
  * */
 public class FileIO
 {
@@ -17,100 +18,162 @@ public class FileIO
   private MyDate lastDataSaveTime; //Contains a MyDate/Time representation of when the system data was last saved.
   private MyDate lastWebExportTime; //Contains a MyDate/Time representation of when the system data was last saved.
 
-  /** Constructs the FileIO object and calls relevant methods for field attribute initialization.
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Constructs the FileIO object and calls relevant methods for field attribute initialization.</p>
+   * @Author: K. Dashnaw
    * */
   public FileIO()
   {
     setSystemFileName("mainProjectSaveFile.bin");
     setSystemSaveFile("Project Data Files/" + this.getSystemFileName());
+
+    //Note: lastDataSaveTime and lastWebExportTime are set directly in the writeToBinary() and export() methods when needed, in composition relationship.
+    // Until then, they are intentionally null/uninitialized.
   }
 
-  /** Returns the name of the system data file
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Gets the system file object that is currently used when saving project data.</p>
+   * @return the File object that the system is currently using when saving project data.
+   * @Author: K. Dashnaw
    * */
   public File getSystemSaveFile()
   {
     return systemSaveFile;
   }
 
-  /** Sets/Initializes the name of the system data file
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Sets the file FILE used for saving the system project data. This is used in combination
+   * with the systemFileName (which contains the name of the file to save). </p>
+   * @param fileName a String containing the directory/path to which the file should be saved to.
+   * @Author: K. Dashnaw
    * */
   public void setSystemSaveFile(String fileName)
   {
     this.systemSaveFile = new File(fileName);
   }
 
-  /** Returns the name of the main system data file
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Gets the name used for the system projects file (persistence) </p>
+   * @return a String value containing the name used for the system project file.
+   * @Author: K. Dashnaw
    * */
   public String getSystemFileName()
   {
     return systemFileName;
   }
 
-  /** Sets/Initializes the name for the main system data file
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Sets the name used for the main project data file.</p>
+   * @param systemFileName a String containing the name the system project file should use.
+   * @Author: K. Dashnaw
    * */
   public void setSystemFileName(String systemFileName)
   {
     this.systemFileName = systemFileName;
   }
 
-  /** Returns the name of the webpage Project Data file
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Used for retrieving a file reference to the currently identified webpage file, that the FileIO.export method writes to.</p>
+   * @return a File object.
+   * @Author: K. Dashnaw
    * */
   public File getWebpageFile()
   {
     return webpageFile;
   }
 
-  /** Sets/Initializes the name of the webpage Project Data file
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Sets the file that is used as the system save file, containing all project information.</p>
+   * @param file the File object to be written to.
+   * @Author: K. Dashnaw
    * */
   public void setWebpageFile(File file)
   {
     this.webpageFile = file;
   }
 
-  /** Returns a MyDate Object containing the last date and time the system files were saved
-   * Author: K: Dashnaw
+
+
+
+
+  /** <p>Gets the the attribute in FileIO documenting on which date the system was last saved.</p>
+   * @return A MyDate object
+   * @Author: K: Dashnaw
    * */
   public MyDate getLastDataSaveTime()
   {
     return lastDataSaveTime;
   }
 
-  /** Sets/Initializes a MyDate Object containing the last date and time the system files were exported to webpage compatible format
-   * Author: K: Dashnaw
+
+
+
+
+  /** <p>Sets the attribute in FileIO documenting on which date the system was last saved.</p>
+   * @param lastDataSaveTime A MyDate object containing the last date at which the writeToBinary method was executed.
+   * @Author: K: Dashnaw
    * */
   public void setLastDataSaveTime(MyDate lastDataSaveTime)
   {
     this.lastDataSaveTime = lastDataSaveTime;
   }
 
-  /** Returns a MyDate Object containing the last date and time the system files were exported to webpage compatible format
-   * Author: K: Dashnaw
+
+
+
+
+  /** <p>Gets the last date upon which the export (as HTML) method was called.</p>
+   * @return a MyDate object
+   * @Author: K: Dashnaw
    * */
   public MyDate getLastWebExportTime()
   {
     return lastWebExportTime;
   }
 
-  /** Sets/Initializes a MyDate Object containing the last date and time the system files were exported to webpage compatible format
-   * Author: K: Dashnaw
+
+
+
+
+  /** <p>Sets a MyDate Object containing the last date and time the system files were exported to webpage compatible format</p>
+   * @param lastWebExportTime A MyDate() Object must be passed as a parameter.
+   * @Author: K: Dashnaw
    * */
   public void setLastWebExportTime(MyDate lastWebExportTime)
   {
     this.lastWebExportTime = lastWebExportTime;
   }
 
-  /** Writes the persistence system data to a local binary file.
-   * File references are defined directly in FileIO.
-   * Return true if saving was successful.
-   * Returns false if not.
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Writes the persistence system data to a local binary file.
+   * File references are defined directly in the FileIO constructor.</p>
+   * @param objectList is an Object[] array containing the <b>serialized</b> data to be written into a binary file.
+   * @return TRUE if data was successfully written to file, or FALSE if not.
+   * @Author: K. Dashnaw
    * */
   public boolean writeToBinary(Object[] objectList)
   {
@@ -138,15 +201,21 @@ public class FileIO
     }
   }
 
-  /** <p>Writes the relevant project data to a local user defined file type for use on the company homepage.
-   * File path references are defined directly in FileIO.
-   * This implementation is basically a textFile writer, which requires the received String data to already be formatted into the proper string pattern. Used incorrectly this may cause errors.
+
+
+
+
+  /** <p>Writes the relevant project data needed for proper presistance to a local user defined file for use on the company homepage..
+   * This implementation is basically a textFile writer, which requires the received String data to already be formatted into the proper string pattern.
+   * Used incorrectly the output may not be a proper json object array.
    * In this application the text formatting is conducted in the MainModel.exportAsJson() method.
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * Prior to calling this method the developer should ensure that FileIo.setWebpageFile(File) is properly defined,
+   * since this method simply uses the directory defined here.</p>
    * @param exportData A String containing the data to export.
    * @param fileName A string containing the name the exported JSON file should have.
    * @param fileType A string containing the file type to append after the name. In the MainModel class we use '.json'.
    * @throws FileNotFoundException if any exceptions parsing, transforming, writing or reading.
+   * @Author K. Dashnaw
    * */
   public void export(String exportData, String fileName, String fileType) throws FileNotFoundException
   {
@@ -164,10 +233,18 @@ public class FileIO
     }
   }
 
+
+
+
+
   /** <p>Loads system persistence data from a local binary file.
-   * File references are defined directly in FileIO.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   * @return An Object Array containing all the system projects and related information, or throws a NullPointerException..
+   * File references are defined directly in the FileIO constructor.</p>
+   * @return An Object Array containing all the system projects and related information, or throws a NullPointerException.
+   * @throws FileNotFoundException
+   * @throws IOException
+   * @throws ClassNotFoundException
+   * @throws NullPointerException
+   * @Author K. Dashnaw
    * */
   public Object[] readFromBinary() throws FileNotFoundException, IOException, ClassNotFoundException, NullPointerException
   {
@@ -193,4 +270,5 @@ public class FileIO
       }
     }
   }
+
 }

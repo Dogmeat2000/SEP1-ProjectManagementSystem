@@ -345,26 +345,6 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     refresh();
   }
 
-  public ProgressReport getReport1()
-  {
-    return report1;
-  }
-
-  public ProgressReport getReport2()
-  {
-    return report2;
-  }
-
-  public ProgressReport getReport3()
-  {
-    return report3;
-  }
-
-  public ProgressReport getReport4()
-  {
-    return report4;
-  }
-
   public MainModel getActiveModel()
   {
     return activeModel;

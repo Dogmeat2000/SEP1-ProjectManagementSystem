@@ -2,9 +2,12 @@ package sep1a233group.bobsprojectmanagementsystem;
 
 import java.io.Serializable;
 
-/**
- * This class defines one of the 4 construction project types.
- * Author: K. Dashnaw (All included methods in class, unless otherwise stated)
+
+
+
+
+/** <p>This class defines one of the 4 construction project types. This class representing the Road class of projects.</p>
+ * @Author: K. Dashnaw
  */
 public class RoadProject extends ConstructionProject implements Serializable
 {
@@ -14,13 +17,19 @@ public class RoadProject extends ConstructionProject implements Serializable
   private double roadWidth; //Describes the width of the road.
   private int projectDuration; // How many months the build will take.
 
-  /** Constructs this object the first time it is created/called. */
+
+
+
+
+  /** <p>Constructs the RoadProject object upon initialization<br>
+   * No arguments are passed to this object as the Application relies on loading data from previous,
+   * or in the MainModel class having fresh data being set to the default values, if any. <br>
+   * Remaining attributes are simply initializes here with placeholder values.</p>
+   * @Author: K. Dashnaw
+   * */
   public RoadProject()
   {
     super();
-
-    //Note: Default values are called and set in the MainModel when project is created, where user changes to these default values are also saved.
-    /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
     setRoadLength(0);
     setRoadWidth(0);
     setBridgeOrTunnelDetails("");
@@ -29,68 +38,143 @@ public class RoadProject extends ConstructionProject implements Serializable
     setProjectType("Road");
   }
 
-  /** Returns a string value containing any details relating to possible bridges or tunnels on the construction route */
+
+
+
+
+  /** <p>Gets the information concerning bridges and tunnels</p>
+   * @return A String containing any information regarding bridges or tunnels.
+   * @Author: K. Dashnaw
+   * */
   public String getBridgeOrTunnelDetails()
   {
     return bridgeOrTunnelDetails;
   }
 
-  /** Sets a string value containing any details relating to possible bridges or tunnels on the construction route */
+
+
+
+
+  /** <p>Sets the information concerning bridges and tunnels</p>
+   * @param bridgeOrTunnelDetails A String containing any information regarding bridges or tunnels.
+   * @Author: K. Dashnaw
+   * */
   public void setBridgeOrTunnelDetails(String bridgeOrTunnelDetails)
   {
     this.bridgeOrTunnelDetails = bridgeOrTunnelDetails;
   }
 
-  /** Returns a string value containing any details relating to environmental or geographical challenges on the route */
+
+
+
+
+  /** <p>Gets the information concerning environmental and geographical information</p>
+   * @return A String containing any information regarding environment or geographical factors.
+   * @Author: K. Dashnaw
+   * */
   public String getEnvironmentalOrGeographicalChallenges()
   {
     return environmentalOrGeographicalChallenges;
   }
 
-  /** Sets a string value containing any details relating to environmental or geographical challenges on the route */
+
+
+
+
+  /**<p>Sets the information concerning environmental and geographical information</p>
+   * @param environmentalOrGeographicalChallenges A String containing any information regarding environment or geographical factors.
+   * @Author: K. Dashnaw
+   * */
   public void setEnvironmentalOrGeographicalChallenges(String environmentalOrGeographicalChallenges)
   {
     this.environmentalOrGeographicalChallenges = environmentalOrGeographicalChallenges;
   }
 
-  /** Returns the planned length of this road project */
+
+
+
+
+  /** <p>Gets the road length in meters</p>
+   * @return Double containing the road length meters.
+   * @Author: K. Dashnaw
+   * */
   public double getRoadLength()
   {
     return roadLength;
   }
 
-  /** Sets the planned length of this road project */
+
+
+
+
+  /** <p>Sets the road length in meters</p>
+   * @param roadLength Double containing the road length meters.
+   * @Author: K. Dashnaw
+   * */
   public void setRoadLength(double roadLength)
   {
     this.roadLength = roadLength;
   }
 
-  /** Returns the planned width of this road project */
+
+
+
+
+  /** <p>Gets the road width in meters</p>
+   * @return Double containing the road width meters.
+   * @Author: K. Dashnaw
+   * */
   public double getRoadWidth()
   {
     return roadWidth;
   }
 
-  /** Sets the planned width of this road project */
+
+
+
+
+  /** <p>Sets the road width in meters</p>
+   * @param roadWidth  Double containing the road width meters.
+   * @Author: K. Dashnaw
+   * */
   public void setRoadWidth(double roadWidth)
   {
     this.roadWidth = roadWidth;
   }
 
-  /** Returns the number of months this project is planned to take to complete. */
+
+
+
+
+  /** <p>Gets the project duration (in months) for this project</p>
+   * @return An Integer with the number of months (duration) for this project.
+   * @Author: K. Dashnaw
+   * */
   public int getProjectDuration()
   {
     return projectDuration;
   }
 
-  /** Sets the number of months this project is planned to take to complete. */
+
+
+
+
+  /** <p>Sets the project duration (in months) for this project</p>
+   * @param projectDuration An Integer with the number of months (duration) for this project.
+   * @Author: K. Dashnaw
+   * */
   public void setProjectDuration(int projectDuration)
   {
     this.projectDuration = projectDuration;
   }
 
-  /** Returns a string value containing all project information. Useful for debugging.
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Generates a String formatted expression of all the attributes in this Road Object.</p>
+   * @return A String containing all the information from this Road Object.
+   * @Author: K. Dashnaw
    * */
   public String toString()
   {
@@ -114,17 +198,22 @@ public class RoadProject extends ConstructionProject implements Serializable
     return returnValue;
   }
 
-  /** Returns a boolean if passed object is identical to this object.
-   * TRUE = They are identical. FALSE = They are not.
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Evaluates whether or not the Object passed as an argument is exactly equal to this Object.</p>
+   * @param obj An object to evaluate against.
+   * @return TRUE if both are equal, else FALSE.
+   * @Author: K. Dashnaw
    * */
-  public boolean equals(Object project)
+  public boolean equals(Object obj)
   {
-    if (!(project instanceof RoadProject))
+    if (!(obj instanceof RoadProject))
     {
       return false;
     }
-    RoadProject other = (RoadProject) project;
+    RoadProject other = (RoadProject) obj;
 
     //Compare local attributes for equality:
     if (!(other.getRoadWidth() == this.getRoadWidth() && other.getProjectDuration() == this.getProjectDuration() &&
@@ -155,6 +244,13 @@ public class RoadProject extends ConstructionProject implements Serializable
     }
   }
 
+
+
+
+  /** <p>Creates a duplicate of the object this method is called on. It copies all attributes values.</p>
+   * @return A new ConstructionProject of the specific type this method is called on.
+   * @Author: K. Dashnaw
+   * */
   public ConstructionProject copy()
   {
     //Create fresh project.

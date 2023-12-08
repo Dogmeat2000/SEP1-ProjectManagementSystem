@@ -852,26 +852,32 @@ public class SubScene_CreateNewProjectView implements Scene_ControllerInterface
         break;
       case "Customers Street Name":
         project.getCustomer().getCustomerAddress().setStreet(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setStreet(text.getText());
         dataAddedToProject = true;
         break;
       case "Building number":
         project.getCustomer().getCustomerAddress().setStreetNumber(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setStreetNumber(text.getText());
         dataAddedToProject = true;
         break;
       case "Customer apartment number, if applicable.":
         project.getCustomer().getCustomerAddress().setApartment(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setApartment(text.getText());
         dataAddedToProject = true;
         break;
       case "ZIP code":
         project.getCustomer().getCustomerAddress().setPostalCode(Integer.parseInt(text.getText().trim()));
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setPostalCode(Integer.parseInt(text.getText().trim()));
         dataAddedToProject = true;
         break;
       case "City":
         project.getCustomer().getCustomerAddress().setCity(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setCity(text.getText());
         dataAddedToProject = true;
         break;
       case "Country":
         project.getCustomer().getCustomerAddress().setCountry(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setCountry(text.getText());
         dataAddedToProject = true;
         break;
       case "Street name":

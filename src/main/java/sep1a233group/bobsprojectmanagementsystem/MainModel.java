@@ -431,7 +431,7 @@ public class MainModel
     {
       if(getAllProjectsList().get(i).isDashboardProject() && getDashboardProgressReports().getCurrentCapacity() <= getDashboardProgressReports().getMaxCapacity() && getDashboardProgressReports().getCurrentCapacity() > 0)
       {
-        getDashboardProgressReports().addProgressReport(getAllProjectsList().get(i).getProgressReport());
+        getDashboardProgressReports().addProgressReport(getAllProjectsList().get(i).generateProgressReport());
       }
     }
   }

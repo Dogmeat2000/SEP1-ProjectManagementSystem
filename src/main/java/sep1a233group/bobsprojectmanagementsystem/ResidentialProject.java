@@ -2,26 +2,30 @@ package sep1a233group.bobsprojectmanagementsystem;
 
 import java.io.Serializable;
 
-/**
- * This class defines one of the 4 construction project types.
- * Author: K. Dashnaw (All included methods in class, unless otherwise stated)
+/** <p>This class defines one of the 4 construction project types. This class representing the Residential class of projects.</p>
+ * @Author: K. Dashnaw
  */
 public class ResidentialProject extends ConstructionProject implements Serializable
 {
   private boolean isRenovation; //False = Project is a new construction. True = Project is a renovation.
   private int numberOfKitchens, numberOfBathrooms, numberOfOtherRoomsWithPlumbing; //Project data
-
   private double buildingSize; //Size of building project in m^2.
-
   private int projectDuration; // How many months the build will take.
 
-  /** Constructs this object the first time it is created/called. */
+
+
+
+
+
+  /** <p>Constructs the ResidentialProject object upon initialization<br>
+   * No arguments are passed to this object as the Application relies on loading data from previous,
+   * or in the MainModel class having fresh data being set to the default values, if any. <br>
+   * Remaining attributes are simply initializes here with placeholder values.</p>
+   * @Author: K. Dashnaw
+   * */
   public ResidentialProject()
   {
     super();
-
-    //Note: Default values are called and set in the MainModel when project is created, where user changes to these default values are also saved.
-    /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
     setIsRenovation(false);
     setBuildingSize(0);
     setNumberOfKitchens(0);
@@ -31,87 +35,182 @@ public class ResidentialProject extends ConstructionProject implements Serializa
     setProjectType("Residential");
   }
 
-  /** Returns the number of kitchens the construction build has assigned. */
+
+
+
+
+
+  /** <p>Gets the number of kitchens for this project</p>
+   * @return An integer containing the number of kitchens.
+   * @Author: K. Dashnaw
+   * */
   public int getNumberOfKitchens()
   {
     return numberOfKitchens;
   }
 
-  /** Sets the number of kitchens the construction build has assigned. */
+
+
+
+
+  /** <p>Sets the number of kitchens for this project</p>
+   * @param numberOfKitchens An integer containing the number of kitchens.
+   * @Author: K. Dashnaw
+   * */
   public void setNumberOfKitchens(int numberOfKitchens)
   {
     this.numberOfKitchens = numberOfKitchens;
   }
 
-  /** Returns the number of bathrooms the construction build has assigned. */
+
+
+
+
+
+  /** <p>Gets the number of bathrooms for this project</p>
+   * @return An integer containing the number of bathrooms.
+   * @Author: K. Dashnaw
+   * */
   public int getNumberOfBathrooms()
   {
     return numberOfBathrooms;
   }
 
-  /** Sets the number of bathrooms the construction build has assigned. */
+
+
+
+
+
+  /** <p>Sets the number of bathrooms for this project</p>
+   * @param numberOfBathrooms  An integer containing the number of bathrooms.
+   * @Author: K. Dashnaw
+   * */
   public void setNumberOfBathrooms(int numberOfBathrooms)
   {
     this.numberOfBathrooms = numberOfBathrooms;
   }
 
-  /** Returns the number of 'other rooms with plumbing' the construction build has assigned. */
+
+
+
+
+
+  /** <p>Gets the number of 'other rooms with plumbing' for this project</p>
+   * @return An integer containing the number of 'other rooms with plumbing'.
+   * @Author: K. Dashnaw
+   * */
   public int getNumberOfOtherRoomsWithPlumbing()
   {
     return numberOfOtherRoomsWithPlumbing;
   }
 
-  /** Sets the number of 'other rooms with plumbing' the construction build has assigned. */
+
+
+
+
+
+  /** <p>Sets the number of 'other rooms with plumbing' for this project</p>
+   * @param numberOfOtherRoomsWithPlumbing  An integer containing the number of 'other rooms with plumbing'.
+   * @Author: K. Dashnaw
+   * */
   public void setNumberOfOtherRoomsWithPlumbing(
       int numberOfOtherRoomsWithPlumbing)
   {
     this.numberOfOtherRoomsWithPlumbing = numberOfOtherRoomsWithPlumbing;
   }
 
-  /** Returns the planned building size in m^2 (Square meters) */
+
+
+
+
+
+  /** <p>Gets the building size in square-meters</p>
+   * @return A Double containing the building size in square-meters.
+   * @Author: K. Dashnaw
+   * */
   public double getBuildingSize()
   {
     return buildingSize;
   }
 
-  /** Sets the planned building size in m^2 (Square meters) */
+
+
+
+
+
+  /** <p>Sets the building size in square-meters</p>
+   * @param buildingSize  A Double containing the building size in square-meters.
+   * @Author: K. Dashnaw
+   * */
   public void setBuildingSize(double buildingSize)
   {
     this.buildingSize = buildingSize;
   }
 
-  /** Returns the number of months this project is planned to take to complete. */
+
+
+
+
+
+  /** <p>Gets the project duration (in months) for this project</p>
+   * @return An Integer with the number of months (duration) for this project.
+   * @Author: K. Dashnaw
+   * */
   public int getProjectDuration()
   {
     return projectDuration;
   }
 
-  /** Sets the number of months this project is planned to take to complete. */
+
+
+
+
+
+  /** <p>Sets the project duration (in months) for this project</p>
+   * @param projectDuration  An Integer with the number of months (duration) for this project.
+   * @Author: K. Dashnaw
+   * */
   public void setProjectDuration(int projectDuration)
   {
     this.projectDuration = projectDuration;
   }
 
-  /**
-   * Returns true if the project is a renovation of an already existing construction.
-   * Returns false if it is an entirely new project.
-   */
+
+
+
+
+
+  /** <p>Gets the renovation/new build status</p>
+   * @return A boolean that shows TRUE if the project is a "renovation" or FALSE if it is a "new constructions"
+   * @Author: K. Dashnaw
+   * */
   public boolean getIsRenovation()
   {
     return isRenovation;
   }
 
-  /**
-   * Sets whether this the project is a renovation of an already existing
-   * construction (True) or if it is an entirely new project (False).
-   */
+
+
+
+
+
+  /** <p>Sets the renovation/new build status</p>
+   * @param isRenovation A boolean that shows TRUE if the project is a "renovation" or FALSE if it is a "new constructions"
+   * @Author: K. Dashnaw
+   * */
   public void setIsRenovation(boolean isRenovation)
   {
     this.isRenovation = isRenovation;
   }
 
-  /** Returns a string value containing all project information. Useful for debugging.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Generates a String formatted expression of all the attributes in this ResidentialProject Object.</p>
+   * @return A String containing all the information from this ResidentialProject Object.
+   * @Author: K. Dashnaw
    * */
   public String toString()
   {
@@ -136,18 +235,24 @@ public class ResidentialProject extends ConstructionProject implements Serializa
     return returnValue;
   }
 
-  /** Returns a boolean if passed object is identical to this object.
-   * TRUE = They are identical. FALSE = They are not.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Evaluates whether or not the Object passed as an argument is exactly equal to this Object.</p>
+   * @param obj An object to evaluate against.
+   * @return TRUE if both are equal, else FALSE.
+   * @Author: K. Dashnaw
    * */
   @Override
-  public boolean equals(Object project)
+  public boolean equals(Object obj)
   {
-    if (!(project instanceof ResidentialProject))
+    if (!(obj instanceof ResidentialProject))
     {
       return false;
     }
-    ResidentialProject other = (ResidentialProject) project;
+    ResidentialProject other = (ResidentialProject) obj;
 
     //Compare local attributes for equality:
     if (!(other.getBuildingSize() == this.getBuildingSize() &&
@@ -187,6 +292,14 @@ public class ResidentialProject extends ConstructionProject implements Serializa
     }
   }
 
+
+
+
+
+  /** <p>Creates a duplicate of the object this method is called on. It copies all attributes values.</p>
+   * @return A new ConstructionProject of the specific type this method is called on.
+   * @Author: K. Dashnaw
+   * */
   public ConstructionProject copy()
   {
     //Create fresh project.

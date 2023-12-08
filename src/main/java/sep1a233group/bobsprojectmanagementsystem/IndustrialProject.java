@@ -2,9 +2,8 @@ package sep1a233group.bobsprojectmanagementsystem;
 
 import java.io.Serializable;
 
-/**
- * This class defines one of the 4 construction project types.
- * Author: K. Dashnaw (All included methods in class, unless otherwise stated)
+/** <p>This class defines one of the 4 construction project types. This class representing the Industrial class of projects.</p>
+ * @Author: K. Dashnaw
  */
 public class IndustrialProject extends ConstructionProject implements Serializable
 {
@@ -12,57 +11,110 @@ public class IndustrialProject extends ConstructionProject implements Serializab
     private double facilitySize; //Size of building project in m^2.
     private int projectDuration; // How many months the build will take.
 
-    /** Constructs this object the first time it is created/called. */
+
+
+
+
+  /** <p>Constructs the IndustrialProject object upon initialization<br>
+   * No arguments are passed to this object as the Application relies on loading data from previous,
+   * or in the MainModel class having fresh data being set to the default values, if any. <br>
+   * Remaining attributes are simply initializes here with placeholder values.</p>
+   * @Author: K. Dashnaw
+   * */
     public IndustrialProject()
     {
       super();
-
-      //Note: Default values are called and set in the MainModel when project is created, where user changes to these default values are also saved.
-      /*If default values successfully loaded, then set them. Else set some hard-coded values!*/
       setFacilitySize(0);
       setFacilityType("");
       setProjectDuration(5);
       setProjectType("Industrial");
     }
 
-    /** Returns a string value containing a description of the planned type of facility */
+
+
+
+
+  /** <p>Gets the intended facility use information.</p>
+   * @return A String containing information about the type of industrial facility.
+   * @Author: K. Dashnaw
+   * */
     public String getFacilityType()
     {
       return facilityType;
     }
 
-    /** Sets a string value containing a description of the planned type of facility */
+
+
+
+
+  /** <p>sets the intended facility use information.</p>
+   * @param facilityType  A String containing information about the type of industrial facility.
+   * @Author: K. Dashnaw
+   * */
     public void setFacilityType(String facilityType)
     {
       this.facilityType = facilityType;
     }
 
-    /** Returns the planned facility size in m^2 (Square meters) */
+
+
+
+
+  /** <p>Gets the facility size in square-meters</p>
+   * @return Double containing the building size in square-meters.
+   * @Author: K. Dashnaw
+   * */
     public double getFacilitySize()
     {
       return facilitySize;
     }
 
-    /** Sets the planned facility size in m^2 (Square meters) */
+
+
+
+
+  /** <p>Sets the facility size in square-meters</p>
+   * @param facilitySize A Double containing the building size in square-meters.
+   * @Author: K. Dashnaw
+   * */
     public void setFacilitySize(double facilitySize)
     {
       this.facilitySize = facilitySize;
     }
 
-    /** Returns the number of months this project is planned to take to complete. */
+
+
+
+
+  /** <p>Gets the project duration (in months) for this project</p>
+   * @return An Integer with the number of months (duration) for this project.
+   * @Author: K. Dashnaw
+   * */
     public int getProjectDuration()
     {
       return projectDuration;
     }
 
-    /** Sets the number of months this project is planned to take to complete. */
+
+
+
+
+  /** <p>Sets the project duration (in months) for this project</p>
+   * @param projectDuration An Integer with the number of months (duration) for this project.
+   * @Author: K. Dashnaw
+   * */
     public void setProjectDuration(int projectDuration)
     {
       this.projectDuration = projectDuration;
     }
 
-  /** Returns a string value containing all project information. Useful for debugging.
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Generates a String formatted expression of all the attributes in this Industrial Object.</p>
+   * @return A String containing all the information from this Industrial Object.
+   * @Author: K. Dashnaw
    * */
   public String toString()
   {
@@ -84,17 +136,22 @@ public class IndustrialProject extends ConstructionProject implements Serializab
     return returnValue;
   }
 
-  /** Returns a boolean if passed object is identical to this object.
-   * TRUE = They are identical. FALSE = They are not.
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Evaluates whether or not the Object passed as an argument is exactly equal to this Object.</p>
+   * @param obj An object to evaluate against.
+   * @return TRUE if both are equal, else FALSE.
+   * @Author: K. Dashnaw
    * */
-  public boolean equals(Object project)
+  public boolean equals(Object obj)
   {
-    if (!(project instanceof IndustrialProject))
+    if (!(obj instanceof IndustrialProject))
     {
       return false;
     }
-    IndustrialProject other = (IndustrialProject) project;
+    IndustrialProject other = (IndustrialProject) obj;
 
     //Compare local attributes for equality:
     if (!(other.getFacilitySize() == this.getFacilitySize() && other.getFacilityType().equals(this.getFacilityType())
@@ -124,6 +181,13 @@ public class IndustrialProject extends ConstructionProject implements Serializab
     }
   }
 
+
+
+
+  /** <p>Creates a duplicate of the object this method is called on. It copies all attributes values.</p>
+   * @return A new ConstructionProject of the specific type this method is called on.
+   * @Author: K. Dashnaw
+   * */
   public ConstructionProject copy()
   {
     //Create fresh project.

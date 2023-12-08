@@ -626,26 +626,32 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
         break;
       case "Customers Street Name":
         project.getCustomer().getCustomerAddress().setStreet(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setStreet(text.getText());
         dataAddedToProject = true;
         break;
       case "Building number":
         project.getCustomer().getCustomerAddress().setStreetNumber(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setStreetNumber(text.getText());
         dataAddedToProject = true;
         break;
       case "Customer apartment number, if applicable.":
         project.getCustomer().getCustomerAddress().setApartment(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setApartment(text.getText());
         dataAddedToProject = true;
         break;
       case "ZIP code":
         project.getCustomer().getCustomerAddress().setPostalCode(Integer.parseInt(text.getText().trim()));
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setPostalCode(Integer.parseInt(text.getText().trim()));
         dataAddedToProject = true;
         break;
       case "City":
         project.getCustomer().getCustomerAddress().setCity(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setCity(text.getText());
         dataAddedToProject = true;
         break;
       case "Country":
         project.getCustomer().getCustomerAddress().setCountry(text.getText());
+        project.getCustomer().getCustomerCompany().getCompanyAddress().setCountry(text.getText());
         dataAddedToProject = true;
         break;
       case "Street name":
@@ -803,7 +809,7 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
         }
         dataAddedToProject = true;
         break;
-      case "Add project to Dashboard?_False", "Dashboard is already full._False":
+      case "Track on Dashboard_False", "Dashboard is already full._False":
         project.setDashboardProject(false);
         dataAddedToProject = true;
         break;
@@ -921,7 +927,6 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     {
       //Remove the original project from the project_list, and replace with this modified one.
       this.getActiveModel().removeProject(this.getActiveModel().getAllProjectsList().get(this.getActiveModel().getProjectIndexPosition()));
- /**/     System.out.println("Project at index #" + this.getActiveModel().getProjectIndexPosition() + " removed");
 
       //Add modified project to system.
       if(this.getActiveModel().editProject(this.getActiveModel().getSelectedProject()))

@@ -181,7 +181,18 @@ public class SceneController
       directoryChooser.setInitialDirectory(this.getActiveModel().getFileManager().getWebpageFile());
     }
 
-    File fileDirectory = directoryChooser.showDialog(this.getActiveStage());
+    File fileDirectory;
+
+    try
+    {
+      fileDirectory = directoryChooser.showDialog(this.getActiveStage());
+    }
+    catch(IllegalArgumentException error)
+    {
+      //Reset the custom file directory location. This catches errors that might arise from loading the data files on other systems/PC's.
+      directoryChooser.setInitialDirectory(new File("Project Data Files"));
+      fileDirectory = directoryChooser.showDialog(this.getActiveStage());
+    }
 
     if(fileDirectory != null)
     {
