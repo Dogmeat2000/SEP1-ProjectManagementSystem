@@ -11,15 +11,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-/** This class controls the GUI related view and methods concerning the "View Projects" GUI stage.
+
+
+
+
+/** <p>This class controls the GUI related view and methods concerning the "View Projects" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
- * It refers to MainModel for model specific methods and actions.
- * Author: */
+ * It refers to MainModel for model specific methods and actions.</p>
+ * @Author: E. Kadrolli & K. Dashnaw
+ * */
 public class Scene_ProjectsMainView implements Scene_ControllerInterface
 {
   @FXML TableView<ConstructionProject> mainTableView;
@@ -38,7 +42,6 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
   @FXML Button removeButton;
   @FXML Button detailsButton;
 
-
   @FXML TextField GUI_Console;
   @FXML Label labelLastProjectSave;
   @FXML Label labelHTMLExportDate;
@@ -46,49 +49,92 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
   private SceneController sceneController;
   private ArrayList<ConstructionProject> projectListCopy;
 
-  /** Returns a reference to the GUI_Console on this page.
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p>Gets a reference to the GUI_Console on this page.</p>
+   * @return TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
    * */
   public TextField getGUI_Console()
   {
     return GUI_Console;
   }
-  /** Sets/Initializes the GUI_Console on this page.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Sets a reference to the GUI_Console on this page.</p>
+   * @param GUI_Console a TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
    * */
   public void setGUI_Console(TextField GUI_Console)
   {
     this.GUI_Console = GUI_Console;
   }
 
-  /** Returns a SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p> Gets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @return a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
    * */
   public SceneController getSceneController()
   {
     return sceneController;
   }
 
-  /** Sets/Initializes the SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
+
+
+
+
+  /** <p> Sets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @param sceneController a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
    * */
   public void setSceneController(SceneController sceneController)
   {
     this.sceneController = sceneController;
   }
 
+
+
+
+/** <p> This method retrieves a copy of the master project list, in order to have a safe list to perform filtering
+ * operations on, without possibly deleting projects from the master list unintentionally.</p>
+ * @return A duplicate ArrayList of ConstructionProjects, based on the master list.
+ * @Author: K. Dashnaw
+ * */
   public ArrayList<ConstructionProject> getProjectListCopy()
   {
     return projectListCopy;
   }
 
+
+
+
+  /** <p> This method sets a copy of the master project list, in order to have a safe list to perform filtering
+   * operations on, without possibly deleting projects from the master list unintentionally.</p>
+   * @param projectListCopy A duplicate ArrayList of ConstructionProjects, based on the master list.
+   * @Author: K. Dashnaw
+   * */
   public void setProjectListCopy(ArrayList<ConstructionProject> projectListCopy)
   {
     this.projectListCopy = projectListCopy;
   }
 
-  /** Initializes this scene into the active stage on the GUI - reusing the same window space.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
+
+
+
+
+  /** <p>This method initiates the scene/stage it is called on and ties it to the mapping done in the SceneController,
+   * thus allowing the overall SceneController to know about this active stage/scene.<br>It is only run on the first initialization.</p>
+   * @param activeModel a MainModel Object reference attached to each scene. It allows the scene to call methods from the model to perform operations.
+   * @param sceneController a reference to the overall responsible SceneController, which ties all the sub-scenes/stages together.
    * */
   public void init(MainModel activeModel, SceneController sceneController)
   {
@@ -103,9 +149,11 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     refresh();
   }
 
-  /** Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
-   * */
+
+
+
+
+  /**<p>This method is called every time this scene/stage becomes active. It is used to refresh onscreen data. </p>*/
   @Override public void refresh()
   {
     setProjectListCopy(this.getActiveModel().getFilteredProjectsList());
@@ -142,16 +190,36 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     System.out.println("Project Table View is now the active stage.");
   }
 
+
+
+
+  /** <p>Gets the active project model.</p>
+   * @return a MainModel object reference.
+   * @Author: K. Dashnaw
+   * */
   public MainModel getActiveModel()
   {
     return activeModel;
   }
 
+
+
+
+  /** <p>Sets the active project model.</p>
+   * @param activeModel a MainModel object reference.
+   * @Author: K. Dashnaw
+   * */
   public void setActiveModel(MainModel activeModel)
   {
     this.activeModel = activeModel;
   }
 
+
+
+
+  /** <p>This method loads all project data that have passed the filtering operations, and displays these to screen in an overview manner.</p>
+   * @Author: K. Dashnaw
+   * */
   public void displayProjects()
   {
     mainTableView.setEditable(false);
@@ -232,8 +300,16 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     });
   }
 
-  /** <p>This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.openWindow() for a more detailed description.</p>*/
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
+   * Check SceneController.openWindow() for a more detailed description.</p>
+   * @param actionEvent ActionEvent that contains a reference to the element which prompted this method to execute.
+   * @throws IOException If something unexpected occurs.
+   * @Author: K. Dashnaw
+   * */
   public void openWindow(ActionEvent actionEvent) throws IOException
   {
     //Refresh GUI console latest message:
@@ -243,8 +319,14 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     this.getSceneController().openWindow(buttonText, this.getGUI_Console());
   }
 
-  /** <p>This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exportToWeb() for a more detailed description.</p>*/
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
+   * Check SceneController.exportToWeb() for a more detailed description.</p>
+   * @Author: K.Dashnaw
+   * */
   public void exportToWeb()
   {
     this.getSceneController().exportToWeb();
@@ -253,8 +335,13 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** <p>This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exitApplication() for a more detailed description.</p>*/
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
+   * Check SceneController.exitApplication() for a more detailed description.</p>
+   * @Author: K. Dashnaw */
   public void exitApplication()
   {
     this.getSceneController().exitApplication();
@@ -263,6 +350,15 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
+
+
+
+  /** <p>This method updates the selected project that belongs to the MainModel. It evaluates what the user has interacted
+   * with and provides the necessary logic to then create a copy of the same project in the master list, where the copy is
+   * then set as the selected project - in order to avoid the unintentional deletion of projects.</p>
+   * @return TRUE if the project was found in the project list, and false if it wasn't. If false then nothing was selected.
+   * @Author: K. Dashnaw
+   * */
   public boolean updateSelectedProject()
   {
     String projectType = mainTableView.getSelectionModel().getSelectedItem().getProjectType();
@@ -351,6 +447,12 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     return false; //The project was not found in the system files.
   }
 
+
+
+
+/** <p>This method is executed when the user selects a project from the displayed overview. It then ensures that the proper context buttons are activated </p>
+ * @Author: K. Dashnaw
+ * */
   public void validateClick_ActivateButtons()
   {
     if(mainTableView.getSelectionModel().getSelectedItem() != null &&
@@ -371,10 +473,15 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     }
   }
 
+
+
+
+
   /**<p>This method initializes the edit sequence allowing the user to modify existing projects in the system.
    * It initializes a temporary copy of the user selected project that collects changes before replacing the
    * originally selected project with the modified one on user confirmation.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param actionEvent An ActionEvent which provides a reference to the source element that prompted the execution of this method.
+   * @Author: K. Dashnaw
    * */
   public void editProjectSelected(ActionEvent actionEvent)
   {
@@ -393,6 +500,13 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     }
   }
 
+
+
+
+  /**<p>This method initializes the remove project sequence allowing the user to delete existing projects from the system.
+   * It asks the user to verify this action before finalizing the deletion. </p>
+   * @Author: K. Dashnaw
+   * */
   public void removeProjectSelected()
   {
     if(updateSelectedProject())
@@ -430,6 +544,14 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     }
   }
 
+
+
+
+  /**<p>This method initializes the "view project details"" sequence allowing the user to view all existing project
+   * information in the system, relating to the selected project.</p>
+   * @param actionEvent An ActionEvent which provides a reference to the source element that prompted the execution of this method.
+   * @Author: K. Dashnaw
+   * */
   public void viewProjectDetails(ActionEvent actionEvent)
   {
     if(updateSelectedProject())
@@ -447,6 +569,13 @@ public class Scene_ProjectsMainView implements Scene_ControllerInterface
     }
   }
 
+
+
+
+  /**<p>This method applies any filters that the user has set on the "filtering" page. It is used in conjunction with
+   * the methods relating to displaying the projects on the overview.</p>
+   * @Author: K. Dashnaw
+   * */
   public void setFilters()
   {
     //Create the set filters window:

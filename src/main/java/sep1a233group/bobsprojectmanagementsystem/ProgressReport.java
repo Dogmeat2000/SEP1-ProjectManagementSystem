@@ -144,6 +144,10 @@ public class ProgressReport implements Serializable
         + '}';
   }
 
+
+
+
+
   /** <p>Evaluates whether or not the Object passed as an argument is exactly equal to this Object.</p>
    * @param obj An object to evaluate against.
    * @return TRUE if both are equal, else FALSE.

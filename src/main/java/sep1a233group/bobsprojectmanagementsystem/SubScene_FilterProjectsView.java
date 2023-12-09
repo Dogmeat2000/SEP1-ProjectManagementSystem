@@ -5,19 +5,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/** This class controls the GUI related view and methods concerning the "Set project filters" GUI stage.
+/** <p>This class controls the GUI related view and methods concerning the "Set project filters" GUI stage.
  * This is where filters are set, so that only projects that fall within the filter parameters are shown on the project view stage.
  * It refers to SceneController for shared GUI related actions and methods.
- * It refers to MainModel for model specific methods and actions.
- * Author: */
+ * It refers to MainModel for model specific methods and actions.</p>
+ * @Author: E. Kadrolli & K. Dashnaw
+ * */
 public class SubScene_FilterProjectsView implements Scene_ControllerInterface
 {
-  @FXML Button buttonSetFilers;
+  @FXML Button buttonSetFilters;
   @FXML CheckBox residentialProject;
   @FXML CheckBox commercialProject;
   @FXML CheckBox industrialProject;
@@ -29,11 +29,18 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
   @FXML TextField durationMax;
   @FXML TextField durationMin;
   @FXML TextField budgetRangeMin;
-  @FXML MainModel activeModel;
-  @FXML SceneController sceneController;
+  private MainModel activeModel;
+  private SceneController sceneController;
 
-  /** Initializes this scene into the active stage on the GUI - reusing the same window space.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
+
+
+
+
+
+  /** <p>This method initiates the scene/stage it is called on and ties it to the mapping done in the SceneController,
+   * thus allowing the overall SceneController to know about this active stage/scene.<br>It is only run on the first initialization.</p>
+   * @param activeModel a MainModel Object reference attached to each scene. It allows the scene to call methods from the model to perform operations.
+   * @param sceneController a reference to the overall responsible SceneController, which ties all the sub-scenes/stages together.
    * */
   public void init(MainModel activeModel, SceneController sceneController)
   {
@@ -42,35 +49,66 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     refresh();
   }
 
-  /** Returns a SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p> Gets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @return a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
    * */
   public SceneController getSceneController()
   {
     return sceneController;
   }
 
-  /** Sets/Initializes the SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p> Sets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @param sceneController a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
    * */
   public void setSceneController(SceneController sceneController)
   {
     this.sceneController = sceneController;
   }
 
+
+
+
+
+  /** <p>Gets the active project model.</p>
+   * @return a MainModel object reference.
+   * @Author: K. Dashnaw
+   * */
   public MainModel getActiveModel()
   {
     return activeModel;
   }
 
+
+
+
+
+  /** <p>Sets the active project model.</p>
+   * @param activeModel a MainModel object reference.
+   * @Author: K. Dashnaw
+   * */
   public void setActiveModel(MainModel activeModel)
   {
     this.activeModel = activeModel;
   }
 
-  /** Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
-   * */
+
+
+
+
+
+  /**<p>This method is called every time this scene/stage becomes active. It is used to refresh onscreen data. </p>*/
   @Override public void refresh()
   {
     //This method should do nothing apart from the below internal debug note. Not refreshing this page will let the previously entered
@@ -80,6 +118,14 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     System.out.println("Set project filters scene is now the active stage.");
   }
 
+
+
+
+
+/** <p> This method performs validation on the displayed and if the data fields pass that validation it enables the "save filters" button.
+ * Else if applies a tooltip to the TextField with the incorrect data, so the user may adjust the entered values.</p>
+ * @Author: K. Dashnaw
+ * */
   public void enableSetFiltersButton()
   {
     boolean validationPassed = true;
@@ -120,16 +166,19 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
       }
     }
 
-    if(validationPassed)
-    {
-      buttonSetFilers.setDisable(false);
-    }
-    else
-    {
-      buttonSetFilers.setDisable(true);
-    }
+    buttonSetFilters.setDisable(!validationPassed);
   }
 
+
+
+
+
+  /** <p> This method simply directs the user back to the main project overview, and does NOT apply
+   * any if the filters the user may have been in the process of setting.</p>
+   * @param actionEvent ActionEvent that contains a reference to the element which prompted this method to execute.
+   * @throws IOException If an unexpected error occurs.
+   * @Author: K. Dashnaw
+   * */
   public void cancel(ActionEvent actionEvent) throws IOException
   {
     //Should be tied to the cancel button only!
@@ -141,6 +190,13 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     stage.close();
   }
 
+
+
+
+
+/** This method loads any previous set filters upon first entering this stage, and displays these to the appropriate elements on screen.
+ * @Author: K. Dashnaw
+ * */
   public void loadFilterSettings()
   {
     Object[] filterSettings = this.getActiveModel().getFilterSettings();
@@ -158,6 +214,13 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     this.roadBuildingProject.setSelected((Boolean) filterSettings[10]);
   }
 
+
+
+
+
+  /** This method reset any already set filters to their default values (which is NO FILTERS)
+   * @Author: K. Dashnaw
+   * */
   public void resetFilters()
   {
     this.budgetRangeMin.setText("");
@@ -175,6 +238,13 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     this.getActiveModel().setFilterSettings("", "", "", "", "", false, false, false, false, false, false);
   }
 
+
+
+
+
+  /** This method applies and saves the entered filtering data.
+   * @Author: K. Dashnaw
+   * */
   public void setFiltersButton()
   {
     String minBudget = this.budgetRangeMin.getText();
@@ -211,7 +281,7 @@ public class SubScene_FilterProjectsView implements Scene_ControllerInterface
     //Applies the filters.
     this.getActiveModel().setFilteredProjectsList(this.getActiveModel().filterProject(Integer.parseInt(minBudget),Integer.parseInt(maxBudget),Integer.parseInt(minDuration),Integer.parseInt(maxDuration), ownerPhoneNumber, hideFinished, hideOngoing, hideResidential, hideCommercial, hideIndustrial, hideRoad));
 
-    Stage stage = (Stage) buttonSetFilers.getScene().getWindow();
+    Stage stage = (Stage) buttonSetFilters.getScene().getWindow();
     stage.close();
   }
 }

@@ -12,7 +12,7 @@ import java.io.IOException;
 /** <p>This class controls the GUI related view and methods concerning the "edit project" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
  * It refers to MainModel for model specific methods and actions.</p>
- * <p><b>Author:</b> K. Dashnaw</p>
+ * @Author: K. Dashnaw
  */
 public class SubScene_EditProjectView implements Scene_ControllerInterface
 {
@@ -64,9 +64,16 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
   private MainModel activeModel;
   private SceneController sceneController;
 
-  /** <p>Initializes this scene into the active stage on the GUI - reusing the same window space.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
-   */
+
+
+
+
+
+  /** <p>This method initiates the scene/stage it is called on and ties it to the mapping done in the SceneController,
+   * thus allowing the overall SceneController to know about this active stage/scene.<br>It is only run on the first initialization.</p>
+   * @param activeModel a MainModel Object reference attached to each scene. It allows the scene to call methods from the model to perform operations.
+   * @param sceneController a reference to the overall responsible SceneController, which ties all the sub-scenes/stages together.
+   * */
   public void init(MainModel activeModel, SceneController sceneController)
   {
     //Sets necessary attributes:
@@ -77,10 +84,12 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     refresh();
   }
 
-  /** <p>Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /**<p>This method is called every time this scene/stage becomes active. It is used to refresh onscreen data. </p>*/
   @Override public void refresh()
   {
     //Refresh the page, as it is shown on a clean load:
@@ -188,59 +197,101 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** <p>Returns a reference to the GUI_Console on this page.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /** <p>Gets a reference to the GUI_Console on this page.</p>
+   * @return TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
+   * */
   public TextField getGUI_Console()
   {
     return GUI_Console;
   }
 
-  /** <p>Sets/Initializes the GUI_Console on this page.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /** <p>Sets a reference to the GUI_Console on this page.</p>
+   * @param GUI_Console TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
+   * */
   public void setGUI_Console(TextField GUI_Console)
   {
     this.GUI_Console = GUI_Console;
   }
 
-  /** <p>Returns a SceneController object containing a reference to this stages parent controller</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /** <p> Gets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @return a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
+   * */
   public SceneController getSceneController()
   {
     return sceneController;
   }
 
-  /** <p>Sets/Initializes the SceneController object containing a reference to this stages parent controller</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /** <p> Sets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @param sceneController a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
+   * */
   public void setSceneController(SceneController sceneController)
   {
     this.sceneController = sceneController;
   }
 
-  /** <p>Returns a reference to the active project model currently providing project related functionality.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Gets the active project model.</p>
+   * @return a MainModel object reference.
+   * @Author: K. Dashnaw
    * */
   public MainModel getActiveModel()
   {
     return activeModel;
   }
 
-  /** <p>Sets/Initializes the reference to the active project model currently providing project related functionality.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Sets the active project model.</p>
+   * @param activeModel a MainModel object reference.
+   * @Author: K. Dashnaw
    * */
   public void setActiveModel(MainModel activeModel)
   {
     this.activeModel = activeModel;
   }
 
-  /** <p>This method prompts a warning to the user that unsaved data will be lost on change of view-screen.
-   * And then simply calls the common method with the same name, from the SceneController.
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
    * Check SceneController.openWindow() for a more detailed description.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+   * @param actionEvent ActionEvent that contains a reference to the element which prompted this method to execute.
+   * @throws IOException If something unexpected occurs.
+   * @Author: K. Dashnaw
+   * */
   public void openWindow(ActionEvent actionEvent) throws IOException
   {
     //Prompt the user to confirm they wish to leave this screen.
@@ -255,10 +306,15 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     this.getSceneController().openWindow(buttonText, this.getGUI_Console());
   }
 
-  /** <p>This method simply calls the common method with the same name, from the SceneController.
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
    * Check SceneController.exportToWeb() for a more detailed description.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+   * @Author: K.Dashnaw
+   * */
   public void exportToWeb()
   {
     this.getSceneController().exportToWeb();
@@ -267,10 +323,15 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** <p>This method checks if there is any unsaved data and then simply calls the common method with the same name, from the SceneController.
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
    * Check SceneController.exitApplication() for a more detailed description.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+   * @Author: K. Dashnaw
+   * */
   public void exitApplication()
   {
     //Prompt the user to confirm they wish to leave this screen.
@@ -287,9 +348,15 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** <p>Method used to create a confirmation prompt window, in order to prompt the user before navigating away from the edit view,
-   * which could otherwise result loss of entered non-saved data.!</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>>Method used to create a confirmation prompt window, in order to prompt the user before navigating away from the edit view,
+   * which could otherwise result loss of entered non-saved data.!</p
+   * @return A boolean that returns TRUE if the uses confirms they wish to proceed with the action, or FALSE if the user aborts.
+   * @Author: K. Dashnaw
    */
   public boolean createPromptWindow()
   {
@@ -323,11 +390,15 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
   }
 
 
+
+
+
+
   /** <p>This method returns the selected projects Data Field values that correspond with the shared project data fields.
    * This is intended for insertion into the on-screen editable textFields, so that already existing data is pre-entered for the user.</p>
-   * <p><b>Author:</b> K. Dashnaw </p>
    * @param node is a reference to the TextField node in which the returned String value shall be inserted.
    * @return A String value intended to be inserted into the above TextField node.
+   * @Author: K. Dashnaw
    * */
   public String loadProjectData_String (TextField node)
   {
@@ -385,11 +456,19 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     return "";
   }
 
-  /** <p>Returns FALSE if TextField is empty and TRUE is they are not.
-   * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.</p>
-   * <p><b>This method MUST be run on a TextField in order to avoid potential crashes/errors.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Input validation method called from the local scene control model, which gets a call from the .fxml scene upon interacting with a
+   * TextField with this method set as an "OnKey" event.<br><br></p>
+   * <p>The code specifics are executed in the main SceneController. This call just redirects to the main SceneController while
+   * adding/handling any additional local logic needed for this specific scene.</p>
+   * <p>WARNING: This method MUST be run on a TextField in order to avoid potential crashes/errors.</p>
+   * @param keyNode A reference to the KeyEvent which activated this method.
+   * @return TRUE if the TextField attached to the OnKey event is NOT empty. Else FALSE if it is empty.
+   * @Author: K. Dashnaw
    */
   public boolean validate_NotEmpty(KeyEvent keyNode)
   {
@@ -407,11 +486,19 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** <p>Returns FALSE if TextField is either empty OR a number/digit, and TRUE is TextField is none of both.
-   * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.</p>
-   * <p><b>This method MUST be run on a TextField in order to avoid potential crashes/errors.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Input validation method to validate that the TextField is NOT empty NOR a number, which is called directly from the .fxml scene upon interacting with a
+   * TextField with this method set as an "OnKey" event.<br><br></p>
+   * <p>The code specifics are executed in the main SceneController. This call just redirects to the main SceneController while
+   * adding/handling any additional local logic needed for this specific scene.</p>
+   * <p>WARNING: This method MUST be run on a TextField in order to avoid potential crashes/errors.</p>
+   * @param keyNode A reference to the KeyEvent which activated this method.
+   * @return TRUE if the TextField attached to the OnKey event is NOT empty AND not a number. Else FALSE if it is empty.
+   * @Author: K. Dashnaw
    */
   public boolean validate_NotEmpty_NotNumber(KeyEvent keyNode)
   {
@@ -429,11 +516,19 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** <p>Returns FALSE if TextField is either empty OR a string OR a negative number/digit, and TRUE is TextField is none of either.
-   * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.</p>
-   * <p><b>This method MUST be run on a TextField in order to avoid potential crashes/errors.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Input validation method to validate that the TextField is NOT empty NOR a negative number NOR a String, which is called directly from the .fxml scene upon interacting with a
+   * TextField with this method set as an "OnKey" event.<br><br></p>
+   * <p>The code specifics are executed in the main SceneController. This call just redirects to the main SceneController while
+   * adding/handling any additional local logic needed for this specific scene.</p>
+   * <p>WARNING: This method MUST be run on a TextField in order to avoid potential crashes/errors.</p>
+   * @param keyNode A reference to the KeyEvent which activated this method.
+   * @return TRUE if the TextField attached to the OnKey event is NOT empty AND not a number. Else FALSE if it is empty.
+   * @Author: K. Dashnaw
    */
   public boolean validate_NotEmpty_NotString_NotNegative(KeyEvent keyNode)
   {
@@ -451,9 +546,14 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** <p>Method disabled the "create project" button and is used in conjunction with the validation fields to ensure that the
-   * "create project" button only is enabled when proper data is ready to be added to the system.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Method disables the "save" button and is used in conjunction with the validation fields to ensure that the
+   * "save" button only is enabled when proper data is ready to be added to the system.</p>
+   * @Author: K. Dashnaw
    * */
   private void resetValidation()
   {
@@ -465,10 +565,15 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
         .setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** <p>This code is run locally in this class. It simply checks if the given TextField contains any data or not.
-   * Takes a KeyEvent and parses this as a TextField.</p>
-   * <p><b>Warning: KeyEvent source must be a TextField, otherwise crashes may occur.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>This code is run locally in this class. It simply checks if the given DatePicker contains any data or not.
+   * If DatePicker is empty it applies a tooltip, if not it removes the tooltip.</p>
+   * @param node a DatePicker object containing a reference to the element which should be evaluated if empty or not.
+   * @Author: K. Dashnaw
    * */
   private void emptyDatePickerCode(DatePicker node)
   {
@@ -481,9 +586,15 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
+
+
+
+
+
   /** <p>Runs as an "On Action" event in the .fxml scene on a DatePicker upon interacted with.
    * It performs validation on the selected date and adds this to the active project.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param actionEvent A ActionEvent reference to the source element which prompted this method to execute.
+   * @Author: K. Dashnaw
    */
   public void validate_DatePicker(ActionEvent actionEvent)
   {
@@ -505,12 +616,17 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
+
+
+
+
+
   /** <p>Can be called from eventHandlers in the .fxml scene, which do not require input validation,
-   * or from the input validation methods in this class.
-   * Method adds the received KeyEvent node to the project data.
-   * It receives a "KeyEvent node" and parses this to a TextField.</p>
-   * <p><b>Warning: KeyEvent node must have a source type of TextField, else errors will occur.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * or from the input validation methods in this class.<br>
+   * Method adds the received KeyEvent node to the project data.</p>
+   * <p>WARNING: KeyEvent node must have a source type of TextField, else errors will occur.</p>
+   * @param keyNode A reference to the node belonging to the KeyEvent that triggered this method.
+   * @Author: K. Dashnaw
    * */
   public void addTemporaryProjectData(KeyEvent keyNode)
   {
@@ -518,12 +634,17 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     addTemporaryProjectData(userInput);
   }
 
+
+
+
+
+
   /** <p>Can be called from eventHandlers in the .fxml scene, which do not require input validation,
-   * or from the input validation methods in this class.
-   * Method adds the received KeyEvent node to the project data.
-   * It receives a "KeyEvent node" and parses this to a TextArea</p>
-   * <p>Warning: KeyEvent node must have a source type of TextArea, else errors will occur.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * or from the input validation methods in this class.<br>
+   * Method adds the received KeyEvent node to the project data.</p>
+   * <p>WARNING: KeyEvent node must have a source type of TextArea, else errors will occur.</p>
+   * @param keyNode A reference to the node belonging to the KeyEvent that triggered this method.
+   * @Author: K. Dashnaw
    * */
   public void addTemporaryProjectData_TextArea(KeyEvent keyNode)
   {
@@ -534,11 +655,16 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     addTemporaryProjectData(text2);
   }
 
+
+
+
+
+
   /** <p>This method is used in conjunction with the above input validation methods.
    * It allows the typed text fields to be passed onto the "addCommonProjectData" input validation step
    * It simply ensures that the proper add Method is called (based on project Type).</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   * @param text It takes a TextField value, which is passed on to the identified proper child method.
+   * @param text A TextField containing a reference to the source TextField that contains the String Data to add to the project.
+   * @Author: K. Dashnaw
    * */
   public void addTemporaryProjectData(TextField text)
   {
@@ -560,11 +686,18 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** <p>Is called from "On Action" EventHandlers in the .fxml scene
-   * Method adds the received ActionEvent node to the project data.
-   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.<br>
+
+
+
+
+
+  /** <p>This method is called from "On Action" EventHandlers in the .fxml scene
+   * Method performs calls a validation check on all screen data fields, and if all data is valid, calls for the selected data
+   * to be validated and added to the active project <br><br>
+   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.<br><br>
    * <b>Warning: ActionEvent node must have a source type of CheckBox, else errors will occur.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param actionEvent A ActionEvent reference to the source element which prompted this method to execute.
+   * @Author: K. Dashnaw
    * */
   public void checkBoxChecker(ActionEvent actionEvent)
   {
@@ -585,12 +718,17 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     addTemporaryProjectData(value);
   }
 
-  /** <p>This method is used in conjunction with the "addTemporaryProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so modifies the in the active project.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>This method is used in conjunction with the "addTemporaryProjectData(TextField text) method".<br>
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
    * @param project This is a reference to the super class that all construction projects are a member of.
    * @param text This is a reference to the node containing the information to add to the project.
-   * @return A boolean that is either true or false. True means that data was modified. False means that it was not.
+   * @return TRUE if data was added and FALSE if no data was added.
+   * @Author: K. Dashnaw
    * */
   public boolean addCommonProjectData(ConstructionProject project, TextField text)
   {
@@ -687,12 +825,12 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
         dataAddedToProject = true;
         break;
       case "Budget in USD":
-        //TODO: Implement check with standard margin ranges to see if budget is within.
+        this.getSceneController().validateIsWithinNormalMargins(text);
         project.getFinances().setTotalBudget(Double.parseDouble(text.getText().trim()));
         dataAddedToProject = true;
         break;
       case "Expenses in USD":
-        //TODO: Implement check with standard margin ranges to see if budget is within.
+        this.getSceneController().validateIsWithinNormalMargins(text);
         project.getFinances().setMaterialExpences(Double.parseDouble(text.getText().trim()));
         dataAddedToProject = true;
         break;
@@ -844,11 +982,16 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+
+
+
+
+
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".<br>
    * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param project This is a reference to the specific project type Class.
    * @param text This is a reference to the node containing the information to add to the project.
+   * @Author: K. Dashnaw
    * */
   public void addTemporaryResidentialData(ResidentialProject project, TextField text)
   {
@@ -859,11 +1002,16 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+
+
+
+
+
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".<br>
    * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param project This is a reference to the specific project type Class.
    * @param text This is a reference to the node containing the information to add to the project.
+   * @Author: K. Dashnaw
    * */
   public void addTemporaryCommercialData(CommercialProject project, TextField text)
   {
@@ -874,11 +1022,16 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+
+
+
+
+
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".<br>
    * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param project This is a reference to the specific project type Class.
    * @param text This is a reference to the node containing the information to add to the project.
+   * @Author: K. Dashnaw
    * */
   public void addTemporaryIndustrialData(IndustrialProject project, TextField text)
   {
@@ -889,11 +1042,16 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
-  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
+
+
+
+
+
+  /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".<br>
    * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param project This is a reference to the specific project type Class.
    * @param text This is a reference to the node containing the information to add to the project.
+   * @Author: K. Dashnaw
    * */
   public void addTemporaryRoadData(RoadProject project, TextField text)
   {
@@ -904,8 +1062,13 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     }
   }
 
+
+
+
+
+
   /** <p>This method checks if all required data fields have been filled out before enabling the "edit project" button.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @Author: K. Dashnaw
    * */
   public void activateEditButton()
   {
@@ -917,8 +1080,13 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
     buttonEditProject.setDisable(dataIsMissing);
   }
 
+
+
+
+
+
   /** <p>This method finalizes the project creation by calling relevant methods from the MainModel. It also asks the user to confirm their creation before finalizing.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @Author: K. Dashnaw
    * */
   public void editProject()
   {

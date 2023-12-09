@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
 /** <p>This class controls the GUI related view and methods concerning the "View Project Details" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
  * It refers to MainModel for model specific methods and actions.</p>
- * <p><b>Author:</b> K. Dashnaw</p>
+ * @Author: K. Dashnaw
  */
 public class SubScene_DetailsView implements Scene_ControllerInterface
 {
@@ -51,7 +51,6 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
   @FXML TextField GUI_Console;
   @FXML GridPane gridProjectDataContainer;
   @FXML GridPane gridCommonProjectDataContainer;
-  @FXML Button buttonEditProject;
   @FXML Button buttonCancel;
   @FXML TextArea taProjectDescription;
   @FXML TextArea taManagersComments;
@@ -65,9 +64,16 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
   private MainModel activeModel;
   private SceneController sceneController;
 
-  /** <p>Initializes this scene into the active stage on the GUI - reusing the same window space.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
-   */
+
+
+
+
+
+  /** <p>This method initiates the scene/stage it is called on and ties it to the mapping done in the SceneController,
+   * thus allowing the overall SceneController to know about this active stage/scene.<br>It is only run on the first initialization.</p>
+   * @param activeModel a MainModel Object reference attached to each scene. It allows the scene to call methods from the model to perform operations.
+   * @param sceneController a reference to the overall responsible SceneController, which ties all the sub-scenes/stages together.
+   * */
   public void init(MainModel activeModel, SceneController sceneController)
   {
     //Sets necessary attributes:
@@ -78,10 +84,12 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
     refresh();
   }
 
-  /** <p>Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /**<p>This method is called every time this scene/stage becomes active. It is used to refresh onscreen data. </p>*/
   @Override public void refresh()
   {
     //Refresh the page, as it is shown on a clean load:
@@ -189,59 +197,101 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** <p>Returns a reference to the GUI_Console on this page.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /** <p>Gets a reference to the GUI_Console on this page.</p>
+   * @return TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
+   * */
   public TextField getGUI_Console()
   {
     return GUI_Console;
   }
 
-  /** <p>Sets/Initializes the GUI_Console on this page.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /** <p>Sets a reference to the GUI_Console on this page.</p>
+   * @param GUI_Console TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
+   * */
   public void setGUI_Console(TextField GUI_Console)
   {
     this.GUI_Console = GUI_Console;
   }
 
-  /** <p>Returns a SceneController object containing a reference to this stages parent controller</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /** <p> Gets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @return a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
+   * */
   public SceneController getSceneController()
   {
     return sceneController;
   }
 
-  /** <p>Sets/Initializes the SceneController object containing a reference to this stages parent controller</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+
+
+
+
+
+  /** <p> Sets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @param sceneController a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
+   * */
   public void setSceneController(SceneController sceneController)
   {
     this.sceneController = sceneController;
   }
 
-  /** <p>Returns a reference to the active project model currently providing project related functionality.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Gets the active project model.</p>
+   * @return a MainModel object reference.
+   * @Author: K. Dashnaw
    * */
   public MainModel getActiveModel()
   {
     return activeModel;
   }
 
-  /** <p>Sets/Initializes the reference to the active project model currently providing project related functionality.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Sets the active project model.</p>
+   * @param activeModel a MainModel object reference.
+   * @Author: K. Dashnaw
    * */
   public void setActiveModel(MainModel activeModel)
   {
     this.activeModel = activeModel;
   }
 
-  /** <p>This method prompts a warning to the user that unsaved data will be lost on change of view-screen.
-   * And then simply calls the common method with the same name, from the SceneController.
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
    * Check SceneController.openWindow() for a more detailed description.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+   * @param actionEvent ActionEvent that contains a reference to the element which prompted this method to execute.
+   * @throws IOException If something unexpected occurs.
+   * @Author: K. Dashnaw
+   * */
   public void openWindow(ActionEvent actionEvent) throws IOException
   {
     //Load the scene the user selected.
@@ -249,10 +299,15 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
     this.getSceneController().openWindow(buttonText, this.getGUI_Console());
   }
 
-  /** <p>This method simply calls the common method with the same name, from the SceneController.
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
    * Check SceneController.exportToWeb() for a more detailed description.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+   * @Author: K.Dashnaw
+   * */
   public void exportToWeb()
   {
     this.getSceneController().exportToWeb();
@@ -261,10 +316,15 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** <p>This method checks if there is any unsaved data and then simply calls the common method with the same name, from the SceneController.
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
    * Check SceneController.exitApplication() for a more detailed description.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
-   */
+   * @Author: K. Dashnaw
+   * */
   public void exitApplication()
   {
     //Prompt the user to confirm they wish to leave this screen.
@@ -281,9 +341,15 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
+
+
+
+
+
   /** <p>Method ensures that the user is directed back to the previous view pane upon satisfied with
    *  his/her browsing of the selected projects details.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param actionEvent A ActionEvent reference to the source element which prompted this method to execute.
+   * @Author: K. Dashnaw
    */
   public void returnToPreviousView (ActionEvent actionEvent) throws IOException
   {
@@ -292,20 +358,31 @@ public class SubScene_DetailsView implements Scene_ControllerInterface
     this.getSceneController().openWindow(buttonText, this.getGUI_Console());
   }
 
-  /** <p>Is called from "On Action" EventHandlers in the .fxml scene
-   * Method adds the received ActionEvent node to the project data.
-   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.<br>
+
+
+
+  /** <p>This method is called from "On Action" EventHandlers in the .fxml scene
+   * Method performs calls a validation check on all screen data fields, and if all data is valid, calls for the selected data
+   * to be validated and added to the active project <br><br>
+   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.<br><br>
    * <b>Warning: ActionEvent node must have a source type of CheckBox, else errors will occur.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param actionEvent A ActionEvent reference to the source element which prompted this method to execute.
+   * @Author: K. Dashnaw
    * */
   public void checkBoxChecker(ActionEvent actionEvent)
   {
-    buttonEditProject.setDisable(true);
     this.getSceneController().checkBoxChecker(actionEvent);
   }
 
-  /** Method used to create a confirmation prompt window, in order to prompt the user before terminating the application!
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>>Method used to create a confirmation prompt window, in order to prompt the user before navigating away from the creation view,
+   * which could otherwise result loss of entered non-saved data.!</p
+   * @return A boolean that returns TRUE if the uses confirms they wish to proceed with the action, or FALSE if the user aborts.
+   * @Author: K. Dashnaw
    */
   public boolean createPromptWindow()
   {

@@ -10,72 +10,98 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
-/** This class controls the GUI related view and methods concerning the "Settings View" GUI stage.
+/** <p>This class controls the GUI related view and methods concerning the "Settings View" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
- * It refers to MainModel for model specific methods and actions.
- * Author: */
+ * It refers to MainModel for model specific methods and actions.</p>
+ * @Author: Z. Banouri & K. Dashnaw
+ */
 public class Scene_SettingsView implements Scene_ControllerInterface
 {
+  private MainModel activeModel;
+  private SceneController sceneController;
+  @FXML TextField timeLineRP;
+  @FXML TextField numberOfKitchensRP;
+  @FXML TextField numberOfBathroomsRP;
+  @FXML TextField roomsWithPlumbingRP;
+  @FXML TextField timeLineCP;
+  @FXML TextField numberOfFloorsCP;
+  @FXML TextField timeLineIP;
+  @FXML TextField timeLineRCP;
+  @FXML TextField bridgesOrTunnelsRCP;
+  @FXML TextField enviromentalOrGeographicalRCP;
+  @FXML Label labelLastProjectSave;
+  @FXML Label labelHTMLExportDate;
   @FXML CheckBox renovationCheckbox;
   @FXML CheckBox newBuildCheckbox;
   @FXML Button saveChangesButton;
   @FXML TextField GUI_Console;
-  private MainModel activeModel;
-  private SceneController sceneController;
-  @FXML private TextField timeLineRP;
-  @FXML private TextField numberOfKitchensRP;
-  @FXML private TextField numberOfBathroomsRP;
-  @FXML private TextField roomsWithPlumbingRP;
 
-  @FXML private TextField timeLineCP;
-  @FXML private TextField numberOfFloorsCP;
-  @FXML private TextField timeLineIP;
-  @FXML private TextField timeLineRCP;
-  @FXML private TextField bridgesOrTunnelsRCP;
-  @FXML private TextField enviromentalOrGeographicalRCP;
-  @FXML Label labelLastProjectSave;
-  @FXML Label labelHTMLExportDate;
 
-  /**
-   * Returns a reference to the GUI_Console on this page.
-   * Author: K. Dashnaw
-   */
+
+
+
+
+  /** <p>Gets a reference to the GUI_Console on this page.</p>
+   * @return TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
+   * */
   public TextField getGUI_Console()
   {
     return GUI_Console;
   }
 
-  /**
-   * Sets/Initializes the GUI_Console on this page.
-   * Author: K. Dashnaw
-   */
+
+
+
+
+
+  /** <p>Sets a reference to the GUI_Console on this page.</p>
+   * @param GUI_Console TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
+   * */
   public void setGUI_Console(TextField GUI_Console)
   {
     this.GUI_Console = GUI_Console;
   }
 
-  /**
-   * Returns a SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
-   */
+
+
+
+
+
+  /** <p> Gets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @return a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
+   * */
   public SceneController getSceneController()
   {
     return sceneController;
   }
 
-  /**
-   * Sets/Initializes the SceneController object containing a reference to this stages parent controller
-   * Author: K. Dashnaw
-   */
+
+
+
+
+
+  /** <p> Sets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @param sceneController a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
+   * */
   public void setSceneController(SceneController sceneController)
   {
     this.sceneController = sceneController;
   }
 
-  /**
-   * Initializes this scene into the active stage on the GUI - reusing the same window space.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
-   */
+
+
+
+
+
+  /** <p>This method initiates the scene/stage it is called on and ties it to the mapping done in the SceneController,
+   * thus allowing the overall SceneController to know about this active stage/scene.<br>It is only run on the first initialization.</p>
+   * @param activeModel a MainModel Object reference attached to each scene. It allows the scene to call methods from the model to perform operations.
+   * @param sceneController a reference to the overall responsible SceneController, which ties all the sub-scenes/stages together.
+   * */
   public void init(MainModel activeModel, SceneController sceneController)
   {
     this.setActiveModel(activeModel);
@@ -87,20 +113,42 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     System.out.println("Project Settings view Scene is now active");
   }
 
+
+
+
+
+  /** <p>Gets the active project model.</p>
+   * @return a MainModel object reference.
+   * @Author: K. Dashnaw
+   * */
   public MainModel getActiveModel()
   {
     return activeModel;
   }
 
+
+
+
+
+  /** <p>Sets the active project model.</p>
+   * @param activeModel a MainModel object reference.
+   * @Author: K. Dashnaw
+   * */
   public void setActiveModel(MainModel activeModel)
   {
     this.activeModel = activeModel;
   }
 
 
-  /** Loading and displaying default values.
-    */
 
+
+
+
+  /** <p>This method reads the already existing default system settings from the MainModel
+   * (connected through the sceneController) and displays this information in appropriate
+   * fields on the settings GUI.</p>
+   * @Author: Z. Banouri
+    */
   public void loadSystemSettings()
   {
     //Settings for Residential Projects
@@ -131,10 +179,15 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     timeLineRCP.setText("" + this.getActiveModel().getDefaultRoadSettings().getProjectDuration());
     bridgesOrTunnelsRCP.setText(this.getActiveModel().getDefaultRoadSettings().getBridgesOrTunnelDetails());
     enviromentalOrGeographicalRCP.setText(this.getActiveModel().getDefaultRoadSettings().getEnviromentalOrGeographicalChallenges());
-
   }
 
-  /** Saving and updating system settings, for different type of construction projects.
+
+
+
+
+
+  /** <p>This method handles the process of saving all the user entered default settings information.</p>
+   * @Author: Z. Banouri
    */
   public void saveSystemSettings()
   {
@@ -173,10 +226,12 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     }
   }
 
-  /**
-   * Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)
-   */
+
+
+
+
+
+  /**<p>This method is called every time this scene/stage becomes active. It is used to refresh onscreen data. </p>*/
   @Override public void refresh()
   {
     loadSystemSettings();
@@ -203,10 +258,17 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     System.out.println("Project Settings Scene is now the active stage.");
   }
 
-  /**
-   * This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.openWindow() for a more detailed description.
-   */
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
+   * Check SceneController.openWindow() for a more detailed description.</p>
+   * @param actionEvent ActionEvent that contains a reference to the element which prompted this method to execute.
+   * @throws IOException If something unexpected occurs.
+   * @Author: K. Dashnaw
+   * */
   public void openWindow(ActionEvent actionEvent) throws IOException
   {
     //Refresh GUI console latest message:
@@ -216,29 +278,47 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     this.getSceneController().openWindow(buttonText, this.getGUI_Console());
   }
 
-  /**
-   * This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exportToWeb() for a more detailed description.
-   */
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
+   * Check SceneController.exportToWeb() for a more detailed description.</p>
+   * @Author: K.Dashnaw
+   * */
   public void exportToWeb()
   {
     this.getSceneController().exportToWeb();
   }
 
-  /**
-   * This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exitApplication() for a more detailed description.
-   */
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
+   * Check SceneController.exitApplication() for a more detailed description.</p>
+   * @Author: K. Dashnaw
+   * */
   public void exitApplication()
   {
     this.getSceneController().exitApplication();
   }
 
-  /** <p>Returns FALSE if TextField is empty and TRUE is they are not.
-   * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.</p>
-   * <p><b>This method MUST be run on a TextField in order to avoid potential crashes/errors.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Input validation method called from the local scene control model, which gets a call from the .fxml scene upon interacting with a
+   * TextField with this method set as an "OnKey" event.<br><br></p>
+   * <p>The code specifics are executed in the main SceneController. This call just redirects to the main SceneController while
+   * adding/handling any additional local logic needed for this specific scene.</p>
+   * <p>WARNING: This method MUST be run on a TextField in order to avoid potential crashes/errors.</p>
+   * @param keyNode A reference to the KeyEvent which activated this method.
+   * @return TRUE if the TextField attached to the OnKey event is NOT empty. Else FALSE if it is empty.
+   * @Author: K. Dashnaw
    */
   public void validate_NotEmpty(KeyEvent keyNode)
   {
@@ -254,9 +334,14 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     }
   }
 
-  /** <p>Method disabled the "save" button and is used in conjunction with the validation fields to ensure that the
+
+
+
+
+
+  /** <p>Method disables the "save" button and is used in conjunction with the validation fields to ensure that the
    * "save" button only is enabled when proper data is ready to be added to the system.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @Author: K. Dashnaw
    * */
   private void resetValidation()
   {
@@ -267,6 +352,14 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
+
+
+
+
+  /** <p>Method enables the "save" button and is used in conjunction with the validation fields to ensure that the
+   * "save" button only is enabled when proper data is validated and ready to be added to the system.</p>
+   * @Author: K. Dashnaw
+   * */
   public void enableSaveButton()
   {
     boolean validationPassed = true;
@@ -310,8 +403,17 @@ public class Scene_SettingsView implements Scene_ControllerInterface
     saveChangesButton.setDisable(!validationPassed);
   }
 
-  /** <p>****</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>This method is called from "On Action" EventHandlers in the .fxml scene
+   * Method performs calls a validation check on all screen data fields, and if all data is valid, enables the 'save button'<br><br>
+   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.<br><br>
+   * <b>Warning: ActionEvent node must have a source type of CheckBox, else errors will occur.</b></p>
+   * @param actionEvent A ActionEvent reference to the source element which prompted this method to execute.
+   * @Author: K. Dashnaw
    * */
   public void checkBoxChecker(ActionEvent actionEvent)
   {

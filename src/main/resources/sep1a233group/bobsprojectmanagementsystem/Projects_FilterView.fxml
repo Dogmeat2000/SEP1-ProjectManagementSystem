@@ -91,7 +91,7 @@
             <Insets bottom="2.5" top="2.5" />
          </VBox.margin>
          <children>
-            <Button fx:id="buttonSetFilers" defaultButton="true" disable="true" focusTraversable="false" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setFiltersButton" prefHeight="30.0" prefWidth="120.0" text="Save Changes" textAlignment="CENTER">
+            <Button fx:id="buttonSetFilters" defaultButton="true" disable="true" focusTraversable="false" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setFiltersButton" prefHeight="30.0" prefWidth="120.0" text="Save Changes" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>

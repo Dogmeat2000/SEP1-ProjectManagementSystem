@@ -11,12 +11,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Optional;
 
-/** This class controls the GUI related view and methods concerning the "Project Dashboard" GUI stage.
+/** <p>This class controls the GUI related view and methods concerning the "Project Dashboard" GUI stage.
  * It refers to SceneController for shared GUI related actions and methods.
- * It refers to MainModel for model specific methods and actions.
- * Author: Alperen & Kristian*/
+ * It refers to MainModel for model specific methods and actions.</p>
+ * @Author: A. Özer & K. Dashnaw
+ * */
 public class Scene_Dashboard implements Scene_ControllerInterface
 {
   private ConstructionProject project1;
@@ -58,10 +58,13 @@ public class Scene_Dashboard implements Scene_ControllerInterface
 
 
 
-  /**
-   * this method resets all the 4 dashboard-projects, and finds the dashboard-projects from the project list again,
-   * to get the updates' information. If there is less than 4 projects in dashboard then the remaining slots will be hidden
-   * Author: Alperen Ö.*/
+
+
+
+  /**<p>this method resets all the 4 dashboard-projects, and finds the dashboard-projects from the project list again,
+   * to get the updates' information. If there is less than 4 projects in dashboard then the remaining slots will be hidden</p>
+   * @Author: A. Özer
+   * */
   public void displayProgressReports()
   {
     project1 = null;
@@ -108,15 +111,20 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     else {slot4.setVisible(false);}
   }
 
-  /**
-   * this method generates a progress report for the 1st project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
-   * Author: Alperen Ö.*/
+
+
+
+
+
+  /**<p>This method generates a progress report for the 1st project in the list marked as dashboard, thereafter relevant values will be displays in the dashboard.</p>
+   * @Author: A. Özer
+   * */
   public void displayReport1()
   {
     report1 = project1.generateProgressReport();
     projectType1.setText(project1.getProjectType());
-    address1.setText("#1:" + this.getProject1().getProjectInformation().getProjectName() + ", " + this.getProject1().getProjectAddress().getPostalCode() + " " + this.getProject1().getProjectAddress().getCity());
-    tlfNo1.setText(report1.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report1.getCustomer().getPhoneNumber()));
+    address1.setText("#1: " + this.getProject1().getProjectInformation().getProjectName() + ", " + this.getProject1().getProjectAddress().getPostalCode() + " " + this.getProject1().getProjectAddress().getCity());
+    tlfNo1.setText(report1.getCustomer().getPhoneNumberPrefix() + " " + report1.getCustomer().getPhoneNumber());
     hoursSpent1.setText(Double.toString(report1.getProjectRessources().getManHoursSpent()));
     expectedHours1.setText(Double.toString(report1.getProjectRessources().getTotalManHoursNeeded()));
       if (report1.getProjectRessources().getManHoursSpent() > report1.getProjectRessources().getTotalManHoursNeeded())
@@ -152,9 +160,14 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     timelineBar1.setProgress((double) report1.getProjectStartDate().daysBetween(MyDate.now())/report1.getProjectStartDate().daysBetween(report1.getProjectEndDate()));
   }
 
-  /**
-   * this method removes the 1st project from the dashboard, and then refreshes the page to show the new dashboard.
-   * Author: Alperen Ö.*/
+
+
+
+
+
+  /**<p>This method removes the 1st project from the dashboard, and then refreshes the page to show the new dashboard.</p>
+   * @Author: A. Özer
+   * */
   public void untrackProject1()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -168,15 +181,20 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     refresh();
   }
 
-  /**
-   * this method generates a progress report for the 2nd project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
-   * Author: Alperen Ö.*/
+
+
+
+
+
+  /**<p>This method generates a progress report for the 2nd project in the list marked as dashboard, thereafter relevant values will be displays in the dashboard.</p>
+   * @Author: A. Özer
+   * */
   public void displayReport2()
   {
     report2 = project2.generateProgressReport();
     projectType2.setText(project2.getProjectType());
-    address2.setText("#2:" + this.getProject2().getProjectInformation().getProjectName() + ", " + this.getProject2().getProjectAddress().getPostalCode() + " " + this.getProject2().getProjectAddress().getCity());
-    tlfNo2.setText(report2.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report2.getCustomer().getPhoneNumber()));
+    address2.setText("#2: " + this.getProject2().getProjectInformation().getProjectName() + ", " + this.getProject2().getProjectAddress().getPostalCode() + " " + this.getProject2().getProjectAddress().getCity());
+    tlfNo2.setText(report2.getCustomer().getPhoneNumberPrefix() + " " + report2.getCustomer().getPhoneNumber());
     hoursSpent2.setText(Double.toString(report2.getProjectRessources().getManHoursSpent()));
     expectedHours2.setText(Double.toString(report2.getProjectRessources().getTotalManHoursNeeded()));
       if (report2.getProjectRessources().getManHoursSpent() > report2.getProjectRessources().getTotalManHoursNeeded())
@@ -211,9 +229,14 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       }
   }
 
-  /**
-   * this method removes the 1st project from the dashboard, and then refreshes the page to show the new dashboard.
-   * Author: Alperen Ö.*/
+
+
+
+
+
+  /**<p>This method removes the 2nd project from the dashboard, and then refreshes the page to show the new dashboard.</p>
+   * @Author: A. Özer
+   * */
   public void untrackProject2()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -227,15 +250,20 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     refresh();
   }
 
-  /**
-   * this method generates a progress report for the 3rd project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
-   * Author: Alperen Ö.*/
+
+
+
+
+
+  /**<p>This method generates a progress report for the 3rd project in the list marked as dashboard, thereafter relevant values will be displays in the dashboard.</p>
+   * @Author: A. Özer
+   * */
   public void displayReport3()
   {
     report3 = project3.generateProgressReport();
     projectType3.setText(project3.getProjectType());
-    address3.setText("#3:" + this.getProject3().getProjectInformation().getProjectName() + ", " + this.getProject3().getProjectAddress().getPostalCode() + " " + this.getProject3().getProjectAddress().getCity());
-    tlfNo3.setText(report3.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report3.getCustomer().getPhoneNumber()));
+    address3.setText("#3: " + this.getProject3().getProjectInformation().getProjectName() + ", " + this.getProject3().getProjectAddress().getPostalCode() + " " + this.getProject3().getProjectAddress().getCity());
+    tlfNo3.setText(report3.getCustomer().getPhoneNumberPrefix() + " " + report3.getCustomer().getPhoneNumber());
     hoursSpent3.setText(Double.toString(report3.getProjectRessources().getManHoursSpent()));
     expectedHours3.setText(Double.toString(report3.getProjectRessources().getTotalManHoursNeeded()));
       if (report3.getProjectRessources().getManHoursSpent() > report3.getProjectRessources().getTotalManHoursNeeded())
@@ -270,9 +298,14 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       }
   }
 
-  /**
-   * this method removes the 1st project from the dashboard, and then refreshes the page to show the new dashboard.
-   * Author: Alperen Ö.*/
+
+
+
+
+
+  /**<p>This method removes the 3rd project from the dashboard, and then refreshes the page to show the new dashboard.</p>
+   * @Author: A. Özer
+   * */
   public void untrackProject3()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -286,15 +319,20 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     refresh();
   }
 
-  /**
-   * this method generates a progress report for the 4th project in the list marked as dashboard, thereafter relevant values will be displayes in the dashboard.
-   * Author: Alperen Ö.*/
+
+
+
+
+
+  /**<p>This method generates a progress report for the 4th project in the list marked as dashboard, thereafter relevant values will be displays in the dashboard.</p>
+   * @Author: A. Özer
+   * */
   public void displayReport4()
   {
     report4 = project4.generateProgressReport();
     projectType4.setText(project4.getProjectType());
-    address4.setText("#4:" + this.getProject4().getProjectInformation().getProjectName() + ", " + this.getProject4().getProjectAddress().getPostalCode() + " " + this.getProject4().getProjectAddress().getCity());
-    tlfNo4.setText(report4.getCustomer().getPhoneNumberPrefix() + " " + Integer.toString(report4.getCustomer().getPhoneNumber()));
+    address4.setText("#4: " + this.getProject4().getProjectInformation().getProjectName() + ", " + this.getProject4().getProjectAddress().getPostalCode() + " " + this.getProject4().getProjectAddress().getCity());
+    tlfNo4.setText(report4.getCustomer().getPhoneNumberPrefix() + " " + report4.getCustomer().getPhoneNumber());
     hoursSpent4.setText(Double.toString(report4.getProjectRessources().getManHoursSpent()));
     expectedHours4.setText(Double.toString(report4.getProjectRessources().getTotalManHoursNeeded()));
       if (report4.getProjectRessources().getManHoursSpent() > report4.getProjectRessources().getTotalManHoursNeeded())
@@ -329,9 +367,14 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       }
   }
 
-  /**
-   * this method removes the 4th project from the dashboard, and then refreshes the page to show the new dashboard.
-   * Author: Alperen Ö.*/
+
+
+
+
+
+  /**<p>This method removes the 4th project from the dashboard, and then refreshes the page to show the new dashboard.</p>
+   * @Author: A. Özer
+   * */
   public void untrackProject4()
   {
     for (int i = 0; i < activeModel.getAllProjectsList().size(); i++)
@@ -345,64 +388,136 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     refresh();
   }
 
+
+
+
+
+  /** <p>Gets the active project model.</p>
+   * @return a MainModel object reference.
+   * @Author: K. Dashnaw
+   * */
   public MainModel getActiveModel()
   {
     return activeModel;
   }
 
+
+
+
+
+  /** <p>Gets the project assigned to dashboard slot #1.</p>
+   * @return The ConstructionProject assigned to dashboard slot #1.
+   * @Author: K. Dashnaw
+   * */
   public ConstructionProject getProject1()
   {
     return project1;
   }
 
+
+
+
+
+  /** <p>Gets the project assigned to dashboard slot #2.</p>
+   * @return The ConstructionProject assigned to dashboard slot #2.
+   * @Author: K. Dashnaw
+   * */
   public ConstructionProject getProject2()
   {
     return project2;
   }
 
+
+
+
+
+  /** <p>Gets the project assigned to dashboard slot #3.</p>
+   * @return The ConstructionProject assigned to dashboard slot #3.
+   * @Author: K. Dashnaw
+   * */
   public ConstructionProject getProject3()
   {
     return project3;
   }
 
+
+
+
+
+  /** <p>Gets the project assigned to dashboard slot #4.</p>
+   * @return The ConstructionProject assigned to dashboard slot #4.
+   * @Author: K. Dashnaw
+   * */
   public ConstructionProject getProject4()
   {
     return project4;
   }
 
-  /** <p>Returns a reference to the GUI_Console on this page.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p>Gets a reference to the GUI_Console on this page.</p>
+   * @return TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
    * */
   public TextField getGUI_Console()
   {
     return GUI_Console;
   }
-  /** <p>Sets/Initializes the GUI_Console on this page.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+
+  /** <p>Sets a reference to the GUI_Console on this page.</p>
+   * @param GUI_Console a TextField containing a reference to this pages' GUI Console.
+   * @Author: K. Dashnaw
    * */
   public void setGUI_Console(TextField GUI_Console)
   {
     this.GUI_Console = GUI_Console;
   }
 
-  /** <p>Returns a SceneController object containing a reference to this stages parent controller</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p> Gets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @return a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
    * */
   public SceneController getSceneController()
   {
     return sceneController;
   }
 
-  /** <p>Sets/Initializes the SceneController object containing a reference to this stages parent controller</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+
+
+
+
+
+  /** <p> Sets the overall SceneController object that is responsible for managing this scenes navigability between application pages.</p>
+   * @param sceneController a SceneController object reference that points to this scenes' overall controller.
+   * @Author: K. Dashnaw
    * */
   public void setSceneController(SceneController sceneController)
   {
     this.sceneController = sceneController;
   }
 
-  /** <p>Initializes this scene into the active stage on the GUI - reusing the same window space.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
+
+
+
+
+
+  /** <p>This method initiates the scene/stage it is called on and ties it to the mapping done in the SceneController,
+   * thus allowing the overall SceneController to know about this active stage/scene.<br>It is only run on the first initialization.</p>
+   * @param activeModel a MainModel Object reference attached to each scene. It allows the scene to call methods from the model to perform operations.
+   * @param sceneController a reference to the overall responsible SceneController, which ties all the sub-scenes/stages together.
    * */
   public void init(MainModel activeModel, SceneController sceneController)
   {
@@ -416,9 +531,12 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     System.out.println("Project Dashboard Scene is now active");
   }
 
-  /** <p>Used to refresh the onscreen view when navigating to this scene/page. It ensures that shown fields are updated with the proper data.
-   * Implementation is inspired by Lector Michael's presentation (VIA University College, Horsens)</p>
-   * */
+
+
+
+
+
+  /**<p>This method is called every time this scene/stage becomes active. It is used to refresh onscreen data. </p>*/
   @Override public void refresh()
   {
     //Refresh GUI console latest message:
@@ -440,8 +558,6 @@ public class Scene_Dashboard implements Scene_ControllerInterface
       labelHTMLExportDate.setText("Last HTML export : Unknown");
     }
 
-
-
     this.getActiveModel().refreshDashboardProjects();
 
     displayProgressReports();
@@ -449,8 +565,17 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     System.out.println("Dashboard now the active stage.");
   }
 
-  /** <p>This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.openWindow() for a more detailed description.</p>*/
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
+   * Check SceneController.openWindow() for a more detailed description.</p>
+   * @param actionEvent ActionEvent that contains a reference to the element which prompted this method to execute.
+   * @throws IOException If something unexpected occurs.
+   * @Author: K. Dashnaw
+   * */
   public void openWindow(ActionEvent actionEvent) throws IOException
   {
     //Refresh GUI console latest message:
@@ -460,8 +585,15 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     this.getSceneController().openWindow(buttonText, this.getGUI_Console());
   }
 
-  /** <p>This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exportToWeb() for a more detailed description.</p>*/
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
+   * Check SceneController.exportToWeb() for a more detailed description.</p>
+   * @Author: K.Dashnaw
+   * */
   public void exportToWeb()
   {
     this.getSceneController().exportToWeb();
@@ -470,8 +602,14 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /** <p>This method simply calls the common method with the same name, from the SceneController.
-   * Check SceneController.exitApplication() for a more detailed description.</p>*/
+
+
+
+
+
+  /** <p>This method simply calls the common method with the same name, from the SceneController.<br>
+   * Check SceneController.exitApplication() for a more detailed description.</p>
+   * @Author: K. Dashnaw */
   public void exitApplication()
   {
     this.getSceneController().exitApplication();
@@ -480,14 +618,20 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     this.getGUI_Console().setText(this.getSceneController().getGUI_ConsoleMessage());
   }
 
-  /**
-   * This method updates the 1st project in the dashboard menu, based on the humanressources and finances values given.
+
+
+
+
+
+  /**<p>This method provides update functionality to the 1st project in the dashboard menu,
+   * which allows the user to quickly update values relating to the HumanRessources and Finances information of the displayed project.</p>
+   * @Author: K. Dashnaw
    * */
   public void updateProject1()
   {
     if(this.getProject1() != null)
     {
-      this.QuickUpdate_Project(1);
+      this.quickUpdate_Project(1);
     }
     else
     {
@@ -496,15 +640,21 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
-  /**
-   * This method updates the 2nd project in the dashboard menu, based on the humanressources and finances values given.
+
+
+
+
+
+  /**<p>This method provides update functionality to the 2nd project in the dashboard menu,
+   * which allows the user to quickly update values relating to the HumanRessources and Finances information of the displayed project.</p>
+   * @Author: K. Dashnaw
    * */
   public void updateProject2()
   {
 
     if(this.getProject2() != null)
     {
-      this.QuickUpdate_Project(2);
+      this.quickUpdate_Project(2);
     }
     else
     {
@@ -513,14 +663,20 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
-  /**
-   * This method updates the 3rd project in the dashboard menu, based on the humanressources and finances values given.
+
+
+
+
+
+  /**<p>This method provides update functionality to the 3rd project in the dashboard menu,
+   * which allows the user to quickly update values relating to the HumanRessources and Finances information of the displayed project.</p>
+   * @Author: K. Dashnaw
    * */
   public void updateProject3()
   {
     if(this.getProject3() != null)
     {
-      this.QuickUpdate_Project(3);
+      this.quickUpdate_Project(3);
     }
     else
     {
@@ -529,14 +685,20 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
-  /**
-   * This method updates the 4rd project in the dashboard menu, based on the humanressources and finances values given.
+
+
+
+
+
+  /**<p>This method provides update functionality to the 4th project in the dashboard menu,
+   * which allows the user to quickly update values relating to the HumanRessources and Finances information of the displayed project.</p>
+   * @Author: K. Dashnaw
    * */
   public void updateProject4()
   {
     if(this.getProject4() != null)
     {
-      this.QuickUpdate_Project(4);
+      this.quickUpdate_Project(4);
     }
     else
     {
@@ -545,7 +707,16 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
-  public void QuickUpdate_Project(int reportNumber)
+
+
+
+
+  /**<p>This method is connected to the 4 updateProject methods described above. It ensures that the proper project is passed on to the "update" window,
+   * and also ensures that a popup-window actually appears in which the user may quickly update the displayed data.</p>
+   * @param reportNumber An integer between 1-4 that corresponds with the currently active projects 1-4, that the user wishes to update.
+   * @Author: K. Dashnaw
+   * */
+  public void quickUpdate_Project(int reportNumber)
   {
     try
     {
@@ -624,6 +795,15 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
+
+
+
+
+  /**<p>This method provides the functionality needed to allow the user to quickly view all available information on the project tied to the activated button.</p>
+   * @param reportNumber An integer between 1-4 that corresponds with the currently active projects 1-4, that the user wishes to view.
+   * @param actionEvent An ActionEvent which provides a reference to the source element that prompted the execution of this method.
+   * @Author: K. Dashnaw
+   * */
   public void viewProjectDetails(int reportNumber, ActionEvent actionEvent)
   {
     //Find index position of the selected progress report:
@@ -679,8 +859,15 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
-  /**
-   * This method re-directs the user to the 1st project's details.
+
+
+
+
+
+  /** <p>This method is tied together with the "viewProjectDetails" method above.
+   * It ensures that the proper project information is displayed to the user, based on which button the user chose to activate.</p>
+   * @param actionEvent An ActionEvent which provides a reference to the source element that prompted the execution of this method.
+   * @Author: K. Dashnaw
    * */
   public void viewProject1(ActionEvent actionEvent)
   {
@@ -695,8 +882,15 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
-  /**
-   * This method re-directs the user to the 2nd project's details.
+
+
+
+
+
+  /** <p>This method is tied together with the "viewProjectDetails" method above.
+   * It ensures that the proper project information is displayed to the user, based on which button the user chose to activate.</p>
+   * @param actionEvent An ActionEvent which provides a reference to the source element that prompted the execution of this method.
+   * @Author: K. Dashnaw
    * */
   public void viewProject2(ActionEvent actionEvent)
   {
@@ -712,8 +906,15 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
-  /**
-   * This method re-directs the user to the 3rd project's details.
+
+
+
+
+
+  /** <p>This method is tied together with the "viewProjectDetails" method above.
+   * It ensures that the proper project information is displayed to the user, based on which button the user chose to activate.</p>
+   * @param actionEvent An ActionEvent which provides a reference to the source element that prompted the execution of this method.
+   * @Author: K. Dashnaw
    * */
   public void viewProject3(ActionEvent actionEvent)
   {
@@ -728,8 +929,15 @@ public class Scene_Dashboard implements Scene_ControllerInterface
     }
   }
 
-  /**
-   * This method re-directs the user to the 4th project's details.
+
+
+
+
+
+  /** <p>This method is tied together with the "viewProjectDetails" method above.
+   * It ensures that the proper project information is displayed to the user, based on which button the user chose to activate.</p>
+   * @param actionEvent An ActionEvent which provides a reference to the source element that prompted the execution of this method.
+   * @Author: K. Dashnaw
    * */
   public void viewProject4(ActionEvent actionEvent)
   {

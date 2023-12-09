@@ -20,11 +20,11 @@ import java.util.Optional;
 
 import static javafx.application.Platform.exit;
 
-/** This class controls the overall flow between the various .fxml scenes in this application.
- * It allows for a seamless transition between windows for the user.
+/** <p>This class controls the overall flow between the various .fxml scenes in this application.
+ * It allows for a seamless transition between windows for the user.<br><br>
  * This class also maintains the shared operations that each scene/stage calls, in order to avoid having duplicate methods described multiple places.
- * Thus, many of the stages will refer to this class for operational instructions in their methods.
- * Author: K. Dashnaw, inspired by the work of Lector Michael from our SDJ1 education.*/
+ * Thus, many of the stages will refer to this class for operational instructions in their methods.</p>
+ * @Author: K. Dashnaw, inspired by the work of Lector Michael from our SDJ1 education.*/
 public class SceneController
 {
   private MainModel activeModel; //Refers to the currently active model. (The one associated with the active scene)
@@ -37,8 +37,14 @@ public class SceneController
   private String GUI_ConsoleMessage; //Continuously updated by GUI pages and contains the latest console message to display.
 
 
-  /** The Scene Controller class is used for controlling the active scene in the GUI application.
-   * It is inspired by some of the SDJ1 developmental work our Lector, Michael, has presented during the SDJ1 course - specifically relating to the use of a 'viewhandler'
+
+
+
+
+  /** <p>Main Constructor to initialize this class
+   * It is inspired by some of the SDJ1 developmental work our Lector, Michael, has presented during the SDJ1 course - specifically relating to the use of a 'viewhandler'</p>
+   * @param activeModel a MainModel Object reference attached to each scene. It allows the scene to call methods from the model to perform operations.
+   * @param activeStage a Stage reference to each scene, which allows this SceneController to navigate between these scenes based on user interaction (button clicks/actions selected).
    */
   public SceneController(MainModel activeModel, Stage activeStage)
   {
@@ -56,61 +62,103 @@ public class SceneController
     scenes = new HashMap<>();
   }
 
-  /** Returns the screen view that is currently active
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Gets the currently active stage.
+   * @return a Stage object containing the currently active Stage
+   * @Author: K. Dashnaw
    * */
   public Stage getActiveStage()
   {
     return activeStage;
   }
 
-  /** Sets the screen view that is currently active
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Sets the currently active stage.
+   * @param activeStage a Stage object containing the currently active Stage
+   * @Author: K. Dashnaw
    * */
   public void setActiveStage(Stage activeStage)
   {
     this.activeStage = activeStage;
   }
 
-  /** Returns the latest GUI Console message. This attribute ensures cross-view port compatibility so
-   * console on all view panes receive the same messages.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Gets the latest GUI Console message.<br><br>>This attribute ensures cross-view port compatibility so
+   * console on all view panes receive the same messages.</p>
+   * @return a String object containing the latest GUI Console message.
+   * @Author: K. Dashnaw
    * */
   public String getGUI_ConsoleMessage()
   {
     return GUI_ConsoleMessage;
   }
 
-  /** Sets the latest GUI Console message. This attribute ensures cross-view port compatibility so
-   * console on all view panes receive the same messages.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Sets the latest GUI Console message.<br><br>>This attribute ensures cross-view port compatibility so
+   * console on all view panes receive the same messages.</p>
+   * @param GUI_ConsoleMessage a String object containing the latest GUI Console message.
+   * @Author: K. Dashnaw
    * */
   public void setGUI_ConsoleMessage(String GUI_ConsoleMessage)
   {
     this.GUI_ConsoleMessage = GUI_ConsoleMessage;
   }
 
-  /** Sets the active project model.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Gets the active project model.</p>
+   * @return a MainModel object reference.
+   * @Author: K. Dashnaw
    * */
   public MainModel getActiveModel()
   {
     return activeModel;
   }
 
-  /** Gets the active project model.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Sets the active project model.</p>
+   * @param activeModel a MainModel object reference.
+   * @Author: K. Dashnaw
    * */
   public void setActiveModel(MainModel activeModel)
   {
     this.activeModel = activeModel;
   }
 
-  /**
-   * This method when called, loads a new window into the FXML loader, re-using the existing window area.
-   * This allows for seamless navigation between different windows in the GUI application.
+
+
+
+
+
+  /**<p>This method when called, loads a new window into the FXML loader, re-using the existing window area.<br>
+   * This allows for seamless navigation between different windows in the GUI application.<br><br>
    * It is inspired by some of the SDJ1 developmental work our Lector, Michael, has presented during the
-   * SDJ1 course - specifically relating to the use of a 'viewhandler'
+   * SDJ1 course - specifically relating to the use of a 'viewhandler'</p>
+   * @param newWindow A String containing only the file name of the .fxml scene to load (no path and no file type).
+   * @throws IOException
    */
   public void loadNewWindow(String newWindow) throws IOException
   {
@@ -144,7 +192,15 @@ public class SceneController
     activeStage.setTitle("Bob's Project Management System");
   }
 
-  /** This is a common method shared between all GUI scenes. This method saves all system data before terminating the application safely. */
+
+
+
+
+
+  /** <p>This is a common method shared between all GUI scenes.<br>
+   * This method saves all system data before terminating the application safely.</p>
+   * @Author: K. Dashnaw
+   * */
   public void exitApplication()
   {
     System.out.println(
@@ -163,10 +219,15 @@ public class SceneController
     }
   }
 
-  /**
-   * This is a common method shared between all GUI scenes. This method saves all system data and then exports
+
+
+
+
+
+  /**<p>This is a common method shared between all GUI scenes.<br>This method saves all system data and then exports
    * progress reports on all non-confidential projects to a webpage compatible file that can be readily loaded
-   * on the company's webpage.
+   * on the company's webpage.</p>
+   * @Author: K. Dashnaw
    */
   public void exportToWeb()
   {
@@ -212,11 +273,18 @@ public class SceneController
     }
   }
 
-  /**
-   * This method is used on GUI buttons as an "On Action" call and is used to navigate between different scenes/pages in the GUI.
-   * It takes the text-label from the button and checks in an if/else manner which GUI scene corresponds to that button.
-   * If changes are made in the GUI labels, but not updated in this method, the application WILL break.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>This method is used on GUI buttons as an "On Action" call and is used to navigate between different scenes/pages in the GUI.<br>
+   * It takes the text-label from the button and checks in an if/else manner which GUI scene corresponds to that button.<br><br>
+   * WARNING: If changes are made in the GUI labels, but not updated in this method, the application WILL break.</p>
+   * @param buttonText a String containing the button text from the passed button. Example: 'You clicked a button called "Display", then you should ensure the String "Display" is entered here'
+   * @param GUI_Console a TextField reference to the currently active scene's GUI console area.
+   * @throws IOException
+   * @Author: K. Dashnaw
    */
   public void openWindow(String buttonText, TextField GUI_Console) throws IOException
   {
@@ -255,12 +323,17 @@ public class SceneController
     }
   }
 
+
+
+
+
+
   /**<p>This method is called from the various Scene Controllers towards this overall controller.
    * It creates a simple confirmation window inside the active window area and returns which button the user selected to press.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param message A String containing the message to display inside the confirmation window.
    * @return "cancelPressed" - This String value is returned if the user pressed the cancel button.<br>
    * "confirmationPressed" - This String value is returned if the user pressed the cancel button.
+   * @Author: K. Dashnaw
    */
   public String createPromptWindow(String message)
   {
@@ -295,11 +368,17 @@ public class SceneController
     }
   }
 
-  /** Returns FALSE if TextField is empty and TRUE is they are not.
-   * Input validation method called from the local scene control model, which gets a call from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.
-   * This method MUST be run on a TextField in order to avoid potential crashes/errors.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Input validation method called from the local scene control model, which gets a call from the .fxml scene upon interacting with a
+   * TextField with this method set as an "OnKey" event.<br><br></p>
+   * <p>WARNING: This method MUST be run on a TextField in order to avoid potential crashes/errors.</p>
+   * @param keyNode A reference to the KeyEvent which activated this method.
+   * @return TRUE if the TextField attached to the OnKey event is NOT empty. Else FALSE if it is empty.
+   * @Author: K. Dashnaw
    */
   public boolean validate_NotEmpty(KeyEvent keyNode)
   {
@@ -321,11 +400,18 @@ public class SceneController
     return true;
   }
 
-  /** Returns FALSE if TextField is either empty OR a number/digit, and TRUE is TextField is none of both.
-   * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.
-   * This method MUST be run on a TextField in order to avoid potential crashes/errors.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Input validation method to validate that the TextField is NOT empty NOR a number, which is called directly from the .fxml scene upon interacting with a
+   * TextField with this method set as an "OnKey" event.<br><br></p>
+   * <p>WARNING: This method MUST be run on a TextField in order to avoid potential crashes/errors.</p>
+   * @param keyNode A reference to the KeyEvent which activated this method.
+   * @param errorMessage A String containing any potential error messages that might have arisen during the execution of this method.
+   * @return TRUE if the TextField attached to the OnKey event is NOT empty AND not a number. Else FALSE if it is empty.
+   * @Author: K. Dashnaw
    */
   public boolean validate_NotEmpty_NotNumber(KeyEvent keyNode, String errorMessage)
   {
@@ -366,11 +452,18 @@ public class SceneController
     }
   }
 
-  /** Returns FALSE if TextField is either empty OR a string OR a negative number/digit, and TRUE is TextField is none of either.
-   * Input validation method called directly from the .fxml scene upon interacting with a
-   * TextField with this method set as an "On Key Typed" event.
-   * This method MUST be run on a TextField in order to avoid potential crashes/errors.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Input validation method to validate that the TextField is NOT empty NOR a negative number NOR a String, which is called directly from the .fxml scene upon interacting with a
+   * TextField with this method set as an "OnKey" event.<br><br></p>
+   * <p>WARNING: This method MUST be run on a TextField in order to avoid potential crashes/errors.</p>
+   * @param keyNode A reference to the KeyEvent which activated this method.
+   * @param errorMessage A String containing any potential error messages that might have arisen during the execution of this method.
+   * @return TRUE if the TextField attached to the OnKey event is NOT empty AND not a number. Else FALSE if it is empty.
+   * @Author: K. Dashnaw
    */
   public boolean validate_NotEmpty_NotString_NotNegative(KeyEvent keyNode, String errorMessage)
   {
@@ -416,10 +509,16 @@ public class SceneController
     }
   }
 
-  /** Checks if input is within standard margin ranges for this input type.
-   * If not, it displays a warning, for the user to confirm the value.
-   * The user can choose to ignore the warning. If there is no conflict it returns true.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Checks if input is within standard margin ranges for this input type.<br>
+   * If not, it displays a warning, for the user to confirm the value.<br>
+   * The user can choose to ignore the warning. If there is no conflict it returns true.</p>
+   * @param node A TextField referencing the node which prompted this method to execute.
+   * @Author: K. Dashnaw
    * */
   public void validateIsWithinNormalMargins(TextField node)
   {
@@ -442,7 +541,7 @@ public class SceneController
         dFormat.setRoundingMode(RoundingMode.HALF_UP);
 
         //Identify which textField that is calling this method:
-        if(node.getPromptText().equalsIgnoreCase("in $USD"))
+        if(node.getPromptText().equalsIgnoreCase("in $USD") || node.getPromptText().equalsIgnoreCase("Budget in USD") || node.getPromptText().equalsIgnoreCase("Expenses in USD"))
         {
           //This is the budget TextField.
           if (this.getActiveModel().getSelectedProject().getProjectType().equalsIgnoreCase("residential") && (
@@ -538,10 +637,17 @@ public class SceneController
     }
   }
 
-  /** This code is run locally in this class. It simply checks if the given TextField contains any data or not.
+
+
+
+
+
+  /** <p>This code simply checks if the given TextField contains any data or not.<br>
    * Takes a KeyEvent and parses this as a TextField.
-   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
-   * Author: K. Dashnaw
+   * <br><br>Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
+   * </p>
+   * @param keyNode A KeyEvent referencing the source element which caused this method to execute.
+   * @Author: K. Dashnaw
    * */
   public void emptyTextFieldCode(KeyEvent keyNode)
   {
@@ -555,10 +661,16 @@ public class SceneController
     setGUI_ConsoleMessage("Error in entered data values. Please review and correct!");
   }
 
-  /** This code is run locally in this class. It simply checks if the given TextField contains any data or not.
-   * Takes a KeyEvent and parses this as a TextField.
-   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>This method  simply checks if the given TextField contains any data or not.<br>
+   * Takes a KeyEvent and parses this as a TextField.<br<br>
+   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.</p>
+   * @param Node A TextField referencing the source element which caused this method to execute.
+   * @Author: K. Dashnaw
    * */
   public void emptyTextFieldCode(TextField Node)
   {
@@ -570,14 +682,18 @@ public class SceneController
     setGUI_ConsoleMessage("Error in entered data values. Please review and correct!");
   }
 
-  /** This code is run locally in this class. It adds a ToolTip to the received node.
-   * Takes a KeyEvent and parses this as a TextField.
-   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.
-   * Parameters are:
-   * "KeyEvent keyNode": A reference to the node belonging to the KeyEvent that triggered this method.
-   * "String textStyle": A CSS style format used to i.e. color the text in the TextField (or similar).
-   * "String toolTipMessage": The text that should be displayed in the tooltip.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p> This method adds a ToolTip to the received node.<br>
+   * Takes a KeyEvent and parses this as a TextField.<br><br>
+   * Warning: KeyEvent source must be a TextField, otherwise crashes may occur.</p>
+   * @param keyNode A reference to the node belonging to the KeyEvent that triggered this method.
+   * @param textStyle A CSS style format used to i.e. color the text in the TextField (or similar).
+   * @param toolTipMessage The text that should be displayed in the tooltip.
+   * @Author: K. Dashnaw
    * */
   public void addErrorTooltip(KeyEvent keyNode, String textStyle, String toolTipMessage)
   {
@@ -590,13 +706,17 @@ public class SceneController
     text.setTooltip(tooltip);
   }
 
-  /** This code is run locally in this class. It adds a ToolTip to the received node.
-   * Takes a DatePicker
-   * Parameters are:
-   * "DatePicker node": A reference to the node belonging to the DatePicker that triggered this method.
-   * "String textStyle": A CSS style format used to i.e. color the text in the TextField (or similar).
-   * "String toolTipMessage": The text that should be displayed in the tooltip.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>This method adds a ToolTip to the received node.<br>
+   * Takes a DatePicker</p>
+   * @param node A reference to the node belonging to the DatePicker that triggered this method.
+   * @param textStyle A CSS style format used to i.e. color the text in the TextField (or similar).
+   * @param toolTipMessage The text that should be displayed in the tooltip.
+   * @Author: K. Dashnaw
    * */
   public void addErrorTooltip(DatePicker node, String textStyle, String toolTipMessage)
   {
@@ -608,13 +728,17 @@ public class SceneController
     node.setTooltip(tooltip);
   }
 
-  /** This code is run locally in this class. It adds a ToolTip to the received node.
-   * Takes a TextField
-   * Parameters are:
-   * "TextField node": A reference to the node belonging to the TextField that triggered this method.
-   * "String textStyle": A CSS style format used to i.e. color the text in the TextField (or similar).
-   * "String toolTipMessage": The text that should be displayed in the tooltip.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>This method adds a ToolTip to the received node.<br>
+   * Takes a TextField</p>
+   * @param node A reference to the node belonging to the TextField that triggered this method.
+   * @param textStyle A CSS style format used to i.e. color the text in the TextField (or similar).
+   * @param toolTipMessage The text that should be displayed in the tooltip.
+   * @Author: K. Dashnaw
    * */
   public void addErrorTooltip(TextField node, String textStyle, String toolTipMessage)
   {
@@ -626,12 +750,17 @@ public class SceneController
     node.setTooltip(tooltip);
   }
 
+
+
+
+
+
   /** <p>This method returns the selected projects Data Field values that correspond with the shared project data fields.
-   * This is intended for insertion into the on-screen editable textFields, so that already existing data is pre-entered for the user.
-   * This method is especially used on: The Project Details view page and _________________________________</p>
-   * <p><b>Author:</b> K. Dashnaw </p>
+   * This is intended for insertion into the on-screen editable textFields, so that already existing data is pre-entered for the user.</p>
    * @param node is a reference to the TextField node in which the returned String value shall be inserted.
+   * @return A String containing the text corresponding with the element that this method was executed on, ensuring that proper data is displayed the proper places.
    * @return A String value intended to be inserted into the above TextField node.
+   * @Author: K. Dashnaw
    * */
   public String loadProjectData_String (TextField node)
   {
@@ -692,11 +821,17 @@ public class SceneController
     return "";
   }
 
-  /** <p>Is called from "On Action" EventHandlers in the .fxml scene
-   * Method adds the received ActionEvent node to the project data.
-   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.<br>
+
+
+
+
+
+  /** <p>This method is called from "On Action" EventHandlers in the .fxml scene
+   * Method adds the received ActionEvent node to the project data.<br><br>
+   * It receives a "ActionEvent node" parses this as a "CheckBox" and checks if it is selected or not.<br><br>
    * <b>Warning: ActionEvent node must have a source type of CheckBox, else errors will occur.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param actionEvent A ActionEvent reference to the source element which prompted this method to execute.
+   * @Author: K. Dashnaw
    * */
   public void checkBoxChecker(ActionEvent actionEvent)
   {
@@ -716,11 +851,16 @@ public class SceneController
     value.setPromptText(value.getText());
   }
 
+
+
+
+
+
   /** <p>This method returns the selected projects Data Field values that correspond with the shared project data fields.
    * This is intended for insertion into the on-screen clickable CheckBoxes, so that already existing data is pre-selected for the user.</p>
-   * <p><b>Author:</b> K. Dashnaw </p>
    * @param node is a reference to the CheckBox node in which the returned boolean value shall be inserted.
    * @return A boolean value intended to be inserted into the above CheckBox node.
+   * @Author: K. Dashnaw
    * */
   public boolean loadProjectData_Checkbox (CheckBox node)
   {
@@ -738,8 +878,17 @@ public class SceneController
     return false;
   }
 
+
+
+
+
+
   /** <p>Method used to display the unique data fields specific to the selected project type!</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param gridResidentialUniqueData A reference to the GridPane element containing the Residential Project Data
+   * @param gridCommercialUniqueData A reference to the GridPane element containing the Commercial Project Data
+   * @param gridIndustrialUniqueData A reference to the GridPane element containing the Industrial Project Data
+   * @param gridRoadUniqueData A reference to the GridPane element containing the Road Project Data
+   * @Author: K. Dashnaw
    */
   public void showUniqueProjectDataFields(GridPane gridResidentialUniqueData, GridPane gridCommercialUniqueData, GridPane gridIndustrialUniqueData, GridPane gridRoadUniqueData)
   {
@@ -762,9 +911,19 @@ public class SceneController
     }
   }
 
-  /** <p>Method used to hide all unique project data fields.
+
+
+
+
+
+  /** <p>Method used to hide all unique project data fields.<br>
    * It is used in conjunction with a show method for the specific data fields, so that only relevant data fields are displayed.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
+   * @param bool A boolean, that if set to TRUE hides the gridPanes. Else it shows them.
+   * @param gridResidentialUniqueData A reference to the GridPane element containing the Residential Project Data
+   * @param gridCommercialUniqueData A reference to the GridPane element containing the Commercial Project Data
+   * @param gridIndustrialUniqueData A reference to the GridPane element containing the Industrial Project Data
+   * @param gridRoadUniqueData A reference to the GridPane element containing the Road Project Data
+   * @Author: K. Dashnaw
    */
   public void hideAllUniqueProjectDataFields(boolean bool, GridPane gridResidentialUniqueData, GridPane gridCommercialUniqueData, GridPane gridIndustrialUniqueData, GridPane gridRoadUniqueData)
   {
@@ -774,10 +933,15 @@ public class SceneController
     hideGridElementNode(gridRoadUniqueData, bool);
   }
 
+
+
+
+
+
   /** <p>Method used to hide a GridPane element.</p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param gridID A reference to the GridPane element to hide.
    * @param bool if true, hide the element - if false, show it.
+   * @Author: K. Dashnaw
    */
   public void hideGridElementNode(GridPane gridID, boolean bool)
   {
@@ -785,11 +949,15 @@ public class SceneController
     gridID.managedProperty().bind(gridID.visibleProperty());
   }
 
-  /** Method used to hide a Button element.
-   * Parameters are:
-   * "Button buttonID": A reference to the Button element to hide.
-   * "boolean bool": if true, hide the element - if false, show it.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Method used to hide a Button element.</p>
+   * @param buttonID A reference to the Button element to hide.
+   * @param bool if true, hide the element - if false, show it.
+   * @Author: K. Dashnaw
    */
   public void hideButtonElementNode(Button buttonID, boolean bool)
   {
@@ -797,11 +965,15 @@ public class SceneController
     buttonID.managedProperty().bind(buttonID.visibleProperty());
   }
 
-  /** Method used to hide a Label element.
-   * Parameters are:
-   * "Label labelID": A reference to the Label element to hide.
-   * "boolean bool": if true, hide the element - if false, show it.
-   * Author: K. Dashnaw
+
+
+
+
+
+  /** <p>Method used to hide a Label element.</p>
+   * @param labelID A reference to the Label element to hide.
+   * @param bool if true, hide the element - if false, show it.
+   * @Author: K. Dashnaw
    */
   public void hideLabelElementNode(Label labelID, boolean bool)
   {
@@ -809,6 +981,15 @@ public class SceneController
     labelID.managedProperty().bind(labelID.visibleProperty());
   }
 
+
+
+
+
+  /** <p>This method validates all data fields during project creation and/or edits in order to ensure that illegal entries are not made.</p>
+   * @param date_EndDateField A reference to the DatePicker GUI element containing the data on the project end date.
+   * @return TRUE if currently entered data is valid and proper for commit. Else FALSE.
+   * @Author: K. Dashnaw
+   */
   public boolean validateActiveProject(DatePicker date_EndDateField)
   {
     ConstructionProject activeProject = this.getActiveModel().getSelectedProject();
@@ -938,14 +1119,17 @@ public class SceneController
   }
 
 
+
+
+
+
   /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.<br><br></p>
    * <p><b>Warning: Switch cases are based on the promptText's associated with the given TextField element.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param project This is a reference to the specific project type Class.
    * @param text This is a reference to the node containing the information to add to the project.
+   * @Author: K. Dashnaw
    * */
-
   public void setTemporaryRoadData(RoadProject project, TextField text)
   {
     switch (text.getPromptText())
@@ -957,7 +1141,6 @@ public class SceneController
         project.setEnvironmentalOrGeographicalChallenges(text.getText());
         break;
       case "Duration in months":
-        //TODO: Implement check with standard margin ranges to see if budget is within.
         project.setProjectDuration(Integer.parseInt(text.getText().trim()));
         break;
       case "length in meters":
@@ -971,14 +1154,18 @@ public class SceneController
     }
   }
 
+
+
+
+
+
   /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.<br><br></p>
    * <p><b>Warning: Switch cases are based on the promptText's associated with the given TextField element.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param project This is a reference to the specific project type Class.
    * @param text This is a reference to the node containing the information to add to the project.
+   * @Author: K. Dashnaw
    * */
-
   public void setTemporaryIndustrialData(IndustrialProject project, TextField text)
   {
     switch (text.getPromptText())
@@ -987,7 +1174,6 @@ public class SceneController
         project.setFacilityType(text.getText());
         break;
       case "Duration in months":
-        //TODO: Implement check with standard margin ranges to see if budget is within.
         project.setProjectDuration(Integer.parseInt(text.getText().trim()));
         break;
       case "in m^2":
@@ -998,14 +1184,18 @@ public class SceneController
     }
   }
 
+
+
+
+
+
   /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.<br><br></p>
    * <p><b>Warning: Switch cases are based on the promptText's associated with the given TextField element.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param project This is a reference to the specific project type Class.
    * @param text This is a reference to the node containing the information to add to the project.
+   * @Author: K. Dashnaw
    * */
-
   public void setTemporaryCommercialData(CommercialProject project, TextField text)
   {
     switch (text.getPromptText())
@@ -1017,7 +1207,6 @@ public class SceneController
         project.setIntendedBuildingUse(text.getText());
         break;
       case "Duration in months":
-        //TODO: Implement check with standard margin ranges to see if budget is within.
         project.setProjectDuration(Integer.parseInt(text.getText().trim()));
         break;
       case "in m^2":
@@ -1028,14 +1217,18 @@ public class SceneController
     }
   }
 
+
+
+
+
+
   /** <p>This method is used in conjunction with the "addCommonProjectData(TextField text) method".
-   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.</p>
+   * It checks if the received data falls within the shared project data fields, and if so adds the data to the active project.<br><br></p>
    * <p><b>Warning: Switch cases are based on the promptText's associated with the given TextField element.</b></p>
-   * <p><b>Author:</b> K. Dashnaw</p>
    * @param project This is a reference to the specific project type Class.
    * @param text This is a reference to the node containing the information to add to the project.
+   * @Author: K. Dashnaw
    * */
-
   public void setTemporaryResidentialData(ResidentialProject project, TextField text)
   {
     switch (text.getPromptText())
@@ -1050,7 +1243,6 @@ public class SceneController
         project.setNumberOfOtherRoomsWithPlumbing(Integer.parseInt(text.getText().trim()));
         break;
       case "Duration in months":
-        //TODO: Implement check with standard margin ranges to see if budget is within.
         project.setProjectDuration(Integer.parseInt(text.getText().trim()));
         break;
       case "in m^2":

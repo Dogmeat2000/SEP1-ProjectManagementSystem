@@ -114,7 +114,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Button fx:id="buttonResidentialProjectType" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="185.0" minWidth="245.0" mnemonicParsing="false" onAction="#ProjectTypeSelected" prefHeight="185.0" prefWidth="245.0" text="ResidentialProjectType" textAlignment="CENTER">
+                                                            <Button fx:id="buttonResidentialProjectType" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="185.0" minWidth="245.0" mnemonicParsing="false" onAction="#getProjectTypeSelected" prefHeight="185.0" prefWidth="245.0" text="ResidentialProjectType" textAlignment="CENTER">
                                                                <graphic>
                                                                   <ImageView fx:id="imgResidentialProjectType" fitHeight="180.0" fitWidth="250.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                                                      <image>
@@ -144,7 +144,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Button fx:id="buttonCommercialProjectType" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="185.0" minWidth="245.0" mnemonicParsing="false" onAction="#ProjectTypeSelected" prefHeight="185.0" prefWidth="245.0" text="CommercialProjectType" textAlignment="CENTER">
+                                                            <Button fx:id="buttonCommercialProjectType" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="185.0" minWidth="245.0" mnemonicParsing="false" onAction="#getProjectTypeSelected" prefHeight="185.0" prefWidth="245.0" text="CommercialProjectType" textAlignment="CENTER">
                                                                <graphic>
                                                                   <ImageView fx:id="imgCommercialProjectType" fitHeight="180.0" fitWidth="250.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                                                      <image>
@@ -174,7 +174,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Button fx:id="buttonIndustrialProjectType" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="185.0" minWidth="245.0" mnemonicParsing="false" onAction="#ProjectTypeSelected" prefHeight="185.0" prefWidth="245.0" text="IndustrialProjectType" textAlignment="CENTER">
+                                                            <Button fx:id="buttonIndustrialProjectType" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="185.0" minWidth="245.0" mnemonicParsing="false" onAction="#getProjectTypeSelected" prefHeight="185.0" prefWidth="245.0" text="IndustrialProjectType" textAlignment="CENTER">
                                                                <graphic>
                                                                   <ImageView fx:id="imgIndustrialProjectType" fitHeight="180.0" fitWidth="250.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                                                      <image>
@@ -201,7 +201,7 @@
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Button fx:id="buttonRoadProjectType" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="185.0" minWidth="245.0" mnemonicParsing="false" onAction="#ProjectTypeSelected" prefHeight="185.0" prefWidth="245.0" text="RoadProjectType" textAlignment="CENTER">
+                                                            <Button fx:id="buttonRoadProjectType" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="185.0" minWidth="245.0" mnemonicParsing="false" onAction="#getProjectTypeSelected" prefHeight="185.0" prefWidth="245.0" text="RoadProjectType" textAlignment="CENTER">
                                                                <graphic>
                                                                   <ImageView fx:id="imgRoadProjectType" fitHeight="180.0" fitWidth="250.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                                                      <image>
