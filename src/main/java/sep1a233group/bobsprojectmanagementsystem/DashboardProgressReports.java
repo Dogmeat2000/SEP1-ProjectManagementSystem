@@ -81,20 +81,24 @@ public class DashboardProgressReports implements Serializable
    * */
   public void addProgressReport(ProgressReport progressReport)
   {
-    for (int i = 0; i < getProgressReports().length; i++)
+    //Check if received progressReport is already in list:
+    boolean reportAlreadyInList = false;
+    for (int j = 0; j < getProgressReports().length; j++)
     {
-      //Check if received progressReport is already in list:
-      boolean reportAlreadyInList = false;
-      for (int j = 0; j < getProgressReports().length; j++)
+      if(getProgressReports()[j] != null && getProgressReports()[j].equals(progressReport))
       {
-        if(getProgressReports()[j] != null && getProgressReports()[j].equals(progressReport))
-        {
-          reportAlreadyInList = true;
-        }
+        reportAlreadyInList = true;
       }
-      if(getProgressReports()[i] == null && !reportAlreadyInList)
+    }
+    if(!reportAlreadyInList)
+    {
+      for (int i = 0; i < getProgressReports().length; i++)
       {
-        dashboardProgressReports[i] = progressReport;
+        if(getProgressReports()[i] == null)
+        {
+          dashboardProgressReports[i] = progressReport;
+          break;
+        }
       }
     }
   }

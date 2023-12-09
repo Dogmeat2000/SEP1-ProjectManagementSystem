@@ -202,7 +202,7 @@ public class CommercialProject extends ConstructionProject implements Serializab
       return false;
     }
     //Compare Customer and Address info:
-    else if(!(other.getCustomer().getCustomerCompany().equals(this.getCustomer().getCustomerCompany()) && other.getProjectAddress().equals(this.getProjectAddress())))
+    else if(!(other.getCustomer().equals(this.getCustomer()) && other.getProjectAddress().equals(this.getProjectAddress())))
     {
       return false;
     }
