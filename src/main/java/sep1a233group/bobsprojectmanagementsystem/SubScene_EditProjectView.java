@@ -503,7 +503,7 @@ public class SubScene_EditProjectView implements Scene_ControllerInterface
   public boolean validate_NotEmpty_NotNumber(KeyEvent keyNode)
   {
     resetValidation();
-    if(getSceneController().validate_NotEmpty_NotNumber(keyNode, "Error in data values while creating new project. Please review and correct!"))
+    if(getSceneController().validate_NotEmpty_NotNumber(keyNode, "Error in data values while editing project. Please review and correct!"))
     {
       addTemporaryProjectData(keyNode);
       return true;
